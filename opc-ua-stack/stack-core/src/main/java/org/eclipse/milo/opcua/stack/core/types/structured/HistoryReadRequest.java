@@ -44,7 +44,11 @@ public class HistoryReadRequest implements UaRequestMessage {
         this._nodesToRead = null;
     }
 
-    public HistoryReadRequest(RequestHeader _requestHeader, ExtensionObject _historyReadDetails, TimestampsToReturn _timestampsToReturn, Boolean _releaseContinuationPoints, HistoryReadValueId[] _nodesToRead) {
+    public HistoryReadRequest(RequestHeader _requestHeader,
+                              ExtensionObject _historyReadDetails,
+                              TimestampsToReturn _timestampsToReturn,
+                              Boolean _releaseContinuationPoints,
+                              HistoryReadValueId[] _nodesToRead) {
         this._requestHeader = _requestHeader;
         this._historyReadDetails = _historyReadDetails;
         this._timestampsToReturn = _timestampsToReturn;
@@ -52,28 +56,46 @@ public class HistoryReadRequest implements UaRequestMessage {
         this._nodesToRead = _nodesToRead;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public ExtensionObject getHistoryReadDetails() { return _historyReadDetails; }
+    public ExtensionObject getHistoryReadDetails() {
+        return _historyReadDetails;
+    }
 
-    public TimestampsToReturn getTimestampsToReturn() { return _timestampsToReturn; }
+    public TimestampsToReturn getTimestampsToReturn() {
+        return _timestampsToReturn;
+    }
 
-    public Boolean getReleaseContinuationPoints() { return _releaseContinuationPoints; }
+    public Boolean getReleaseContinuationPoints() {
+        return _releaseContinuationPoints;
+    }
 
-    public HistoryReadValueId[] getNodesToRead() { return _nodesToRead; }
+    public HistoryReadValueId[] getNodesToRead() {
+        return _nodesToRead;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(HistoryReadRequest historyReadRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", historyReadRequest._requestHeader != null ? historyReadRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            historyReadRequest._requestHeader != null ? historyReadRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeExtensionObject("HistoryReadDetails", historyReadRequest._historyReadDetails);
         encoder.encodeEnumeration("TimestampsToReturn", historyReadRequest._timestampsToReturn);
         encoder.encodeBoolean("ReleaseContinuationPoints", historyReadRequest._releaseContinuationPoints);
@@ -83,16 +105,26 @@ public class HistoryReadRequest implements UaRequestMessage {
     public static HistoryReadRequest decode(UaDecoder decoder) {
         RequestHeader _requestHeader = decoder.decodeSerializable("RequestHeader", RequestHeader.class);
         ExtensionObject _historyReadDetails = decoder.decodeExtensionObject("HistoryReadDetails");
-        TimestampsToReturn _timestampsToReturn = decoder.decodeEnumeration("TimestampsToReturn", TimestampsToReturn.class);
+        TimestampsToReturn _timestampsToReturn = decoder
+            .decodeEnumeration("TimestampsToReturn", TimestampsToReturn.class);
         Boolean _releaseContinuationPoints = decoder.decodeBoolean("ReleaseContinuationPoints");
-        HistoryReadValueId[] _nodesToRead = decoder.decodeArray("NodesToRead", decoder::decodeSerializable, HistoryReadValueId.class);
+        HistoryReadValueId[] _nodesToRead = decoder
+            .decodeArray("NodesToRead", decoder::decodeSerializable, HistoryReadValueId.class);
 
-        return new HistoryReadRequest(_requestHeader, _historyReadDetails, _timestampsToReturn, _releaseContinuationPoints, _nodesToRead);
+        return new HistoryReadRequest(
+            _requestHeader,
+            _historyReadDetails,
+            _timestampsToReturn,
+            _releaseContinuationPoints,
+            _nodesToRead
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(HistoryReadRequest::encode, HistoryReadRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(HistoryReadRequest::decode, HistoryReadRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(HistoryReadRequest::encode, HistoryReadRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(HistoryReadRequest::decode, HistoryReadRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

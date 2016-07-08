@@ -30,13 +30,15 @@ public class UaPropertyNode extends UaVariableNode {
 
         super(nodeManager, nodeId, browseName, displayName);
 
-        addReference(new Reference(
-            nodeId,
-            Identifiers.HasTypeDefinition,
-            Identifiers.PropertyType.expanded(),
-            NodeClass.VariableType,
-            true
-        ));
+        addReference(
+            new Reference(
+                nodeId,
+                Identifiers.HasTypeDefinition,
+                Identifiers.PropertyType.expanded(),
+                NodeClass.VariableType,
+                true
+            )
+        );
     }
 
 }

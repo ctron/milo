@@ -24,22 +24,19 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UByte;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 
-
 @UaObjectType(name = "LockType")
 public class LockNode extends BaseObjectNode implements LockType {
 
-    public LockNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public LockNode(UaNodeManager nodeManager,
+                    NodeId nodeId,
+                    QualifiedName browseName,
+                    LocalizedText displayName,
+                    Optional<LocalizedText> description,
+                    Optional<UInteger> writeMask,
+                    Optional<UInteger> userWriteMask,
+                    UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
-
 
 }

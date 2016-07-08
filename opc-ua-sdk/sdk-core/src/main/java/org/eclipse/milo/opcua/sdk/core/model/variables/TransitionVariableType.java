@@ -20,15 +20,9 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 
-
 public interface TransitionVariableType extends BaseDataVariableType {
 
-    Property<Object> ID = new BasicProperty<>(
-        QualifiedName.parse("0:Id"),
-        NodeId.parse("ns=0;i=24"),
-        -1,
-        Object.class
-    );
+    Property<Object> ID = new BasicProperty<>(QualifiedName.parse("0:Id"), NodeId.parse("ns=0;i=24"), -1, Object.class);
 
     Property<QualifiedName> NAME = new BasicProperty<>(
         QualifiedName.parse("0:Name"),
@@ -57,7 +51,6 @@ public interface TransitionVariableType extends BaseDataVariableType {
         -1,
         DateTime.class
     );
-
 
     Object getId();
 

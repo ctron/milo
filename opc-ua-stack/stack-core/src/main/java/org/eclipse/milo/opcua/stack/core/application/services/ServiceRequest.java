@@ -36,10 +36,7 @@ public class ServiceRequest<ReqT extends UaRequestMessage, ResT extends UaRespon
     private final UaStackServer server;
     private final ServerSecureChannel secureChannel;
 
-    public ServiceRequest(ReqT request,
-                          long requestId,
-                          UaStackServer server,
-                          ServerSecureChannel secureChannel) {
+    public ServiceRequest(ReqT request, long requestId, UaStackServer server, ServerSecureChannel secureChannel) {
 
         this.request = request;
         this.requestId = requestId;
@@ -96,7 +93,9 @@ public class ServiceRequest<ReqT extends UaRequestMessage, ResT extends UaRespon
             DateTime.now(),
             request.getRequestHeader().getRequestHandle(),
             serviceResult,
-            null, null, null
+            null,
+            null,
+            null
         );
     }
 
@@ -105,7 +104,9 @@ public class ServiceRequest<ReqT extends UaRequestMessage, ResT extends UaRespon
             DateTime.now(),
             request.getRequestHeader().getRequestHandle(),
             new StatusCode(statusCode),
-            null, null, null
+            null,
+            null,
+            null
         );
 
         return new ServiceFault(responseHeader);
@@ -113,13 +114,16 @@ public class ServiceRequest<ReqT extends UaRequestMessage, ResT extends UaRespon
 
     public ServiceFault createServiceFault(Throwable throwable) {
         UaException exception = (throwable instanceof UaException) ?
-            (UaException) throwable : new UaException(throwable);
+            (UaException) throwable :
+            new UaException(throwable);
 
         ResponseHeader responseHeader = new ResponseHeader(
             DateTime.now(),
             request.getRequestHeader().getRequestHandle(),
             exception.getStatusCode(),
-            null, null, null
+            null,
+            null,
+            null
         );
 
         return new ServiceFault(responseHeader);
@@ -127,7 +131,8 @@ public class ServiceRequest<ReqT extends UaRequestMessage, ResT extends UaRespon
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects
+            .toStringHelper(this)
             .add("requestId", requestId)
             .add("request", request.getClass().getSimpleName())
             .toString();

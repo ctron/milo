@@ -122,7 +122,10 @@ public class SubscriptionServices implements SubscriptionServiceSet {
                         availableSequenceNumbers = subscription.getAvailableSequenceNumbers();
 
                         if (request.getSendInitialValues()) {
-                            subscription.getMonitoredItems().values().stream()
+                            subscription
+                                .getMonitoredItems()
+                                .values()
+                                .stream()
                                 .filter(item -> item instanceof MonitoredDataItem)
                                 .map(item -> (MonitoredDataItem) item)
                                 .forEach(MonitoredDataItem::clearLastValue);
@@ -134,11 +137,13 @@ public class SubscriptionServices implements SubscriptionServiceSet {
             }
         }
 
-        service.setResponse(new TransferSubscriptionsResponse(
-            service.createResponseHeader(),
-            a(results, TransferResult.class),
-            new DiagnosticInfo[0]
-        ));
+        service.setResponse(
+            new TransferSubscriptionsResponse(
+                service.createResponseHeader(),
+                a(results, TransferResult.class),
+                new DiagnosticInfo[0]
+            )
+        );
     }
 
     private boolean sessionsHaveSameUser(Session s1, Session s2) {

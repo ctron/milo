@@ -42,9 +42,7 @@ public final class NumericRange {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("range", range)
-            .toString();
+        return MoreObjects.toStringHelper(this).add("range", range).toString();
     }
 
     private int getDimensionCount() {
@@ -159,7 +157,9 @@ public final class NumericRange {
         }
     }
 
-    public static Object writeToValueAtRange(Variant currentVariant, Variant updateVariant, NumericRange range) throws UaException {
+    public static Object writeToValueAtRange(Variant currentVariant,
+                                             Variant updateVariant,
+                                             NumericRange range) throws UaException {
         Object current = currentVariant.getValue();
         Object update = updateVariant.getValue();
 
@@ -174,7 +174,10 @@ public final class NumericRange {
         }
     }
 
-    private static Object writeToValueAtRange(Object current, Object update, NumericRange range, int dimension) throws UaException {
+    private static Object writeToValueAtRange(Object current,
+                                              Object update,
+                                              NumericRange range,
+                                              int dimension) throws UaException {
         int dimensionCount = range.getDimensionCount();
         Bounds bounds = range.getBounds(dimension);
         int low = bounds.low, high = bounds.high;
@@ -265,6 +268,5 @@ public final class NumericRange {
             return copy;
         }
     }
-
 
 }

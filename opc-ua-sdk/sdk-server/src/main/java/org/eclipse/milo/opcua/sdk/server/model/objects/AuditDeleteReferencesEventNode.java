@@ -28,17 +28,17 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 import org.eclipse.milo.opcua.stack.core.types.structured.DeleteReferencesItem;
 
 @UaObjectNode(typeName = "0:AuditDeleteReferencesEventType")
-public class AuditDeleteReferencesEventNode extends AuditNodeManagementEventNode implements AuditDeleteReferencesEventType {
+public class AuditDeleteReferencesEventNode extends AuditNodeManagementEventNode
+        implements AuditDeleteReferencesEventType {
 
-    public AuditDeleteReferencesEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditDeleteReferencesEventNode(UaNodeManager nodeManager,
+                                          NodeId nodeId,
+                                          QualifiedName browseName,
+                                          LocalizedText displayName,
+                                          Optional<LocalizedText> description,
+                                          Optional<UInteger> writeMask,
+                                          Optional<UInteger> userWriteMask,
+                                          UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -52,7 +52,9 @@ public class AuditDeleteReferencesEventNode extends AuditNodeManagementEventNode
 
     @Override
     public PropertyNode getReferencesToDeleteNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditDeleteReferencesEventType.REFERENCES_TO_DELETE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditDeleteReferencesEventType.REFERENCES_TO_DELETE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

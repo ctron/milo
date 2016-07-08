@@ -77,12 +77,12 @@ public class NamespaceManager {
     public void addNamespace(Namespace namespace) {
         Preconditions.checkNotNull(
             namespaceTable.getIndex(namespace.getNamespaceUri()),
-            "namespace must be registered prior to adding");
+            "namespace must be registered prior to adding"
+        );
 
         namespaces.put(namespace.getNamespaceIndex(), namespace);
 
-        logger.info("added namespace index={}, uri={}",
-            namespace.getNamespaceIndex(), namespace.getNamespaceUri());
+        logger.info("added namespace index={}, uri={}", namespace.getNamespaceIndex(), namespace.getNamespaceUri());
     }
 
     /**
@@ -100,8 +100,11 @@ public class NamespaceManager {
         T namespace = namespaceFunction.apply(namespaceIndex);
         namespaces.put(namespaceIndex, namespace);
 
-        logger.info("registered and added namespace index={}, uri={}",
-            namespace.getNamespaceIndex(), namespace.getNamespaceUri());
+        logger.info(
+            "registered and added namespace index={}, uri={}",
+            namespace.getNamespaceIndex(),
+            namespace.getNamespaceUri()
+        );
 
         return namespace;
     }
@@ -133,23 +136,25 @@ public class NamespaceManager {
         } else {
             UShort index = namespaceTable.getIndex(namespaceUri);
 
-            if (index == null) return Optional.empty();
-            else return Optional.of(createNodeId(index, identifier, type));
+            if (index == null)
+                return Optional.empty();
+            else
+                return Optional.of(createNodeId(index, identifier, type));
         }
     }
 
     private NodeId createNodeId(UShort namespaceIndex, Object identifier, IdType type) {
         switch (type) {
-            case Numeric:
-                return new NodeId(namespaceIndex, (UInteger) identifier);
-            case String:
-                return new NodeId(namespaceIndex, (String) identifier);
-            case Guid:
-                return new NodeId(namespaceIndex, (UUID) identifier);
-            case Opaque:
-                return new NodeId(namespaceIndex, (ByteString) identifier);
-            default:
-                throw new UaRuntimeException(StatusCodes.Bad_InternalError, "unhandled type: " + type);
+        case Numeric:
+            return new NodeId(namespaceIndex, (UInteger) identifier);
+        case String:
+            return new NodeId(namespaceIndex, (String) identifier);
+        case Guid:
+            return new NodeId(namespaceIndex, (UUID) identifier);
+        case Opaque:
+            return new NodeId(namespaceIndex, (ByteString) identifier);
+        default:
+            throw new UaRuntimeException(StatusCodes.Bad_InternalError, "unhandled type: " + type);
         }
     }
 

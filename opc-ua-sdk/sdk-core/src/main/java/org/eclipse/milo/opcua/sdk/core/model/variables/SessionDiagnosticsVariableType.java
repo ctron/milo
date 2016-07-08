@@ -19,9 +19,7 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 import org.eclipse.milo.opcua.stack.core.types.structured.ApplicationDescription;
 import org.eclipse.milo.opcua.stack.core.types.structured.ServiceCounterDataType;
 
-
 public interface SessionDiagnosticsVariableType extends BaseDataVariableType {
-
 
     NodeId getSessionId();
 

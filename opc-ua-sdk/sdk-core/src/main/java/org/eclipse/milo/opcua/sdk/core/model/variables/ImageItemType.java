@@ -19,7 +19,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.structured.AxisInformation;
 
-
 public interface ImageItemType extends ArrayItemType {
 
     Property<AxisInformation> X_AXIS_DEFINITION = new BasicProperty<>(
@@ -35,7 +34,6 @@ public interface ImageItemType extends ArrayItemType {
         -1,
         AxisInformation.class
     );
-
 
     AxisInformation getXAxisDefinition();
 

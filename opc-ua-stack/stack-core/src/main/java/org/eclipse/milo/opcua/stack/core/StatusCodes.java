@@ -13,14 +13,12 @@
 
 package org.eclipse.milo.opcua.stack.core;
 
-
 import java.lang.reflect.Field;
 import java.util.Optional;
 
 import com.google.common.collect.ImmutableMap;
 import org.eclipse.milo.opcua.stack.core.types.builtin.StatusCode;
 import org.eclipse.milo.opcua.stack.core.util.annotations.Description;
-
 
 @SuppressWarnings("unused")
 public class StatusCodes {
@@ -37,14 +35,31 @@ public class StatusCodes {
                     String name = f.getName();
                     String desc = f.getAnnotation(Description.class).value();
 
-                    builder.put(code, new String[]{name, desc});
-                } catch (IllegalAccessException ignored) {
-                }
+                    builder.put(
+                        code,
+                        new String[]{
+                            name,
+                            desc
+                        }
+                    );
+                } catch (IllegalAccessException ignored) {}
             }
         }
 
-        builder.put(StatusCode.GOOD.getValue(), new String[]{"Good", "Good; unspecified."});
-        builder.put(StatusCode.BAD.getValue(), new String[]{"Bad", "Bad; unspecified."});
+        builder.put(
+            StatusCode.GOOD.getValue(),
+            new String[]{
+                "Good",
+                "Good; unspecified."
+            }
+        );
+        builder.put(
+            StatusCode.BAD.getValue(),
+            new String[]{
+                "Bad",
+                "Bad; unspecified."
+            }
+        );
 
         DESCRIPTIONS = builder.build();
     }

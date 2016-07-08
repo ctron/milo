@@ -42,7 +42,10 @@ public class SimpleAttributeOperand extends FilterOperand {
         this._indexRange = null;
     }
 
-    public SimpleAttributeOperand(NodeId _typeDefinitionId, QualifiedName[] _browsePath, UInteger _attributeId, String _indexRange) {
+    public SimpleAttributeOperand(NodeId _typeDefinitionId,
+                                  QualifiedName[] _browsePath,
+                                  UInteger _attributeId,
+                                  String _indexRange) {
         super();
         this._typeDefinitionId = _typeDefinitionId;
         this._browsePath = _browsePath;
@@ -50,23 +53,36 @@ public class SimpleAttributeOperand extends FilterOperand {
         this._indexRange = _indexRange;
     }
 
-    public NodeId getTypeDefinitionId() { return _typeDefinitionId; }
+    public NodeId getTypeDefinitionId() {
+        return _typeDefinitionId;
+    }
 
-    public QualifiedName[] getBrowsePath() { return _browsePath; }
+    public QualifiedName[] getBrowsePath() {
+        return _browsePath;
+    }
 
-    public UInteger getAttributeId() { return _attributeId; }
+    public UInteger getAttributeId() {
+        return _attributeId;
+    }
 
-    public String getIndexRange() { return _indexRange; }
+    public String getIndexRange() {
+        return _indexRange;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(SimpleAttributeOperand simpleAttributeOperand, UaEncoder encoder) {
         encoder.encodeNodeId("TypeDefinitionId", simpleAttributeOperand._typeDefinitionId);
@@ -77,7 +93,8 @@ public class SimpleAttributeOperand extends FilterOperand {
 
     public static SimpleAttributeOperand decode(UaDecoder decoder) {
         NodeId _typeDefinitionId = decoder.decodeNodeId("TypeDefinitionId");
-        QualifiedName[] _browsePath = decoder.decodeArray("BrowsePath", decoder::decodeQualifiedName, QualifiedName.class);
+        QualifiedName[] _browsePath = decoder
+            .decodeArray("BrowsePath", decoder::decodeQualifiedName, QualifiedName.class);
         UInteger _attributeId = decoder.decodeUInt32("AttributeId");
         String _indexRange = decoder.decodeString("IndexRange");
 
@@ -85,8 +102,18 @@ public class SimpleAttributeOperand extends FilterOperand {
     }
 
     static {
-        DelegateRegistry.registerEncoder(SimpleAttributeOperand::encode, SimpleAttributeOperand.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(SimpleAttributeOperand::decode, SimpleAttributeOperand.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            SimpleAttributeOperand::encode,
+            SimpleAttributeOperand.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            SimpleAttributeOperand::decode,
+            SimpleAttributeOperand.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

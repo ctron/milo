@@ -99,7 +99,12 @@ public class ArrayUtil {
 
         while (type.isArray()) {
             int length = array != null ? Array.getLength(array) : 0;
-            dimensions = Ints.concat(dimensions, new int[]{length});
+            dimensions = Ints.concat(
+                dimensions,
+                new int[]{
+                    length
+                }
+            );
 
             array = length > 0 ? Array.get(array, 0) : null;
             type = type.getComponentType();
@@ -117,7 +122,6 @@ public class ArrayUtil {
 
         return type;
     }
-
 
     private static int length(int[] tail) {
         int product = 1;

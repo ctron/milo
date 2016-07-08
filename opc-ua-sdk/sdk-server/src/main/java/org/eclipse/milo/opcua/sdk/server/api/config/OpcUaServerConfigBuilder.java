@@ -44,12 +44,10 @@ public class OpcUaServerConfigBuilder extends UaTcpStackServerConfigBuilder {
     private EnumSet<SecurityPolicy> securityPolicies = EnumSet.of(SecurityPolicy.None);
     private IdentityValidator identityValidator = new AnonymousIdentityValidator();
 
-    private BuildInfo buildInfo = new BuildInfo(
-        "", "", "", "", "", DateTime.MIN_VALUE);
+    private BuildInfo buildInfo = new BuildInfo("", "", "", "", "", DateTime.MIN_VALUE);
 
-    private OpcUaServerConfigLimits limits =
-        new OpcUaServerConfigLimits() {
-        };
+    private OpcUaServerConfigLimits limits = new OpcUaServerConfigLimits() {
+    };
 
     public OpcUaServerConfigBuilder setHostname(String hostname) {
         this.hostname = hostname;
@@ -169,8 +167,7 @@ public class OpcUaServerConfigBuilder extends UaTcpStackServerConfigBuilder {
 
     private static String getDefaultHostname() {
         try {
-            return System.getProperty("hostname",
-                InetAddress.getLocalHost().getHostName());
+            return System.getProperty("hostname", InetAddress.getLocalHost().getHostName());
         } catch (UnknownHostException e) {
             return "localhost";
         }

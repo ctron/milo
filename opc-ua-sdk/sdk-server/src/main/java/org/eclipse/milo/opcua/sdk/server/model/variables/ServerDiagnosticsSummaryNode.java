@@ -32,33 +32,44 @@ import org.eclipse.milo.opcua.stack.core.types.structured.ServerDiagnosticsSumma
 @UaVariableNode(typeName = "0:ServerDiagnosticsSummaryType")
 public class ServerDiagnosticsSummaryNode extends BaseDataVariableNode implements ServerDiagnosticsSummaryType {
 
-    public ServerDiagnosticsSummaryNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public ServerDiagnosticsSummaryNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public ServerDiagnosticsSummaryNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public ServerDiagnosticsSummaryNode(UaNodeManager nodeManager,
+                                        NodeId nodeId,
+                                        QualifiedName browseName,
+                                        LocalizedText displayName,
+                                        Optional<LocalizedText> description,
+                                        Optional<UInteger> writeMask,
+                                        Optional<UInteger> userWriteMask,
+                                        DataValue value,
+                                        NodeId dataType,
+                                        Integer valueRank,
+                                        Optional<UInteger[]> arrayDimensions,
+                                        UByte accessLevel,
+                                        UByte userAccessLevel,
+                                        Optional<Double> minimumSamplingInterval,
+                                        boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
 
     @Override
@@ -97,8 +108,7 @@ public class ServerDiagnosticsSummaryNode extends BaseDataVariableNode implement
 
     @Override
     public void setServerViewCount(UInteger value) {
-        getVariableComponent("ServerViewCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ServerViewCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -117,8 +127,7 @@ public class ServerDiagnosticsSummaryNode extends BaseDataVariableNode implement
 
     @Override
     public void setCurrentSessionCount(UInteger value) {
-        getVariableComponent("CurrentSessionCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CurrentSessionCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -137,8 +146,7 @@ public class ServerDiagnosticsSummaryNode extends BaseDataVariableNode implement
 
     @Override
     public void setCumulatedSessionCount(UInteger value) {
-        getVariableComponent("CumulatedSessionCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CumulatedSessionCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -177,8 +185,7 @@ public class ServerDiagnosticsSummaryNode extends BaseDataVariableNode implement
 
     @Override
     public void setRejectedSessionCount(UInteger value) {
-        getVariableComponent("RejectedSessionCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("RejectedSessionCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -197,8 +204,7 @@ public class ServerDiagnosticsSummaryNode extends BaseDataVariableNode implement
 
     @Override
     public void setSessionTimeoutCount(UInteger value) {
-        getVariableComponent("SessionTimeoutCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SessionTimeoutCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -217,8 +223,7 @@ public class ServerDiagnosticsSummaryNode extends BaseDataVariableNode implement
 
     @Override
     public void setSessionAbortCount(UInteger value) {
-        getVariableComponent("SessionAbortCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SessionAbortCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -237,8 +242,7 @@ public class ServerDiagnosticsSummaryNode extends BaseDataVariableNode implement
 
     @Override
     public void setPublishingIntervalCount(UInteger value) {
-        getVariableComponent("PublishingIntervalCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("PublishingIntervalCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -257,8 +261,7 @@ public class ServerDiagnosticsSummaryNode extends BaseDataVariableNode implement
 
     @Override
     public void setCurrentSubscriptionCount(UInteger value) {
-        getVariableComponent("CurrentSubscriptionCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CurrentSubscriptionCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -317,8 +320,7 @@ public class ServerDiagnosticsSummaryNode extends BaseDataVariableNode implement
 
     @Override
     public void setRejectedRequestsCount(UInteger value) {
-        getVariableComponent("RejectedRequestsCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("RejectedRequestsCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

@@ -31,35 +31,45 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaVariableNode(typeName = "0:DataTypeDescriptionType")
 public class DataTypeDescriptionNode extends BaseDataVariableNode implements DataTypeDescriptionType {
 
-    public DataTypeDescriptionNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public DataTypeDescriptionNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public DataTypeDescriptionNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public DataTypeDescriptionNode(UaNodeManager nodeManager,
+                                   NodeId nodeId,
+                                   QualifiedName browseName,
+                                   LocalizedText displayName,
+                                   Optional<LocalizedText> description,
+                                   Optional<UInteger> writeMask,
+                                   Optional<UInteger> userWriteMask,
+                                   DataValue value,
+                                   NodeId dataType,
+                                   Integer valueRank,
+                                   Optional<UInteger[]> arrayDimensions,
+                                   UByte accessLevel,
+                                   UByte userAccessLevel,
+                                   Optional<Double> minimumSamplingInterval,
+                                   boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
-
 
     @Override
     public String getDataTypeVersion() {
@@ -70,7 +80,9 @@ public class DataTypeDescriptionNode extends BaseDataVariableNode implements Dat
 
     @Override
     public PropertyNode getDataTypeVersionNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(DataTypeDescriptionType.DATA_TYPE_VERSION.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            DataTypeDescriptionType.DATA_TYPE_VERSION.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -89,7 +101,9 @@ public class DataTypeDescriptionNode extends BaseDataVariableNode implements Dat
 
     @Override
     public PropertyNode getDictionaryFragmentNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(DataTypeDescriptionType.DICTIONARY_FRAGMENT.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            DataTypeDescriptionType.DICTIONARY_FRAGMENT.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

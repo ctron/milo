@@ -41,23 +41,38 @@ public class RegisterServerRequest implements UaRequestMessage {
         this._server = _server;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public RegisteredServer getServer() { return _server; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public RegisteredServer getServer() {
+        return _server;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(RegisterServerRequest registerServerRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", registerServerRequest._requestHeader != null ? registerServerRequest._requestHeader : new RequestHeader());
-        encoder.encodeSerializable("Server", registerServerRequest._server != null ? registerServerRequest._server : new RegisteredServer());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            registerServerRequest._requestHeader != null ? registerServerRequest._requestHeader : new RequestHeader()
+        );
+        encoder.encodeSerializable(
+            "Server",
+            registerServerRequest._server != null ? registerServerRequest._server : new RegisteredServer()
+        );
     }
 
     public static RegisterServerRequest decode(UaDecoder decoder) {
@@ -68,8 +83,18 @@ public class RegisterServerRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(RegisterServerRequest::encode, RegisterServerRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(RegisterServerRequest::decode, RegisterServerRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            RegisterServerRequest::encode,
+            RegisterServerRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            RegisterServerRequest::decode,
+            RegisterServerRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

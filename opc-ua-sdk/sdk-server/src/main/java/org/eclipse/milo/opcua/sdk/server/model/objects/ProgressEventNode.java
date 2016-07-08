@@ -30,15 +30,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UShort;
 @UaObjectNode(typeName = "0:ProgressEventType")
 public class ProgressEventNode extends BaseEventNode implements ProgressEventType {
 
-    public ProgressEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ProgressEventNode(UaNodeManager nodeManager,
+                             NodeId nodeId,
+                             QualifiedName browseName,
+                             LocalizedText displayName,
+                             Optional<LocalizedText> description,
+                             Optional<UInteger> writeMask,
+                             Optional<UInteger> userWriteMask,
+                             UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }

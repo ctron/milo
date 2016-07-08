@@ -42,35 +42,61 @@ public class OpenSecureChannelResponse implements UaResponseMessage {
         this._serverNonce = null;
     }
 
-    public OpenSecureChannelResponse(ResponseHeader _responseHeader, UInteger _serverProtocolVersion, ChannelSecurityToken _securityToken, ByteString _serverNonce) {
+    public OpenSecureChannelResponse(ResponseHeader _responseHeader,
+                                     UInteger _serverProtocolVersion,
+                                     ChannelSecurityToken _securityToken,
+                                     ByteString _serverNonce) {
         this._responseHeader = _responseHeader;
         this._serverProtocolVersion = _serverProtocolVersion;
         this._securityToken = _securityToken;
         this._serverNonce = _serverNonce;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public UInteger getServerProtocolVersion() { return _serverProtocolVersion; }
+    public UInteger getServerProtocolVersion() {
+        return _serverProtocolVersion;
+    }
 
-    public ChannelSecurityToken getSecurityToken() { return _securityToken; }
+    public ChannelSecurityToken getSecurityToken() {
+        return _securityToken;
+    }
 
-    public ByteString getServerNonce() { return _serverNonce; }
+    public ByteString getServerNonce() {
+        return _serverNonce;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(OpenSecureChannelResponse openSecureChannelResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", openSecureChannelResponse._responseHeader != null ? openSecureChannelResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            openSecureChannelResponse._responseHeader != null ?
+                openSecureChannelResponse._responseHeader :
+                new ResponseHeader()
+        );
         encoder.encodeUInt32("ServerProtocolVersion", openSecureChannelResponse._serverProtocolVersion);
-        encoder.encodeSerializable("SecurityToken", openSecureChannelResponse._securityToken != null ? openSecureChannelResponse._securityToken : new ChannelSecurityToken());
+        encoder.encodeSerializable(
+            "SecurityToken",
+            openSecureChannelResponse._securityToken != null ?
+                openSecureChannelResponse._securityToken :
+                new ChannelSecurityToken()
+        );
         encoder.encodeByteString("ServerNonce", openSecureChannelResponse._serverNonce);
     }
 
@@ -84,8 +110,18 @@ public class OpenSecureChannelResponse implements UaResponseMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(OpenSecureChannelResponse::encode, OpenSecureChannelResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(OpenSecureChannelResponse::decode, OpenSecureChannelResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            OpenSecureChannelResponse::encode,
+            OpenSecureChannelResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            OpenSecureChannelResponse::decode,
+            OpenSecureChannelResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

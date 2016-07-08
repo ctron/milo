@@ -45,7 +45,16 @@ public class VariableTypeAttributes extends NodeAttributes {
         this._isAbstract = null;
     }
 
-    public VariableTypeAttributes(UInteger _specifiedAttributes, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask, Variant _value, NodeId _dataType, Integer _valueRank, UInteger[] _arrayDimensions, Boolean _isAbstract) {
+    public VariableTypeAttributes(UInteger _specifiedAttributes,
+                                  LocalizedText _displayName,
+                                  LocalizedText _description,
+                                  UInteger _writeMask,
+                                  UInteger _userWriteMask,
+                                  Variant _value,
+                                  NodeId _dataType,
+                                  Integer _valueRank,
+                                  UInteger[] _arrayDimensions,
+                                  Boolean _isAbstract) {
         super(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask);
         this._value = _value;
         this._dataType = _dataType;
@@ -54,25 +63,40 @@ public class VariableTypeAttributes extends NodeAttributes {
         this._isAbstract = _isAbstract;
     }
 
-    public Variant getValue() { return _value; }
+    public Variant getValue() {
+        return _value;
+    }
 
-    public NodeId getDataType() { return _dataType; }
+    public NodeId getDataType() {
+        return _dataType;
+    }
 
-    public Integer getValueRank() { return _valueRank; }
+    public Integer getValueRank() {
+        return _valueRank;
+    }
 
-    public UInteger[] getArrayDimensions() { return _arrayDimensions; }
+    public UInteger[] getArrayDimensions() {
+        return _arrayDimensions;
+    }
 
-    public Boolean getIsAbstract() { return _isAbstract; }
+    public Boolean getIsAbstract() {
+        return _isAbstract;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(VariableTypeAttributes variableTypeAttributes, UaEncoder encoder) {
         encoder.encodeUInt32("SpecifiedAttributes", variableTypeAttributes._specifiedAttributes);
@@ -99,12 +123,33 @@ public class VariableTypeAttributes extends NodeAttributes {
         UInteger[] _arrayDimensions = decoder.decodeArray("ArrayDimensions", decoder::decodeUInt32, UInteger.class);
         Boolean _isAbstract = decoder.decodeBoolean("IsAbstract");
 
-        return new VariableTypeAttributes(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask, _value, _dataType, _valueRank, _arrayDimensions, _isAbstract);
+        return new VariableTypeAttributes(
+            _specifiedAttributes,
+            _displayName,
+            _description,
+            _writeMask,
+            _userWriteMask,
+            _value,
+            _dataType,
+            _valueRank,
+            _arrayDimensions,
+            _isAbstract
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(VariableTypeAttributes::encode, VariableTypeAttributes.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(VariableTypeAttributes::decode, VariableTypeAttributes.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            VariableTypeAttributes::encode,
+            VariableTypeAttributes.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            VariableTypeAttributes::decode,
+            VariableTypeAttributes.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

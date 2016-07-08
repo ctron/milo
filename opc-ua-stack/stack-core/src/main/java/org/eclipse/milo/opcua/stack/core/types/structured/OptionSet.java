@@ -42,19 +42,28 @@ public class OptionSet implements UaStructure {
         this._validBits = _validBits;
     }
 
-    public ByteString getValue() { return _value; }
+    public ByteString getValue() {
+        return _value;
+    }
 
-    public ByteString getValidBits() { return _validBits; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public ByteString getValidBits() {
+        return _validBits;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(OptionSet optionSet, UaEncoder encoder) {
         encoder.encodeByteString("Value", optionSet._value);

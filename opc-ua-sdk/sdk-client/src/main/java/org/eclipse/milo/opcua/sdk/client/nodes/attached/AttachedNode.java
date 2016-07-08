@@ -81,27 +81,30 @@ public class AttachedNode implements UaNode {
     }
 
     protected CompletableFuture<DataValue> readAttribute(AttributeId attributeId) {
-        Optional<DataValue> opt =
-            AttributeId.BASE_NODE_ATTRIBUTES.contains(attributeId) ?
-                nodeCache.getAttribute(nodeId, attributeId) : Optional.empty();
+        Optional<DataValue> opt = AttributeId.BASE_NODE_ATTRIBUTES.contains(attributeId) ?
+            nodeCache.getAttribute(nodeId, attributeId) :
+            Optional.empty();
 
-        return opt.map(CompletableFuture::completedFuture).orElseGet(() -> {
-            ReadValueId readValueId = new ReadValueId(
-                nodeId, attributeId.uid(), null, QualifiedName.NULL_VALUE);
+        return opt.map(CompletableFuture::completedFuture).orElseGet(
+            () -> {
+                ReadValueId readValueId = new ReadValueId(nodeId, attributeId.uid(), null, QualifiedName.NULL_VALUE);
 
-            CompletableFuture<ReadResponse> future =
-                client.read(0.0, TimestampsToReturn.Neither, newArrayList(readValueId));
+                CompletableFuture<ReadResponse> future = client
+                    .read(0.0, TimestampsToReturn.Neither, newArrayList(readValueId));
 
-            return future.thenApply(response -> {
-                DataValue value = response.getResults()[0];
+                return future.thenApply(
+                    response -> {
+                        DataValue value = response.getResults()[0];
 
-                if (attributeId != AttributeId.Value) {
-                    nodeCache.putAttribute(nodeId, attributeId, value);
-                }
+                        if (attributeId != AttributeId.Value) {
+                            nodeCache.putAttribute(nodeId, attributeId, value);
+                        }
 
-                return value;
-            });
-        });
+                        return value;
+                    }
+                );
+            }
+        );
     }
 
     @Override
@@ -140,18 +143,19 @@ public class AttachedNode implements UaNode {
     }
 
     protected CompletableFuture<StatusCode> writeAttribute(AttributeId attributeId, DataValue value) {
-        WriteValue writeValue = new WriteValue(
-            nodeId, attributeId.uid(), null, value);
+        WriteValue writeValue = new WriteValue(nodeId, attributeId.uid(), null, value);
 
-        return client.write(newArrayList(writeValue)).thenApply(response -> {
-            StatusCode statusCode = response.getResults()[0];
+        return client.write(newArrayList(writeValue)).thenApply(
+            response -> {
+                StatusCode statusCode = response.getResults()[0];
 
-            if (statusCode.isGood()) {
-                nodeCache.invalidate(nodeId, attributeId);
+                if (statusCode.isGood()) {
+                    nodeCache.invalidate(nodeId, attributeId);
+                }
+
+                return statusCode;
             }
-
-            return statusCode;
-        });
+        );
     }
 
 }

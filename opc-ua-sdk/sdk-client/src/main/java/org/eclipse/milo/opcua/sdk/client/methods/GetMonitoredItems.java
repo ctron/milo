@@ -45,18 +45,20 @@ public class GetMonitoredItems extends AbstractUaMethod {
             new Variant(subscriptionId)
         };
 
-        return invoke(inputArguments).thenCompose(outputArguments -> {
-            try {
-                UInteger[] v0 = (UInteger[]) outputArguments[0].getValue();
-                UInteger[] v1 = (UInteger[]) outputArguments[1].getValue();
+        return invoke(inputArguments).thenCompose(
+            outputArguments -> {
+                try {
+                    UInteger[] v0 = (UInteger[]) outputArguments[0].getValue();
+                    UInteger[] v1 = (UInteger[]) outputArguments[1].getValue();
 
-                return CompletableFuture.completedFuture(new Tuple2<>(v0, v1));
-            } catch (Throwable t) {
-                CompletableFuture<Tuple2<UInteger[], UInteger[]>> f = new CompletableFuture<>();
-                f.completeExceptionally(new UaException(t));
-                return f;
+                    return CompletableFuture.completedFuture(new Tuple2<>(v0, v1));
+                } catch (Throwable t) {
+                    CompletableFuture<Tuple2<UInteger[], UInteger[]>> f = new CompletableFuture<>();
+                    f.completeExceptionally(new UaException(t));
+                    return f;
+                }
             }
-        });
+        );
     }
 
 }

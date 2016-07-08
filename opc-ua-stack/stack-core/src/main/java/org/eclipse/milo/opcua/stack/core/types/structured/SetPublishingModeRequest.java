@@ -39,30 +39,48 @@ public class SetPublishingModeRequest implements UaRequestMessage {
         this._subscriptionIds = null;
     }
 
-    public SetPublishingModeRequest(RequestHeader _requestHeader, Boolean _publishingEnabled, UInteger[] _subscriptionIds) {
+    public SetPublishingModeRequest(RequestHeader _requestHeader,
+                                    Boolean _publishingEnabled,
+                                    UInteger[] _subscriptionIds) {
         this._requestHeader = _requestHeader;
         this._publishingEnabled = _publishingEnabled;
         this._subscriptionIds = _subscriptionIds;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public Boolean getPublishingEnabled() { return _publishingEnabled; }
+    public Boolean getPublishingEnabled() {
+        return _publishingEnabled;
+    }
 
-    public UInteger[] getSubscriptionIds() { return _subscriptionIds; }
+    public UInteger[] getSubscriptionIds() {
+        return _subscriptionIds;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(SetPublishingModeRequest setPublishingModeRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", setPublishingModeRequest._requestHeader != null ? setPublishingModeRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            setPublishingModeRequest._requestHeader != null ?
+                setPublishingModeRequest._requestHeader :
+                new RequestHeader()
+        );
         encoder.encodeBoolean("PublishingEnabled", setPublishingModeRequest._publishingEnabled);
         encoder.encodeArray("SubscriptionIds", setPublishingModeRequest._subscriptionIds, encoder::encodeUInt32);
     }
@@ -76,8 +94,18 @@ public class SetPublishingModeRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(SetPublishingModeRequest::encode, SetPublishingModeRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(SetPublishingModeRequest::decode, SetPublishingModeRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            SetPublishingModeRequest::encode,
+            SetPublishingModeRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            SetPublishingModeRequest::decode,
+            SetPublishingModeRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

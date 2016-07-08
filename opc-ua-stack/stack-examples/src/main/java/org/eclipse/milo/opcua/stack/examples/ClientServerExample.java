@@ -63,25 +63,29 @@ public class ClientServerExample {
 
             CompletableFuture<TestStackResponse> future = client.testStack(i);
 
-            future.whenComplete((response, ex) -> {
-                if (response != null) {
-                    logger.info("Received TestStackResponse output={}", response.getOutput());
-                } else {
-                    logger.error("Error: {}", ex.getMessage(), ex);
+            future.whenComplete(
+                (response, ex) -> {
+                    if (response != null) {
+                        logger.info("Received TestStackResponse output={}", response.getOutput());
+                    } else {
+                        logger.error("Error: {}", ex.getMessage(), ex);
+                    }
                 }
-            });
+            );
 
             futures.add(future);
         }
 
         CompletableFuture<?> all = CompletableFuture.allOf(futures.toArray(new CompletableFuture<?>[futures.size()]));
 
-        all.whenComplete((r, ex) -> {
-            client.disconnect();
-            server.shutdown();
+        all.whenComplete(
+            (r, ex) -> {
+                client.disconnect();
+                server.shutdown();
 
-            Stack.releaseSharedResources();
-        });
+                Stack.releaseSharedResources();
+            }
+        );
     }
 
     private static class KeyStoreLoader {
@@ -129,6 +133,5 @@ public class ClientServerExample {
         }
 
     }
-
 
 }

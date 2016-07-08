@@ -43,19 +43,28 @@ public class MonitoredItemNotification implements UaStructure {
         this._value = _value;
     }
 
-    public UInteger getClientHandle() { return _clientHandle; }
+    public UInteger getClientHandle() {
+        return _clientHandle;
+    }
 
-    public DataValue getValue() { return _value; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public DataValue getValue() {
+        return _value;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(MonitoredItemNotification monitoredItemNotification, UaEncoder encoder) {
         encoder.encodeUInt32("ClientHandle", monitoredItemNotification._clientHandle);
@@ -70,8 +79,18 @@ public class MonitoredItemNotification implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(MonitoredItemNotification::encode, MonitoredItemNotification.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(MonitoredItemNotification::decode, MonitoredItemNotification.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            MonitoredItemNotification::encode,
+            MonitoredItemNotification.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            MonitoredItemNotification::decode,
+            MonitoredItemNotification.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

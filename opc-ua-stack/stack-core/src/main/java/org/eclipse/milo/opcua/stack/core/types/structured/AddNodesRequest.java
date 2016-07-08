@@ -41,22 +41,34 @@ public class AddNodesRequest implements UaRequestMessage {
         this._nodesToAdd = _nodesToAdd;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public AddNodesItem[] getNodesToAdd() { return _nodesToAdd; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public AddNodesItem[] getNodesToAdd() {
+        return _nodesToAdd;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(AddNodesRequest addNodesRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", addNodesRequest._requestHeader != null ? addNodesRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            addNodesRequest._requestHeader != null ? addNodesRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeArray("NodesToAdd", addNodesRequest._nodesToAdd, encoder::encodeSerializable);
     }
 
@@ -68,8 +80,10 @@ public class AddNodesRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(AddNodesRequest::encode, AddNodesRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(AddNodesRequest::decode, AddNodesRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(AddNodesRequest::encode, AddNodesRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(AddNodesRequest::decode, AddNodesRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

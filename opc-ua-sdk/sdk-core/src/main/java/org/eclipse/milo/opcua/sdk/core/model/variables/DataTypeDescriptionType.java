@@ -19,7 +19,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.ByteString;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 
-
 public interface DataTypeDescriptionType extends BaseDataVariableType {
 
     Property<String> DATA_TYPE_VERSION = new BasicProperty<>(
@@ -35,7 +34,6 @@ public interface DataTypeDescriptionType extends BaseDataVariableType {
         -1,
         ByteString.class
     );
-
 
     String getDataTypeVersion();
 

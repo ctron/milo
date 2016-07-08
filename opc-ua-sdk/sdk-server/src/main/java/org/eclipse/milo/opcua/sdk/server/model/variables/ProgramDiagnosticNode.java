@@ -35,39 +35,49 @@ import org.eclipse.milo.opcua.stack.core.types.structured.StatusResult;
 @UaVariableNode(typeName = "0:ProgramDiagnosticType")
 public class ProgramDiagnosticNode extends BaseDataVariableNode implements ProgramDiagnosticType {
 
-    public ProgramDiagnosticNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public ProgramDiagnosticNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public ProgramDiagnosticNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public ProgramDiagnosticNode(UaNodeManager nodeManager,
+                                 NodeId nodeId,
+                                 QualifiedName browseName,
+                                 LocalizedText displayName,
+                                 Optional<LocalizedText> description,
+                                 Optional<UInteger> writeMask,
+                                 Optional<UInteger> userWriteMask,
+                                 DataValue value,
+                                 NodeId dataType,
+                                 Integer valueRank,
+                                 Optional<UInteger[]> arrayDimensions,
+                                 UByte accessLevel,
+                                 UByte userAccessLevel,
+                                 Optional<Double> minimumSamplingInterval,
+                                 boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
 
     @Override
     public DataValue getValue() {
-        ProgramDiagnosticDataType value = new ProgramDiagnosticDataType(
-        );
+        ProgramDiagnosticDataType value = new ProgramDiagnosticDataType();
 
         return new DataValue(new Variant(value));
     }
@@ -119,7 +129,9 @@ public class ProgramDiagnosticNode extends BaseDataVariableNode implements Progr
 
     @Override
     public PropertyNode getInvocationCreationTimeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ProgramDiagnosticType.INVOCATION_CREATION_TIME.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ProgramDiagnosticType.INVOCATION_CREATION_TIME.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -138,7 +150,9 @@ public class ProgramDiagnosticNode extends BaseDataVariableNode implements Progr
 
     @Override
     public PropertyNode getLastTransitionTimeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ProgramDiagnosticType.LAST_TRANSITION_TIME.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ProgramDiagnosticType.LAST_TRANSITION_TIME.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -176,7 +190,9 @@ public class ProgramDiagnosticNode extends BaseDataVariableNode implements Progr
 
     @Override
     public PropertyNode getLastMethodSessionIdNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ProgramDiagnosticType.LAST_METHOD_SESSION_ID.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ProgramDiagnosticType.LAST_METHOD_SESSION_ID.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -195,7 +211,9 @@ public class ProgramDiagnosticNode extends BaseDataVariableNode implements Progr
 
     @Override
     public PropertyNode getLastMethodInputArgumentsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ProgramDiagnosticType.LAST_METHOD_INPUT_ARGUMENTS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ProgramDiagnosticType.LAST_METHOD_INPUT_ARGUMENTS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -214,7 +232,9 @@ public class ProgramDiagnosticNode extends BaseDataVariableNode implements Progr
 
     @Override
     public PropertyNode getLastMethodOutputArgumentsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ProgramDiagnosticType.LAST_METHOD_OUTPUT_ARGUMENTS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ProgramDiagnosticType.LAST_METHOD_OUTPUT_ARGUMENTS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -233,7 +253,9 @@ public class ProgramDiagnosticNode extends BaseDataVariableNode implements Progr
 
     @Override
     public PropertyNode getLastMethodCallTimeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ProgramDiagnosticType.LAST_METHOD_CALL_TIME.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ProgramDiagnosticType.LAST_METHOD_CALL_TIME.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -252,7 +274,9 @@ public class ProgramDiagnosticNode extends BaseDataVariableNode implements Progr
 
     @Override
     public PropertyNode getLastMethodReturnStatusNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ProgramDiagnosticType.LAST_METHOD_RETURN_STATUS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ProgramDiagnosticType.LAST_METHOD_RETURN_STATUS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

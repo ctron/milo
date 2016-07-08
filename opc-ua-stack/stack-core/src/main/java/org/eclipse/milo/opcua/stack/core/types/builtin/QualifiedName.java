@@ -95,10 +95,7 @@ public final class QualifiedName {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("name", name)
-            .add("namespaceIndex", namespaceIndex)
-            .toString();
+        return MoreObjects.toStringHelper(this).add("name", name).add("namespaceIndex", namespaceIndex).toString();
     }
 
     public String toParseableString() {

@@ -38,17 +38,24 @@ public class UserIdentityToken implements UaStructure {
         this._policyId = _policyId;
     }
 
-    public String getPolicyId() { return _policyId; }
+    public String getPolicyId() {
+        return _policyId;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(UserIdentityToken userIdentityToken, UaEncoder encoder) {
         encoder.encodeString("PolicyId", userIdentityToken._policyId);
@@ -61,8 +68,10 @@ public class UserIdentityToken implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(UserIdentityToken::encode, UserIdentityToken.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(UserIdentityToken::decode, UserIdentityToken.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(UserIdentityToken::encode, UserIdentityToken.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(UserIdentityToken::decode, UserIdentityToken.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

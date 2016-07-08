@@ -132,23 +132,22 @@ public class TestNamespace implements Namespace {
     }
 
     @Override
-    public void read(ReadContext context, Double maxAge, TimestampsToReturn timestamps, List<ReadValueId> readValueIds) {
+    public void read(ReadContext context,
+                     Double maxAge,
+                     TimestampsToReturn timestamps,
+                     List<ReadValueId> readValueIds) {
         List<DataValue> results = Lists.newArrayListWithCapacity(readValueIds.size());
 
         for (ReadValueId id : readValueIds) {
             UaNode node = nodeManager.get(id.getNodeId());
 
             if (node != null) {
-                DataValue value = node.readAttribute(
-                    id.getAttributeId().intValue(),
-                    timestamps,
-                    id.getIndexRange());
+                DataValue value = node.readAttribute(id.getAttributeId().intValue(), timestamps, id.getIndexRange());
 
                 if (logger.isTraceEnabled()) {
                     Variant variant = value.getValue();
                     Object o = variant != null ? variant.getValue() : null;
-                    logger.trace("Read value={} from attributeId={} of {}",
-                        o, id.getAttributeId(), id.getNodeId());
+                    logger.trace("Read value={} from attributeId={} of {}", o, id.getAttributeId(), id.getNodeId());
                 }
 
                 results.add(value);
@@ -166,20 +165,26 @@ public class TestNamespace implements Namespace {
 
         for (WriteValue writeValue : writeValues) {
             try {
-                UaNode node = nodeManager.getNode(writeValue.getNodeId())
+                UaNode node = nodeManager
+                    .getNode(writeValue.getNodeId())
                     .orElseThrow(() -> new UaException(StatusCodes.Bad_NodeIdUnknown));
 
                 node.writeAttribute(
                     server.getNamespaceManager(),
                     writeValue.getAttributeId().intValue(),
                     writeValue.getValue(),
-                    writeValue.getIndexRange());
+                    writeValue.getIndexRange()
+                );
 
                 if (logger.isTraceEnabled()) {
                     Variant variant = writeValue.getValue().getValue();
                     Object o = variant != null ? variant.getValue() : null;
-                    logger.trace("Wrote value={} to attributeId={} of {}",
-                        o, writeValue.getAttributeId(), writeValue.getNodeId());
+                    logger.trace(
+                        "Wrote value={} to attributeId={} of {}",
+                        o,
+                        writeValue.getAttributeId(),
+                        writeValue.getNodeId()
+                    );
                 }
 
                 results.add(StatusCode.GOOD);
@@ -223,27 +228,120 @@ public class TestNamespace implements Namespace {
     }
 
     private static final Object[][] STATIC_SCALAR_NODES = new Object[][]{
-        {"Bool", Identifiers.Boolean, new Variant(false)},
-        {"Byte", Identifiers.Byte, new Variant(ubyte(0x00))},
-        {"ByteString", Identifiers.ByteString, new Variant(new ByteString(new byte[]{0x01, 0x02, 0x03, 0x04}))},
-        {"DateTime", Identifiers.DateTime, new Variant(DateTime.now())},
-        {"Double", Identifiers.Double, new Variant(3.14d)},
-        {"Duration", Identifiers.Duration, new Variant(1.0)},
-        {"Float", Identifiers.Float, new Variant(3.14f)},
-        {"Guid", Identifiers.Guid, new Variant(UUID.randomUUID())},
-        {"Int16", Identifiers.Int16, new Variant((short) 16)},
-        {"Int32", Identifiers.Int32, new Variant(32)},
-        {"Int64", Identifiers.Int64, new Variant(64L)},
-        {"LocalizedText", Identifiers.LocalizedText, new Variant(LocalizedText.english("localized text"))},
-        {"NodeId", Identifiers.NodeId, new Variant(new NodeId(1234, "abcd"))},
-        {"QualifiedName", Identifiers.QualifiedName, new Variant(new QualifiedName(1234, "defg"))},
-        {"SByte", Identifiers.SByte, new Variant((byte) 0x00)},
-        {"String", Identifiers.String, new Variant("string value")},
-        {"UtcTime", Identifiers.UtcTime, new Variant(DateTime.now())},
-        {"UInt16", Identifiers.UInt16, new Variant(ushort(16))},
-        {"UInt32", Identifiers.UInt32, new Variant(uint(32))},
-        {"UInt64", Identifiers.UInt64, new Variant(ulong(64L))},
-        {"XmlElement", Identifiers.XmlElement, new Variant(new XmlElement("<a>hello</a>"))},
+        {
+            "Bool",
+            Identifiers.Boolean,
+            new Variant(false)
+        },
+        {
+            "Byte",
+            Identifiers.Byte,
+            new Variant(ubyte(0x00))
+        },
+        {
+            "ByteString",
+            Identifiers.ByteString,
+            new Variant(
+                new ByteString(
+                    new byte[]{
+                        0x01,
+                        0x02,
+                        0x03,
+                        0x04
+                    }
+                )
+            )
+        },
+        {
+            "DateTime",
+            Identifiers.DateTime,
+            new Variant(DateTime.now())
+        },
+        {
+            "Double",
+            Identifiers.Double,
+            new Variant(3.14d)
+        },
+        {
+            "Duration",
+            Identifiers.Duration,
+            new Variant(1.0)
+        },
+        {
+            "Float",
+            Identifiers.Float,
+            new Variant(3.14f)
+        },
+        {
+            "Guid",
+            Identifiers.Guid,
+            new Variant(UUID.randomUUID())
+        },
+        {
+            "Int16",
+            Identifiers.Int16,
+            new Variant((short) 16)
+        },
+        {
+            "Int32",
+            Identifiers.Int32,
+            new Variant(32)
+        },
+        {
+            "Int64",
+            Identifiers.Int64,
+            new Variant(64L)
+        },
+        {
+            "LocalizedText",
+            Identifiers.LocalizedText,
+            new Variant(LocalizedText.english("localized text"))
+        },
+        {
+            "NodeId",
+            Identifiers.NodeId,
+            new Variant(new NodeId(1234, "abcd"))
+        },
+        {
+            "QualifiedName",
+            Identifiers.QualifiedName,
+            new Variant(new QualifiedName(1234, "defg"))
+        },
+        {
+            "SByte",
+            Identifiers.SByte,
+            new Variant((byte) 0x00)
+        },
+        {
+            "String",
+            Identifiers.String,
+            new Variant("string value")
+        },
+        {
+            "UtcTime",
+            Identifiers.UtcTime,
+            new Variant(DateTime.now())
+        },
+        {
+            "UInt16",
+            Identifiers.UInt16,
+            new Variant(ushort(16))
+        },
+        {
+            "UInt32",
+            Identifiers.UInt32,
+            new Variant(uint(32))
+        },
+        {
+            "UInt64",
+            Identifiers.UInt64,
+            new Variant(ulong(64L))
+        },
+        {
+            "XmlElement",
+            Identifiers.XmlElement,
+            new Variant(new XmlElement("<a>hello</a>"))
+        },
     };
 
     private void addStaticScalarNodes() {
@@ -265,13 +363,15 @@ public class TestNamespace implements Namespace {
 
             node.setValue(new DataValue(variant));
 
-            folder.addReference(new Reference(
-                folder.getNodeId(),
-                Identifiers.Organizes,
-                node.getNodeId().expanded(),
-                node.getNodeClass(),
-                true
-            ));
+            folder.addReference(
+                new Reference(
+                    folder.getNodeId(),
+                    Identifiers.Organizes,
+                    node.getNodeId().expanded(),
+                    node.getNodeClass(),
+                    true
+                )
+            );
 
             logger.debug("Added reference: {} -> {}", folder.getNodeId(), node.getNodeId());
 
@@ -294,13 +394,15 @@ public class TestNamespace implements Namespace {
         if (!nodeManager.containsKey(firstNode.getNodeId())) {
             nodeManager.put(firstNode.getNodeId(), firstNode);
 
-            nodeManager.get(root.getNodeId()).addReference(new Reference(
-                root.getNodeId(),
-                Identifiers.Organizes,
-                firstNode.getNodeId().expanded(),
-                firstNode.getNodeClass(),
-                true
-            ));
+            nodeManager.get(root.getNodeId()).addReference(
+                new Reference(
+                    root.getNodeId(),
+                    Identifiers.Organizes,
+                    firstNode.getNodeId().expanded(),
+                    firstNode.getNodeClass(),
+                    true
+                )
+            );
 
             logger.debug("Added reference: {} -> {}", root.getNodeId(), firstNode.getNodeId());
         }
@@ -318,13 +420,15 @@ public class TestNamespace implements Namespace {
                 if (!nodeManager.containsKey(next.getNodeId())) {
                     nodeManager.put(next.getNodeId(), next);
 
-                    nodeManager.get(node.getNodeId()).addReference(new Reference(
-                        node.getNodeId(),
-                        Identifiers.Organizes,
-                        next.getNodeId().expanded(),
-                        next.getNodeClass(),
-                        true
-                    ));
+                    nodeManager.get(node.getNodeId()).addReference(
+                        new Reference(
+                            node.getNodeId(),
+                            Identifiers.Organizes,
+                            next.getNodeId().expanded(),
+                            next.getNodeClass(),
+                            true
+                        )
+                    );
 
                     logger.debug("Added reference: {} -> {}", node.getNodeId(), next.getNodeId());
                 }
@@ -334,13 +438,16 @@ public class TestNamespace implements Namespace {
         return folderNodes.getLast();
     }
 
-    private LinkedList<UaObjectNode> processPathElements(List<String> elements, List<String> path, LinkedList<UaObjectNode> nodes) {
+    private LinkedList<UaObjectNode> processPathElements(List<String> elements,
+                                                         List<String> path,
+                                                         LinkedList<UaObjectNode> nodes) {
         if (elements.size() == 1) {
             String name = elements.get(0);
             String prefix = String.join("/", path) + "/";
             if (!prefix.startsWith("/")) prefix = "/" + prefix;
 
-            UaObjectNode node = UaObjectNode.builder(nodeManager)
+            UaObjectNode node = UaObjectNode
+                .builder(nodeManager)
                 .setNodeId(new NodeId(namespaceIndex, prefix + name))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))
                 .setDisplayName(LocalizedText.english(name))
@@ -355,7 +462,8 @@ public class TestNamespace implements Namespace {
             String prefix = String.join("/", path) + "/";
             if (!prefix.startsWith("/")) prefix = "/" + prefix;
 
-            UaObjectNode node = UaObjectNode.builder(nodeManager)
+            UaObjectNode node = UaObjectNode
+                .builder(nodeManager)
                 .setNodeId(new NodeId(namespaceIndex, prefix + name))
                 .setBrowseName(new QualifiedName(namespaceIndex, name))
                 .setDisplayName(LocalizedText.english(name))

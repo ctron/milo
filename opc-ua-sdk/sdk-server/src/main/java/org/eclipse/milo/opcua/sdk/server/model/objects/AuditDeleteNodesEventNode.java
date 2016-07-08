@@ -30,15 +30,14 @@ import org.eclipse.milo.opcua.stack.core.types.structured.DeleteNodesItem;
 @UaObjectNode(typeName = "0:AuditDeleteNodesEventType")
 public class AuditDeleteNodesEventNode extends AuditNodeManagementEventNode implements AuditDeleteNodesEventType {
 
-    public AuditDeleteNodesEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditDeleteNodesEventNode(UaNodeManager nodeManager,
+                                     NodeId nodeId,
+                                     QualifiedName browseName,
+                                     LocalizedText displayName,
+                                     Optional<LocalizedText> description,
+                                     Optional<UInteger> writeMask,
+                                     Optional<UInteger> userWriteMask,
+                                     UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -52,7 +51,9 @@ public class AuditDeleteNodesEventNode extends AuditNodeManagementEventNode impl
 
     @Override
     public PropertyNode getNodesToDeleteNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditDeleteNodesEventType.NODES_TO_DELETE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditDeleteNodesEventType.NODES_TO_DELETE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

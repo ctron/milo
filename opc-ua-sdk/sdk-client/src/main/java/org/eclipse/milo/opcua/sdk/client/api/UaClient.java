@@ -29,7 +29,8 @@ import org.eclipse.milo.opcua.sdk.client.subscriptions.OpcUaSubscriptionManager;
 import org.eclipse.milo.opcua.stack.core.serialization.UaRequestMessage;
 import org.eclipse.milo.opcua.stack.core.serialization.UaResponseMessage;
 
-public interface UaClient extends AttributeServices, MethodServices, MonitoredItemServices, SubscriptionServices, ViewServices {
+public interface UaClient
+        extends AttributeServices, MethodServices, MonitoredItemServices, SubscriptionServices, ViewServices {
 
     /**
      * @return the {@link OpcUaClientConfig} for this client.
@@ -86,6 +87,5 @@ public interface UaClient extends AttributeServices, MethodServices, MonitoredIt
      */
     void sendRequests(List<? extends UaRequestMessage> requests,
                       List<CompletableFuture<? extends UaResponseMessage>> futures);
-
 
 }

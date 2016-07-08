@@ -18,16 +18,9 @@ import org.eclipse.milo.opcua.sdk.core.model.Property;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 
-
 public interface FiniteStateVariableType extends StateVariableType {
 
-    Property<NodeId> ID = new BasicProperty<>(
-        QualifiedName.parse("0:Id"),
-        NodeId.parse("ns=0;i=17"),
-        -1,
-        NodeId.class
-    );
-
+    Property<NodeId> ID = new BasicProperty<>(QualifiedName.parse("0:Id"), NodeId.parse("ns=0;i=17"), -1, NodeId.class);
 
     NodeId getId();
 

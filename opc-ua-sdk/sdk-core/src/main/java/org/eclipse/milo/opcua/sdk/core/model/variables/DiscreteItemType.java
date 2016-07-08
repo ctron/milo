@@ -15,5 +15,4 @@ package org.eclipse.milo.opcua.sdk.core.model.variables;
 
 public interface DiscreteItemType extends DataItemType {
 
-
 }

@@ -53,7 +53,8 @@ public class MethodServices implements MethodServiceSet {
 
         CallRequest request = service.getRequest();
 
-        List<PendingCall> pendingCalls = Arrays.stream(request.getMethodsToCall())
+        List<PendingCall> pendingCalls = Arrays
+            .stream(request.getMethodsToCall())
             .map(PendingCall::new)
             .collect(Collectors.toList());
 
@@ -61,47 +62,59 @@ public class MethodServices implements MethodServiceSet {
          * Group by namespace and call asynchronously for each.
          */
 
-        Map<UShort, List<PendingCall>> byNamespace = pendingCalls.stream()
+        Map<UShort, List<PendingCall>> byNamespace = pendingCalls
+            .stream()
             .collect(Collectors.groupingBy(pending -> pending.getInput().getMethodId().getNamespaceIndex()));
 
-        byNamespace.keySet().forEach(index -> {
-            List<PendingCall> pending = byNamespace.get(index);
+        byNamespace.keySet().forEach(
+            index -> {
+                List<PendingCall> pending = byNamespace.get(index);
 
-            List<CallMethodRequest> requests = pending.stream()
-                .map(PendingCall::getInput)
-                .collect(Collectors.toList());
+                List<CallMethodRequest> requests = pending
+                    .stream()
+                    .map(PendingCall::getInput)
+                    .collect(Collectors.toList());
 
-            Namespace namespace = server.getNamespaceManager().getNamespace(index);
+                Namespace namespace = server.getNamespaceManager().getNamespace(index);
 
-            CompletableFuture<List<CallMethodResult>> future = new CompletableFuture<>();
+                CompletableFuture<List<CallMethodResult>> future = new CompletableFuture<>();
 
-            CallContext context = new CallContext(
-                server, session, future, diagnosticsContext);
+                CallContext context = new CallContext(server, session, future, diagnosticsContext);
 
-            server.getExecutorService().execute(() -> namespace.call(context, requests));
+                server.getExecutorService().execute(() -> namespace.call(context, requests));
 
-            future.thenAccept(values -> {
-                for (int i = 0; i < values.size(); i++) {
-                    pending.get(i).getFuture().complete(values.get(i));
-                }
-            });
-        });
+                future.thenAccept(
+                    values -> {
+                        for (int i = 0; i < values.size(); i++) {
+                            pending.get(i).getFuture().complete(values.get(i));
+                        }
+                    }
+                );
+            }
+        );
 
         /*
          * When all PendingCalls have been completed send a CallResponse with the values.
-		 */
+         */
 
-        List<CompletableFuture<CallMethodResult>> futures = pendingCalls.stream()
+        List<CompletableFuture<CallMethodResult>> futures = pendingCalls
+            .stream()
             .map(PendingCall::getFuture)
             .collect(Collectors.toList());
 
-        FutureUtils.sequence(futures).thenAcceptAsync(values -> {
-            ResponseHeader header = service.createResponseHeader();
-            CallResponse response = new CallResponse(
-                header, a(values, CallMethodResult.class), new DiagnosticInfo[0]);
+        FutureUtils.sequence(futures).thenAcceptAsync(
+            values -> {
+                ResponseHeader header = service.createResponseHeader();
+                CallResponse response = new CallResponse(
+                    header,
+                    a(values, CallMethodResult.class),
+                    new DiagnosticInfo[0]
+                );
 
-            service.setResponse(response);
-        }, server.getExecutorService());
+                service.setResponse(response);
+            },
+            server.getExecutorService()
+        );
     }
 
 }

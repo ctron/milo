@@ -35,33 +35,44 @@ import org.eclipse.milo.opcua.stack.core.types.structured.SessionDiagnosticsData
 @UaVariableNode(typeName = "0:SessionDiagnosticsVariableType")
 public class SessionDiagnosticsVariableNode extends BaseDataVariableNode implements SessionDiagnosticsVariableType {
 
-    public SessionDiagnosticsVariableNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public SessionDiagnosticsVariableNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public SessionDiagnosticsVariableNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public SessionDiagnosticsVariableNode(UaNodeManager nodeManager,
+                                          NodeId nodeId,
+                                          QualifiedName browseName,
+                                          LocalizedText displayName,
+                                          Optional<LocalizedText> description,
+                                          Optional<UInteger> writeMask,
+                                          Optional<UInteger> userWriteMask,
+                                          DataValue value,
+                                          NodeId dataType,
+                                          Integer valueRank,
+                                          Optional<UInteger[]> arrayDimensions,
+                                          UByte accessLevel,
+                                          UByte userAccessLevel,
+                                          Optional<Double> minimumSamplingInterval,
+                                          boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
 
     @Override
@@ -131,8 +142,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setSessionId(NodeId value) {
-        getVariableComponent("SessionId")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SessionId").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -151,8 +161,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setSessionName(String value) {
-        getVariableComponent("SessionName")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SessionName").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -171,8 +180,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setClientDescription(ApplicationDescription value) {
-        getVariableComponent("ClientDescription")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ClientDescription").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -191,8 +199,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setServerUri(String value) {
-        getVariableComponent("ServerUri")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ServerUri").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -211,8 +218,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setEndpointUrl(String value) {
-        getVariableComponent("EndpointUrl")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("EndpointUrl").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -231,8 +237,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setLocaleIds(String[] value) {
-        getVariableComponent("LocaleIds")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("LocaleIds").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -251,8 +256,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setActualSessionTimeout(Double value) {
-        getVariableComponent("ActualSessionTimeout")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ActualSessionTimeout").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -271,8 +275,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setMaxResponseMessageSize(UInteger value) {
-        getVariableComponent("MaxResponseMessageSize")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("MaxResponseMessageSize").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -291,8 +294,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setClientConnectionTime(DateTime value) {
-        getVariableComponent("ClientConnectionTime")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ClientConnectionTime").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -311,8 +313,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setClientLastContactTime(DateTime value) {
-        getVariableComponent("ClientLastContactTime")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ClientLastContactTime").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -331,8 +332,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setCurrentSubscriptionsCount(UInteger value) {
-        getVariableComponent("CurrentSubscriptionsCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CurrentSubscriptionsCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -391,8 +391,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setTotalRequestCount(ServiceCounterDataType value) {
-        getVariableComponent("TotalRequestCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("TotalRequestCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -411,8 +410,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setUnauthorizedRequestCount(UInteger value) {
-        getVariableComponent("UnauthorizedRequestCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("UnauthorizedRequestCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -431,8 +429,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setReadCount(ServiceCounterDataType value) {
-        getVariableComponent("ReadCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ReadCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -451,8 +448,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setHistoryReadCount(ServiceCounterDataType value) {
-        getVariableComponent("HistoryReadCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("HistoryReadCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -471,8 +467,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setWriteCount(ServiceCounterDataType value) {
-        getVariableComponent("WriteCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("WriteCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -491,8 +486,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setHistoryUpdateCount(ServiceCounterDataType value) {
-        getVariableComponent("HistoryUpdateCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("HistoryUpdateCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -511,8 +505,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setCallCount(ServiceCounterDataType value) {
-        getVariableComponent("CallCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CallCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -531,8 +524,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setCreateMonitoredItemsCount(ServiceCounterDataType value) {
-        getVariableComponent("CreateMonitoredItemsCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CreateMonitoredItemsCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -551,8 +543,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setModifyMonitoredItemsCount(ServiceCounterDataType value) {
-        getVariableComponent("ModifyMonitoredItemsCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ModifyMonitoredItemsCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -571,8 +562,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setSetMonitoringModeCount(ServiceCounterDataType value) {
-        getVariableComponent("SetMonitoringModeCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SetMonitoringModeCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -591,8 +581,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setSetTriggeringCount(ServiceCounterDataType value) {
-        getVariableComponent("SetTriggeringCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SetTriggeringCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -611,8 +600,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setDeleteMonitoredItemsCount(ServiceCounterDataType value) {
-        getVariableComponent("DeleteMonitoredItemsCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("DeleteMonitoredItemsCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -631,8 +619,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setCreateSubscriptionCount(ServiceCounterDataType value) {
-        getVariableComponent("CreateSubscriptionCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CreateSubscriptionCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -651,8 +638,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setModifySubscriptionCount(ServiceCounterDataType value) {
-        getVariableComponent("ModifySubscriptionCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ModifySubscriptionCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -671,8 +657,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setSetPublishingModeCount(ServiceCounterDataType value) {
-        getVariableComponent("SetPublishingModeCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SetPublishingModeCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -691,8 +676,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setPublishCount(ServiceCounterDataType value) {
-        getVariableComponent("PublishCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("PublishCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -711,8 +695,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setRepublishCount(ServiceCounterDataType value) {
-        getVariableComponent("RepublishCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("RepublishCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -751,8 +734,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setDeleteSubscriptionsCount(ServiceCounterDataType value) {
-        getVariableComponent("DeleteSubscriptionsCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("DeleteSubscriptionsCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -771,8 +753,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setAddNodesCount(ServiceCounterDataType value) {
-        getVariableComponent("AddNodesCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("AddNodesCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -791,8 +772,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setAddReferencesCount(ServiceCounterDataType value) {
-        getVariableComponent("AddReferencesCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("AddReferencesCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -811,8 +791,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setDeleteNodesCount(ServiceCounterDataType value) {
-        getVariableComponent("DeleteNodesCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("DeleteNodesCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -831,8 +810,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setDeleteReferencesCount(ServiceCounterDataType value) {
-        getVariableComponent("DeleteReferencesCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("DeleteReferencesCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -851,8 +829,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setBrowseCount(ServiceCounterDataType value) {
-        getVariableComponent("BrowseCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("BrowseCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -871,8 +848,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setBrowseNextCount(ServiceCounterDataType value) {
-        getVariableComponent("BrowseNextCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("BrowseNextCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -911,8 +887,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setQueryFirstCount(ServiceCounterDataType value) {
-        getVariableComponent("QueryFirstCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("QueryFirstCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -931,8 +906,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setQueryNextCount(ServiceCounterDataType value) {
-        getVariableComponent("QueryNextCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("QueryNextCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -951,8 +925,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setRegisterNodesCount(ServiceCounterDataType value) {
-        getVariableComponent("RegisterNodesCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("RegisterNodesCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -971,8 +944,7 @@ public class SessionDiagnosticsVariableNode extends BaseDataVariableNode impleme
 
     @Override
     public void setUnregisterNodesCount(ServiceCounterDataType value) {
-        getVariableComponent("UnregisterNodesCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("UnregisterNodesCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

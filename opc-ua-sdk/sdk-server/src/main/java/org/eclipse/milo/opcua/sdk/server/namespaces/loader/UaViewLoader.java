@@ -23,7 +23,6 @@ public class UaViewLoader {
         this.nodeManager = nodeManager;
     }
 
-    public void buildNodes() {
-    }
+    public void buildNodes() {}
 
 }

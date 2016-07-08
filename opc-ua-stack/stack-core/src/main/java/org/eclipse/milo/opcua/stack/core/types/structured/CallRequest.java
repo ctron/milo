@@ -41,28 +41,41 @@ public class CallRequest implements UaRequestMessage {
         this._methodsToCall = _methodsToCall;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public CallMethodRequest[] getMethodsToCall() { return _methodsToCall; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public CallMethodRequest[] getMethodsToCall() {
+        return _methodsToCall;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CallRequest callRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", callRequest._requestHeader != null ? callRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            callRequest._requestHeader != null ? callRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeArray("MethodsToCall", callRequest._methodsToCall, encoder::encodeSerializable);
     }
 
     public static CallRequest decode(UaDecoder decoder) {
         RequestHeader _requestHeader = decoder.decodeSerializable("RequestHeader", RequestHeader.class);
-        CallMethodRequest[] _methodsToCall = decoder.decodeArray("MethodsToCall", decoder::decodeSerializable, CallMethodRequest.class);
+        CallMethodRequest[] _methodsToCall = decoder
+            .decodeArray("MethodsToCall", decoder::decodeSerializable, CallMethodRequest.class);
 
         return new CallRequest(_requestHeader, _methodsToCall);
     }

@@ -20,7 +20,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.LocalizedText;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 
-
 public interface TwoStateVariableType extends StateVariableType {
 
     Property<Boolean> ID = new BasicProperty<>(
@@ -57,7 +56,6 @@ public interface TwoStateVariableType extends StateVariableType {
         -1,
         LocalizedText.class
     );
-
 
     Boolean getId();
 

@@ -13,7 +13,6 @@
 
 package org.eclipse.milo.opcua.stack.core.application;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -90,8 +89,8 @@ public class DefaultCertificateValidator implements CertificateValidator {
     public synchronized void verifyTrustChain(X509Certificate certificate,
                                               List<X509Certificate> chain) throws UaException {
         try {
-            CertificateValidationUtil.validateTrustChain(
-                certificate, chain, trustedCertificates, authorityCertificates);
+            CertificateValidationUtil
+                .validateTrustChain(certificate, chain, trustedCertificates, authorityCertificates);
 
         } catch (UaException e) {
             certificateRejected(certificate);
@@ -138,11 +137,13 @@ public class DefaultCertificateValidator implements CertificateValidator {
 
         Set<X509Certificate> certificates = certificatesFromDir(trustedDir);
 
-        Set<X509Certificate> trusted = certificates.stream()
+        Set<X509Certificate> trusted = certificates
+            .stream()
             .filter(c -> c.getBasicConstraints() == -1)
             .collect(toSet());
 
-        Set<X509Certificate> authority = certificates.stream()
+        Set<X509Certificate> authority = certificates
+            .stream()
             .filter(c -> c.getBasicConstraints() != -1)
             .collect(toSet());
 
@@ -154,20 +155,19 @@ public class DefaultCertificateValidator implements CertificateValidator {
             authorityCertificates.addAll(authority);
         }
 
-        logger.debug("trustedCertificates.size()={}, authorityCertificates.size()={}",
-            trustedCertificates.size(), authorityCertificates.size());
+        logger.debug(
+            "trustedCertificates.size()={}, authorityCertificates.size()={}",
+            trustedCertificates.size(),
+            authorityCertificates.size()
+        );
     }
 
     private Set<X509Certificate> certificatesFromDir(File dir) {
         File[] files = dir.listFiles();
         if (files == null) files = new File[0];
 
-        return Arrays.stream(files)
-            .map(this::file2certificate)
-            .filter(c -> c != null)
-            .collect(toSet());
+        return Arrays.stream(files).map(this::file2certificate).filter(c -> c != null).collect(toSet());
     }
-
 
     private X509Certificate file2certificate(File f) {
         try {

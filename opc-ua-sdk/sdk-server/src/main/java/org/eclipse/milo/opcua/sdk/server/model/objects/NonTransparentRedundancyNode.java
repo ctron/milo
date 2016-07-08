@@ -29,15 +29,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:NonTransparentRedundancyType")
 public class NonTransparentRedundancyNode extends ServerRedundancyNode implements NonTransparentRedundancyType {
 
-    public NonTransparentRedundancyNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public NonTransparentRedundancyNode(UaNodeManager nodeManager,
+                                        NodeId nodeId,
+                                        QualifiedName browseName,
+                                        LocalizedText displayName,
+                                        Optional<LocalizedText> description,
+                                        Optional<UInteger> writeMask,
+                                        Optional<UInteger> userWriteMask,
+                                        UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -51,7 +50,9 @@ public class NonTransparentRedundancyNode extends ServerRedundancyNode implement
 
     @Override
     public PropertyNode getServerUriArrayNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(NonTransparentRedundancyType.SERVER_URI_ARRAY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            NonTransparentRedundancyType.SERVER_URI_ARRAY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

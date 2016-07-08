@@ -38,24 +38,32 @@ public class ContentFilter implements UaStructure {
         this._elements = _elements;
     }
 
-    public ContentFilterElement[] getElements() { return _elements; }
+    public ContentFilterElement[] getElements() {
+        return _elements;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ContentFilter contentFilter, UaEncoder encoder) {
         encoder.encodeArray("Elements", contentFilter._elements, encoder::encodeSerializable);
     }
 
     public static ContentFilter decode(UaDecoder decoder) {
-        ContentFilterElement[] _elements = decoder.decodeArray("Elements", decoder::decodeSerializable, ContentFilterElement.class);
+        ContentFilterElement[] _elements = decoder
+            .decodeArray("Elements", decoder::decodeSerializable, ContentFilterElement.class);
 
         return new ContentFilter(_elements);
     }

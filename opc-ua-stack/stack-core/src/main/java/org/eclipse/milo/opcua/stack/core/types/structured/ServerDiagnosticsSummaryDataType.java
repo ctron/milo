@@ -57,7 +57,18 @@ public class ServerDiagnosticsSummaryDataType implements UaStructure {
         this._rejectedRequestsCount = null;
     }
 
-    public ServerDiagnosticsSummaryDataType(UInteger _serverViewCount, UInteger _currentSessionCount, UInteger _cumulatedSessionCount, UInteger _securityRejectedSessionCount, UInteger _rejectedSessionCount, UInteger _sessionTimeoutCount, UInteger _sessionAbortCount, UInteger _currentSubscriptionCount, UInteger _cumulatedSubscriptionCount, UInteger _publishingIntervalCount, UInteger _securityRejectedRequestsCount, UInteger _rejectedRequestsCount) {
+    public ServerDiagnosticsSummaryDataType(UInteger _serverViewCount,
+                                            UInteger _currentSessionCount,
+                                            UInteger _cumulatedSessionCount,
+                                            UInteger _securityRejectedSessionCount,
+                                            UInteger _rejectedSessionCount,
+                                            UInteger _sessionTimeoutCount,
+                                            UInteger _sessionAbortCount,
+                                            UInteger _currentSubscriptionCount,
+                                            UInteger _cumulatedSubscriptionCount,
+                                            UInteger _publishingIntervalCount,
+                                            UInteger _securityRejectedRequestsCount,
+                                            UInteger _rejectedRequestsCount) {
         this._serverViewCount = _serverViewCount;
         this._currentSessionCount = _currentSessionCount;
         this._cumulatedSessionCount = _cumulatedSessionCount;
@@ -72,52 +83,88 @@ public class ServerDiagnosticsSummaryDataType implements UaStructure {
         this._rejectedRequestsCount = _rejectedRequestsCount;
     }
 
-    public UInteger getServerViewCount() { return _serverViewCount; }
+    public UInteger getServerViewCount() {
+        return _serverViewCount;
+    }
 
-    public UInteger getCurrentSessionCount() { return _currentSessionCount; }
+    public UInteger getCurrentSessionCount() {
+        return _currentSessionCount;
+    }
 
-    public UInteger getCumulatedSessionCount() { return _cumulatedSessionCount; }
+    public UInteger getCumulatedSessionCount() {
+        return _cumulatedSessionCount;
+    }
 
-    public UInteger getSecurityRejectedSessionCount() { return _securityRejectedSessionCount; }
+    public UInteger getSecurityRejectedSessionCount() {
+        return _securityRejectedSessionCount;
+    }
 
-    public UInteger getRejectedSessionCount() { return _rejectedSessionCount; }
+    public UInteger getRejectedSessionCount() {
+        return _rejectedSessionCount;
+    }
 
-    public UInteger getSessionTimeoutCount() { return _sessionTimeoutCount; }
+    public UInteger getSessionTimeoutCount() {
+        return _sessionTimeoutCount;
+    }
 
-    public UInteger getSessionAbortCount() { return _sessionAbortCount; }
+    public UInteger getSessionAbortCount() {
+        return _sessionAbortCount;
+    }
 
-    public UInteger getCurrentSubscriptionCount() { return _currentSubscriptionCount; }
+    public UInteger getCurrentSubscriptionCount() {
+        return _currentSubscriptionCount;
+    }
 
-    public UInteger getCumulatedSubscriptionCount() { return _cumulatedSubscriptionCount; }
+    public UInteger getCumulatedSubscriptionCount() {
+        return _cumulatedSubscriptionCount;
+    }
 
-    public UInteger getPublishingIntervalCount() { return _publishingIntervalCount; }
+    public UInteger getPublishingIntervalCount() {
+        return _publishingIntervalCount;
+    }
 
-    public UInteger getSecurityRejectedRequestsCount() { return _securityRejectedRequestsCount; }
+    public UInteger getSecurityRejectedRequestsCount() {
+        return _securityRejectedRequestsCount;
+    }
 
-    public UInteger getRejectedRequestsCount() { return _rejectedRequestsCount; }
+    public UInteger getRejectedRequestsCount() {
+        return _rejectedRequestsCount;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ServerDiagnosticsSummaryDataType serverDiagnosticsSummaryDataType, UaEncoder encoder) {
         encoder.encodeUInt32("ServerViewCount", serverDiagnosticsSummaryDataType._serverViewCount);
         encoder.encodeUInt32("CurrentSessionCount", serverDiagnosticsSummaryDataType._currentSessionCount);
         encoder.encodeUInt32("CumulatedSessionCount", serverDiagnosticsSummaryDataType._cumulatedSessionCount);
-        encoder.encodeUInt32("SecurityRejectedSessionCount", serverDiagnosticsSummaryDataType._securityRejectedSessionCount);
+        encoder.encodeUInt32(
+            "SecurityRejectedSessionCount",
+            serverDiagnosticsSummaryDataType._securityRejectedSessionCount
+        );
         encoder.encodeUInt32("RejectedSessionCount", serverDiagnosticsSummaryDataType._rejectedSessionCount);
         encoder.encodeUInt32("SessionTimeoutCount", serverDiagnosticsSummaryDataType._sessionTimeoutCount);
         encoder.encodeUInt32("SessionAbortCount", serverDiagnosticsSummaryDataType._sessionAbortCount);
         encoder.encodeUInt32("CurrentSubscriptionCount", serverDiagnosticsSummaryDataType._currentSubscriptionCount);
-        encoder.encodeUInt32("CumulatedSubscriptionCount", serverDiagnosticsSummaryDataType._cumulatedSubscriptionCount);
+        encoder
+            .encodeUInt32("CumulatedSubscriptionCount", serverDiagnosticsSummaryDataType._cumulatedSubscriptionCount);
         encoder.encodeUInt32("PublishingIntervalCount", serverDiagnosticsSummaryDataType._publishingIntervalCount);
-        encoder.encodeUInt32("SecurityRejectedRequestsCount", serverDiagnosticsSummaryDataType._securityRejectedRequestsCount);
+        encoder.encodeUInt32(
+            "SecurityRejectedRequestsCount",
+            serverDiagnosticsSummaryDataType._securityRejectedRequestsCount
+        );
         encoder.encodeUInt32("RejectedRequestsCount", serverDiagnosticsSummaryDataType._rejectedRequestsCount);
     }
 
@@ -135,12 +182,35 @@ public class ServerDiagnosticsSummaryDataType implements UaStructure {
         UInteger _securityRejectedRequestsCount = decoder.decodeUInt32("SecurityRejectedRequestsCount");
         UInteger _rejectedRequestsCount = decoder.decodeUInt32("RejectedRequestsCount");
 
-        return new ServerDiagnosticsSummaryDataType(_serverViewCount, _currentSessionCount, _cumulatedSessionCount, _securityRejectedSessionCount, _rejectedSessionCount, _sessionTimeoutCount, _sessionAbortCount, _currentSubscriptionCount, _cumulatedSubscriptionCount, _publishingIntervalCount, _securityRejectedRequestsCount, _rejectedRequestsCount);
+        return new ServerDiagnosticsSummaryDataType(
+            _serverViewCount,
+            _currentSessionCount,
+            _cumulatedSessionCount,
+            _securityRejectedSessionCount,
+            _rejectedSessionCount,
+            _sessionTimeoutCount,
+            _sessionAbortCount,
+            _currentSubscriptionCount,
+            _cumulatedSubscriptionCount,
+            _publishingIntervalCount,
+            _securityRejectedRequestsCount,
+            _rejectedRequestsCount
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(ServerDiagnosticsSummaryDataType::encode, ServerDiagnosticsSummaryDataType.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ServerDiagnosticsSummaryDataType::decode, ServerDiagnosticsSummaryDataType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            ServerDiagnosticsSummaryDataType::encode,
+            ServerDiagnosticsSummaryDataType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            ServerDiagnosticsSummaryDataType::decode,
+            ServerDiagnosticsSummaryDataType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

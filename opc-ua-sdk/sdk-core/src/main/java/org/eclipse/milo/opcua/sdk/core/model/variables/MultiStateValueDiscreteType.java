@@ -20,7 +20,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.structured.EnumValueType;
 
-
 public interface MultiStateValueDiscreteType extends DiscreteItemType {
 
     Property<EnumValueType[]> ENUM_VALUES = new BasicProperty<>(
@@ -36,7 +35,6 @@ public interface MultiStateValueDiscreteType extends DiscreteItemType {
         -1,
         LocalizedText.class
     );
-
 
     EnumValueType[] getEnumValues();
 

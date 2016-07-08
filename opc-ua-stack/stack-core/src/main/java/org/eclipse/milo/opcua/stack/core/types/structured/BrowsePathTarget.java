@@ -43,19 +43,28 @@ public class BrowsePathTarget implements UaStructure {
         this._remainingPathIndex = _remainingPathIndex;
     }
 
-    public ExpandedNodeId getTargetId() { return _targetId; }
+    public ExpandedNodeId getTargetId() {
+        return _targetId;
+    }
 
-    public UInteger getRemainingPathIndex() { return _remainingPathIndex; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public UInteger getRemainingPathIndex() {
+        return _remainingPathIndex;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(BrowsePathTarget browsePathTarget, UaEncoder encoder) {
         encoder.encodeExpandedNodeId("TargetId", browsePathTarget._targetId);
@@ -70,8 +79,10 @@ public class BrowsePathTarget implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(BrowsePathTarget::encode, BrowsePathTarget.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(BrowsePathTarget::decode, BrowsePathTarget.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(BrowsePathTarget::encode, BrowsePathTarget.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(BrowsePathTarget::decode, BrowsePathTarget.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

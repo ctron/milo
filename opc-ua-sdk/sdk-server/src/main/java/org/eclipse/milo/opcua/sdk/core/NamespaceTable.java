@@ -65,7 +65,9 @@ public class NamespaceTable {
     }
 
     public synchronized String[] toArray() {
-        List<String> uris = uriTable.entrySet().stream()
+        List<String> uris = uriTable
+            .entrySet()
+            .stream()
             .sorted((e1, e2) -> e1.getKey().intValue() - e2.getKey().intValue())
             .map(Map.Entry::getValue)
             .collect(Collectors.toList());

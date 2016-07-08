@@ -65,10 +65,7 @@ public abstract class SecurityFixture {
             serverKeyPair = new KeyPair(serverPublicKey, (PrivateKey) serverPrivateKey);
         }
 
-        serverCertificateManager = new TestCertificateManager(
-            serverKeyPair,
-            serverCertificate
-        );
+        serverCertificateManager = new TestCertificateManager(serverKeyPair, serverCertificate);
 
         serverCertificateValidator = new TestCertificateValidator(clientCertificate);
     }

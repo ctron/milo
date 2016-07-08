@@ -58,8 +58,7 @@ public class XmlEncoder implements UaEncoder {
 
     private volatile XMLStreamWriter streamWriter;
 
-    public XmlEncoder() {
-    }
+    public XmlEncoder() {}
 
     public XmlEncoder(OutputStream outputStream) throws XMLStreamException {
         setOutput(outputStream);
@@ -181,11 +180,16 @@ public class XmlEncoder implements UaEncoder {
     @Override
     public void encodeGuid(String field, UUID value) {
         if (value != null) {
-            write(field, Unchecked.consumer(w -> {
-                w.writeStartElement("String");
-                w.writeCharacters(value.toString());
-                w.writeEndElement();
-            }));
+            write(
+                field,
+                Unchecked.consumer(
+                    w -> {
+                        w.writeStartElement("String");
+                        w.writeCharacters(value.toString());
+                        w.writeEndElement();
+                    }
+                )
+            );
         } else {
             if (field != null) {
                 try {
@@ -220,11 +224,16 @@ public class XmlEncoder implements UaEncoder {
     @Override
     public void encodeNodeId(String field, NodeId value) {
         if (value != null) {
-            write(field, Unchecked.consumer(w -> {
-                w.writeStartElement("Identifier");
-                w.writeCharacters(value.toParseableString());
-                w.writeEndElement();
-            }));
+            write(
+                field,
+                Unchecked.consumer(
+                    w -> {
+                        w.writeStartElement("Identifier");
+                        w.writeCharacters(value.toParseableString());
+                        w.writeEndElement();
+                    }
+                )
+            );
         } else {
             if (field != null) {
                 try {
@@ -239,11 +248,16 @@ public class XmlEncoder implements UaEncoder {
     @Override
     public void encodeExpandedNodeId(String field, ExpandedNodeId value) {
         if (value != null) {
-            write(field, Unchecked.consumer(w -> {
-                w.writeStartElement("Identifier");
-                w.writeCharacters(value.toParseableString());
-                w.writeEndElement();
-            }));
+            write(
+                field,
+                Unchecked.consumer(
+                    w -> {
+                        w.writeStartElement("Identifier");
+                        w.writeCharacters(value.toParseableString());
+                        w.writeEndElement();
+                    }
+                )
+            );
         } else {
             if (field != null) {
                 try {
@@ -273,10 +287,15 @@ public class XmlEncoder implements UaEncoder {
     @Override
     public void encodeQualifiedName(String field, QualifiedName value) {
         if (value != null) {
-            write(field, Unchecked.consumer(w -> {
-                encodeUInt16("NamespaceIndex", value.getNamespaceIndex());
-                encodeString("Name", value.getName());
-            }));
+            write(
+                field,
+                Unchecked.consumer(
+                    w -> {
+                        encodeUInt16("NamespaceIndex", value.getNamespaceIndex());
+                        encodeString("Name", value.getName());
+                    }
+                )
+            );
         } else {
             if (field != null) {
                 try {
@@ -291,10 +310,15 @@ public class XmlEncoder implements UaEncoder {
     @Override
     public void encodeLocalizedText(String field, LocalizedText value) {
         if (value != null) {
-            write(field, Unchecked.consumer(w -> {
-                encodeString("Locale", value.getLocale());
-                encodeString("Text", value.getText());
-            }));
+            write(
+                field,
+                Unchecked.consumer(
+                    w -> {
+                        encodeString("Locale", value.getLocale());
+                        encodeString("Text", value.getText());
+                    }
+                )
+            );
         } else {
             if (field != null) {
                 try {
@@ -309,27 +333,32 @@ public class XmlEncoder implements UaEncoder {
     @Override
     public void encodeExtensionObject(String field, ExtensionObject value) {
         if (value != null) {
-            write(field, Unchecked.consumer(w -> {
-                encodeNodeId("TypeId", value.getEncodingTypeId());
+            write(
+                field,
+                Unchecked.consumer(
+                    w -> {
+                        encodeNodeId("TypeId", value.getEncodingTypeId());
 
-                Object object = value.getEncoded();
+                        Object object = value.getEncoded();
 
-                if (object instanceof UaSerializable) {
-                    UaSerializable serializable = (UaSerializable) object;
+                        if (object instanceof UaSerializable) {
+                            UaSerializable serializable = (UaSerializable) object;
 
-                    encodeSerializable("Body", serializable);
-                } else if (object instanceof ByteString) {
-                    ByteString byteString = (ByteString) object;
+                            encodeSerializable("Body", serializable);
+                        } else if (object instanceof ByteString) {
+                            ByteString byteString = (ByteString) object;
 
-                    streamWriter.writeStartElement("Body");
-                    encodeByteString("ByteString", byteString);
-                    streamWriter.writeEndElement();
-                } else if (object instanceof XmlElement) {
-                    XmlElement xmlElement = (XmlElement) object;
+                            streamWriter.writeStartElement("Body");
+                            encodeByteString("ByteString", byteString);
+                            streamWriter.writeEndElement();
+                        } else if (object instanceof XmlElement) {
+                            XmlElement xmlElement = (XmlElement) object;
 
-                    encodeXmlElement("Body", xmlElement);
-                }
-            }));
+                            encodeXmlElement("Body", xmlElement);
+                        }
+                    }
+                )
+            );
         }
     }
 
@@ -389,10 +418,15 @@ public class XmlEncoder implements UaEncoder {
     }
 
     private void writeNilValue(String field, String name) {
-        write(field, Unchecked.consumer(w -> {
-            w.writeEmptyElement(name);
-            w.writeAttribute(Namespaces.XML_SCHEMA_INSTANCE, "nil", "true");
-        }));
+        write(
+            field,
+            Unchecked.consumer(
+                w -> {
+                    w.writeEmptyElement(name);
+                    w.writeAttribute(Namespaces.XML_SCHEMA_INSTANCE, "nil", "true");
+                }
+            )
+        );
     }
 
 }

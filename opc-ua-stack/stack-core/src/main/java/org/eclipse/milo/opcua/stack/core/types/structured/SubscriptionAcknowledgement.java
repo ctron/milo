@@ -42,19 +42,28 @@ public class SubscriptionAcknowledgement implements UaStructure {
         this._sequenceNumber = _sequenceNumber;
     }
 
-    public UInteger getSubscriptionId() { return _subscriptionId; }
+    public UInteger getSubscriptionId() {
+        return _subscriptionId;
+    }
 
-    public UInteger getSequenceNumber() { return _sequenceNumber; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public UInteger getSequenceNumber() {
+        return _sequenceNumber;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(SubscriptionAcknowledgement subscriptionAcknowledgement, UaEncoder encoder) {
         encoder.encodeUInt32("SubscriptionId", subscriptionAcknowledgement._subscriptionId);
@@ -69,8 +78,18 @@ public class SubscriptionAcknowledgement implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(SubscriptionAcknowledgement::encode, SubscriptionAcknowledgement.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(SubscriptionAcknowledgement::decode, SubscriptionAcknowledgement.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            SubscriptionAcknowledgement::encode,
+            SubscriptionAcknowledgement.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            SubscriptionAcknowledgement::decode,
+            SubscriptionAcknowledgement.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

@@ -29,17 +29,17 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UByte;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 
 @UaObjectNode(typeName = "0:ProgramTransitionAuditEventType")
-public class ProgramTransitionAuditEventNode extends AuditUpdateStateEventNode implements ProgramTransitionAuditEventType {
+public class ProgramTransitionAuditEventNode extends AuditUpdateStateEventNode
+        implements ProgramTransitionAuditEventType {
 
-    public ProgramTransitionAuditEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ProgramTransitionAuditEventNode(UaNodeManager nodeManager,
+                                           NodeId nodeId,
+                                           QualifiedName browseName,
+                                           LocalizedText displayName,
+                                           Optional<LocalizedText> description,
+                                           Optional<UInteger> writeMask,
+                                           Optional<UInteger> userWriteMask,
+                                           UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -60,8 +60,7 @@ public class ProgramTransitionAuditEventNode extends AuditUpdateStateEventNode i
 
     @Override
     public void setTransition(LocalizedText value) {
-        getVariableComponent("Transition")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("Transition").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

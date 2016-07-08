@@ -59,8 +59,7 @@ public class XmlDecoder implements UaDecoder {
 
     private volatile XMLStreamReader streamReader;
 
-    public XmlDecoder() {
-    }
+    public XmlDecoder() {}
 
     public XmlDecoder(InputStream inputStream) throws XMLStreamException {
         setInput(inputStream);
@@ -144,11 +143,14 @@ public class XmlDecoder implements UaDecoder {
 
     @Override
     public DateTime decodeDateTime(String field) throws UaSerializationException {
-        return parseElement(field, content -> {
-            Calendar calendar = DatatypeConverter.parseDateTime(content);
+        return parseElement(
+            field,
+            content -> {
+                Calendar calendar = DatatypeConverter.parseDateTime(content);
 
-            return new DateTime(calendar.getTime());
-        });
+                return new DateTime(calendar.getTime());
+            }
+        );
     }
 
     @Override
@@ -179,15 +181,18 @@ public class XmlDecoder implements UaDecoder {
 
     @Override
     public ByteString decodeByteString(String field) throws UaSerializationException {
-        return parseNillableElement(field, content -> {
-            if (content != null) {
-                byte[] bs = DatatypeConverter.parseBase64Binary(content);
+        return parseNillableElement(
+            field,
+            content -> {
+                if (content != null) {
+                    byte[] bs = DatatypeConverter.parseBase64Binary(content);
 
-                return ByteString.of(bs);
-            } else {
-                return ByteString.NULL_VALUE;
+                    return ByteString.of(bs);
+                } else {
+                    return ByteString.NULL_VALUE;
+                }
             }
-        });
+        );
     }
 
     @Override
@@ -319,8 +324,10 @@ public class XmlDecoder implements UaDecoder {
             } else if (body instanceof ByteString) {
                 return new ExtensionObject((ByteString) body, encodingTypeId);
             } else {
-                throw new UaSerializationException(StatusCodes.Bad_DecodingError,
-                    "unrecognized ExtensionObject body: " + body);
+                throw new UaSerializationException(
+                    StatusCodes.Bad_DecodingError,
+                    "unrecognized ExtensionObject body: " + body
+                );
             }
         } else {
             return new ExtensionObject(ByteString.NULL_VALUE, NodeId.NULL_VALUE);
@@ -418,9 +425,13 @@ public class XmlDecoder implements UaDecoder {
             requireNextEndElement(field);
 
             return new DataValue(
-                value, statusCode,
-                sourceTimestamp, sourcePicoseconds,
-                serverTimestamp, serverPicoseconds);
+                value,
+                statusCode,
+                sourceTimestamp,
+                sourcePicoseconds,
+                serverTimestamp,
+                serverPicoseconds
+            );
         } else {
             return new DataValue(Variant.NULL_VALUE);
         }
@@ -487,58 +498,58 @@ public class XmlDecoder implements UaDecoder {
 
     private Object decodeBuiltinType(String type) throws UaSerializationException {
         switch (type) {
-            case "Boolean":
-                return decodeBoolean(null);
-            case "SByte":
-                return decodeSByte(null);
-            case "Byte":
-                return decodeByte(null);
-            case "Int16":
-                return decodeInt16(null);
-            case "UInt16":
-                return decodeUInt16(null);
-            case "Int32":
-                return decodeInt32(null);
-            case "UInt32":
-                return decodeUInt32(null);
-            case "Int64":
-                return decodeInt64(null);
-            case "UInt64":
-                return decodeUInt64(null);
-            case "Float":
-                return decodeFloat(null);
-            case "Double":
-                return decodeDouble(null);
-            case "String":
-                return decodeString(null);
-            case "DateTime":
-                return decodeDateTime(null);
-            case "Guid":
-                return decodeGuid(null);
-            case "ByteString":
-                return decodeByteString(null);
-            case "XmlElement":
-                return decodeXmlElement(null);
-            case "NodeId":
-                return decodeNodeId(null);
-            case "ExpandedNodeId":
-                return decodeExpandedNodeId(null);
-            case "StatusCode":
-                return decodeStatusCode(null);
-            case "QualifiedName":
-                return decodeQualifiedName(null);
-            case "LocalizedText":
-                return decodeLocalizedText(null);
-            case "ExtensionObject":
-                return decodeExtensionObject(null);
-            case "DataValue":
-                return decodeDataValue(null);
-            case "Variant":
-                return decodeVariant(null);
-            case "DiagnosticInfo":
-                return decodeDiagnosticInfo(null);
-            default:
-                throw new UaSerializationException(StatusCodes.Bad_DecodingError, "unknown builtin type: " + type);
+        case "Boolean":
+            return decodeBoolean(null);
+        case "SByte":
+            return decodeSByte(null);
+        case "Byte":
+            return decodeByte(null);
+        case "Int16":
+            return decodeInt16(null);
+        case "UInt16":
+            return decodeUInt16(null);
+        case "Int32":
+            return decodeInt32(null);
+        case "UInt32":
+            return decodeUInt32(null);
+        case "Int64":
+            return decodeInt64(null);
+        case "UInt64":
+            return decodeUInt64(null);
+        case "Float":
+            return decodeFloat(null);
+        case "Double":
+            return decodeDouble(null);
+        case "String":
+            return decodeString(null);
+        case "DateTime":
+            return decodeDateTime(null);
+        case "Guid":
+            return decodeGuid(null);
+        case "ByteString":
+            return decodeByteString(null);
+        case "XmlElement":
+            return decodeXmlElement(null);
+        case "NodeId":
+            return decodeNodeId(null);
+        case "ExpandedNodeId":
+            return decodeExpandedNodeId(null);
+        case "StatusCode":
+            return decodeStatusCode(null);
+        case "QualifiedName":
+            return decodeQualifiedName(null);
+        case "LocalizedText":
+            return decodeLocalizedText(null);
+        case "ExtensionObject":
+            return decodeExtensionObject(null);
+        case "DataValue":
+            return decodeDataValue(null);
+        case "Variant":
+            return decodeVariant(null);
+        case "DiagnosticInfo":
+            return decodeDiagnosticInfo(null);
+        default:
+            throw new UaSerializationException(StatusCodes.Bad_DecodingError, "unknown builtin type: " + type);
         }
     }
 
@@ -595,8 +606,14 @@ public class XmlDecoder implements UaDecoder {
         }
 
         return new DiagnosticInfo(
-            namespaceUri, symbolicId, locale, localizedText,
-            additionalInfo, innerStatusCode, innerDiagnosticInfo);
+            namespaceUri,
+            symbolicId,
+            locale,
+            localizedText,
+            additionalInfo,
+            innerStatusCode,
+            innerDiagnosticInfo
+        );
     }
 
     @Override
@@ -623,7 +640,6 @@ public class XmlDecoder implements UaDecoder {
     public <T> T[] decodeArray(String field, BiFunction<String, Class<T>, T> decoder, Class<T> clazz) {
         return null;
     }
-
 
     private <T> T parseElement(String element, Function<String, T> parser) throws UaSerializationException {
         requireNextStartElement(element);
@@ -682,8 +698,10 @@ public class XmlDecoder implements UaDecoder {
 
     private void requireNextStartElement(String element) throws UaSerializationException {
         if (!nextStartElement(element)) {
-            throw new UaSerializationException(StatusCodes.Bad_DecodingError,
-                "start of element '" + element + "' not found");
+            throw new UaSerializationException(
+                StatusCodes.Bad_DecodingError,
+                "start of element '" + element + "' not found"
+            );
         }
     }
 
@@ -702,8 +720,10 @@ public class XmlDecoder implements UaDecoder {
 
     private void requireNextEndElement(String element) throws UaSerializationException {
         if (!nextEndElement(element)) {
-            throw new UaSerializationException(StatusCodes.Bad_DecodingError,
-                "end of element '" + element + "' not found");
+            throw new UaSerializationException(
+                StatusCodes.Bad_DecodingError,
+                "end of element '" + element + "' not found"
+            );
         }
     }
 
@@ -713,8 +733,10 @@ public class XmlDecoder implements UaDecoder {
 
     private void requireCurrentElement(String element) throws UaSerializationException {
         if (!currentElement(element)) {
-            throw new UaSerializationException(StatusCodes.Bad_DecodingError,
-                "expected current element '" + element + "'");
+            throw new UaSerializationException(
+                StatusCodes.Bad_DecodingError,
+                "expected current element '" + element + "'"
+            );
         }
     }
 

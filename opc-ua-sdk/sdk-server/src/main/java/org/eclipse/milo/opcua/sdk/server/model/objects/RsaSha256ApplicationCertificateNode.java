@@ -25,17 +25,17 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UByte;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 
 @UaObjectNode(typeName = "0:RsaSha256ApplicationCertificateType")
-public class RsaSha256ApplicationCertificateNode extends ApplicationCertificateNode implements RsaSha256ApplicationCertificateType {
+public class RsaSha256ApplicationCertificateNode extends ApplicationCertificateNode
+        implements RsaSha256ApplicationCertificateType {
 
-    public RsaSha256ApplicationCertificateNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public RsaSha256ApplicationCertificateNode(UaNodeManager nodeManager,
+                                               NodeId nodeId,
+                                               QualifiedName browseName,
+                                               LocalizedText displayName,
+                                               Optional<LocalizedText> description,
+                                               Optional<UInteger> writeMask,
+                                               Optional<UInteger> userWriteMask,
+                                               UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }

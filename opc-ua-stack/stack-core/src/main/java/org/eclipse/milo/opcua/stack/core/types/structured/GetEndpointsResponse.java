@@ -41,35 +41,50 @@ public class GetEndpointsResponse implements UaResponseMessage {
         this._endpoints = _endpoints;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public EndpointDescription[] getEndpoints() { return _endpoints; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public EndpointDescription[] getEndpoints() {
+        return _endpoints;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(GetEndpointsResponse getEndpointsResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", getEndpointsResponse._responseHeader != null ? getEndpointsResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            getEndpointsResponse._responseHeader != null ? getEndpointsResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeArray("Endpoints", getEndpointsResponse._endpoints, encoder::encodeSerializable);
     }
 
     public static GetEndpointsResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
-        EndpointDescription[] _endpoints = decoder.decodeArray("Endpoints", decoder::decodeSerializable, EndpointDescription.class);
+        EndpointDescription[] _endpoints = decoder
+            .decodeArray("Endpoints", decoder::decodeSerializable, EndpointDescription.class);
 
         return new GetEndpointsResponse(_responseHeader, _endpoints);
     }
 
     static {
-        DelegateRegistry.registerEncoder(GetEndpointsResponse::encode, GetEndpointsResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(GetEndpointsResponse::decode, GetEndpointsResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(GetEndpointsResponse::encode, GetEndpointsResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(GetEndpointsResponse::decode, GetEndpointsResponse.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

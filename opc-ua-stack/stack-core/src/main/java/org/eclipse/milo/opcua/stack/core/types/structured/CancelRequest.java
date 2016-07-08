@@ -42,22 +42,34 @@ public class CancelRequest implements UaRequestMessage {
         this._requestHandle = _requestHandle;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public UInteger getRequestHandle() { return _requestHandle; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public UInteger getRequestHandle() {
+        return _requestHandle;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CancelRequest cancelRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", cancelRequest._requestHeader != null ? cancelRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            cancelRequest._requestHeader != null ? cancelRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeUInt32("RequestHandle", cancelRequest._requestHandle);
     }
 

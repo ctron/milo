@@ -39,45 +39,64 @@ public class QueryNextResponse implements UaResponseMessage {
         this._revisedContinuationPoint = null;
     }
 
-    public QueryNextResponse(ResponseHeader _responseHeader, QueryDataSet[] _queryDataSets, ByteString _revisedContinuationPoint) {
+    public QueryNextResponse(ResponseHeader _responseHeader,
+                             QueryDataSet[] _queryDataSets,
+                             ByteString _revisedContinuationPoint) {
         this._responseHeader = _responseHeader;
         this._queryDataSets = _queryDataSets;
         this._revisedContinuationPoint = _revisedContinuationPoint;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public QueryDataSet[] getQueryDataSets() { return _queryDataSets; }
+    public QueryDataSet[] getQueryDataSets() {
+        return _queryDataSets;
+    }
 
-    public ByteString getRevisedContinuationPoint() { return _revisedContinuationPoint; }
+    public ByteString getRevisedContinuationPoint() {
+        return _revisedContinuationPoint;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(QueryNextResponse queryNextResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", queryNextResponse._responseHeader != null ? queryNextResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            queryNextResponse._responseHeader != null ? queryNextResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeArray("QueryDataSets", queryNextResponse._queryDataSets, encoder::encodeSerializable);
         encoder.encodeByteString("RevisedContinuationPoint", queryNextResponse._revisedContinuationPoint);
     }
 
     public static QueryNextResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
-        QueryDataSet[] _queryDataSets = decoder.decodeArray("QueryDataSets", decoder::decodeSerializable, QueryDataSet.class);
+        QueryDataSet[] _queryDataSets = decoder
+            .decodeArray("QueryDataSets", decoder::decodeSerializable, QueryDataSet.class);
         ByteString _revisedContinuationPoint = decoder.decodeByteString("RevisedContinuationPoint");
 
         return new QueryNextResponse(_responseHeader, _queryDataSets, _revisedContinuationPoint);
     }
 
     static {
-        DelegateRegistry.registerEncoder(QueryNextResponse::encode, QueryNextResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(QueryNextResponse::decode, QueryNextResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(QueryNextResponse::encode, QueryNextResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(QueryNextResponse::decode, QueryNextResponse.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

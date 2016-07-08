@@ -42,35 +42,60 @@ public class MonitoredItemModifyRequest implements UaStructure {
         this._requestedParameters = _requestedParameters;
     }
 
-    public UInteger getMonitoredItemId() { return _monitoredItemId; }
+    public UInteger getMonitoredItemId() {
+        return _monitoredItemId;
+    }
 
-    public MonitoringParameters getRequestedParameters() { return _requestedParameters; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public MonitoringParameters getRequestedParameters() {
+        return _requestedParameters;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(MonitoredItemModifyRequest monitoredItemModifyRequest, UaEncoder encoder) {
         encoder.encodeUInt32("MonitoredItemId", monitoredItemModifyRequest._monitoredItemId);
-        encoder.encodeSerializable("RequestedParameters", monitoredItemModifyRequest._requestedParameters != null ? monitoredItemModifyRequest._requestedParameters : new MonitoringParameters());
+        encoder.encodeSerializable(
+            "RequestedParameters",
+            monitoredItemModifyRequest._requestedParameters != null ?
+                monitoredItemModifyRequest._requestedParameters :
+                new MonitoringParameters()
+        );
     }
 
     public static MonitoredItemModifyRequest decode(UaDecoder decoder) {
         UInteger _monitoredItemId = decoder.decodeUInt32("MonitoredItemId");
-        MonitoringParameters _requestedParameters = decoder.decodeSerializable("RequestedParameters", MonitoringParameters.class);
+        MonitoringParameters _requestedParameters = decoder
+            .decodeSerializable("RequestedParameters", MonitoringParameters.class);
 
         return new MonitoredItemModifyRequest(_monitoredItemId, _requestedParameters);
     }
 
     static {
-        DelegateRegistry.registerEncoder(MonitoredItemModifyRequest::encode, MonitoredItemModifyRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(MonitoredItemModifyRequest::decode, MonitoredItemModifyRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            MonitoredItemModifyRequest::encode,
+            MonitoredItemModifyRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            MonitoredItemModifyRequest::decode,
+            MonitoredItemModifyRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

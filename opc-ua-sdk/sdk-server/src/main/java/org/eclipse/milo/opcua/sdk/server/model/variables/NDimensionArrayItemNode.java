@@ -31,35 +31,45 @@ import org.eclipse.milo.opcua.stack.core.types.structured.AxisInformation;
 @UaVariableNode(typeName = "0:NDimensionArrayItemType")
 public class NDimensionArrayItemNode extends ArrayItemNode implements NDimensionArrayItemType {
 
-    public NDimensionArrayItemNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public NDimensionArrayItemNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public NDimensionArrayItemNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public NDimensionArrayItemNode(UaNodeManager nodeManager,
+                                   NodeId nodeId,
+                                   QualifiedName browseName,
+                                   LocalizedText displayName,
+                                   Optional<LocalizedText> description,
+                                   Optional<UInteger> writeMask,
+                                   Optional<UInteger> userWriteMask,
+                                   DataValue value,
+                                   NodeId dataType,
+                                   Integer valueRank,
+                                   Optional<UInteger[]> arrayDimensions,
+                                   UByte accessLevel,
+                                   UByte userAccessLevel,
+                                   Optional<Double> minimumSamplingInterval,
+                                   boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
-
 
     @Override
     public AxisInformation[] getAxisDefinition() {

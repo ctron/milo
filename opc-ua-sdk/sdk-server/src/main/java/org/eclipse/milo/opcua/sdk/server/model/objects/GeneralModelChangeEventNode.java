@@ -30,15 +30,14 @@ import org.eclipse.milo.opcua.stack.core.types.structured.ModelChangeStructureDa
 @UaObjectNode(typeName = "0:GeneralModelChangeEventType")
 public class GeneralModelChangeEventNode extends BaseModelChangeEventNode implements GeneralModelChangeEventType {
 
-    public GeneralModelChangeEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public GeneralModelChangeEventNode(UaNodeManager nodeManager,
+                                       NodeId nodeId,
+                                       QualifiedName browseName,
+                                       LocalizedText displayName,
+                                       Optional<LocalizedText> description,
+                                       Optional<UInteger> writeMask,
+                                       Optional<UInteger> userWriteMask,
+                                       UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }

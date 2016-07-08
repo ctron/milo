@@ -43,28 +43,39 @@ public class TransferResult implements UaStructure {
         this._availableSequenceNumbers = _availableSequenceNumbers;
     }
 
-    public StatusCode getStatusCode() { return _statusCode; }
+    public StatusCode getStatusCode() {
+        return _statusCode;
+    }
 
-    public UInteger[] getAvailableSequenceNumbers() { return _availableSequenceNumbers; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public UInteger[] getAvailableSequenceNumbers() {
+        return _availableSequenceNumbers;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(TransferResult transferResult, UaEncoder encoder) {
         encoder.encodeStatusCode("StatusCode", transferResult._statusCode);
-        encoder.encodeArray("AvailableSequenceNumbers", transferResult._availableSequenceNumbers, encoder::encodeUInt32);
+        encoder
+            .encodeArray("AvailableSequenceNumbers", transferResult._availableSequenceNumbers, encoder::encodeUInt32);
     }
 
     public static TransferResult decode(UaDecoder decoder) {
         StatusCode _statusCode = decoder.decodeStatusCode("StatusCode");
-        UInteger[] _availableSequenceNumbers = decoder.decodeArray("AvailableSequenceNumbers", decoder::decodeUInt32, UInteger.class);
+        UInteger[] _availableSequenceNumbers = decoder
+            .decodeArray("AvailableSequenceNumbers", decoder::decodeUInt32, UInteger.class);
 
         return new TransferResult(_statusCode, _availableSequenceNumbers);
     }

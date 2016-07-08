@@ -180,7 +180,8 @@ public final class ExpandedNodeId {
 
         return Objects.equal(serverIndex, that.serverIndex) &&
             Objects.equal(nodeId.getIdentifier(), that.nodeId.getIdentifier()) &&
-            (Objects.equal(namespaceUri, that.namespaceUri) || Objects.equal(nodeId.getNamespaceIndex(), that.nodeId.getNamespaceIndex()));
+            (Objects.equal(namespaceUri, that.namespaceUri) ||
+                Objects.equal(nodeId.getNamespaceIndex(), that.nodeId.getNamespaceIndex()));
     }
 
     @Override
@@ -222,20 +223,22 @@ public final class ExpandedNodeId {
         }
 
         switch (getType()) {
-            case Numeric:
-                sb.append("i=").append(getIdentifier());
-                break;
-            case String:
-                sb.append("s=").append(getIdentifier());
-                break;
-            case Guid:
-                sb.append("g=").append(getIdentifier());
-                break;
-            case Opaque:
-                ByteString bs = (ByteString) getIdentifier();
-                if (bs.isNull()) sb.append("b=");
-                else sb.append("b=").append(DatatypeConverter.printBase64Binary(bs.bytes()));
-                break;
+        case Numeric:
+            sb.append("i=").append(getIdentifier());
+            break;
+        case String:
+            sb.append("s=").append(getIdentifier());
+            break;
+        case Guid:
+            sb.append("g=").append(getIdentifier());
+            break;
+        case Opaque:
+            ByteString bs = (ByteString) getIdentifier();
+            if (bs.isNull())
+                sb.append("b=");
+            else
+                sb.append("b=").append(DatatypeConverter.printBase64Binary(bs.bytes()));
+            break;
         }
 
         return sb.toString();
@@ -264,16 +267,21 @@ public final class ExpandedNodeId {
             }
 
             switch (nodeId.getType()) {
-                case Guid:
-                    return new ExpandedNodeId(namespaceIndex, (UUID) identifier, namespaceUri, serverIndex);
-                case Numeric:
-                    return new ExpandedNodeId(namespaceIndex, ((UInteger) identifier).intValue(), namespaceUri, serverIndex);
-                case Opaque:
-                    return new ExpandedNodeId(namespaceIndex, (ByteString) identifier, namespaceUri, serverIndex);
-                case String:
-                    return new ExpandedNodeId(namespaceIndex, (String) identifier, namespaceUri, serverIndex);
-                default:
-                    throw new IllegalStateException("IdType " + nodeId.getType());
+            case Guid:
+                return new ExpandedNodeId(namespaceIndex, (UUID) identifier, namespaceUri, serverIndex);
+            case Numeric:
+                return new ExpandedNodeId(
+                    namespaceIndex,
+                    ((UInteger) identifier).intValue(),
+                    namespaceUri,
+                    serverIndex
+                );
+            case Opaque:
+                return new ExpandedNodeId(namespaceIndex, (ByteString) identifier, namespaceUri, serverIndex);
+            case String:
+                return new ExpandedNodeId(namespaceIndex, (String) identifier, namespaceUri, serverIndex);
+            default:
+                throw new IllegalStateException("IdType " + nodeId.getType());
             }
         } catch (Throwable t) {
             throw new UaRuntimeException(StatusCodes.Bad_NodeIdInvalid, t);

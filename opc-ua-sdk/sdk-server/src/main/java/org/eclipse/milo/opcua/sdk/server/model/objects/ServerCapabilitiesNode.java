@@ -32,15 +32,14 @@ import org.eclipse.milo.opcua.stack.core.types.structured.SignedSoftwareCertific
 @UaObjectNode(typeName = "0:ServerCapabilitiesType")
 public class ServerCapabilitiesNode extends BaseObjectNode implements ServerCapabilitiesType {
 
-    public ServerCapabilitiesNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ServerCapabilitiesNode(UaNodeManager nodeManager,
+                                  NodeId nodeId,
+                                  QualifiedName browseName,
+                                  LocalizedText displayName,
+                                  Optional<LocalizedText> description,
+                                  Optional<UInteger> writeMask,
+                                  Optional<UInteger> userWriteMask,
+                                  UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -54,7 +53,9 @@ public class ServerCapabilitiesNode extends BaseObjectNode implements ServerCapa
 
     @Override
     public PropertyNode getServerProfileArrayNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ServerCapabilitiesType.SERVER_PROFILE_ARRAY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ServerCapabilitiesType.SERVER_PROFILE_ARRAY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -92,7 +93,9 @@ public class ServerCapabilitiesNode extends BaseObjectNode implements ServerCapa
 
     @Override
     public PropertyNode getMinSupportedSampleRateNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ServerCapabilitiesType.MIN_SUPPORTED_SAMPLE_RATE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ServerCapabilitiesType.MIN_SUPPORTED_SAMPLE_RATE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -111,7 +114,9 @@ public class ServerCapabilitiesNode extends BaseObjectNode implements ServerCapa
 
     @Override
     public PropertyNode getMaxBrowseContinuationPointsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ServerCapabilitiesType.MAX_BROWSE_CONTINUATION_POINTS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ServerCapabilitiesType.MAX_BROWSE_CONTINUATION_POINTS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -130,7 +135,9 @@ public class ServerCapabilitiesNode extends BaseObjectNode implements ServerCapa
 
     @Override
     public PropertyNode getMaxQueryContinuationPointsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ServerCapabilitiesType.MAX_QUERY_CONTINUATION_POINTS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ServerCapabilitiesType.MAX_QUERY_CONTINUATION_POINTS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -149,7 +156,9 @@ public class ServerCapabilitiesNode extends BaseObjectNode implements ServerCapa
 
     @Override
     public PropertyNode getMaxHistoryContinuationPointsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ServerCapabilitiesType.MAX_HISTORY_CONTINUATION_POINTS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ServerCapabilitiesType.MAX_HISTORY_CONTINUATION_POINTS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -168,7 +177,9 @@ public class ServerCapabilitiesNode extends BaseObjectNode implements ServerCapa
 
     @Override
     public PropertyNode getSoftwareCertificatesNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ServerCapabilitiesType.SOFTWARE_CERTIFICATES.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ServerCapabilitiesType.SOFTWARE_CERTIFICATES.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -225,7 +236,9 @@ public class ServerCapabilitiesNode extends BaseObjectNode implements ServerCapa
 
     @Override
     public PropertyNode getMaxByteStringLengthNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ServerCapabilitiesType.MAX_BYTE_STRING_LENGTH.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ServerCapabilitiesType.MAX_BYTE_STRING_LENGTH.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

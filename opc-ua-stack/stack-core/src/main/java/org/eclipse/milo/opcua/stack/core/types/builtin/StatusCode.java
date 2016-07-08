@@ -102,8 +102,7 @@ public final class StatusCode {
     public String toString() {
         ToStringHelper helper = MoreObjects.toStringHelper(this);
 
-        StatusCodes.lookup(value).ifPresent(
-            nameAndDesc -> helper.add("name", nameAndDesc[0]));
+        StatusCodes.lookup(value).ifPresent(nameAndDesc -> helper.add("name", nameAndDesc[0]));
 
         helper.add("value", String.format("0x%08X", value));
         helper.add("quality", quality(this));
@@ -112,10 +111,14 @@ public final class StatusCode {
     }
 
     private static String quality(StatusCode statusCode) {
-        if (statusCode.isGood()) return "good";
-        else if (statusCode.isBad()) return "bad";
-        else if (statusCode.isUncertain()) return "uncertain";
-        else return "unknown";
+        if (statusCode.isGood())
+            return "good";
+        else if (statusCode.isBad())
+            return "bad";
+        else if (statusCode.isUncertain())
+            return "uncertain";
+        else
+            return "unknown";
     }
 
 }

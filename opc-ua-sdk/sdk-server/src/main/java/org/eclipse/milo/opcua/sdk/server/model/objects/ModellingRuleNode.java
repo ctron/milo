@@ -30,15 +30,14 @@ import org.eclipse.milo.opcua.stack.core.types.enumerated.NamingRuleType;
 @UaObjectNode(typeName = "0:ModellingRuleType")
 public class ModellingRuleNode extends BaseObjectNode implements ModellingRuleType {
 
-    public ModellingRuleNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ModellingRuleNode(UaNodeManager nodeManager,
+                             NodeId nodeId,
+                             QualifiedName browseName,
+                             LocalizedText displayName,
+                             Optional<LocalizedText> description,
+                             Optional<UInteger> writeMask,
+                             Optional<UInteger> userWriteMask,
+                             UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }

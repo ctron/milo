@@ -46,7 +46,12 @@ public class QueryFirstResponse implements UaResponseMessage {
         this._filterResult = null;
     }
 
-    public QueryFirstResponse(ResponseHeader _responseHeader, QueryDataSet[] _queryDataSets, ByteString _continuationPoint, ParsingResult[] _parsingResults, DiagnosticInfo[] _diagnosticInfos, ContentFilterResult _filterResult) {
+    public QueryFirstResponse(ResponseHeader _responseHeader,
+                              QueryDataSet[] _queryDataSets,
+                              ByteString _continuationPoint,
+                              ParsingResult[] _parsingResults,
+                              DiagnosticInfo[] _diagnosticInfos,
+                              ContentFilterResult _filterResult) {
         this._responseHeader = _responseHeader;
         this._queryDataSets = _queryDataSets;
         this._continuationPoint = _continuationPoint;
@@ -55,51 +60,86 @@ public class QueryFirstResponse implements UaResponseMessage {
         this._filterResult = _filterResult;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public QueryDataSet[] getQueryDataSets() { return _queryDataSets; }
+    public QueryDataSet[] getQueryDataSets() {
+        return _queryDataSets;
+    }
 
-    public ByteString getContinuationPoint() { return _continuationPoint; }
+    public ByteString getContinuationPoint() {
+        return _continuationPoint;
+    }
 
-    public ParsingResult[] getParsingResults() { return _parsingResults; }
+    public ParsingResult[] getParsingResults() {
+        return _parsingResults;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
-    public ContentFilterResult getFilterResult() { return _filterResult; }
+    public ContentFilterResult getFilterResult() {
+        return _filterResult;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(QueryFirstResponse queryFirstResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", queryFirstResponse._responseHeader != null ? queryFirstResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            queryFirstResponse._responseHeader != null ? queryFirstResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeArray("QueryDataSets", queryFirstResponse._queryDataSets, encoder::encodeSerializable);
         encoder.encodeByteString("ContinuationPoint", queryFirstResponse._continuationPoint);
         encoder.encodeArray("ParsingResults", queryFirstResponse._parsingResults, encoder::encodeSerializable);
         encoder.encodeArray("DiagnosticInfos", queryFirstResponse._diagnosticInfos, encoder::encodeDiagnosticInfo);
-        encoder.encodeSerializable("FilterResult", queryFirstResponse._filterResult != null ? queryFirstResponse._filterResult : new ContentFilterResult());
+        encoder.encodeSerializable(
+            "FilterResult",
+            queryFirstResponse._filterResult != null ? queryFirstResponse._filterResult : new ContentFilterResult()
+        );
     }
 
     public static QueryFirstResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
-        QueryDataSet[] _queryDataSets = decoder.decodeArray("QueryDataSets", decoder::decodeSerializable, QueryDataSet.class);
+        QueryDataSet[] _queryDataSets = decoder
+            .decodeArray("QueryDataSets", decoder::decodeSerializable, QueryDataSet.class);
         ByteString _continuationPoint = decoder.decodeByteString("ContinuationPoint");
-        ParsingResult[] _parsingResults = decoder.decodeArray("ParsingResults", decoder::decodeSerializable, ParsingResult.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        ParsingResult[] _parsingResults = decoder
+            .decodeArray("ParsingResults", decoder::decodeSerializable, ParsingResult.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
         ContentFilterResult _filterResult = decoder.decodeSerializable("FilterResult", ContentFilterResult.class);
 
-        return new QueryFirstResponse(_responseHeader, _queryDataSets, _continuationPoint, _parsingResults, _diagnosticInfos, _filterResult);
+        return new QueryFirstResponse(
+            _responseHeader,
+            _queryDataSets,
+            _continuationPoint,
+            _parsingResults,
+            _diagnosticInfos,
+            _filterResult
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(QueryFirstResponse::encode, QueryFirstResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(QueryFirstResponse::decode, QueryFirstResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(QueryFirstResponse::encode, QueryFirstResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(QueryFirstResponse::decode, QueryFirstResponse.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

@@ -19,7 +19,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.LocalizedText;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 
-
 public interface MultiStateDiscreteType extends DiscreteItemType {
 
     Property<LocalizedText[]> ENUM_STRINGS = new BasicProperty<>(
@@ -28,7 +27,6 @@ public interface MultiStateDiscreteType extends DiscreteItemType {
         1,
         LocalizedText[].class
     );
-
 
     LocalizedText[] getEnumStrings();
 

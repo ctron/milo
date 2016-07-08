@@ -38,20 +38,32 @@ public class CloseSecureChannelResponse implements UaResponseMessage {
         this._responseHeader = _responseHeader;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CloseSecureChannelResponse closeSecureChannelResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", closeSecureChannelResponse._responseHeader != null ? closeSecureChannelResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            closeSecureChannelResponse._responseHeader != null ?
+                closeSecureChannelResponse._responseHeader :
+                new ResponseHeader()
+        );
     }
 
     public static CloseSecureChannelResponse decode(UaDecoder decoder) {
@@ -61,8 +73,18 @@ public class CloseSecureChannelResponse implements UaResponseMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(CloseSecureChannelResponse::encode, CloseSecureChannelResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(CloseSecureChannelResponse::decode, CloseSecureChannelResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            CloseSecureChannelResponse::encode,
+            CloseSecureChannelResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            CloseSecureChannelResponse::decode,
+            CloseSecureChannelResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

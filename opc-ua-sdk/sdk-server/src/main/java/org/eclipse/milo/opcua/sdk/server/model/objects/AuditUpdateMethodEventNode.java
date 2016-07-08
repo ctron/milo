@@ -29,15 +29,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:AuditUpdateMethodEventType")
 public class AuditUpdateMethodEventNode extends AuditEventNode implements AuditUpdateMethodEventType {
 
-    public AuditUpdateMethodEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditUpdateMethodEventNode(UaNodeManager nodeManager,
+                                      NodeId nodeId,
+                                      QualifiedName browseName,
+                                      LocalizedText displayName,
+                                      Optional<LocalizedText> description,
+                                      Optional<UInteger> writeMask,
+                                      Optional<UInteger> userWriteMask,
+                                      UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -70,7 +69,9 @@ public class AuditUpdateMethodEventNode extends AuditEventNode implements AuditU
 
     @Override
     public PropertyNode getInputArgumentsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditUpdateMethodEventType.INPUT_ARGUMENTS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditUpdateMethodEventType.INPUT_ARGUMENTS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

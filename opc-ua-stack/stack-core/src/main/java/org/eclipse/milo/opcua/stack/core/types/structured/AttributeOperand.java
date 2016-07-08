@@ -43,7 +43,11 @@ public class AttributeOperand extends FilterOperand {
         this._indexRange = null;
     }
 
-    public AttributeOperand(NodeId _nodeId, String _alias, RelativePath _browsePath, UInteger _attributeId, String _indexRange) {
+    public AttributeOperand(NodeId _nodeId,
+                            String _alias,
+                            RelativePath _browsePath,
+                            UInteger _attributeId,
+                            String _indexRange) {
         super();
         this._nodeId = _nodeId;
         this._alias = _alias;
@@ -52,30 +56,48 @@ public class AttributeOperand extends FilterOperand {
         this._indexRange = _indexRange;
     }
 
-    public NodeId getNodeId() { return _nodeId; }
+    public NodeId getNodeId() {
+        return _nodeId;
+    }
 
-    public String getAlias() { return _alias; }
+    public String getAlias() {
+        return _alias;
+    }
 
-    public RelativePath getBrowsePath() { return _browsePath; }
+    public RelativePath getBrowsePath() {
+        return _browsePath;
+    }
 
-    public UInteger getAttributeId() { return _attributeId; }
+    public UInteger getAttributeId() {
+        return _attributeId;
+    }
 
-    public String getIndexRange() { return _indexRange; }
+    public String getIndexRange() {
+        return _indexRange;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(AttributeOperand attributeOperand, UaEncoder encoder) {
         encoder.encodeNodeId("NodeId", attributeOperand._nodeId);
         encoder.encodeString("Alias", attributeOperand._alias);
-        encoder.encodeSerializable("BrowsePath", attributeOperand._browsePath != null ? attributeOperand._browsePath : new RelativePath());
+        encoder.encodeSerializable(
+            "BrowsePath",
+            attributeOperand._browsePath != null ? attributeOperand._browsePath : new RelativePath()
+        );
         encoder.encodeUInt32("AttributeId", attributeOperand._attributeId);
         encoder.encodeString("IndexRange", attributeOperand._indexRange);
     }
@@ -91,8 +113,10 @@ public class AttributeOperand extends FilterOperand {
     }
 
     static {
-        DelegateRegistry.registerEncoder(AttributeOperand::encode, AttributeOperand.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(AttributeOperand::decode, AttributeOperand.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(AttributeOperand::encode, AttributeOperand.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(AttributeOperand::decode, AttributeOperand.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

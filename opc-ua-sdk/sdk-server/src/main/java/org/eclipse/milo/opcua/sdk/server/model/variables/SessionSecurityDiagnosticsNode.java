@@ -34,33 +34,44 @@ import org.eclipse.milo.opcua.stack.core.types.structured.SessionSecurityDiagnos
 @UaVariableNode(typeName = "0:SessionSecurityDiagnosticsType")
 public class SessionSecurityDiagnosticsNode extends BaseDataVariableNode implements SessionSecurityDiagnosticsType {
 
-    public SessionSecurityDiagnosticsNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public SessionSecurityDiagnosticsNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public SessionSecurityDiagnosticsNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public SessionSecurityDiagnosticsNode(UaNodeManager nodeManager,
+                                          NodeId nodeId,
+                                          QualifiedName browseName,
+                                          LocalizedText displayName,
+                                          Optional<LocalizedText> description,
+                                          Optional<UInteger> writeMask,
+                                          Optional<UInteger> userWriteMask,
+                                          DataValue value,
+                                          NodeId dataType,
+                                          Integer valueRank,
+                                          Optional<UInteger[]> arrayDimensions,
+                                          UByte accessLevel,
+                                          UByte userAccessLevel,
+                                          Optional<Double> minimumSamplingInterval,
+                                          boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
 
     @Override
@@ -96,8 +107,7 @@ public class SessionSecurityDiagnosticsNode extends BaseDataVariableNode impleme
 
     @Override
     public void setSessionId(NodeId value) {
-        getVariableComponent("SessionId")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SessionId").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -116,8 +126,7 @@ public class SessionSecurityDiagnosticsNode extends BaseDataVariableNode impleme
 
     @Override
     public void setClientUserIdOfSession(String value) {
-        getVariableComponent("ClientUserIdOfSession")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ClientUserIdOfSession").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -136,8 +145,7 @@ public class SessionSecurityDiagnosticsNode extends BaseDataVariableNode impleme
 
     @Override
     public void setClientUserIdHistory(String[] value) {
-        getVariableComponent("ClientUserIdHistory")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ClientUserIdHistory").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -156,8 +164,7 @@ public class SessionSecurityDiagnosticsNode extends BaseDataVariableNode impleme
 
     @Override
     public void setAuthenticationMechanism(String value) {
-        getVariableComponent("AuthenticationMechanism")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("AuthenticationMechanism").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -176,8 +183,7 @@ public class SessionSecurityDiagnosticsNode extends BaseDataVariableNode impleme
 
     @Override
     public void setEncoding(String value) {
-        getVariableComponent("Encoding")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("Encoding").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -196,8 +202,7 @@ public class SessionSecurityDiagnosticsNode extends BaseDataVariableNode impleme
 
     @Override
     public void setTransportProtocol(String value) {
-        getVariableComponent("TransportProtocol")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("TransportProtocol").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -216,8 +221,7 @@ public class SessionSecurityDiagnosticsNode extends BaseDataVariableNode impleme
 
     @Override
     public void setSecurityMode(MessageSecurityMode value) {
-        getVariableComponent("SecurityMode")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SecurityMode").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -236,8 +240,7 @@ public class SessionSecurityDiagnosticsNode extends BaseDataVariableNode impleme
 
     @Override
     public void setSecurityPolicyUri(String value) {
-        getVariableComponent("SecurityPolicyUri")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SecurityPolicyUri").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -256,8 +259,7 @@ public class SessionSecurityDiagnosticsNode extends BaseDataVariableNode impleme
 
     @Override
     public void setClientCertificate(ByteString value) {
-        getVariableComponent("ClientCertificate")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ClientCertificate").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

@@ -57,7 +57,8 @@ public class OpcUaSubscription implements UaSubscription {
     private final OpcUaClient client;
     private final UInteger subscriptionId;
 
-    public OpcUaSubscription(OpcUaClient client, UInteger subscriptionId,
+    public OpcUaSubscription(OpcUaClient client,
+                             UInteger subscriptionId,
                              double revisedPublishingInterval,
                              UInteger revisedLifetimeCount,
                              UInteger revisedMaxKeepAliveCount,
@@ -79,126 +80,133 @@ public class OpcUaSubscription implements UaSubscription {
     public CompletableFuture<List<UaMonitoredItem>> createMonitoredItems(TimestampsToReturn timestampsToReturn,
                                                                          List<MonitoredItemCreateRequest> itemsToCreate) {
 
-        return client.createMonitoredItems(
-            subscriptionId,
-            timestampsToReturn,
-            itemsToCreate).thenApply(response -> {
+        return client.createMonitoredItems(subscriptionId, timestampsToReturn, itemsToCreate).thenApply(
+            response -> {
 
-            List<UaMonitoredItem> createdItems = newArrayList();
+                List<UaMonitoredItem> createdItems = newArrayList();
 
-            MonitoredItemCreateResult[] results = response.getResults();
+                MonitoredItemCreateResult[] results = response.getResults();
 
-            for (int i = 0; i < itemsToCreate.size(); i++) {
-                MonitoredItemCreateRequest request = itemsToCreate.get(i);
-                MonitoredItemCreateResult result = results[i];
+                for (int i = 0; i < itemsToCreate.size(); i++) {
+                    MonitoredItemCreateRequest request = itemsToCreate.get(i);
+                    MonitoredItemCreateResult result = results[i];
 
-                OpcUaMonitoredItem item = new OpcUaMonitoredItem(
-                    request.getRequestedParameters().getClientHandle(),
-                    request.getItemToMonitor(),
-                    result.getMonitoredItemId(),
-                    result.getStatusCode(),
-                    result.getRevisedSamplingInterval(),
-                    result.getRevisedQueueSize(),
-                    result.getFilterResult(),
-                    request.getMonitoringMode());
+                    OpcUaMonitoredItem item = new OpcUaMonitoredItem(
+                        request.getRequestedParameters().getClientHandle(),
+                        request.getItemToMonitor(),
+                        result.getMonitoredItemId(),
+                        result.getStatusCode(),
+                        result.getRevisedSamplingInterval(),
+                        result.getRevisedQueueSize(),
+                        result.getFilterResult(),
+                        request.getMonitoringMode()
+                    );
 
-                if (item.getStatusCode().isGood()) {
-                    itemsByClientHandle.put(item.getClientHandle(), item);
-                    itemsByServerHandle.put(item.getMonitoredItemId(), item);
+                    if (item.getStatusCode().isGood()) {
+                        itemsByClientHandle.put(item.getClientHandle(), item);
+                        itemsByServerHandle.put(item.getMonitoredItemId(), item);
+                    }
+
+                    createdItems.add(item);
                 }
 
-                createdItems.add(item);
+                return createdItems;
             }
-
-            return createdItems;
-        });
+        );
     }
 
     @Override
     public CompletableFuture<List<StatusCode>> modifyMonitoredItems(TimestampsToReturn timestampsToReturn,
                                                                     List<MonitoredItemModifyRequest> itemsToModify) {
 
-        CompletableFuture<ModifyMonitoredItemsResponse> future =
-            client.modifyMonitoredItems(subscriptionId, timestampsToReturn, itemsToModify);
+        CompletableFuture<ModifyMonitoredItemsResponse> future = client
+            .modifyMonitoredItems(subscriptionId, timestampsToReturn, itemsToModify);
 
-        return future.thenApply(response -> {
-            List<StatusCode> statusCodes = newArrayList();
+        return future.thenApply(
+            response -> {
+                List<StatusCode> statusCodes = newArrayList();
 
-            MonitoredItemModifyResult[] results = response.getResults();
+                MonitoredItemModifyResult[] results = response.getResults();
 
-            for (int i = 0; i < results.length; i++) {
-                MonitoredItemModifyRequest request = itemsToModify.get(i);
-                MonitoredItemModifyResult result = results[i];
-                StatusCode statusCode = result.getStatusCode();
+                for (int i = 0; i < results.length; i++) {
+                    MonitoredItemModifyRequest request = itemsToModify.get(i);
+                    MonitoredItemModifyResult result = results[i];
+                    StatusCode statusCode = result.getStatusCode();
 
-                OpcUaMonitoredItem item = itemsByServerHandle.get(request.getMonitoredItemId());
+                    OpcUaMonitoredItem item = itemsByServerHandle.get(request.getMonitoredItemId());
 
-                if (item != null) {
-                    item.setStatusCode(statusCode);
-                    item.setRevisedSamplingInterval(result.getRevisedSamplingInterval());
-                    item.setRevisedQueueSize(result.getRevisedQueueSize());
-                    item.setFilterResult(result.getFilterResult());
+                    if (item != null) {
+                        item.setStatusCode(statusCode);
+                        item.setRevisedSamplingInterval(result.getRevisedSamplingInterval());
+                        item.setRevisedQueueSize(result.getRevisedQueueSize());
+                        item.setFilterResult(result.getFilterResult());
+                    }
+
+                    statusCodes.add(statusCode);
                 }
 
-                statusCodes.add(statusCode);
+                return statusCodes;
             }
-
-            return statusCodes;
-        });
+        );
     }
 
     @Override
     public CompletableFuture<List<StatusCode>> deleteMonitoredItems(List<UaMonitoredItem> itemsToDelete) {
 
-        List<UInteger> monitoredItemIds = itemsToDelete.stream()
+        List<UInteger> monitoredItemIds = itemsToDelete
+            .stream()
             .map(UaMonitoredItem::getMonitoredItemId)
             .collect(Collectors.toList());
 
-        return client.deleteMonitoredItems(subscriptionId, monitoredItemIds).thenApply(response -> {
-            StatusCode[] results = response.getResults();
+        return client.deleteMonitoredItems(subscriptionId, monitoredItemIds).thenApply(
+            response -> {
+                StatusCode[] results = response.getResults();
 
-            for (UaMonitoredItem item : itemsToDelete) {
-                itemsByClientHandle.remove(item.getClientHandle());
-                itemsByServerHandle.remove(item.getMonitoredItemId());
+                for (UaMonitoredItem item : itemsToDelete) {
+                    itemsByClientHandle.remove(item.getClientHandle());
+                    itemsByServerHandle.remove(item.getMonitoredItemId());
+                }
+
+                return Arrays.asList(results);
             }
-
-            return Arrays.asList(results);
-        });
+        );
     }
-
 
     @Override
     public CompletableFuture<List<StatusCode>> setMonitoringMode(MonitoringMode monitoringMode,
                                                                  List<UaMonitoredItem> items) {
 
-        List<UInteger> monitoredItemIds = items.stream()
+        List<UInteger> monitoredItemIds = items
+            .stream()
             .map(UaMonitoredItem::getMonitoredItemId)
             .collect(Collectors.toList());
 
-        CompletableFuture<SetMonitoringModeResponse> future =
-            client.setMonitoringMode(subscriptionId, monitoringMode, monitoredItemIds);
+        CompletableFuture<SetMonitoringModeResponse> future = client
+            .setMonitoringMode(subscriptionId, monitoringMode, monitoredItemIds);
 
-        return future.thenApply(response -> {
-            StatusCode[] results = response.getResults();
+        return future.thenApply(
+            response -> {
+                StatusCode[] results = response.getResults();
 
-            for (int i = 0; i < monitoredItemIds.size(); i++) {
-                UInteger id = monitoredItemIds.get(i);
-                OpcUaMonitoredItem item = itemsByServerHandle.get(id);
+                for (int i = 0; i < monitoredItemIds.size(); i++) {
+                    UInteger id = monitoredItemIds.get(i);
+                    OpcUaMonitoredItem item = itemsByServerHandle.get(id);
 
-                StatusCode result = results[i];
-                if (result.isGood() && item != null) {
-                    item.setMonitoringMode(monitoringMode);
+                    StatusCode result = results[i];
+                    if (result.isGood() && item != null) {
+                        item.setMonitoringMode(monitoringMode);
+                    }
                 }
-            }
 
-            return Arrays.asList(results);
-        });
+                return Arrays.asList(results);
+            }
+        );
     }
 
     @Override
     public CompletableFuture<StatusCode> setPublishingMode(boolean publishingEnabled) {
-        return client.setPublishingMode(publishingEnabled, newArrayList(subscriptionId))
-            .thenApply(response -> {
+        return client.setPublishingMode(publishingEnabled, newArrayList(subscriptionId)).thenApply(
+            response -> {
                 StatusCode statusCode = response.getResults()[0];
 
                 if (statusCode.isGood()) {
@@ -206,7 +214,8 @@ public class OpcUaSubscription implements UaSubscription {
                 }
 
                 return statusCode;
-            });
+            }
+        );
     }
 
     @Override

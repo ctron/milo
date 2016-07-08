@@ -41,22 +41,34 @@ public class RegisterNodesResponse implements UaResponseMessage {
         this._registeredNodeIds = _registeredNodeIds;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public NodeId[] getRegisteredNodeIds() { return _registeredNodeIds; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId[] getRegisteredNodeIds() {
+        return _registeredNodeIds;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(RegisterNodesResponse registerNodesResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", registerNodesResponse._responseHeader != null ? registerNodesResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            registerNodesResponse._responseHeader != null ? registerNodesResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeArray("RegisteredNodeIds", registerNodesResponse._registeredNodeIds, encoder::encodeNodeId);
     }
 
@@ -68,8 +80,18 @@ public class RegisterNodesResponse implements UaResponseMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(RegisterNodesResponse::encode, RegisterNodesResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(RegisterNodesResponse::decode, RegisterNodesResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            RegisterNodesResponse::encode,
+            RegisterNodesResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            RegisterNodesResponse::decode,
+            RegisterNodesResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

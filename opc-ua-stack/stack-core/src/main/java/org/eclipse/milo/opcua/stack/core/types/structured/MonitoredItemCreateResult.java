@@ -45,7 +45,11 @@ public class MonitoredItemCreateResult implements UaStructure {
         this._filterResult = null;
     }
 
-    public MonitoredItemCreateResult(StatusCode _statusCode, UInteger _monitoredItemId, Double _revisedSamplingInterval, UInteger _revisedQueueSize, ExtensionObject _filterResult) {
+    public MonitoredItemCreateResult(StatusCode _statusCode,
+                                     UInteger _monitoredItemId,
+                                     Double _revisedSamplingInterval,
+                                     UInteger _revisedQueueSize,
+                                     ExtensionObject _filterResult) {
         this._statusCode = _statusCode;
         this._monitoredItemId = _monitoredItemId;
         this._revisedSamplingInterval = _revisedSamplingInterval;
@@ -53,25 +57,40 @@ public class MonitoredItemCreateResult implements UaStructure {
         this._filterResult = _filterResult;
     }
 
-    public StatusCode getStatusCode() { return _statusCode; }
+    public StatusCode getStatusCode() {
+        return _statusCode;
+    }
 
-    public UInteger getMonitoredItemId() { return _monitoredItemId; }
+    public UInteger getMonitoredItemId() {
+        return _monitoredItemId;
+    }
 
-    public Double getRevisedSamplingInterval() { return _revisedSamplingInterval; }
+    public Double getRevisedSamplingInterval() {
+        return _revisedSamplingInterval;
+    }
 
-    public UInteger getRevisedQueueSize() { return _revisedQueueSize; }
+    public UInteger getRevisedQueueSize() {
+        return _revisedQueueSize;
+    }
 
-    public ExtensionObject getFilterResult() { return _filterResult; }
+    public ExtensionObject getFilterResult() {
+        return _filterResult;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(MonitoredItemCreateResult monitoredItemCreateResult, UaEncoder encoder) {
         encoder.encodeStatusCode("StatusCode", monitoredItemCreateResult._statusCode);
@@ -88,12 +107,28 @@ public class MonitoredItemCreateResult implements UaStructure {
         UInteger _revisedQueueSize = decoder.decodeUInt32("RevisedQueueSize");
         ExtensionObject _filterResult = decoder.decodeExtensionObject("FilterResult");
 
-        return new MonitoredItemCreateResult(_statusCode, _monitoredItemId, _revisedSamplingInterval, _revisedQueueSize, _filterResult);
+        return new MonitoredItemCreateResult(
+            _statusCode,
+            _monitoredItemId,
+            _revisedSamplingInterval,
+            _revisedQueueSize,
+            _filterResult
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(MonitoredItemCreateResult::encode, MonitoredItemCreateResult.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(MonitoredItemCreateResult::decode, MonitoredItemCreateResult.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            MonitoredItemCreateResult::encode,
+            MonitoredItemCreateResult.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            MonitoredItemCreateResult::decode,
+            MonitoredItemCreateResult.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

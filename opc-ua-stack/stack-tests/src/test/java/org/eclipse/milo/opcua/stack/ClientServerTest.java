@@ -69,28 +69,84 @@ public class ClientServerTest extends SecurityFixture {
     @DataProvider
     public Object[][] getVariants() {
         return new Object[][]{
-            {new Variant(true)},
-            {new Variant((byte) 1)},
-            {new Variant(ubyte(1))},
-            {new Variant((short) 1)},
-            {new Variant(ushort(1))},
-            {new Variant(1)},
-            {new Variant(uint(1))},
-            {new Variant(1L)},
-            {new Variant(ulong(1L))},
-            {new Variant(3.14f)},
-            {new Variant(6.12d)},
-            {new Variant("hello, world")},
-            {new Variant(DateTime.now())},
-            {new Variant(UUID.randomUUID())},
-            {new Variant(ByteString.of(new byte[]{1, 2, 3, 4}))},
-            {new Variant(new XmlElement("<tag>hello</tag>"))},
-            {new Variant(new NodeId(0, 42))},
-            {new Variant(new ExpandedNodeId(1, 42, "uri", 1))},
-            {new Variant(StatusCode.GOOD)},
-            {new Variant(new QualifiedName(0, "QualifiedName"))},
-            {new Variant(LocalizedText.english("LocalizedText"))},
-            {new Variant(ExtensionObject.encode(new ReadValueId(NodeId.NULL_VALUE, uint(1), null, new QualifiedName(0, "DataEncoding"))))},
+            {
+                new Variant(true)
+            },
+            {
+                new Variant((byte) 1)
+            },
+            {
+                new Variant(ubyte(1))
+            },
+            {
+                new Variant((short) 1)
+            },
+            {
+                new Variant(ushort(1))
+            },
+            {
+                new Variant(1)
+            },
+            {
+                new Variant(uint(1))
+            },
+            {
+                new Variant(1L)
+            },
+            {
+                new Variant(ulong(1L))
+            },
+            {
+                new Variant(3.14f)
+            },
+            {
+                new Variant(6.12d)
+            },
+            {
+                new Variant("hello, world")
+            },
+            {
+                new Variant(DateTime.now())
+            },
+            {
+                new Variant(UUID.randomUUID())
+            },
+            {
+                new Variant(
+                    ByteString.of(
+                        new byte[]{
+                            1,
+                            2,
+                            3,
+                            4
+                        }
+                    )
+                )
+            },
+            {
+                new Variant(new XmlElement("<tag>hello</tag>"))
+            },
+            {
+                new Variant(new NodeId(0, 42))
+            },
+            {
+                new Variant(new ExpandedNodeId(1, 42, "uri", 1))
+            },
+            {
+                new Variant(StatusCode.GOOD)
+            },
+            {
+                new Variant(new QualifiedName(0, "QualifiedName"))
+            },
+            {
+                new Variant(LocalizedText.english("LocalizedText"))
+            },
+            {
+                new Variant(
+                    ExtensionObject
+                        .encode(new ReadValueId(NodeId.NULL_VALUE, uint(1), null, new QualifiedName(0, "DataEncoding")))
+                )
+            },
         };
     }
 
@@ -106,7 +162,8 @@ public class ClientServerTest extends SecurityFixture {
 
         CryptoRestrictions.remove();
 
-        UaTcpStackServerConfig config = UaTcpStackServerConfig.builder()
+        UaTcpStackServerConfig config = UaTcpStackServerConfig
+            .builder()
             .setServerName("test")
             .setCertificateManager(serverCertificateManager)
             .setCertificateValidator(serverCertificateValidator)
@@ -114,26 +171,68 @@ public class ClientServerTest extends SecurityFixture {
 
         server = new UaTcpStackServer(config);
 
-        server.addEndpoint("opc.tcp://localhost:12685/test", null)
-            .addEndpoint("opc.tcp://localhost:12685/test", null, serverCertificate, SecurityPolicy.Basic128Rsa15, MessageSecurityMode.Sign)
-            .addEndpoint("opc.tcp://localhost:12685/test", null, serverCertificate, SecurityPolicy.Basic256, MessageSecurityMode.Sign)
-            .addEndpoint("opc.tcp://localhost:12685/test", null, serverCertificate, SecurityPolicy.Basic256Sha256, MessageSecurityMode.Sign)
-            .addEndpoint("opc.tcp://localhost:12685/test", null, serverCertificate, SecurityPolicy.Basic128Rsa15, MessageSecurityMode.SignAndEncrypt)
-            .addEndpoint("opc.tcp://localhost:12685/test", null, serverCertificate, SecurityPolicy.Basic256, MessageSecurityMode.SignAndEncrypt)
-            .addEndpoint("opc.tcp://localhost:12685/test", null, serverCertificate, SecurityPolicy.Basic256Sha256, MessageSecurityMode.SignAndEncrypt);
-
-        server.addRequestHandler(TestStackRequest.class, (service) -> {
-            TestStackRequest request = service.getRequest();
-
-            ResponseHeader header = new ResponseHeader(
-                DateTime.now(),
-                request.getRequestHeader().getRequestHandle(),
-                StatusCode.GOOD,
-                null, null, null
+        server
+            .addEndpoint("opc.tcp://localhost:12685/test", null)
+            .addEndpoint(
+                "opc.tcp://localhost:12685/test",
+                null,
+                serverCertificate,
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.Sign
+            )
+            .addEndpoint(
+                "opc.tcp://localhost:12685/test",
+                null,
+                serverCertificate,
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.Sign
+            )
+            .addEndpoint(
+                "opc.tcp://localhost:12685/test",
+                null,
+                serverCertificate,
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.Sign
+            )
+            .addEndpoint(
+                "opc.tcp://localhost:12685/test",
+                null,
+                serverCertificate,
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.SignAndEncrypt
+            )
+            .addEndpoint(
+                "opc.tcp://localhost:12685/test",
+                null,
+                serverCertificate,
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.SignAndEncrypt
+            )
+            .addEndpoint(
+                "opc.tcp://localhost:12685/test",
+                null,
+                serverCertificate,
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.SignAndEncrypt
             );
 
-            service.setResponse(new TestStackResponse(header, request.getInput()));
-        });
+        server.addRequestHandler(
+            TestStackRequest.class,
+            (service) -> {
+                TestStackRequest request = service.getRequest();
+
+                ResponseHeader header = new ResponseHeader(
+                    DateTime.now(),
+                    request.getRequestHeader().getRequestHandle(),
+                    StatusCode.GOOD,
+                    null,
+                    null,
+                    null
+                );
+
+                service.setResponse(new TestStackResponse(header, request.getInput()));
+            }
+        );
 
         server.startup();
 
@@ -150,8 +249,12 @@ public class ClientServerTest extends SecurityFixture {
     public void testClientServerRoundTrip_TestStack_NoSecurity(Variant input) throws Exception {
         EndpointDescription endpoint = endpoints[0];
 
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}, input={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode(), input);
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}, input={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode(),
+            input
+        );
 
         UaTcpStackClient client = createClient(endpoint);
 
@@ -162,8 +265,12 @@ public class ClientServerTest extends SecurityFixture {
     public void testClientServerRoundTrip_TestStack_Basic128Rsa15_Sign(Variant input) throws Exception {
         EndpointDescription endpoint = endpoints[1];
 
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}, input={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode(), input);
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}, input={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode(),
+            input
+        );
 
         UaTcpStackClient client = createClient(endpoint);
 
@@ -174,8 +281,12 @@ public class ClientServerTest extends SecurityFixture {
     public void testClientServerRoundTrip_TestStack_Basic256_Sign(Variant input) throws Exception {
         EndpointDescription endpoint = endpoints[2];
 
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}, input={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode(), input);
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}, input={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode(),
+            input
+        );
 
         UaTcpStackClient client = createClient(endpoint);
 
@@ -186,8 +297,12 @@ public class ClientServerTest extends SecurityFixture {
     public void testClientServerRoundTrip_TestStack_Basic256Sha256_Sign(Variant input) throws Exception {
         EndpointDescription endpoint = endpoints[3];
 
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}, input={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode(), input);
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}, input={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode(),
+            input
+        );
 
         UaTcpStackClient client = createClient(endpoint);
 
@@ -198,8 +313,12 @@ public class ClientServerTest extends SecurityFixture {
     public void testClientServerRoundTrip_TestStack_Basic128Rsa15_SignAndEncrypt(Variant input) throws Exception {
         EndpointDescription endpoint = endpoints[4];
 
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}, input={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode(), input);
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}, input={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode(),
+            input
+        );
 
         UaTcpStackClient client = createClient(endpoint);
 
@@ -210,8 +329,12 @@ public class ClientServerTest extends SecurityFixture {
     public void testClientServerRoundTrip_TestStack_Basic256_SignAndEncrypt(Variant input) throws Exception {
         EndpointDescription endpoint = endpoints[5];
 
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}, input={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode(), input);
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}, input={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode(),
+            input
+        );
 
         UaTcpStackClient client = createClient(endpoint);
 
@@ -222,8 +345,12 @@ public class ClientServerTest extends SecurityFixture {
     public void testClientServerRoundTrip_TestStack_Basic256Sha256_SignAndEncrypt(Variant input) throws Exception {
         EndpointDescription endpoint = endpoints[6];
 
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}, input={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode(), input);
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}, input={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode(),
+            input
+        );
 
         UaTcpStackClient client = createClient(endpoint);
 
@@ -235,8 +362,12 @@ public class ClientServerTest extends SecurityFixture {
         EndpointDescription endpoint = endpoints[0];
 
         Variant input = new Variant(42);
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}, input={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode(), input);
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}, input={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode(),
+            input
+        );
 
         UaTcpStackClient client = createClient(endpoint);
 
@@ -245,7 +376,12 @@ public class ClientServerTest extends SecurityFixture {
             RequestHeader header = new RequestHeader(
                 NodeId.NULL_VALUE,
                 DateTime.now(),
-                uint(i), uint(0), null, uint(60000), null);
+                uint(i),
+                uint(0),
+                null,
+                uint(60000),
+                null
+            );
 
             TestStackRequest request = new TestStackRequest(header, uint(i), i, input);
 
@@ -261,7 +397,12 @@ public class ClientServerTest extends SecurityFixture {
             RequestHeader header = new RequestHeader(
                 NodeId.NULL_VALUE,
                 DateTime.now(),
-                uint(i), uint(0), null, uint(60000), null);
+                uint(i),
+                uint(0),
+                null,
+                uint(60000),
+                null
+            );
 
             TestStackRequest request = new TestStackRequest(header, uint(i), i, input);
 
@@ -278,15 +419,24 @@ public class ClientServerTest extends SecurityFixture {
         EndpointDescription endpoint = endpoints[0];
         Variant input = new Variant(42);
 
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}, input={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode(), input);
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}, input={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode(),
+            input
+        );
 
         UaTcpStackClient client = createClient(endpoint);
 
         RequestHeader header = new RequestHeader(
             NodeId.NULL_VALUE,
             DateTime.now(),
-            uint(0), uint(0), null, uint(60000), null);
+            uint(0),
+            uint(0),
+            null,
+            uint(60000),
+            null
+        );
 
         TestStackRequest request = new TestStackRequest(header, uint(0), 0, input);
 
@@ -311,15 +461,24 @@ public class ClientServerTest extends SecurityFixture {
         EndpointDescription endpoint = endpoints[0];
         Variant input = new Variant(42);
 
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}, input={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode(), input);
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}, input={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode(),
+            input
+        );
 
         UaTcpStackClient client = createClient(endpoint);
 
         RequestHeader header = new RequestHeader(
             NodeId.NULL_VALUE,
             DateTime.now(),
-            uint(0), uint(0), null, uint(60000), null);
+            uint(0),
+            uint(0),
+            null,
+            uint(60000),
+            null
+        );
 
         TestStackRequest request = new TestStackRequest(header, uint(0), 0, input);
 
@@ -343,15 +502,24 @@ public class ClientServerTest extends SecurityFixture {
         EndpointDescription endpoint = endpoints[0];
         Variant input = new Variant(42);
 
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}, input={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode(), input);
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}, input={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode(),
+            input
+        );
 
         UaTcpStackClient client = createClient(endpoint);
 
         RequestHeader header = new RequestHeader(
             NodeId.NULL_VALUE,
             DateTime.now(),
-            uint(0), uint(0), null, uint(60000), null);
+            uint(0),
+            uint(0),
+            null,
+            uint(60000),
+            null
+        );
 
         TestStackRequest request = new TestStackRequest(header, uint(0), 0, input);
 
@@ -376,10 +544,14 @@ public class ClientServerTest extends SecurityFixture {
     public void testClientTimeout() throws Exception {
         EndpointDescription endpoint = endpoints[0];
 
-        logger.info("SecurityPolicy={}, MessageSecurityMode={}",
-            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()), endpoint.getSecurityMode());
+        logger.info(
+            "SecurityPolicy={}, MessageSecurityMode={}",
+            SecurityPolicy.fromUri(endpoint.getSecurityPolicyUri()),
+            endpoint.getSecurityMode()
+        );
 
-        UaTcpStackClientConfig config = UaTcpStackClientConfig.builder()
+        UaTcpStackClientConfig config = UaTcpStackClientConfig
+            .builder()
             .setEndpoint(endpoint)
             .setKeyPair(clientKeyPair)
             .setCertificate(clientCertificate)
@@ -387,13 +559,17 @@ public class ClientServerTest extends SecurityFixture {
 
         UaTcpStackClient client = new UaTcpStackClient(config);
 
-        server.addRequestHandler(TestStackRequest.class, service -> {
-            // intentionally do nothing so the request can timeout
-            logger.info("received {}; ignoring...", service.getRequest());
-        });
+        server.addRequestHandler(
+            TestStackRequest.class,
+            service -> {
+                // intentionally do nothing so the request can timeout
+                logger.info("received {}; ignoring...", service.getRequest());
+            }
+        );
 
         RequestHeader header = new RequestHeader(
-            NodeId.NULL_VALUE, DateTime.now(),
+            NodeId.NULL_VALUE,
+            DateTime.now(),
             uint(0),
             uint(0),
             null,
@@ -403,15 +579,19 @@ public class ClientServerTest extends SecurityFixture {
 
         TestStackRequest request = new TestStackRequest(header, uint(0), 0, new Variant(42));
 
-        assertThrows(ExecutionException.class, () -> {
-            UaResponseMessage response = client.sendRequest(request).get();
+        assertThrows(
+            ExecutionException.class,
+            () -> {
+                UaResponseMessage response = client.sendRequest(request).get();
 
-            logger.info("response={}", response);
-        });
+                logger.info("response={}", response);
+            }
+        );
     }
 
     private UaTcpStackClient createClient(EndpointDescription endpoint) throws UaException {
-        UaTcpStackClientConfig config = UaTcpStackClientConfig.builder()
+        UaTcpStackClientConfig config = UaTcpStackClientConfig
+            .builder()
             .setEndpoint(endpoint)
             .setKeyPair(clientKeyPair)
             .setCertificate(clientCertificate)
@@ -420,7 +600,8 @@ public class ClientServerTest extends SecurityFixture {
         return new UaTcpStackClient(config);
     }
 
-    private void connectAndTest(Variant input, UaTcpStackClient client) throws InterruptedException, java.util.concurrent.ExecutionException {
+    private void connectAndTest(Variant input,
+                                UaTcpStackClient client) throws InterruptedException, java.util.concurrent.ExecutionException {
         client.connect().get();
 
         List<TestStackRequest> requests = Lists.newArrayList();
@@ -430,8 +611,12 @@ public class ClientServerTest extends SecurityFixture {
             RequestHeader header = new RequestHeader(
                 NodeId.NULL_VALUE,
                 DateTime.now(),
-                uint(i), uint(0), null,
-                uint(60000), null);
+                uint(i),
+                uint(0),
+                null,
+                uint(60000),
+                null
+            );
 
             requests.add(new TestStackRequest(header, uint(i), i, input));
 

@@ -44,12 +44,14 @@ public class ClientExample {
         // Query endpoints and select highest security level.
         EndpointDescription[] endpoints = UaTcpStackClient.getEndpoints("opc.tcp://localhost:12685/example").get();
 
-        EndpointDescription endpoint = Arrays.stream(endpoints)
+        EndpointDescription endpoint = Arrays
+            .stream(endpoints)
             .sorted((e1, e2) -> e2.getSecurityLevel().intValue() - e1.getSecurityLevel().intValue())
             .findFirst()
             .orElseThrow(() -> new Exception("no endpoints returned"));
 
-        UaTcpStackClientConfig config = UaTcpStackClientConfig.builder()
+        UaTcpStackClientConfig config = UaTcpStackClientConfig
+            .builder()
             .setApplicationName(LocalizedText.english("Stack Example Client"))
             .setApplicationUri(String.format("urn:example-client:%s", UUID.randomUUID()))
             .setCertificate(certificate)
@@ -65,7 +67,11 @@ public class ClientExample {
             NodeId.NULL_VALUE,
             DateTime.now(),
             uint(requestHandle.getAndIncrement()),
-            uint(0), null, uint(60), null);
+            uint(0),
+            null,
+            uint(60),
+            null
+        );
 
         TestStackRequest request = new TestStackRequest(header, uint(0), 1, new Variant(input));
 

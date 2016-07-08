@@ -28,10 +28,12 @@ public class ServiceMetric {
     public void record(ServiceRequest<?, ?> service) {
         Timer.Context context = requestTimer.time();
 
-        service.getFuture().whenComplete((r, ex) -> {
-            context.stop();
-            if (ex != null) errorCounter.inc();
-        });
+        service.getFuture().whenComplete(
+            (r, ex) -> {
+                context.stop();
+                if (ex != null) errorCounter.inc();
+            }
+        );
     }
 
     public Timer getRequestTimer() {
@@ -43,9 +45,7 @@ public class ServiceMetric {
     }
 
     public ServiceCounterDataType getServiceCounter() {
-        return new ServiceCounterDataType(
-            uint(requestTimer.getCount()),
-            uint(errorCounter.getCount()));
+        return new ServiceCounterDataType(uint(requestTimer.getCount()), uint(errorCounter.getCount()));
     }
 
 }

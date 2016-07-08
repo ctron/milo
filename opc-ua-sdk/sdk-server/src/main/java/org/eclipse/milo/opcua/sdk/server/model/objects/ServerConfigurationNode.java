@@ -30,15 +30,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:ServerConfigurationType")
 public class ServerConfigurationNode extends BaseObjectNode implements ServerConfigurationType {
 
-    public ServerConfigurationNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ServerConfigurationNode(UaNodeManager nodeManager,
+                                   NodeId nodeId,
+                                   QualifiedName browseName,
+                                   LocalizedText displayName,
+                                   Optional<LocalizedText> description,
+                                   Optional<UInteger> writeMask,
+                                   Optional<UInteger> userWriteMask,
+                                   UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -52,7 +51,9 @@ public class ServerConfigurationNode extends BaseObjectNode implements ServerCon
 
     @Override
     public PropertyNode getServerCapabilitiesNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ServerConfigurationType.SERVER_CAPABILITIES.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ServerConfigurationType.SERVER_CAPABILITIES.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -71,7 +72,9 @@ public class ServerConfigurationNode extends BaseObjectNode implements ServerCon
 
     @Override
     public PropertyNode getSupportedPrivateKeyFormatsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ServerConfigurationType.SUPPORTED_PRIVATE_KEY_FORMATS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ServerConfigurationType.SUPPORTED_PRIVATE_KEY_FORMATS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -90,7 +93,9 @@ public class ServerConfigurationNode extends BaseObjectNode implements ServerCon
 
     @Override
     public PropertyNode getMaxTrustListSizeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ServerConfigurationType.MAX_TRUST_LIST_SIZE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ServerConfigurationType.MAX_TRUST_LIST_SIZE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -109,7 +114,9 @@ public class ServerConfigurationNode extends BaseObjectNode implements ServerCon
 
     @Override
     public PropertyNode getMulticastDnsEnabledNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ServerConfigurationType.MULTICAST_DNS_ENABLED.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ServerConfigurationType.MULTICAST_DNS_ENABLED.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

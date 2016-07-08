@@ -39,30 +39,46 @@ public class QueryNextRequest implements UaRequestMessage {
         this._continuationPoint = null;
     }
 
-    public QueryNextRequest(RequestHeader _requestHeader, Boolean _releaseContinuationPoint, ByteString _continuationPoint) {
+    public QueryNextRequest(RequestHeader _requestHeader,
+                            Boolean _releaseContinuationPoint,
+                            ByteString _continuationPoint) {
         this._requestHeader = _requestHeader;
         this._releaseContinuationPoint = _releaseContinuationPoint;
         this._continuationPoint = _continuationPoint;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public Boolean getReleaseContinuationPoint() { return _releaseContinuationPoint; }
+    public Boolean getReleaseContinuationPoint() {
+        return _releaseContinuationPoint;
+    }
 
-    public ByteString getContinuationPoint() { return _continuationPoint; }
+    public ByteString getContinuationPoint() {
+        return _continuationPoint;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(QueryNextRequest queryNextRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", queryNextRequest._requestHeader != null ? queryNextRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            queryNextRequest._requestHeader != null ? queryNextRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeBoolean("ReleaseContinuationPoint", queryNextRequest._releaseContinuationPoint);
         encoder.encodeByteString("ContinuationPoint", queryNextRequest._continuationPoint);
     }
@@ -76,8 +92,10 @@ public class QueryNextRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(QueryNextRequest::encode, QueryNextRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(QueryNextRequest::decode, QueryNextRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(QueryNextRequest::encode, QueryNextRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(QueryNextRequest::decode, QueryNextRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

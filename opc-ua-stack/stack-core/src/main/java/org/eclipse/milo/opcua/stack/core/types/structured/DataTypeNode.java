@@ -38,22 +38,37 @@ public class DataTypeNode extends TypeNode {
         this._isAbstract = null;
     }
 
-    public DataTypeNode(NodeId _nodeId, NodeClass _nodeClass, QualifiedName _browseName, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask, ReferenceNode[] _references, Boolean _isAbstract) {
+    public DataTypeNode(NodeId _nodeId,
+                        NodeClass _nodeClass,
+                        QualifiedName _browseName,
+                        LocalizedText _displayName,
+                        LocalizedText _description,
+                        UInteger _writeMask,
+                        UInteger _userWriteMask,
+                        ReferenceNode[] _references,
+                        Boolean _isAbstract) {
         super(_nodeId, _nodeClass, _browseName, _displayName, _description, _writeMask, _userWriteMask, _references);
         this._isAbstract = _isAbstract;
     }
 
-    public Boolean getIsAbstract() { return _isAbstract; }
+    public Boolean getIsAbstract() {
+        return _isAbstract;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DataTypeNode dataTypeNode, UaEncoder encoder) {
         encoder.encodeNodeId("NodeId", dataTypeNode._nodeId);
@@ -75,10 +90,21 @@ public class DataTypeNode extends TypeNode {
         LocalizedText _description = decoder.decodeLocalizedText("Description");
         UInteger _writeMask = decoder.decodeUInt32("WriteMask");
         UInteger _userWriteMask = decoder.decodeUInt32("UserWriteMask");
-        ReferenceNode[] _references = decoder.decodeArray("References", decoder::decodeSerializable, ReferenceNode.class);
+        ReferenceNode[] _references = decoder
+            .decodeArray("References", decoder::decodeSerializable, ReferenceNode.class);
         Boolean _isAbstract = decoder.decodeBoolean("IsAbstract");
 
-        return new DataTypeNode(_nodeId, _nodeClass, _browseName, _displayName, _description, _writeMask, _userWriteMask, _references, _isAbstract);
+        return new DataTypeNode(
+            _nodeId,
+            _nodeClass,
+            _browseName,
+            _displayName,
+            _description,
+            _writeMask,
+            _userWriteMask,
+            _references,
+            _isAbstract
+        );
     }
 
     static {

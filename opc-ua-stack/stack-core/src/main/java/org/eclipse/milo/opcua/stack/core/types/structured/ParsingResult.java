@@ -46,21 +46,32 @@ public class ParsingResult implements UaStructure {
         this._dataDiagnosticInfos = _dataDiagnosticInfos;
     }
 
-    public StatusCode getStatusCode() { return _statusCode; }
+    public StatusCode getStatusCode() {
+        return _statusCode;
+    }
 
-    public StatusCode[] getDataStatusCodes() { return _dataStatusCodes; }
+    public StatusCode[] getDataStatusCodes() {
+        return _dataStatusCodes;
+    }
 
-    public DiagnosticInfo[] getDataDiagnosticInfos() { return _dataDiagnosticInfos; }
+    public DiagnosticInfo[] getDataDiagnosticInfos() {
+        return _dataDiagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ParsingResult parsingResult, UaEncoder encoder) {
         encoder.encodeStatusCode("StatusCode", parsingResult._statusCode);
@@ -70,8 +81,10 @@ public class ParsingResult implements UaStructure {
 
     public static ParsingResult decode(UaDecoder decoder) {
         StatusCode _statusCode = decoder.decodeStatusCode("StatusCode");
-        StatusCode[] _dataStatusCodes = decoder.decodeArray("DataStatusCodes", decoder::decodeStatusCode, StatusCode.class);
-        DiagnosticInfo[] _dataDiagnosticInfos = decoder.decodeArray("DataDiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        StatusCode[] _dataStatusCodes = decoder
+            .decodeArray("DataStatusCodes", decoder::decodeStatusCode, StatusCode.class);
+        DiagnosticInfo[] _dataDiagnosticInfos = decoder
+            .decodeArray("DataDiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
         return new ParsingResult(_statusCode, _dataStatusCodes, _dataDiagnosticInfos);
     }

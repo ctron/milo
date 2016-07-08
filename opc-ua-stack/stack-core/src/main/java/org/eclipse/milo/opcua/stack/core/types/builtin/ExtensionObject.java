@@ -67,25 +67,25 @@ public final class ExtensionObject {
         if (decoded != null) return (T) decoded;
 
         switch (bodyType) {
-            case ByteString: {
-                ByteString bs = (ByteString) encoded;
-                if (bs == null || bs.isNull()) {
-                    return null;
-                } else {
-                    decoded = context.decodeFromByteString((ByteString) encoded, encodingTypeId);
-                    return (T) decoded;
-                }
+        case ByteString: {
+            ByteString bs = (ByteString) encoded;
+            if (bs == null || bs.isNull()) {
+                return null;
+            } else {
+                decoded = context.decodeFromByteString((ByteString) encoded, encodingTypeId);
+                return (T) decoded;
             }
+        }
 
-            case XmlElement: {
-                XmlElement e = (XmlElement) encoded;
-                if (e == null || e.isNull()) {
-                    return null;
-                } else {
-                    decoded = context.decodeFromXmlElement((XmlElement) encoded, encodingTypeId);
-                    return (T) decoded;
-                }
+        case XmlElement: {
+            XmlElement e = (XmlElement) encoded;
+            if (e == null || e.isNull()) {
+                return null;
+            } else {
+                decoded = context.decodeFromXmlElement((XmlElement) encoded, encodingTypeId);
+                return (T) decoded;
             }
+        }
         }
 
         throw new RuntimeException("encodingType=" + bodyType);
@@ -95,11 +95,13 @@ public final class ExtensionObject {
         return encodeAsByteString(structure, structure.getBinaryEncodingId());
     }
 
-    public static ExtensionObject encodeAsByteString(Object object, NodeId encodingTypeId) throws UaSerializationException {
+    public static ExtensionObject encodeAsByteString(Object object,
+                                                     NodeId encodingTypeId) throws UaSerializationException {
         return encodeAsByteString(object, encodingTypeId, DataTypeEncoding.OPC_UA);
     }
 
-    public static ExtensionObject encodeAsXmlElement(Object object, NodeId encodingTypeId) throws UaSerializationException {
+    public static ExtensionObject encodeAsXmlElement(Object object,
+                                                     NodeId encodingTypeId) throws UaSerializationException {
         return encodeAsXmlElement(object, encodingTypeId, DataTypeEncoding.OPC_UA);
     }
 
@@ -128,8 +130,7 @@ public final class ExtensionObject {
 
         ExtensionObject that = (ExtensionObject) o;
 
-        return Objects.equal(encoded, that.encoded) &&
-            Objects.equal(encodingTypeId, that.encodingTypeId);
+        return Objects.equal(encoded, that.encoded) && Objects.equal(encodingTypeId, that.encodingTypeId);
     }
 
     @Override
@@ -139,7 +140,8 @@ public final class ExtensionObject {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects
+            .toStringHelper(this)
             .add("encoded", encoded)
             .add("encodingTypeId", encodingTypeId)
             .toString();

@@ -44,7 +44,11 @@ public class AxisInformation implements UaStructure {
         this._axisSteps = null;
     }
 
-    public AxisInformation(EUInformation _engineeringUnits, Range _eURange, LocalizedText _title, AxisScaleEnumeration _axisScaleType, Double[] _axisSteps) {
+    public AxisInformation(EUInformation _engineeringUnits,
+                           Range _eURange,
+                           LocalizedText _title,
+                           AxisScaleEnumeration _axisScaleType,
+                           Double[] _axisSteps) {
         this._engineeringUnits = _engineeringUnits;
         this._eURange = _eURange;
         this._title = _title;
@@ -52,29 +56,48 @@ public class AxisInformation implements UaStructure {
         this._axisSteps = _axisSteps;
     }
 
-    public EUInformation getEngineeringUnits() { return _engineeringUnits; }
+    public EUInformation getEngineeringUnits() {
+        return _engineeringUnits;
+    }
 
-    public Range getEURange() { return _eURange; }
+    public Range getEURange() {
+        return _eURange;
+    }
 
-    public LocalizedText getTitle() { return _title; }
+    public LocalizedText getTitle() {
+        return _title;
+    }
 
-    public AxisScaleEnumeration getAxisScaleType() { return _axisScaleType; }
+    public AxisScaleEnumeration getAxisScaleType() {
+        return _axisScaleType;
+    }
 
-    public Double[] getAxisSteps() { return _axisSteps; }
+    public Double[] getAxisSteps() {
+        return _axisSteps;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(AxisInformation axisInformation, UaEncoder encoder) {
-        encoder.encodeSerializable("EngineeringUnits", axisInformation._engineeringUnits != null ? axisInformation._engineeringUnits : new EUInformation());
-        encoder.encodeSerializable("EURange", axisInformation._eURange != null ? axisInformation._eURange : new Range());
+        encoder.encodeSerializable(
+            "EngineeringUnits",
+            axisInformation._engineeringUnits != null ? axisInformation._engineeringUnits : new EUInformation()
+        );
+        encoder
+            .encodeSerializable("EURange", axisInformation._eURange != null ? axisInformation._eURange : new Range());
         encoder.encodeLocalizedText("Title", axisInformation._title);
         encoder.encodeEnumeration("AxisScaleType", axisInformation._axisScaleType);
         encoder.encodeArray("AxisSteps", axisInformation._axisSteps, encoder::encodeDouble);
@@ -91,8 +114,10 @@ public class AxisInformation implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(AxisInformation::encode, AxisInformation.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(AxisInformation::decode, AxisInformation.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(AxisInformation::encode, AxisInformation.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(AxisInformation::decode, AxisInformation.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

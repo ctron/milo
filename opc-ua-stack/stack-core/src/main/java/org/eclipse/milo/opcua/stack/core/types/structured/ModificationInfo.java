@@ -46,21 +46,32 @@ public class ModificationInfo implements UaStructure {
         this._userName = _userName;
     }
 
-    public DateTime getModificationTime() { return _modificationTime; }
+    public DateTime getModificationTime() {
+        return _modificationTime;
+    }
 
-    public HistoryUpdateType getUpdateType() { return _updateType; }
+    public HistoryUpdateType getUpdateType() {
+        return _updateType;
+    }
 
-    public String getUserName() { return _userName; }
+    public String getUserName() {
+        return _userName;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ModificationInfo modificationInfo, UaEncoder encoder) {
         encoder.encodeDateTime("ModificationTime", modificationInfo._modificationTime);
@@ -77,8 +88,10 @@ public class ModificationInfo implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(ModificationInfo::encode, ModificationInfo.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ModificationInfo::decode, ModificationInfo.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(ModificationInfo::encode, ModificationInfo.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(ModificationInfo::decode, ModificationInfo.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

@@ -36,22 +36,34 @@ public class ObjectTypeAttributes extends NodeAttributes {
         this._isAbstract = null;
     }
 
-    public ObjectTypeAttributes(UInteger _specifiedAttributes, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask, Boolean _isAbstract) {
+    public ObjectTypeAttributes(UInteger _specifiedAttributes,
+                                LocalizedText _displayName,
+                                LocalizedText _description,
+                                UInteger _writeMask,
+                                UInteger _userWriteMask,
+                                Boolean _isAbstract) {
         super(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask);
         this._isAbstract = _isAbstract;
     }
 
-    public Boolean getIsAbstract() { return _isAbstract; }
+    public Boolean getIsAbstract() {
+        return _isAbstract;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ObjectTypeAttributes objectTypeAttributes, UaEncoder encoder) {
         encoder.encodeUInt32("SpecifiedAttributes", objectTypeAttributes._specifiedAttributes);
@@ -70,12 +82,21 @@ public class ObjectTypeAttributes extends NodeAttributes {
         UInteger _userWriteMask = decoder.decodeUInt32("UserWriteMask");
         Boolean _isAbstract = decoder.decodeBoolean("IsAbstract");
 
-        return new ObjectTypeAttributes(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask, _isAbstract);
+        return new ObjectTypeAttributes(
+            _specifiedAttributes,
+            _displayName,
+            _description,
+            _writeMask,
+            _userWriteMask,
+            _isAbstract
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(ObjectTypeAttributes::encode, ObjectTypeAttributes.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ObjectTypeAttributes::decode, ObjectTypeAttributes.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(ObjectTypeAttributes::encode, ObjectTypeAttributes.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(ObjectTypeAttributes::decode, ObjectTypeAttributes.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

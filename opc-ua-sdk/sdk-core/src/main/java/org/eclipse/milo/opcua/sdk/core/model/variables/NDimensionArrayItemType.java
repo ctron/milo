@@ -19,7 +19,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.structured.AxisInformation;
 
-
 public interface NDimensionArrayItemType extends ArrayItemType {
 
     Property<AxisInformation[]> AXIS_DEFINITION = new BasicProperty<>(
@@ -28,7 +27,6 @@ public interface NDimensionArrayItemType extends ArrayItemType {
         1,
         AxisInformation[].class
     );
-
 
     AxisInformation[] getAxisDefinition();
 

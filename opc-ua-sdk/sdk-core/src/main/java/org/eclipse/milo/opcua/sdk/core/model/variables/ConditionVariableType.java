@@ -19,7 +19,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.DateTime;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 
-
 public interface ConditionVariableType extends BaseDataVariableType {
 
     Property<DateTime> SOURCE_TIMESTAMP = new BasicProperty<>(
@@ -28,7 +27,6 @@ public interface ConditionVariableType extends BaseDataVariableType {
         -1,
         DateTime.class
     );
-
 
     DateTime getSourceTimestamp();
 

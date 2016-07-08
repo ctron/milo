@@ -35,33 +35,44 @@ import org.eclipse.milo.opcua.stack.core.types.structured.ServerStatusDataType;
 @UaVariableNode(typeName = "0:ServerStatusType")
 public class ServerStatusNode extends BaseDataVariableNode implements ServerStatusType {
 
-    public ServerStatusNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public ServerStatusNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public ServerStatusNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public ServerStatusNode(UaNodeManager nodeManager,
+                            NodeId nodeId,
+                            QualifiedName browseName,
+                            LocalizedText displayName,
+                            Optional<LocalizedText> description,
+                            Optional<UInteger> writeMask,
+                            Optional<UInteger> userWriteMask,
+                            DataValue value,
+                            NodeId dataType,
+                            Integer valueRank,
+                            Optional<UInteger[]> arrayDimensions,
+                            UByte accessLevel,
+                            UByte userAccessLevel,
+                            Optional<Double> minimumSamplingInterval,
+                            boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
 
     @Override
@@ -94,8 +105,7 @@ public class ServerStatusNode extends BaseDataVariableNode implements ServerStat
 
     @Override
     public void setStartTime(DateTime value) {
-        getVariableComponent("StartTime")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("StartTime").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -114,8 +124,7 @@ public class ServerStatusNode extends BaseDataVariableNode implements ServerStat
 
     @Override
     public void setCurrentTime(DateTime value) {
-        getVariableComponent("CurrentTime")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CurrentTime").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -134,8 +143,7 @@ public class ServerStatusNode extends BaseDataVariableNode implements ServerStat
 
     @Override
     public void setState(ServerState value) {
-        getVariableComponent("State")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("State").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -154,8 +162,7 @@ public class ServerStatusNode extends BaseDataVariableNode implements ServerStat
 
     @Override
     public void setBuildInfo(BuildInfo value) {
-        getVariableComponent("BuildInfo")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("BuildInfo").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -174,8 +181,7 @@ public class ServerStatusNode extends BaseDataVariableNode implements ServerStat
 
     @Override
     public void setSecondsTillShutdown(UInteger value) {
-        getVariableComponent("SecondsTillShutdown")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SecondsTillShutdown").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -194,8 +200,7 @@ public class ServerStatusNode extends BaseDataVariableNode implements ServerStat
 
     @Override
     public void setShutdownReason(LocalizedText value) {
-        getVariableComponent("ShutdownReason")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ShutdownReason").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

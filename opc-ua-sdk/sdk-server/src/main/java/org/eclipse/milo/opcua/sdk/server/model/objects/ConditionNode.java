@@ -35,15 +35,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UShort;
 @UaObjectNode(typeName = "0:ConditionType")
 public class ConditionNode extends BaseEventNode implements ConditionType {
 
-    public ConditionNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ConditionNode(UaNodeManager nodeManager,
+                         NodeId nodeId,
+                         QualifiedName browseName,
+                         LocalizedText displayName,
+                         Optional<LocalizedText> description,
+                         Optional<UInteger> writeMask,
+                         Optional<UInteger> userWriteMask,
+                         UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -178,8 +177,7 @@ public class ConditionNode extends BaseEventNode implements ConditionType {
 
     @Override
     public void setEnabledState(LocalizedText value) {
-        getVariableComponent("EnabledState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("EnabledState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -198,8 +196,7 @@ public class ConditionNode extends BaseEventNode implements ConditionType {
 
     @Override
     public void setQuality(StatusCode value) {
-        getVariableComponent("Quality")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("Quality").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -218,8 +215,7 @@ public class ConditionNode extends BaseEventNode implements ConditionType {
 
     @Override
     public void setLastSeverity(UShort value) {
-        getVariableComponent("LastSeverity")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("LastSeverity").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -238,8 +234,7 @@ public class ConditionNode extends BaseEventNode implements ConditionType {
 
     @Override
     public void setComment(LocalizedText value) {
-        getVariableComponent("Comment")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("Comment").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

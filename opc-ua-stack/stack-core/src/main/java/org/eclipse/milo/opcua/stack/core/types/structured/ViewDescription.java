@@ -46,21 +46,32 @@ public class ViewDescription implements UaStructure {
         this._viewVersion = _viewVersion;
     }
 
-    public NodeId getViewId() { return _viewId; }
+    public NodeId getViewId() {
+        return _viewId;
+    }
 
-    public DateTime getTimestamp() { return _timestamp; }
+    public DateTime getTimestamp() {
+        return _timestamp;
+    }
 
-    public UInteger getViewVersion() { return _viewVersion; }
+    public UInteger getViewVersion() {
+        return _viewVersion;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ViewDescription viewDescription, UaEncoder encoder) {
         encoder.encodeNodeId("ViewId", viewDescription._viewId);
@@ -77,8 +88,10 @@ public class ViewDescription implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(ViewDescription::encode, ViewDescription.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ViewDescription::decode, ViewDescription.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(ViewDescription::encode, ViewDescription.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(ViewDescription::decode, ViewDescription.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

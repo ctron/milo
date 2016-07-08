@@ -31,15 +31,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UShort;
 @UaObjectNode(typeName = "0:FileType")
 public class FileNode extends BaseObjectNode implements FileType {
 
-    public FileNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public FileNode(UaNodeManager nodeManager,
+                    NodeId nodeId,
+                    QualifiedName browseName,
+                    LocalizedText displayName,
+                    Optional<LocalizedText> description,
+                    Optional<UInteger> writeMask,
+                    Optional<UInteger> userWriteMask,
+                    UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }

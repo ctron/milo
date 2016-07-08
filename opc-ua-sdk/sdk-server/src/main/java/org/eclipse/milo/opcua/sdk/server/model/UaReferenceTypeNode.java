@@ -46,13 +46,21 @@ public class UaReferenceTypeNode extends UaNode implements ReferenceTypeNode {
                                boolean symmetric,
                                Optional<LocalizedText> inverseName) {
 
-        super(nodeManager, nodeId, NodeClass.ReferenceType, browseName, displayName, description, writeMask, userWriteMask);
+        super(
+            nodeManager,
+            nodeId,
+            NodeClass.ReferenceType,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask
+        );
 
         this.isAbstract = isAbstract;
         this.symmetric = symmetric;
         this.inverseName = inverseName;
     }
-
 
     @Override
     public Boolean getIsAbstract() {

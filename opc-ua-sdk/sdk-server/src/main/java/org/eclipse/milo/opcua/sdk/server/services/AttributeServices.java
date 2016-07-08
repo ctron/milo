@@ -93,57 +93,58 @@ public class AttributeServices implements AttributeServiceSet {
             futures.add(pending.getFuture());
         }
 
-		/*
+        /*
          * Group PendingReads by namespace and call read for each.
-		 */
+         */
 
-        Map<UShort, List<PendingRead>> byNamespace = pendingReads.stream()
+        Map<UShort, List<PendingRead>> byNamespace = pendingReads
+            .stream()
             .collect(groupingBy(pending -> pending.getInput().getNodeId().getNamespaceIndex()));
 
-        byNamespace.keySet().forEach(index -> {
-            List<PendingRead> pending = byNamespace.get(index);
+        byNamespace.keySet().forEach(
+            index -> {
+                List<PendingRead> pending = byNamespace.get(index);
 
-            CompletableFuture<List<DataValue>> future = new CompletableFuture<>();
+                CompletableFuture<List<DataValue>> future = new CompletableFuture<>();
 
-            ReadContext context = new ReadContext(
-                server, session, future, diagnosticsContext);
+                ReadContext context = new ReadContext(server, session, future, diagnosticsContext);
 
-            server.getExecutorService().execute(() -> {
-                Namespace namespace = server.getNamespaceManager().getNamespace(index);
+                server.getExecutorService().execute(
+                    () -> {
+                        Namespace namespace = server.getNamespaceManager().getNamespace(index);
 
-                List<ReadValueId> readValueIds = pending.stream()
-                    .map(PendingRead::getInput)
-                    .collect(toList());
+                        List<ReadValueId> readValueIds = pending.stream().map(PendingRead::getInput).collect(toList());
 
-                namespace.read(
-                    context,
-                    request.getMaxAge(),
-                    request.getTimestampsToReturn(),
-                    readValueIds);
-            });
+                        namespace.read(context, request.getMaxAge(), request.getTimestampsToReturn(), readValueIds);
+                    }
+                );
 
-            future.thenAccept(values -> {
-                for (int i = 0; i < values.size(); i++) {
-                    pending.get(i).getFuture().complete(values.get(i));
-                }
-            });
-        });
+                future.thenAccept(
+                    values -> {
+                        for (int i = 0; i < values.size(); i++) {
+                            pending.get(i).getFuture().complete(values.get(i));
+                        }
+                    }
+                );
+            }
+        );
 
-		/*
+        /*
          * When all PendingReads have been completed send a ReadResponse with the values.
-		 */
+         */
 
-        FutureUtils.sequence(futures).thenAcceptAsync(values -> {
-            ResponseHeader header = service.createResponseHeader();
+        FutureUtils.sequence(futures).thenAcceptAsync(
+            values -> {
+                ResponseHeader header = service.createResponseHeader();
 
-            DiagnosticInfo[] diagnosticInfos =
-                diagnosticsContext.getDiagnosticInfos(nodesToRead);
+                DiagnosticInfo[] diagnosticInfos = diagnosticsContext.getDiagnosticInfos(nodesToRead);
 
-            ReadResponse response = new ReadResponse(
-                header, a(values, DataValue.class), diagnosticInfos);
+                ReadResponse response = new ReadResponse(header, a(values, DataValue.class), diagnosticInfos);
 
-            service.setResponse(response);
-        }, server.getExecutorService());
+                service.setResponse(response);
+            },
+            server.getExecutorService()
+        );
     }
 
     @Override
@@ -178,45 +179,50 @@ public class AttributeServices implements AttributeServiceSet {
             futures.add(pending.getFuture());
         }
 
-        Map<UShort, List<PendingWrite>> byNamespace = pendingWrites.stream()
+        Map<UShort, List<PendingWrite>> byNamespace = pendingWrites
+            .stream()
             .collect(groupingBy(pending -> pending.getInput().getNodeId().getNamespaceIndex()));
 
-        byNamespace.keySet().forEach(index -> {
-            List<PendingWrite> pending = byNamespace.get(index);
+        byNamespace.keySet().forEach(
+            index -> {
+                List<PendingWrite> pending = byNamespace.get(index);
 
-            CompletableFuture<List<StatusCode>> future = new CompletableFuture<>();
+                CompletableFuture<List<StatusCode>> future = new CompletableFuture<>();
 
-            WriteContext context = new WriteContext(
-                server, session, future, diagnosticsContext);
+                WriteContext context = new WriteContext(server, session, future, diagnosticsContext);
 
-            server.getExecutorService().execute(() -> {
-                Namespace namespace = server.getNamespaceManager().getNamespace(index);
+                server.getExecutorService().execute(
+                    () -> {
+                        Namespace namespace = server.getNamespaceManager().getNamespace(index);
 
-                List<WriteValue> writeValues = pending.stream()
-                    .map(PendingWrite::getInput)
-                    .collect(toList());
+                        List<WriteValue> writeValues = pending.stream().map(PendingWrite::getInput).collect(toList());
 
-                namespace.write(context, writeValues);
-            });
+                        namespace.write(context, writeValues);
+                    }
+                );
 
-            future.thenAccept(statusCodes -> {
-                for (int i = 0; i < statusCodes.size(); i++) {
-                    pending.get(i).getFuture().complete(statusCodes.get(i));
-                }
-            });
-        });
+                future.thenAccept(
+                    statusCodes -> {
+                        for (int i = 0; i < statusCodes.size(); i++) {
+                            pending.get(i).getFuture().complete(statusCodes.get(i));
+                        }
+                    }
+                );
+            }
+        );
 
-        FutureUtils.sequence(futures).thenAcceptAsync(values -> {
-            ResponseHeader header = service.createResponseHeader();
+        FutureUtils.sequence(futures).thenAcceptAsync(
+            values -> {
+                ResponseHeader header = service.createResponseHeader();
 
-            DiagnosticInfo[] diagnosticInfos =
-                diagnosticsContext.getDiagnosticInfos(nodesToWrite);
+                DiagnosticInfo[] diagnosticInfos = diagnosticsContext.getDiagnosticInfos(nodesToWrite);
 
-            WriteResponse response = new WriteResponse(
-                header, a(values, StatusCode.class), diagnosticInfos);
+                WriteResponse response = new WriteResponse(header, a(values, StatusCode.class), diagnosticInfos);
 
-            service.setResponse(response);
-        }, server.getExecutorService());
+                service.setResponse(response);
+            },
+            server.getExecutorService()
+        );
     }
 
 }

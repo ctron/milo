@@ -50,7 +50,14 @@ public class RegisteredServer implements UaStructure {
         this._isOnline = null;
     }
 
-    public RegisteredServer(String _serverUri, String _productUri, LocalizedText[] _serverNames, ApplicationType _serverType, String _gatewayServerUri, String[] _discoveryUrls, String _semaphoreFilePath, Boolean _isOnline) {
+    public RegisteredServer(String _serverUri,
+                            String _productUri,
+                            LocalizedText[] _serverNames,
+                            ApplicationType _serverType,
+                            String _gatewayServerUri,
+                            String[] _discoveryUrls,
+                            String _semaphoreFilePath,
+                            Boolean _isOnline) {
         this._serverUri = _serverUri;
         this._productUri = _productUri;
         this._serverNames = _serverNames;
@@ -61,31 +68,52 @@ public class RegisteredServer implements UaStructure {
         this._isOnline = _isOnline;
     }
 
-    public String getServerUri() { return _serverUri; }
+    public String getServerUri() {
+        return _serverUri;
+    }
 
-    public String getProductUri() { return _productUri; }
+    public String getProductUri() {
+        return _productUri;
+    }
 
-    public LocalizedText[] getServerNames() { return _serverNames; }
+    public LocalizedText[] getServerNames() {
+        return _serverNames;
+    }
 
-    public ApplicationType getServerType() { return _serverType; }
+    public ApplicationType getServerType() {
+        return _serverType;
+    }
 
-    public String getGatewayServerUri() { return _gatewayServerUri; }
+    public String getGatewayServerUri() {
+        return _gatewayServerUri;
+    }
 
-    public String[] getDiscoveryUrls() { return _discoveryUrls; }
+    public String[] getDiscoveryUrls() {
+        return _discoveryUrls;
+    }
 
-    public String getSemaphoreFilePath() { return _semaphoreFilePath; }
+    public String getSemaphoreFilePath() {
+        return _semaphoreFilePath;
+    }
 
-    public Boolean getIsOnline() { return _isOnline; }
+    public Boolean getIsOnline() {
+        return _isOnline;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(RegisteredServer registeredServer, UaEncoder encoder) {
         encoder.encodeString("ServerUri", registeredServer._serverUri);
@@ -101,19 +129,31 @@ public class RegisteredServer implements UaStructure {
     public static RegisteredServer decode(UaDecoder decoder) {
         String _serverUri = decoder.decodeString("ServerUri");
         String _productUri = decoder.decodeString("ProductUri");
-        LocalizedText[] _serverNames = decoder.decodeArray("ServerNames", decoder::decodeLocalizedText, LocalizedText.class);
+        LocalizedText[] _serverNames = decoder
+            .decodeArray("ServerNames", decoder::decodeLocalizedText, LocalizedText.class);
         ApplicationType _serverType = decoder.decodeEnumeration("ServerType", ApplicationType.class);
         String _gatewayServerUri = decoder.decodeString("GatewayServerUri");
         String[] _discoveryUrls = decoder.decodeArray("DiscoveryUrls", decoder::decodeString, String.class);
         String _semaphoreFilePath = decoder.decodeString("SemaphoreFilePath");
         Boolean _isOnline = decoder.decodeBoolean("IsOnline");
 
-        return new RegisteredServer(_serverUri, _productUri, _serverNames, _serverType, _gatewayServerUri, _discoveryUrls, _semaphoreFilePath, _isOnline);
+        return new RegisteredServer(
+            _serverUri,
+            _productUri,
+            _serverNames,
+            _serverType,
+            _gatewayServerUri,
+            _discoveryUrls,
+            _semaphoreFilePath,
+            _isOnline
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(RegisteredServer::encode, RegisteredServer.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(RegisteredServer::decode, RegisteredServer.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(RegisteredServer::encode, RegisteredServer.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(RegisteredServer::decode, RegisteredServer.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

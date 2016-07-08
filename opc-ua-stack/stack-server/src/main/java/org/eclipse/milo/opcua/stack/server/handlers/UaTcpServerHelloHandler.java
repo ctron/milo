@@ -56,20 +56,18 @@ public class UaTcpServerHelloHandler extends ByteToMessageDecoder implements Hea
     protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) throws Exception {
         buffer = buffer.order(ByteOrder.LITTLE_ENDIAN);
 
-        while (buffer.readableBytes() >= HEADER_LENGTH &&
-            buffer.readableBytes() >= getMessageLength(buffer)) {
+        while (buffer.readableBytes() >= HEADER_LENGTH && buffer.readableBytes() >= getMessageLength(buffer)) {
 
             int messageLength = getMessageLength(buffer);
             MessageType messageType = MessageType.fromMediumInt(buffer.getMedium(buffer.readerIndex()));
 
             switch (messageType) {
-                case Hello:
-                    onHello(ctx, buffer.readSlice(messageLength));
-                    break;
+            case Hello:
+                onHello(ctx, buffer.readSlice(messageLength));
+                break;
 
-                default:
-                    throw new UaException(StatusCodes.Bad_TcpMessageTypeInvalid,
-                        "unexpected MessageType: " + messageType);
+            default:
+                throw new UaException(StatusCodes.Bad_TcpMessageTypeInvalid, "unexpected MessageType: " + messageType);
             }
         }
     }
@@ -82,8 +80,10 @@ public class UaTcpServerHelloHandler extends ByteToMessageDecoder implements Hea
         UaTcpStackServer server = socketServer.getServer(hello.getEndpointUrl());
 
         if (server == null) {
-            throw new UaException(StatusCodes.Bad_TcpEndpointUrlInvalid,
-                "unrecognized endpoint url: " + hello.getEndpointUrl());
+            throw new UaException(
+                StatusCodes.Bad_TcpEndpointUrlInvalid,
+                "unrecognized endpoint url: " + hello.getEndpointUrl()
+            );
         }
 
         ctx.channel().attr(ENDPOINT_URL_KEY).set(hello.getEndpointUrl());
@@ -95,8 +95,10 @@ public class UaTcpServerHelloHandler extends ByteToMessageDecoder implements Hea
         long remoteMaxChunkCount = hello.getMaxChunkCount();
 
         if (remoteProtocolVersion < PROTOCOL_VERSION) {
-            throw new UaException(StatusCodes.Bad_ProtocolVersionUnsupported,
-                "unsupported protocol version: " + remoteProtocolVersion);
+            throw new UaException(
+                StatusCodes.Bad_ProtocolVersionUnsupported,
+                "unsupported protocol version: " + remoteProtocolVersion
+            );
         }
 
         ChannelConfig config = server.getChannelConfig();
@@ -163,11 +165,15 @@ public class UaTcpServerHelloHandler extends ByteToMessageDecoder implements Hea
             ErrorMessage errorMessage = ExceptionHandler.sendErrorMessage(ctx, cause);
 
             if (cause instanceof UaException) {
-                logger.debug("[remote={}] UaException caught; sent {}",
-                    ctx.channel().remoteAddress(), errorMessage, cause);
+                logger.debug(
+                    "[remote={}] UaException caught; sent {}",
+                    ctx.channel().remoteAddress(),
+                    errorMessage,
+                    cause
+                );
             } else {
-                logger.error("[remote={}] Exception caught; sent {}",
-                    ctx.channel().remoteAddress(), errorMessage, cause);
+                logger
+                    .error("[remote={}] Exception caught; sent {}", ctx.channel().remoteAddress(), errorMessage, cause);
             }
         }
     }

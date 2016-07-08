@@ -124,8 +124,13 @@ public class Subscription {
         resetKeepAliveCounter();
         resetLifetimeCounter();
 
-        logger.debug("[id={}] subscription created, interval={}, keep-alive={}, lifetime={}",
-            subscriptionId, publishingInterval, maxKeepAliveCount, lifetimeCount);
+        logger.debug(
+            "[id={}] subscription created, interval={}, keep-alive={}, lifetime={}",
+            subscriptionId,
+            publishingInterval,
+            maxKeepAliveCount,
+            lifetimeCount
+        );
     }
 
     public synchronized void modifySubscription(ModifySubscriptionRequest request) {
@@ -138,8 +143,13 @@ public class Subscription {
 
         resetLifetimeCounter();
 
-        logger.debug("[id={}] subscription modified, interval={}, keep-alive={}, lifetime={}",
-            subscriptionId, publishingInterval, maxKeepAliveCount, lifetimeCount);
+        logger.debug(
+            "[id={}] subscription modified, interval={}, keep-alive={}, lifetime={}",
+            subscriptionId,
+            publishingInterval,
+            maxKeepAliveCount,
+            lifetimeCount
+        );
     }
 
     public synchronized List<BaseMonitoredItem<?>> deleteSubscription() {
@@ -310,7 +320,10 @@ public class Subscription {
         UInteger sequenceNumber = uint(currentSequenceNumber());
 
         NotificationMessage notificationMessage = new NotificationMessage(
-            sequenceNumber, DateTime.now(), new ExtensionObject[0]);
+            sequenceNumber,
+            DateTime.now(),
+            new ExtensionObject[0]
+        );
 
         UInteger[] available = getAvailableSequenceNumbers();
 
@@ -318,34 +331,51 @@ public class Subscription {
         StatusCode[] acknowledgeResults = subscriptionManager.getAcknowledgeResults(requestHandle);
 
         PublishResponse response = new PublishResponse(
-            header, subscriptionId, available,
-            moreNotifications, notificationMessage,
-            acknowledgeResults, new DiagnosticInfo[0]);
+            header,
+            subscriptionId,
+            available,
+            moreNotifications,
+            notificationMessage,
+            acknowledgeResults,
+            new DiagnosticInfo[0]
+        );
 
         service.setResponse(response);
 
-        logger.debug("[id={}] returned keep-alive NotificationMessage sequenceNumber={}.",
-            subscriptionId, sequenceNumber);
+        logger.debug(
+            "[id={}] returned keep-alive NotificationMessage sequenceNumber={}.",
+            subscriptionId,
+            sequenceNumber
+        );
     }
 
     void returnStatusChangeNotification(ServiceRequest<PublishRequest, PublishResponse> service) {
         StatusChangeNotification statusChange = new StatusChangeNotification(
-            new StatusCode(StatusCodes.Bad_Timeout), null);
+            new StatusCode(StatusCodes.Bad_Timeout),
+            null
+        );
 
         UInteger sequenceNumber = uint(nextSequenceNumber());
 
         NotificationMessage notificationMessage = new NotificationMessage(
             sequenceNumber,
             new DateTime(),
-            new ExtensionObject[]{ExtensionObject.encode(statusChange)}
+            new ExtensionObject[]{
+                ExtensionObject.encode(statusChange)
+            }
         );
 
         ResponseHeader header = service.createResponseHeader();
 
         PublishResponse response = new PublishResponse(
-            header, subscriptionId,
-            new UInteger[0], false, notificationMessage,
-            new StatusCode[0], new DiagnosticInfo[0]);
+            header,
+            subscriptionId,
+            new UInteger[0],
+            false,
+            notificationMessage,
+            new StatusCode[0],
+            new DiagnosticInfo[0]
+        );
 
         service.setResponse(response);
 
@@ -357,9 +387,7 @@ public class Subscription {
 
         lastIterator.forEachRemaining(items::add);
 
-        itemsById.values().stream()
-            .filter(item -> item.hasNotifications() || item.isTriggered())
-            .forEach(items::add);
+        itemsById.values().stream().filter(item -> item.hasNotifications() || item.isTriggered()).forEach(items::add);
 
         PeekingIterator<BaseMonitoredItem<?>> iterator = Iterators.peekingIterator(items.iterator());
 
@@ -416,27 +444,31 @@ public class Subscription {
         List<MonitoredItemNotification> dataNotifications = Lists.newArrayList();
         List<EventFieldList> eventNotifications = Lists.newArrayList();
 
-        notifications.forEach(notification -> {
-            if (notification instanceof MonitoredItemNotification) {
-                dataNotifications.add((MonitoredItemNotification) notification);
-            } else if (notification instanceof EventFieldList) {
-                eventNotifications.add((EventFieldList) notification);
+        notifications.forEach(
+            notification -> {
+                if (notification instanceof MonitoredItemNotification) {
+                    dataNotifications.add((MonitoredItemNotification) notification);
+                } else if (notification instanceof EventFieldList) {
+                    eventNotifications.add((EventFieldList) notification);
+                }
             }
-        });
+        );
 
         List<ExtensionObject> notificationData = Lists.newArrayList();
 
         if (dataNotifications.size() > 0) {
             DataChangeNotification dataChange = new DataChangeNotification(
                 dataNotifications.toArray(new MonitoredItemNotification[dataNotifications.size()]),
-                new DiagnosticInfo[0]);
+                new DiagnosticInfo[0]
+            );
 
             notificationData.add(ExtensionObject.encode(dataChange));
         }
 
         if (eventNotifications.size() > 0) {
             EventNotificationList eventChange = new EventNotificationList(
-                eventNotifications.toArray(new EventFieldList[eventNotifications.size()]));
+                eventNotifications.toArray(new EventFieldList[eventNotifications.size()])
+            );
 
             notificationData.add(ExtensionObject.encode(eventChange));
         }
@@ -458,19 +490,28 @@ public class Subscription {
         ResponseHeader header = service.createResponseHeader();
 
         PublishResponse response = new PublishResponse(
-            header, subscriptionId,
-            available, moreNotifications, notificationMessage,
-            acknowledgeResults, new DiagnosticInfo[0]);
+            header,
+            subscriptionId,
+            available,
+            moreNotifications,
+            notificationMessage,
+            acknowledgeResults,
+            new DiagnosticInfo[0]
+        );
 
         service.setResponse(response);
 
-        logger.debug("[id={}] returning {} DataChangeNotification(s) and {} EventNotificationList(s) sequenceNumber={}.",
-            subscriptionId, dataNotifications.size(), eventNotifications.size(), sequenceNumber);
+        logger.debug(
+            "[id={}] returning {} DataChangeNotification(s) and {} EventNotificationList(s) sequenceNumber={}.",
+            subscriptionId,
+            dataNotifications.size(),
+            eventNotifications.size(),
+            sequenceNumber
+        );
     }
 
     private boolean notificationsAvailable() {
-        return itemsById.values().stream()
-            .anyMatch(item -> item.hasNotifications() || item.isTriggered());
+        return itemsById.values().stream().anyMatch(item -> item.hasNotifications() || item.isTriggered());
     }
 
     private void setState(State state) {
@@ -548,15 +589,26 @@ public class Subscription {
     synchronized void onPublish(ServiceRequest<PublishRequest, PublishResponse> service) {
         State state = this.state.get();
 
-        logger.trace("[id={}] onPublish(), state={}, keep-alive={}, lifetime={}",
-            subscriptionId, state, keepAliveCounter, lifetimeCounter);
+        logger.trace(
+            "[id={}] onPublish(), state={}, keep-alive={}, lifetime={}",
+            subscriptionId,
+            state,
+            keepAliveCounter,
+            lifetimeCounter
+        );
 
-        if (state == State.Normal) publishHandler.whenNormal(service);
-        else if (state == State.KeepAlive) publishHandler.whenKeepAlive(service);
-        else if (state == State.Late) publishHandler.whenLate(service);
-        else if (state == State.Closing) publishHandler.whenClosing(service);
-        else if (state == State.Closed) publishHandler.whenClosed(service);
-        else throw new RuntimeException("Unhandled subscription state: " + state);
+        if (state == State.Normal)
+            publishHandler.whenNormal(service);
+        else if (state == State.KeepAlive)
+            publishHandler.whenKeepAlive(service);
+        else if (state == State.Late)
+            publishHandler.whenLate(service);
+        else if (state == State.Closing)
+            publishHandler.whenClosing(service);
+        else if (state == State.Closed)
+            publishHandler.whenClosed(service);
+        else
+            throw new RuntimeException("Unhandled subscription state: " + state);
     }
 
     /**
@@ -565,14 +617,24 @@ public class Subscription {
     synchronized void onPublishingTimer() {
         State state = this.state.get();
 
-        logger.trace("[id={}] onPublishingTimer(), state={}, keep-alive={}, lifetime={}",
-            subscriptionId, state, keepAliveCounter, lifetimeCounter);
+        logger.trace(
+            "[id={}] onPublishingTimer(), state={}, keep-alive={}, lifetime={}",
+            subscriptionId,
+            state,
+            keepAliveCounter,
+            lifetimeCounter
+        );
 
-        if (state == State.Normal) timerHandler.whenNormal();
-        else if (state == State.KeepAlive) timerHandler.whenKeepAlive();
-        else if (state == State.Late) timerHandler.whenLate();
-        else if (state == State.Closed) logger.debug("[id={}] onPublish(), state={}", subscriptionId, state); // No-op.
-        else throw new RuntimeException("unhandled subscription state: " + state);
+        if (state == State.Normal)
+            timerHandler.whenNormal();
+        else if (state == State.KeepAlive)
+            timerHandler.whenKeepAlive();
+        else if (state == State.Late)
+            timerHandler.whenLate();
+        else if (state == State.Closed)
+            logger.debug("[id={}] onPublish(), state={}", subscriptionId, state); // No-op.
+        else
+            throw new RuntimeException("unhandled subscription state: " + state);
     }
 
     synchronized void startPublishingTimer() {
@@ -644,8 +706,7 @@ public class Subscription {
                 messageSent = true;
             }
             /* Subscription State Table Row 11 */
-            else if (!publishingEnabled ||
-                (publishingEnabled && !notificationsAvailable && !moreNotifications)) {
+            else if (!publishingEnabled || (publishingEnabled && !notificationsAvailable && !moreNotifications)) {
                 setState(State.KeepAlive);
                 resetLifetimeCounter();
                 returnKeepAlive(service);
@@ -679,8 +740,8 @@ public class Subscription {
 
             /* Subscription State Table Row 6 */
             if (publishRequestQueued && publishingEnabled && notificationsAvailable) {
-                Optional<ServiceRequest<PublishRequest, PublishResponse>> service =
-                    Optional.ofNullable(publishQueue().poll());
+                Optional<ServiceRequest<PublishRequest, PublishResponse>> service = Optional
+                    .ofNullable(publishQueue().poll());
 
                 if (service.isPresent()) {
                     resetLifetimeCounter();
@@ -692,10 +753,11 @@ public class Subscription {
                 }
             }
             /* Subscription State Table Row 7 */
-            else if (publishRequestQueued && !messageSent &&
+            else if (publishRequestQueued &&
+                !messageSent &&
                 (!publishingEnabled || (publishingEnabled && !notificationsAvailable))) {
-                Optional<ServiceRequest<PublishRequest, PublishResponse>> service =
-                    Optional.ofNullable(publishQueue().poll());
+                Optional<ServiceRequest<PublishRequest, PublishResponse>> service = Optional
+                    .ofNullable(publishQueue().poll());
 
                 if (service.isPresent()) {
                     resetLifetimeCounter();
@@ -735,8 +797,8 @@ public class Subscription {
 
             /* Subscription State Table Row 14 */
             if (publishingEnabled && notificationsAvailable && publishRequestQueued) {
-                Optional<ServiceRequest<PublishRequest, PublishResponse>> service =
-                    Optional.ofNullable(publishQueue().poll());
+                Optional<ServiceRequest<PublishRequest, PublishResponse>> service = Optional
+                    .ofNullable(publishQueue().poll());
 
                 if (service.isPresent()) {
                     setState(State.Normal);
@@ -749,11 +811,12 @@ public class Subscription {
                 }
             }
             /* Subscription State Table Row 15 */
-            else if (publishRequestQueued && keepAliveCounter == 1 &&
+            else if (publishRequestQueued &&
+                keepAliveCounter == 1 &&
                 (!publishingEnabled || (publishingEnabled && !notificationsAvailable))) {
 
-                Optional<ServiceRequest<PublishRequest, PublishResponse>> service =
-                    Optional.ofNullable(publishQueue().poll());
+                Optional<ServiceRequest<PublishRequest, PublishResponse>> service = Optional
+                    .ofNullable(publishQueue().poll());
 
                 if (service.isPresent()) {
                     returnKeepAlive(service.get());
@@ -765,16 +828,14 @@ public class Subscription {
                 }
             }
             /* Subscription State Table Row 16 */
-            else if (keepAliveCounter > 1 &&
-                (!publishingEnabled || (publishingEnabled && !notificationsAvailable))) {
+            else if (keepAliveCounter > 1 && (!publishingEnabled || (publishingEnabled && !notificationsAvailable))) {
 
                 keepAliveCounter--;
                 startPublishingTimer();
             }
             /* Subscription State Table Row 17 */
             else if (!publishRequestQueued &&
-                (keepAliveCounter == 1 ||
-                    (keepAliveCounter > 1 && publishingEnabled && notificationsAvailable))) {
+                (keepAliveCounter == 1 || (keepAliveCounter > 1 && publishingEnabled && notificationsAvailable))) {
 
                 setState(State.Late);
                 startPublishingTimer();

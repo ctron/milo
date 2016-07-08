@@ -101,8 +101,9 @@ public class Session implements SessionServiceSet {
         subscriptionServices = new SubscriptionServices(subscriptionManager);
         viewServices = new ViewServices();
 
-        checkTimeoutFuture = server.getScheduledExecutorService().schedule(
-            this::checkTimeout, sessionTimeout.toNanos(), TimeUnit.NANOSECONDS);
+        checkTimeoutFuture = server
+            .getScheduledExecutorService()
+            .schedule(this::checkTimeout, sessionTimeout.toNanos(), TimeUnit.NANOSECONDS);
     }
 
     public long getSecureChannelId() {
@@ -158,10 +159,14 @@ public class Session implements SessionServiceSet {
             listeners.forEach(listener -> listener.onSessionClosed(this, true));
         } else {
             long remaining = sessionTimeout.toNanos() - elapsed;
-            logger.trace("Session id={} timeout scheduled for +{}s.",
-                sessionId, Duration.ofNanos(remaining).getSeconds());
+            logger.trace(
+                "Session id={} timeout scheduled for +{}s.",
+                sessionId,
+                Duration.ofNanos(remaining).getSeconds()
+            );
 
-            checkTimeoutFuture = server.getScheduledExecutorService()
+            checkTimeoutFuture = server
+                .getScheduledExecutorService()
                 .schedule(this::checkTimeout, remaining, TimeUnit.NANOSECONDS);
         }
     }

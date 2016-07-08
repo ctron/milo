@@ -52,7 +52,19 @@ public class VariableAttributes extends NodeAttributes {
         this._historizing = null;
     }
 
-    public VariableAttributes(UInteger _specifiedAttributes, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask, Variant _value, NodeId _dataType, Integer _valueRank, UInteger[] _arrayDimensions, UByte _accessLevel, UByte _userAccessLevel, Double _minimumSamplingInterval, Boolean _historizing) {
+    public VariableAttributes(UInteger _specifiedAttributes,
+                              LocalizedText _displayName,
+                              LocalizedText _description,
+                              UInteger _writeMask,
+                              UInteger _userWriteMask,
+                              Variant _value,
+                              NodeId _dataType,
+                              Integer _valueRank,
+                              UInteger[] _arrayDimensions,
+                              UByte _accessLevel,
+                              UByte _userAccessLevel,
+                              Double _minimumSamplingInterval,
+                              Boolean _historizing) {
         super(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask);
         this._value = _value;
         this._dataType = _dataType;
@@ -64,31 +76,52 @@ public class VariableAttributes extends NodeAttributes {
         this._historizing = _historizing;
     }
 
-    public Variant getValue() { return _value; }
+    public Variant getValue() {
+        return _value;
+    }
 
-    public NodeId getDataType() { return _dataType; }
+    public NodeId getDataType() {
+        return _dataType;
+    }
 
-    public Integer getValueRank() { return _valueRank; }
+    public Integer getValueRank() {
+        return _valueRank;
+    }
 
-    public UInteger[] getArrayDimensions() { return _arrayDimensions; }
+    public UInteger[] getArrayDimensions() {
+        return _arrayDimensions;
+    }
 
-    public UByte getAccessLevel() { return _accessLevel; }
+    public UByte getAccessLevel() {
+        return _accessLevel;
+    }
 
-    public UByte getUserAccessLevel() { return _userAccessLevel; }
+    public UByte getUserAccessLevel() {
+        return _userAccessLevel;
+    }
 
-    public Double getMinimumSamplingInterval() { return _minimumSamplingInterval; }
+    public Double getMinimumSamplingInterval() {
+        return _minimumSamplingInterval;
+    }
 
-    public Boolean getHistorizing() { return _historizing; }
+    public Boolean getHistorizing() {
+        return _historizing;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(VariableAttributes variableAttributes, UaEncoder encoder) {
         encoder.encodeUInt32("SpecifiedAttributes", variableAttributes._specifiedAttributes);
@@ -121,12 +154,28 @@ public class VariableAttributes extends NodeAttributes {
         Double _minimumSamplingInterval = decoder.decodeDouble("MinimumSamplingInterval");
         Boolean _historizing = decoder.decodeBoolean("Historizing");
 
-        return new VariableAttributes(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask, _value, _dataType, _valueRank, _arrayDimensions, _accessLevel, _userAccessLevel, _minimumSamplingInterval, _historizing);
+        return new VariableAttributes(
+            _specifiedAttributes,
+            _displayName,
+            _description,
+            _writeMask,
+            _userWriteMask,
+            _value,
+            _dataType,
+            _valueRank,
+            _arrayDimensions,
+            _accessLevel,
+            _userAccessLevel,
+            _minimumSamplingInterval,
+            _historizing
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(VariableAttributes::encode, VariableAttributes.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(VariableAttributes::decode, VariableAttributes.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(VariableAttributes::encode, VariableAttributes.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(VariableAttributes::decode, VariableAttributes.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

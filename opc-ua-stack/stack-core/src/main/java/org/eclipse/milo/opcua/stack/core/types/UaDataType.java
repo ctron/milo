@@ -16,7 +16,6 @@ package org.eclipse.milo.opcua.stack.core.types;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UaDataType {
     String value();

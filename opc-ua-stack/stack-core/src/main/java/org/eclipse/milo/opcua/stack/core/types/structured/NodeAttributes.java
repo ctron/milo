@@ -44,7 +44,11 @@ public class NodeAttributes implements UaStructure {
         this._userWriteMask = null;
     }
 
-    public NodeAttributes(UInteger _specifiedAttributes, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask) {
+    public NodeAttributes(UInteger _specifiedAttributes,
+                          LocalizedText _displayName,
+                          LocalizedText _description,
+                          UInteger _writeMask,
+                          UInteger _userWriteMask) {
         this._specifiedAttributes = _specifiedAttributes;
         this._displayName = _displayName;
         this._description = _description;
@@ -52,25 +56,40 @@ public class NodeAttributes implements UaStructure {
         this._userWriteMask = _userWriteMask;
     }
 
-    public UInteger getSpecifiedAttributes() { return _specifiedAttributes; }
+    public UInteger getSpecifiedAttributes() {
+        return _specifiedAttributes;
+    }
 
-    public LocalizedText getDisplayName() { return _displayName; }
+    public LocalizedText getDisplayName() {
+        return _displayName;
+    }
 
-    public LocalizedText getDescription() { return _description; }
+    public LocalizedText getDescription() {
+        return _description;
+    }
 
-    public UInteger getWriteMask() { return _writeMask; }
+    public UInteger getWriteMask() {
+        return _writeMask;
+    }
 
-    public UInteger getUserWriteMask() { return _userWriteMask; }
+    public UInteger getUserWriteMask() {
+        return _userWriteMask;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(NodeAttributes nodeAttributes, UaEncoder encoder) {
         encoder.encodeUInt32("SpecifiedAttributes", nodeAttributes._specifiedAttributes);

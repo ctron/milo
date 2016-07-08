@@ -27,17 +27,17 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UByte;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 
 @UaObjectNode(typeName = "0:AuditConditionShelvingEventType")
-public class AuditConditionShelvingEventNode extends AuditConditionEventNode implements AuditConditionShelvingEventType {
+public class AuditConditionShelvingEventNode extends AuditConditionEventNode
+        implements AuditConditionShelvingEventType {
 
-    public AuditConditionShelvingEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditConditionShelvingEventNode(UaNodeManager nodeManager,
+                                           NodeId nodeId,
+                                           QualifiedName browseName,
+                                           LocalizedText displayName,
+                                           Optional<LocalizedText> description,
+                                           Optional<UInteger> writeMask,
+                                           Optional<UInteger> userWriteMask,
+                                           UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -51,7 +51,9 @@ public class AuditConditionShelvingEventNode extends AuditConditionEventNode imp
 
     @Override
     public PropertyNode getShelvingTimeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditConditionShelvingEventType.SHELVING_TIME.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditConditionShelvingEventType.SHELVING_TIME.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

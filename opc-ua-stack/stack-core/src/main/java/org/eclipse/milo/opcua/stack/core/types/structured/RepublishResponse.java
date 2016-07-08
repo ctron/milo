@@ -41,35 +41,55 @@ public class RepublishResponse implements UaResponseMessage {
         this._notificationMessage = _notificationMessage;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public NotificationMessage getNotificationMessage() { return _notificationMessage; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NotificationMessage getNotificationMessage() {
+        return _notificationMessage;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(RepublishResponse republishResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", republishResponse._responseHeader != null ? republishResponse._responseHeader : new ResponseHeader());
-        encoder.encodeSerializable("NotificationMessage", republishResponse._notificationMessage != null ? republishResponse._notificationMessage : new NotificationMessage());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            republishResponse._responseHeader != null ? republishResponse._responseHeader : new ResponseHeader()
+        );
+        encoder.encodeSerializable(
+            "NotificationMessage",
+            republishResponse._notificationMessage != null ?
+                republishResponse._notificationMessage :
+                new NotificationMessage()
+        );
     }
 
     public static RepublishResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
-        NotificationMessage _notificationMessage = decoder.decodeSerializable("NotificationMessage", NotificationMessage.class);
+        NotificationMessage _notificationMessage = decoder
+            .decodeSerializable("NotificationMessage", NotificationMessage.class);
 
         return new RepublishResponse(_responseHeader, _notificationMessage);
     }
 
     static {
-        DelegateRegistry.registerEncoder(RepublishResponse::encode, RepublishResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(RepublishResponse::decode, RepublishResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(RepublishResponse::encode, RepublishResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(RepublishResponse::decode, RepublishResponse.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

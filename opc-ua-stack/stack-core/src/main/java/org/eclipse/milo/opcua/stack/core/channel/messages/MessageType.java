@@ -34,39 +34,39 @@ public enum MessageType {
 
     public static int toMediumInt(MessageType messageType) throws UaException {
         switch (messageType) {
-            case Hello:
-                return HEL;
-            case Acknowledge:
-                return ACK;
-            case Error:
-                return ERR;
-            case OpenSecureChannel:
-                return OPN;
-            case CloseSecureChannel:
-                return CLO;
-            case SecureMessage:
-                return MSG;
-            default:
-                throw new UaException(StatusCodes.Bad_TcpMessageTypeInvalid, "unknown message type: " + messageType);
+        case Hello:
+            return HEL;
+        case Acknowledge:
+            return ACK;
+        case Error:
+            return ERR;
+        case OpenSecureChannel:
+            return OPN;
+        case CloseSecureChannel:
+            return CLO;
+        case SecureMessage:
+            return MSG;
+        default:
+            throw new UaException(StatusCodes.Bad_TcpMessageTypeInvalid, "unknown message type: " + messageType);
         }
     }
 
     public static MessageType fromMediumInt(int messageType) throws UaException {
         switch (messageType) {
-            case HEL:
-                return Hello;
-            case ACK:
-                return Acknowledge;
-            case ERR:
-                return Error;
-            case OPN:
-                return OpenSecureChannel;
-            case CLO:
-                return CloseSecureChannel;
-            case MSG:
-                return SecureMessage;
-            default:
-                throw new UaException(StatusCodes.Bad_TcpMessageTypeInvalid, "unknown message type: " + messageType);
+        case HEL:
+            return Hello;
+        case ACK:
+            return Acknowledge;
+        case ERR:
+            return Error;
+        case OPN:
+            return OpenSecureChannel;
+        case CLO:
+            return CloseSecureChannel;
+        case MSG:
+            return SecureMessage;
+        default:
+            throw new UaException(StatusCodes.Bad_TcpMessageTypeInvalid, "unknown message type: " + messageType);
         }
     }
 

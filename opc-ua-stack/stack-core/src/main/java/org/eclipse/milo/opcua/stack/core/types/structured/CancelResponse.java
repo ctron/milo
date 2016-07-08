@@ -42,22 +42,34 @@ public class CancelResponse implements UaResponseMessage {
         this._cancelCount = _cancelCount;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public UInteger getCancelCount() { return _cancelCount; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public UInteger getCancelCount() {
+        return _cancelCount;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CancelResponse cancelResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", cancelResponse._responseHeader != null ? cancelResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            cancelResponse._responseHeader != null ? cancelResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeUInt32("CancelCount", cancelResponse._cancelCount);
     }
 

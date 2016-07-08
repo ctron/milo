@@ -41,35 +41,64 @@ public class DeleteReferencesRequest implements UaRequestMessage {
         this._referencesToDelete = _referencesToDelete;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public DeleteReferencesItem[] getReferencesToDelete() { return _referencesToDelete; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public DeleteReferencesItem[] getReferencesToDelete() {
+        return _referencesToDelete;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DeleteReferencesRequest deleteReferencesRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", deleteReferencesRequest._requestHeader != null ? deleteReferencesRequest._requestHeader : new RequestHeader());
-        encoder.encodeArray("ReferencesToDelete", deleteReferencesRequest._referencesToDelete, encoder::encodeSerializable);
+        encoder.encodeSerializable(
+            "RequestHeader",
+            deleteReferencesRequest._requestHeader != null ?
+                deleteReferencesRequest._requestHeader :
+                new RequestHeader()
+        );
+        encoder.encodeArray(
+            "ReferencesToDelete",
+            deleteReferencesRequest._referencesToDelete,
+            encoder::encodeSerializable
+        );
     }
 
     public static DeleteReferencesRequest decode(UaDecoder decoder) {
         RequestHeader _requestHeader = decoder.decodeSerializable("RequestHeader", RequestHeader.class);
-        DeleteReferencesItem[] _referencesToDelete = decoder.decodeArray("ReferencesToDelete", decoder::decodeSerializable, DeleteReferencesItem.class);
+        DeleteReferencesItem[] _referencesToDelete = decoder
+            .decodeArray("ReferencesToDelete", decoder::decodeSerializable, DeleteReferencesItem.class);
 
         return new DeleteReferencesRequest(_requestHeader, _referencesToDelete);
     }
 
     static {
-        DelegateRegistry.registerEncoder(DeleteReferencesRequest::encode, DeleteReferencesRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DeleteReferencesRequest::decode, DeleteReferencesRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            DeleteReferencesRequest::encode,
+            DeleteReferencesRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            DeleteReferencesRequest::decode,
+            DeleteReferencesRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

@@ -60,21 +60,77 @@ public class ChunkSerializationTest extends SecureChannelFixture {
     @DataProvider
     public Object[][] getAsymmetricSecurityParameters() {
         return new Object[][]{
-            {SecurityPolicy.None, MessageSecurityMode.None, 128},
-            {SecurityPolicy.Basic128Rsa15, MessageSecurityMode.Sign, 128},
-            {SecurityPolicy.Basic128Rsa15, MessageSecurityMode.SignAndEncrypt, 128},
-            {SecurityPolicy.Basic256, MessageSecurityMode.Sign, 128},
-            {SecurityPolicy.Basic256, MessageSecurityMode.SignAndEncrypt, 128},
-            {SecurityPolicy.Basic256Sha256, MessageSecurityMode.Sign, 128},
-            {SecurityPolicy.Basic256Sha256, MessageSecurityMode.SignAndEncrypt, 128},
+            {
+                SecurityPolicy.None,
+                MessageSecurityMode.None,
+                128
+            },
+            {
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.Sign,
+                128
+            },
+            {
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.SignAndEncrypt,
+                128
+            },
+            {
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.Sign,
+                128
+            },
+            {
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.SignAndEncrypt,
+                128
+            },
+            {
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.Sign,
+                128
+            },
+            {
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.SignAndEncrypt,
+                128
+            },
 
-            {SecurityPolicy.None, MessageSecurityMode.None, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic128Rsa15, MessageSecurityMode.Sign, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic128Rsa15, MessageSecurityMode.SignAndEncrypt, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic256, MessageSecurityMode.Sign, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic256, MessageSecurityMode.SignAndEncrypt, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic256Sha256, MessageSecurityMode.Sign, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic256Sha256, MessageSecurityMode.SignAndEncrypt, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
+            {
+                SecurityPolicy.None,
+                MessageSecurityMode.None,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.Sign,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.SignAndEncrypt,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.Sign,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.SignAndEncrypt,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.Sign,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.SignAndEncrypt,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
         };
     }
 
@@ -83,8 +139,12 @@ public class ChunkSerializationTest extends SecureChannelFixture {
                                       MessageSecurityMode messageSecurity,
                                       int messageSize) throws Exception {
 
-        logger.info("Asymmetric chunk serialization, securityPolicy={}, messageSecurityMode={}, messageSize={}",
-            securityPolicy, messageSecurity, messageSize);
+        logger.info(
+            "Asymmetric chunk serialization, securityPolicy={}, messageSecurityMode={}, messageSize={}",
+            securityPolicy,
+            messageSecurity,
+            messageSize
+        );
 
         ChunkEncoder encoder = new ChunkEncoder(parameters);
         ChunkDecoder decoder = new ChunkDecoder(parameters);
@@ -97,8 +157,7 @@ public class ChunkSerializationTest extends SecureChannelFixture {
             .attr(ClientSecureChannel.KEY_REQUEST_ID_SEQUENCE)
             .setIfAbsent(new LongSequence(1L, UInteger.MAX_VALUE));
 
-        LongSequence requestId = clientChannel
-            .attr(ClientSecureChannel.KEY_REQUEST_ID_SEQUENCE).get();
+        LongSequence requestId = clientChannel.attr(ClientSecureChannel.KEY_REQUEST_ID_SEQUENCE).get();
 
         byte[] messageBytes = new byte[messageSize];
         for (int i = 0; i < messageBytes.length; i++) {
@@ -107,17 +166,10 @@ public class ChunkSerializationTest extends SecureChannelFixture {
 
         ByteBuf messageBuffer = BufferUtil.buffer().writeBytes(messageBytes);
 
-        List<ByteBuf> chunkBuffers = encoder.encodeAsymmetric(
-            clientChannel,
-            MessageType.OpenSecureChannel,
-            messageBuffer,
-            requestId.getAndIncrement()
-        );
+        List<ByteBuf> chunkBuffers = encoder
+            .encodeAsymmetric(clientChannel, MessageType.OpenSecureChannel, messageBuffer, requestId.getAndIncrement());
 
-        ByteBuf decodedBuffer = decoder.decodeAsymmetric(
-            serverChannel,
-            chunkBuffers
-        );
+        ByteBuf decodedBuffer = decoder.decodeAsymmetric(serverChannel, chunkBuffers);
 
         ReferenceCountUtil.releaseLater(messageBuffer);
         ReferenceCountUtil.releaseLater(decodedBuffer);
@@ -129,29 +181,113 @@ public class ChunkSerializationTest extends SecureChannelFixture {
     @DataProvider
     public Object[][] getSymmetricSecurityParameters() {
         return new Object[][]{
-            {SecurityPolicy.None, MessageSecurityMode.None, 128},
-            {SecurityPolicy.Basic128Rsa15, MessageSecurityMode.Sign, 128},
-            {SecurityPolicy.Basic128Rsa15, MessageSecurityMode.SignAndEncrypt, 128},
-            {SecurityPolicy.Basic256, MessageSecurityMode.Sign, 128},
-            {SecurityPolicy.Basic256, MessageSecurityMode.SignAndEncrypt, 128},
-            {SecurityPolicy.Basic256Sha256, MessageSecurityMode.Sign, 128},
-            {SecurityPolicy.Basic256Sha256, MessageSecurityMode.SignAndEncrypt, 128},
+            {
+                SecurityPolicy.None,
+                MessageSecurityMode.None,
+                128
+            },
+            {
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.Sign,
+                128
+            },
+            {
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.SignAndEncrypt,
+                128
+            },
+            {
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.Sign,
+                128
+            },
+            {
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.SignAndEncrypt,
+                128
+            },
+            {
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.Sign,
+                128
+            },
+            {
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.SignAndEncrypt,
+                128
+            },
 
-            {SecurityPolicy.None, MessageSecurityMode.None, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic128Rsa15, MessageSecurityMode.Sign, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic128Rsa15, MessageSecurityMode.SignAndEncrypt, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic256, MessageSecurityMode.Sign, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic256, MessageSecurityMode.SignAndEncrypt, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic256Sha256, MessageSecurityMode.Sign, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
-            {SecurityPolicy.Basic256Sha256, MessageSecurityMode.SignAndEncrypt, ChannelConfig.DEFAULT_MAX_CHUNK_SIZE},
+            {
+                SecurityPolicy.None,
+                MessageSecurityMode.None,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.Sign,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.SignAndEncrypt,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.Sign,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.SignAndEncrypt,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.Sign,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
+            {
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.SignAndEncrypt,
+                ChannelConfig.DEFAULT_MAX_CHUNK_SIZE
+            },
 
-            {SecurityPolicy.None, MessageSecurityMode.None, ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE},
-            {SecurityPolicy.Basic128Rsa15, MessageSecurityMode.Sign, ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE},
-            {SecurityPolicy.Basic128Rsa15, MessageSecurityMode.SignAndEncrypt, ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE},
-            {SecurityPolicy.Basic256, MessageSecurityMode.Sign, ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE},
-            {SecurityPolicy.Basic256, MessageSecurityMode.SignAndEncrypt, ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE},
-            {SecurityPolicy.Basic256Sha256, MessageSecurityMode.Sign, ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE},
-            {SecurityPolicy.Basic256Sha256, MessageSecurityMode.SignAndEncrypt, ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE},
+            {
+                SecurityPolicy.None,
+                MessageSecurityMode.None,
+                ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE
+            },
+            {
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.Sign,
+                ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE
+            },
+            {
+                SecurityPolicy.Basic128Rsa15,
+                MessageSecurityMode.SignAndEncrypt,
+                ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE
+            },
+            {
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.Sign,
+                ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE
+            },
+            {
+                SecurityPolicy.Basic256,
+                MessageSecurityMode.SignAndEncrypt,
+                ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE
+            },
+            {
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.Sign,
+                ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE
+            },
+            {
+                SecurityPolicy.Basic256Sha256,
+                MessageSecurityMode.SignAndEncrypt,
+                ChannelConfig.DEFAULT_MAX_MESSAGE_SIZE
+            },
         };
     }
 
@@ -160,8 +296,12 @@ public class ChunkSerializationTest extends SecureChannelFixture {
                                      MessageSecurityMode messageSecurity,
                                      int messageSize) throws Exception {
 
-        logger.info("Symmetric chunk serialization, securityPolicy={}, messageSecurityMode={}, messageSize={}",
-            securityPolicy, messageSecurity, messageSize);
+        logger.info(
+            "Symmetric chunk serialization, securityPolicy={}, messageSecurityMode={}, messageSize={}",
+            securityPolicy,
+            messageSecurity,
+            messageSize
+        );
 
         ChunkEncoder encoder = new ChunkEncoder(parameters);
         ChunkDecoder decoder = new ChunkDecoder(parameters);
@@ -174,8 +314,7 @@ public class ChunkSerializationTest extends SecureChannelFixture {
             .attr(ClientSecureChannel.KEY_REQUEST_ID_SEQUENCE)
             .setIfAbsent(new LongSequence(1L, UInteger.MAX_VALUE));
 
-        LongSequence requestId = clientChannel
-            .attr(ClientSecureChannel.KEY_REQUEST_ID_SEQUENCE).get();
+        LongSequence requestId = clientChannel.attr(ClientSecureChannel.KEY_REQUEST_ID_SEQUENCE).get();
 
         byte[] messageBytes = new byte[messageSize];
         for (int i = 0; i < messageBytes.length; i++) {
@@ -184,17 +323,10 @@ public class ChunkSerializationTest extends SecureChannelFixture {
 
         ByteBuf messageBuffer = BufferUtil.buffer().writeBytes(messageBytes);
 
-        List<ByteBuf> chunkBuffers = encoder.encodeSymmetric(
-            clientChannel,
-            MessageType.SecureMessage,
-            messageBuffer,
-            requestId.getAndIncrement()
-        );
+        List<ByteBuf> chunkBuffers = encoder
+            .encodeSymmetric(clientChannel, MessageType.SecureMessage, messageBuffer, requestId.getAndIncrement());
 
-        ByteBuf decodedBuffer = decoder.decodeSymmetric(
-            serverChannel,
-            chunkBuffers
-        );
+        ByteBuf decodedBuffer = decoder.decodeSymmetric(serverChannel, chunkBuffers);
 
         ReferenceCountUtil.releaseLater(messageBuffer);
         ReferenceCountUtil.releaseLater(decodedBuffer);

@@ -154,12 +154,7 @@ public final class DataValue {
     public static DataValue derivedNonValue(DataValue from, TimestampsToReturn timestamps) {
         boolean includeServer = timestamps == TimestampsToReturn.Server || timestamps == TimestampsToReturn.Both;
 
-        return new DataValue(
-            from.value,
-            from.status,
-            null,
-            includeServer ? from.serverTime : null
-        );
+        return new DataValue(from.value, from.status, null, includeServer ? from.serverTime : null);
     }
 
 }

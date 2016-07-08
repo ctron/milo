@@ -32,33 +32,46 @@ import org.eclipse.milo.opcua.stack.core.types.structured.SamplingIntervalDiagno
 @UaVariableNode(typeName = "0:SamplingIntervalDiagnosticsType")
 public class SamplingIntervalDiagnosticsNode extends BaseDataVariableNode implements SamplingIntervalDiagnosticsType {
 
-    public SamplingIntervalDiagnosticsNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public SamplingIntervalDiagnosticsNode(UaNodeManager nodeManager,
+                                           NodeId nodeId,
+                                           VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public SamplingIntervalDiagnosticsNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public SamplingIntervalDiagnosticsNode(UaNodeManager nodeManager,
+                                           NodeId nodeId,
+                                           QualifiedName browseName,
+                                           LocalizedText displayName,
+                                           Optional<LocalizedText> description,
+                                           Optional<UInteger> writeMask,
+                                           Optional<UInteger> userWriteMask,
+                                           DataValue value,
+                                           NodeId dataType,
+                                           Integer valueRank,
+                                           Optional<UInteger[]> arrayDimensions,
+                                           UByte accessLevel,
+                                           UByte userAccessLevel,
+                                           Optional<Double> minimumSamplingInterval,
+                                           boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
 
     @Override
@@ -89,8 +102,7 @@ public class SamplingIntervalDiagnosticsNode extends BaseDataVariableNode implem
 
     @Override
     public void setSamplingInterval(Double value) {
-        getVariableComponent("SamplingInterval")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SamplingInterval").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override

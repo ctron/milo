@@ -60,9 +60,7 @@ public class OpcUaDataTypeEncoding implements DataTypeEncoding {
         byte[] bs = encoded.bytes();
         if (bs == null) bs = new byte[0];
 
-        ByteBuf buffer = Unpooled
-            .wrappedBuffer(bs)
-            .order(ByteOrder.LITTLE_ENDIAN);
+        ByteBuf buffer = Unpooled.wrappedBuffer(bs).order(ByteOrder.LITTLE_ENDIAN);
 
         BinaryDecoder decoder = new BinaryDecoder();
         decoder.setBuffer(buffer);

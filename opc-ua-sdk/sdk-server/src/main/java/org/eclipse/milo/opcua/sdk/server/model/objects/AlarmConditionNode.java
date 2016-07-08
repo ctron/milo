@@ -33,15 +33,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:AlarmConditionType")
 public class AlarmConditionNode extends AcknowledgeableConditionNode implements AlarmConditionType {
 
-    public AlarmConditionNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AlarmConditionNode(UaNodeManager nodeManager,
+                              NodeId nodeId,
+                              QualifiedName browseName,
+                              LocalizedText displayName,
+                              Optional<LocalizedText> description,
+                              Optional<UInteger> writeMask,
+                              Optional<UInteger> userWriteMask,
+                              UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -126,8 +125,7 @@ public class AlarmConditionNode extends AcknowledgeableConditionNode implements 
 
     @Override
     public void setEnabledState(LocalizedText value) {
-        getVariableComponent("EnabledState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("EnabledState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -146,8 +144,7 @@ public class AlarmConditionNode extends AcknowledgeableConditionNode implements 
 
     @Override
     public void setActiveState(LocalizedText value) {
-        getVariableComponent("ActiveState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ActiveState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -166,8 +163,7 @@ public class AlarmConditionNode extends AcknowledgeableConditionNode implements 
 
     @Override
     public void setSuppressedState(LocalizedText value) {
-        getVariableComponent("SuppressedState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SuppressedState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

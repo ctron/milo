@@ -17,5 +17,4 @@ public interface DirectoryType extends FolderType {
 
     FolderType getApplications();
 
-
 }

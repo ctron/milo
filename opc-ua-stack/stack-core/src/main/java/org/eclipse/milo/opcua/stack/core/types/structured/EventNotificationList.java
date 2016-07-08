@@ -39,17 +39,24 @@ public class EventNotificationList extends NotificationData {
         this._events = _events;
     }
 
-    public EventFieldList[] getEvents() { return _events; }
+    public EventFieldList[] getEvents() {
+        return _events;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(EventNotificationList eventNotificationList, UaEncoder encoder) {
         encoder.encodeArray("Events", eventNotificationList._events, encoder::encodeSerializable);
@@ -62,8 +69,18 @@ public class EventNotificationList extends NotificationData {
     }
 
     static {
-        DelegateRegistry.registerEncoder(EventNotificationList::encode, EventNotificationList.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(EventNotificationList::decode, EventNotificationList.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            EventNotificationList::encode,
+            EventNotificationList.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            EventNotificationList::decode,
+            EventNotificationList.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

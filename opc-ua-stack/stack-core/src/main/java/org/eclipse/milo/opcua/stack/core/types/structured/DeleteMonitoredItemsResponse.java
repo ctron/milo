@@ -40,45 +40,78 @@ public class DeleteMonitoredItemsResponse implements UaResponseMessage {
         this._diagnosticInfos = null;
     }
 
-    public DeleteMonitoredItemsResponse(ResponseHeader _responseHeader, StatusCode[] _results, DiagnosticInfo[] _diagnosticInfos) {
+    public DeleteMonitoredItemsResponse(ResponseHeader _responseHeader,
+                                        StatusCode[] _results,
+                                        DiagnosticInfo[] _diagnosticInfos) {
         this._responseHeader = _responseHeader;
         this._results = _results;
         this._diagnosticInfos = _diagnosticInfos;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public StatusCode[] getResults() { return _results; }
+    public StatusCode[] getResults() {
+        return _results;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DeleteMonitoredItemsResponse deleteMonitoredItemsResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", deleteMonitoredItemsResponse._responseHeader != null ? deleteMonitoredItemsResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            deleteMonitoredItemsResponse._responseHeader != null ?
+                deleteMonitoredItemsResponse._responseHeader :
+                new ResponseHeader()
+        );
         encoder.encodeArray("Results", deleteMonitoredItemsResponse._results, encoder::encodeStatusCode);
-        encoder.encodeArray("DiagnosticInfos", deleteMonitoredItemsResponse._diagnosticInfos, encoder::encodeDiagnosticInfo);
+        encoder.encodeArray(
+            "DiagnosticInfos",
+            deleteMonitoredItemsResponse._diagnosticInfos,
+            encoder::encodeDiagnosticInfo
+        );
     }
 
     public static DeleteMonitoredItemsResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
         StatusCode[] _results = decoder.decodeArray("Results", decoder::decodeStatusCode, StatusCode.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
         return new DeleteMonitoredItemsResponse(_responseHeader, _results, _diagnosticInfos);
     }
 
     static {
-        DelegateRegistry.registerEncoder(DeleteMonitoredItemsResponse::encode, DeleteMonitoredItemsResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DeleteMonitoredItemsResponse::decode, DeleteMonitoredItemsResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            DeleteMonitoredItemsResponse::encode,
+            DeleteMonitoredItemsResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            DeleteMonitoredItemsResponse::decode,
+            DeleteMonitoredItemsResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

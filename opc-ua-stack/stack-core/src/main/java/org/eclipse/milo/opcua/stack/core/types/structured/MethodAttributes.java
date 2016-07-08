@@ -38,25 +38,40 @@ public class MethodAttributes extends NodeAttributes {
         this._userExecutable = null;
     }
 
-    public MethodAttributes(UInteger _specifiedAttributes, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask, Boolean _executable, Boolean _userExecutable) {
+    public MethodAttributes(UInteger _specifiedAttributes,
+                            LocalizedText _displayName,
+                            LocalizedText _description,
+                            UInteger _writeMask,
+                            UInteger _userWriteMask,
+                            Boolean _executable,
+                            Boolean _userExecutable) {
         super(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask);
         this._executable = _executable;
         this._userExecutable = _userExecutable;
     }
 
-    public Boolean getExecutable() { return _executable; }
+    public Boolean getExecutable() {
+        return _executable;
+    }
 
-    public Boolean getUserExecutable() { return _userExecutable; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public Boolean getUserExecutable() {
+        return _userExecutable;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(MethodAttributes methodAttributes, UaEncoder encoder) {
         encoder.encodeUInt32("SpecifiedAttributes", methodAttributes._specifiedAttributes);
@@ -77,12 +92,22 @@ public class MethodAttributes extends NodeAttributes {
         Boolean _executable = decoder.decodeBoolean("Executable");
         Boolean _userExecutable = decoder.decodeBoolean("UserExecutable");
 
-        return new MethodAttributes(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask, _executable, _userExecutable);
+        return new MethodAttributes(
+            _specifiedAttributes,
+            _displayName,
+            _description,
+            _writeMask,
+            _userWriteMask,
+            _executable,
+            _userExecutable
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(MethodAttributes::encode, MethodAttributes.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(MethodAttributes::decode, MethodAttributes.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(MethodAttributes::encode, MethodAttributes.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(MethodAttributes::decode, MethodAttributes.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

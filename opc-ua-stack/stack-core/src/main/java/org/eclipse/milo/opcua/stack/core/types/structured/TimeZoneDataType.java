@@ -41,19 +41,28 @@ public class TimeZoneDataType implements UaStructure {
         this._daylightSavingInOffset = _daylightSavingInOffset;
     }
 
-    public Short getOffset() { return _offset; }
+    public Short getOffset() {
+        return _offset;
+    }
 
-    public Boolean getDaylightSavingInOffset() { return _daylightSavingInOffset; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public Boolean getDaylightSavingInOffset() {
+        return _daylightSavingInOffset;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(TimeZoneDataType timeZoneDataType, UaEncoder encoder) {
         encoder.encodeInt16("Offset", timeZoneDataType._offset);
@@ -68,8 +77,10 @@ public class TimeZoneDataType implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(TimeZoneDataType::encode, TimeZoneDataType.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(TimeZoneDataType::decode, TimeZoneDataType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(TimeZoneDataType::encode, TimeZoneDataType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(TimeZoneDataType::decode, TimeZoneDataType.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

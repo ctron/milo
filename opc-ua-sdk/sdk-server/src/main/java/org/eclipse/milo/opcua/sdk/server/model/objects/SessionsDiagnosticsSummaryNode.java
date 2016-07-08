@@ -34,15 +34,14 @@ import org.eclipse.milo.opcua.stack.core.types.structured.SessionSecurityDiagnos
 @UaObjectNode(typeName = "0:SessionsDiagnosticsSummaryType")
 public class SessionsDiagnosticsSummaryNode extends BaseObjectNode implements SessionsDiagnosticsSummaryType {
 
-    public SessionsDiagnosticsSummaryNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public SessionsDiagnosticsSummaryNode(UaNodeManager nodeManager,
+                                          NodeId nodeId,
+                                          QualifiedName browseName,
+                                          LocalizedText displayName,
+                                          Optional<LocalizedText> description,
+                                          Optional<UInteger> writeMask,
+                                          Optional<UInteger> userWriteMask,
+                                          UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -63,15 +62,16 @@ public class SessionsDiagnosticsSummaryNode extends BaseObjectNode implements Se
 
     @Override
     public void setSessionDiagnosticsArray(SessionDiagnosticsDataType[] value) {
-        getVariableComponent("SessionDiagnosticsArray")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SessionDiagnosticsArray").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
     public SessionSecurityDiagnosticsDataType[] getSessionSecurityDiagnosticsArray() {
         Optional<VariableNode> component = getVariableComponent("SessionSecurityDiagnosticsArray");
 
-        return component.map(node -> (SessionSecurityDiagnosticsDataType[]) node.getValue().getValue().getValue()).orElse(null);
+        return component
+            .map(node -> (SessionSecurityDiagnosticsDataType[]) node.getValue().getValue().getValue())
+            .orElse(null);
     }
 
     @Override

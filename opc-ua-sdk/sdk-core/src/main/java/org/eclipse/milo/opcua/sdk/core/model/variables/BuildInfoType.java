@@ -15,9 +15,7 @@ package org.eclipse.milo.opcua.sdk.core.model.variables;
 
 import org.eclipse.milo.opcua.stack.core.types.builtin.DateTime;
 
-
 public interface BuildInfoType extends BaseDataVariableType {
-
 
     String getProductUri();
 

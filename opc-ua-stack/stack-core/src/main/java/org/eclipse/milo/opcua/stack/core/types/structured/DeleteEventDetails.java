@@ -40,17 +40,24 @@ public class DeleteEventDetails extends HistoryUpdateDetails {
         this._eventIds = _eventIds;
     }
 
-    public ByteString[] getEventIds() { return _eventIds; }
+    public ByteString[] getEventIds() {
+        return _eventIds;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DeleteEventDetails deleteEventDetails, UaEncoder encoder) {
         encoder.encodeNodeId("NodeId", deleteEventDetails._nodeId);
@@ -65,8 +72,10 @@ public class DeleteEventDetails extends HistoryUpdateDetails {
     }
 
     static {
-        DelegateRegistry.registerEncoder(DeleteEventDetails::encode, DeleteEventDetails.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DeleteEventDetails::decode, DeleteEventDetails.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(DeleteEventDetails::encode, DeleteEventDetails.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(DeleteEventDetails::decode, DeleteEventDetails.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

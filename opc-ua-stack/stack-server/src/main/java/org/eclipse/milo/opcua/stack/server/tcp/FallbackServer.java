@@ -46,7 +46,8 @@ public class FallbackServer {
     private final UaTcpStackServer server;
 
     public FallbackServer() {
-        UaTcpStackServerConfig config = UaTcpStackServerConfig.builder()
+        UaTcpStackServerConfig config = UaTcpStackServerConfig
+            .builder()
             .setApplicationName(LocalizedText.english("Stack Discovery Server"))
             .setApplicationUri("urn:eclipse:milo:opcua:stack:discovery")
             .setProductUri("https://projects.eclipse.org/projects/iot.milo")
@@ -92,15 +93,13 @@ public class FallbackServer {
                 Lists.newArrayList(request.getProfileUris()) :
                 new ArrayList<>();
 
-            EndpointDescription[] filtered = Arrays.stream(endpoints)
+            EndpointDescription[] filtered = Arrays
+                .stream(endpoints)
                 .filter(ed -> filterProfileUris(ed, profileUris))
                 .filter(this::filterEndpointUrls)
                 .toArray(EndpointDescription[]::new);
 
-            service.setResponse(new GetEndpointsResponse(
-                service.createResponseHeader(),
-                filtered
-            ));
+            service.setResponse(new GetEndpointsResponse(service.createResponseHeader(), filtered));
         }
 
         private boolean filterProfileUris(EndpointDescription endpoint, List<String> profileUris) {
@@ -136,7 +135,9 @@ public class FallbackServer {
 
             ResponseHeader header = service.createResponseHeader();
             FindServersResponse response = new FindServersResponse(
-                header, servers.toArray(new ApplicationDescription[servers.size()]));
+                header,
+                servers.toArray(new ApplicationDescription[servers.size()])
+            );
 
             service.setResponse(response);
         }

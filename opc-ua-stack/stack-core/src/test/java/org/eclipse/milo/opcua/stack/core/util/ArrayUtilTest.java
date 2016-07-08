@@ -25,10 +25,74 @@ public class ArrayUtilTest {
     @DataProvider(name = "arrays")
     public Object[][] getArrays() {
         return new Object[][]{
-                {new Integer[]{0, 1, 2, 3, 4, 5, 6, 7}},
-                {new int[]{0, 1, 2, 3, 4, 5, 6, 7}},
-                {new int[][]{{0, 1}, {2, 3}, {4, 5}, {6, 7}}},
-                {new int[][][]{{{0, 1}, {2, 3},}, {{4, 5}, {6, 7}}}}
+            {
+                new Integer[]{
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7
+                }
+            },
+            {
+                new int[]{
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7
+                }
+            },
+            {
+                new int[][]{
+                    {
+                        0,
+                        1
+                    },
+                    {
+                        2,
+                        3
+                    },
+                    {
+                        4,
+                        5
+                    },
+                    {
+                        6,
+                        7
+                    }
+                }
+            },
+            {
+                new int[][][]{
+                    {
+                        {
+                            0,
+                            1
+                        },
+                        {
+                            2,
+                            3
+                        },
+                    },
+                    {
+                        {
+                            4,
+                            5
+                        },
+                        {
+                            6,
+                            7
+                        }
+                    }
+                }
+            }
         };
     }
 
@@ -52,12 +116,48 @@ public class ArrayUtilTest {
     @DataProvider(name = "dimensions")
     public Object[][] getDimensions() {
         return new Object[][]{
-                {new int[0], new int[]{0}},
-                {new int[1], new int[]{1}},
-                {new int[0][0], new int[]{0, 0}},
-                {new int[1][2], new int[]{1, 2}},
-                {new int[0][0][0], new int[]{0, 0, 0}},
-                {new int[1][2][3], new int[]{1, 2, 3}}
+            {
+                new int[0],
+                new int[]{
+                    0
+                }
+            },
+            {
+                new int[1],
+                new int[]{
+                    1
+                }
+            },
+            {
+                new int[0][0],
+                new int[]{
+                    0,
+                    0
+                }
+            },
+            {
+                new int[1][2],
+                new int[]{
+                    1,
+                    2
+                }
+            },
+            {
+                new int[0][0][0],
+                new int[]{
+                    0,
+                    0,
+                    0
+                }
+            },
+            {
+                new int[1][2][3],
+                new int[]{
+                    1,
+                    2,
+                    3
+                }
+            }
         };
     }
 
@@ -69,15 +169,42 @@ public class ArrayUtilTest {
     @DataProvider(name = "typedArrays")
     public Object[][] getTypedArrays() {
         return new Object[][]{
-                {new int[1], int.class},
-                {new int[2][2], int.class},
-                {new int[3][3][3], int.class},
-                {new Integer[1], Integer.class},
-                {new Integer[2][2], Integer.class},
-                {new Integer[3][3][3], Integer.class},
-                {new String[1], String.class},
-                {new String[2][2], String.class},
-                {new String[3][3][3], String.class},
+            {
+                new int[1],
+                int.class
+            },
+            {
+                new int[2][2],
+                int.class
+            },
+            {
+                new int[3][3][3],
+                int.class
+            },
+            {
+                new Integer[1],
+                Integer.class
+            },
+            {
+                new Integer[2][2],
+                Integer.class
+            },
+            {
+                new Integer[3][3][3],
+                Integer.class
+            },
+            {
+                new String[1],
+                String.class
+            },
+            {
+                new String[2][2],
+                String.class
+            },
+            {
+                new String[3][3][3],
+                String.class
+            },
         };
     }
 

@@ -36,8 +36,7 @@ import org.reflections.Reflections;
 
 public class VariableNodeFactory {
 
-    private static final Reflections NODE_REFLECTIONS =
-        new Reflections("org.eclipse.milo.opcua.sdk.server.model");
+    private static final Reflections NODE_REFLECTIONS = new Reflections("org.eclipse.milo.opcua.sdk.server.model");
 
     private final UaNodeManager nodeManager;
 
@@ -45,11 +44,10 @@ public class VariableNodeFactory {
         this.nodeManager = nodeManager;
     }
 
-    public UaVariableNode create(
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        NodeId typeDefinitionId) {
+    public UaVariableNode create(NodeId nodeId,
+                                 QualifiedName browseName,
+                                 LocalizedText displayName,
+                                 NodeId typeDefinitionId) {
 
         UaVariableNode variableNode = create(nodeId, typeDefinitionId);
 
@@ -59,12 +57,11 @@ public class VariableNodeFactory {
         return variableNode;
     }
 
-    public <T extends VariableNode> T create(
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        NodeId typeDefinitionId,
-        Class<T> clazz) {
+    public <T extends VariableNode> T create(NodeId nodeId,
+                                             QualifiedName browseName,
+                                             LocalizedText displayName,
+                                             NodeId typeDefinitionId,
+                                             Class<T> clazz) {
 
         T variableNode = create(nodeId, typeDefinitionId, clazz);
 
@@ -78,26 +75,30 @@ public class VariableNodeFactory {
         return create(nodeId, typeDefinitionId, UaVariableNode.class);
     }
 
-    public <T extends VariableNode> T create(NodeId nodeId, NodeId typeDefinitionId, Class<T> clazz) throws UaRuntimeException {
-        UaVariableTypeNode typeDefinitionNode = (UaVariableTypeNode) nodeManager.getNode(typeDefinitionId)
-            .orElseThrow(() ->
-                new UaRuntimeException(
-                    StatusCodes.Bad_NodeIdUnknown,
-                    "unknown type definition: " + typeDefinitionId));
+    public <T extends VariableNode> T create(NodeId nodeId,
+                                             NodeId typeDefinitionId,
+                                             Class<T> clazz) throws UaRuntimeException {
+        UaVariableTypeNode typeDefinitionNode = (UaVariableTypeNode) nodeManager.getNode(typeDefinitionId).orElseThrow(
+            () -> new UaRuntimeException(StatusCodes.Bad_NodeIdUnknown, "unknown type definition: " + typeDefinitionId)
+        );
 
         UaVariableNode node = instanceFromTypeDefinition(nodeId, typeDefinitionNode);
         nodeManager.addNode(node);
 
-        List<UaVariableNode> propertyDeclarations = typeDefinitionNode.getReferences().stream()
+        List<UaVariableNode> propertyDeclarations = typeDefinitionNode
+            .getReferences()
+            .stream()
             .filter(Reference.HAS_PROPERTY_PREDICATE)
             .distinct()
             .map(r -> nodeManager.getNode(r.getTargetNodeId()))
             .flatMap(StreamUtil::opt2stream)
             .map(UaVariableNode.class::cast)
-            .filter(vn ->
-                vn.getReferences().stream().anyMatch(r ->
-                    Identifiers.HasModellingRule.equals(r.getReferenceTypeId()) &&
-                        Identifiers.ModellingRule_Mandatory.expanded().equals(r.getTargetNodeId())))
+            .filter(
+                vn -> vn.getReferences().stream().anyMatch(
+                    r -> Identifiers.HasModellingRule.equals(r.getReferenceTypeId()) &&
+                        Identifiers.ModellingRule_Mandatory.expanded().equals(r.getTargetNodeId())
+                )
+            )
             .collect(Collectors.toList());
 
         for (UaVariableNode declaration : propertyDeclarations) {
@@ -120,7 +121,9 @@ public class VariableNodeFactory {
             nodeManager.addNode(instance);
         }
 
-        List<UaVariableNode> variableDeclarations = typeDefinitionNode.getReferences().stream()
+        List<UaVariableNode> variableDeclarations = typeDefinitionNode
+            .getReferences()
+            .stream()
             .filter(Reference.HAS_COMPONENT_PREDICATE)
             .map(r -> nodeManager.getNode(r.getTargetNodeId()))
             .flatMap(StreamUtil::opt2stream)
@@ -153,13 +156,12 @@ public class VariableNodeFactory {
     private UaVariableNode instanceFromTypeDefinition(NodeId nodeId, UaVariableTypeNode typeDefinitionNode) {
         QualifiedName browseName = typeDefinitionNode.getBrowseName();
 
-        Set<Class<?>> classes = NODE_REFLECTIONS.getTypesAnnotatedWith(
-            variableAnnotation(browseName.toParseableString()));
+        Set<Class<?>> classes = NODE_REFLECTIONS
+            .getTypesAnnotatedWith(variableAnnotation(browseName.toParseableString()));
 
-        Class<?> clazz = classes.stream().findFirst().orElseThrow(() ->
-            new UaRuntimeException(
-                StatusCodes.Bad_TypeDefinitionInvalid,
-                "unknown variable type: " + browseName));
+        Class<?> clazz = classes.stream().findFirst().orElseThrow(
+            () -> new UaRuntimeException(StatusCodes.Bad_TypeDefinitionInvalid, "unknown variable type: " + browseName)
+        );
 
         try {
             Class[] UA_VARIABLE_NODE_CTOR_PARAMS = {
@@ -178,13 +180,15 @@ public class VariableNodeFactory {
 
             UaVariableNode variableNode = (UaVariableNode) ctor.newInstance(initArgs);
 
-            variableNode.addReference(new Reference(
-                nodeId,
-                Identifiers.HasTypeDefinition,
-                new ExpandedNodeId(typeDefinitionNode.getNodeId()),
-                NodeClass.VariableType,
-                true
-            ));
+            variableNode.addReference(
+                new Reference(
+                    nodeId,
+                    Identifiers.HasTypeDefinition,
+                    new ExpandedNodeId(typeDefinitionNode.getNodeId()),
+                    NodeClass.VariableType,
+                    true
+                )
+            );
 
             return variableNode;
         } catch (Exception e) {

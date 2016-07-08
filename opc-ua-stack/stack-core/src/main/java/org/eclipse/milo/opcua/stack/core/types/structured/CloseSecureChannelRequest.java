@@ -38,20 +38,32 @@ public class CloseSecureChannelRequest implements UaRequestMessage {
         this._requestHeader = _requestHeader;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CloseSecureChannelRequest closeSecureChannelRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", closeSecureChannelRequest._requestHeader != null ? closeSecureChannelRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            closeSecureChannelRequest._requestHeader != null ?
+                closeSecureChannelRequest._requestHeader :
+                new RequestHeader()
+        );
     }
 
     public static CloseSecureChannelRequest decode(UaDecoder decoder) {
@@ -61,8 +73,18 @@ public class CloseSecureChannelRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(CloseSecureChannelRequest::encode, CloseSecureChannelRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(CloseSecureChannelRequest::decode, CloseSecureChannelRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            CloseSecureChannelRequest::encode,
+            CloseSecureChannelRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            CloseSecureChannelRequest::decode,
+            CloseSecureChannelRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

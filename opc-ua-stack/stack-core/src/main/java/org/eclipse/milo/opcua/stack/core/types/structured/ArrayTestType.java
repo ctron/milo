@@ -99,7 +99,31 @@ public class ArrayTestType implements UaStructure {
         this._enumeratedValues = null;
     }
 
-    public ArrayTestType(Boolean[] _booleans, Byte[] _sBytes, Short[] _int16s, UShort[] _uInt16s, Integer[] _int32s, UInteger[] _uInt32s, Long[] _int64s, ULong[] _uInt64s, Float[] _floats, Double[] _doubles, String[] _strings, DateTime[] _dateTimes, UUID[] _guids, ByteString[] _byteStrings, XmlElement[] _xmlElements, NodeId[] _nodeIds, ExpandedNodeId[] _expandedNodeIds, StatusCode[] _statusCodes, DiagnosticInfo[] _diagnosticInfos, QualifiedName[] _qualifiedNames, LocalizedText[] _localizedTexts, ExtensionObject[] _extensionObjects, DataValue[] _dataValues, Variant[] _variants, EnumeratedTestType[] _enumeratedValues) {
+    public ArrayTestType(Boolean[] _booleans,
+                         Byte[] _sBytes,
+                         Short[] _int16s,
+                         UShort[] _uInt16s,
+                         Integer[] _int32s,
+                         UInteger[] _uInt32s,
+                         Long[] _int64s,
+                         ULong[] _uInt64s,
+                         Float[] _floats,
+                         Double[] _doubles,
+                         String[] _strings,
+                         DateTime[] _dateTimes,
+                         UUID[] _guids,
+                         ByteString[] _byteStrings,
+                         XmlElement[] _xmlElements,
+                         NodeId[] _nodeIds,
+                         ExpandedNodeId[] _expandedNodeIds,
+                         StatusCode[] _statusCodes,
+                         DiagnosticInfo[] _diagnosticInfos,
+                         QualifiedName[] _qualifiedNames,
+                         LocalizedText[] _localizedTexts,
+                         ExtensionObject[] _extensionObjects,
+                         DataValue[] _dataValues,
+                         Variant[] _variants,
+                         EnumeratedTestType[] _enumeratedValues) {
         this._booleans = _booleans;
         this._sBytes = _sBytes;
         this._int16s = _int16s;
@@ -242,7 +266,6 @@ public class ArrayTestType implements UaStructure {
         return XmlEncodingId;
     }
 
-
     public static void encode(ArrayTestType arrayTestType, UaEncoder encoder) {
         encoder.encodeArray("Booleans", arrayTestType._booleans, encoder::encodeBoolean);
         encoder.encodeArray("SBytes", arrayTestType._sBytes, encoder::encodeSByte);
@@ -288,17 +311,49 @@ public class ArrayTestType implements UaStructure {
         ByteString[] _byteStrings = decoder.decodeArray("ByteStrings", decoder::decodeByteString, ByteString.class);
         XmlElement[] _xmlElements = decoder.decodeArray("XmlElements", decoder::decodeXmlElement, XmlElement.class);
         NodeId[] _nodeIds = decoder.decodeArray("NodeIds", decoder::decodeNodeId, NodeId.class);
-        ExpandedNodeId[] _expandedNodeIds = decoder.decodeArray("ExpandedNodeIds", decoder::decodeExpandedNodeId, ExpandedNodeId.class);
+        ExpandedNodeId[] _expandedNodeIds = decoder
+            .decodeArray("ExpandedNodeIds", decoder::decodeExpandedNodeId, ExpandedNodeId.class);
         StatusCode[] _statusCodes = decoder.decodeArray("StatusCodes", decoder::decodeStatusCode, StatusCode.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
-        QualifiedName[] _qualifiedNames = decoder.decodeArray("QualifiedNames", decoder::decodeQualifiedName, QualifiedName.class);
-        LocalizedText[] _localizedTexts = decoder.decodeArray("LocalizedTexts", decoder::decodeLocalizedText, LocalizedText.class);
-        ExtensionObject[] _extensionObjects = decoder.decodeArray("ExtensionObjects", decoder::decodeExtensionObject, ExtensionObject.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        QualifiedName[] _qualifiedNames = decoder
+            .decodeArray("QualifiedNames", decoder::decodeQualifiedName, QualifiedName.class);
+        LocalizedText[] _localizedTexts = decoder
+            .decodeArray("LocalizedTexts", decoder::decodeLocalizedText, LocalizedText.class);
+        ExtensionObject[] _extensionObjects = decoder
+            .decodeArray("ExtensionObjects", decoder::decodeExtensionObject, ExtensionObject.class);
         DataValue[] _dataValues = decoder.decodeArray("DataValues", decoder::decodeDataValue, DataValue.class);
         Variant[] _variants = decoder.decodeArray("Variants", decoder::decodeVariant, Variant.class);
-        EnumeratedTestType[] _enumeratedValues = decoder.decodeArray("EnumeratedValues", decoder::decodeEnumeration, EnumeratedTestType.class);
+        EnumeratedTestType[] _enumeratedValues = decoder
+            .decodeArray("EnumeratedValues", decoder::decodeEnumeration, EnumeratedTestType.class);
 
-        return new ArrayTestType(_booleans, _sBytes, _int16s, _uInt16s, _int32s, _uInt32s, _int64s, _uInt64s, _floats, _doubles, _strings, _dateTimes, _guids, _byteStrings, _xmlElements, _nodeIds, _expandedNodeIds, _statusCodes, _diagnosticInfos, _qualifiedNames, _localizedTexts, _extensionObjects, _dataValues, _variants, _enumeratedValues);
+        return new ArrayTestType(
+            _booleans,
+            _sBytes,
+            _int16s,
+            _uInt16s,
+            _int32s,
+            _uInt32s,
+            _int64s,
+            _uInt64s,
+            _floats,
+            _doubles,
+            _strings,
+            _dateTimes,
+            _guids,
+            _byteStrings,
+            _xmlElements,
+            _nodeIds,
+            _expandedNodeIds,
+            _statusCodes,
+            _diagnosticInfos,
+            _qualifiedNames,
+            _localizedTexts,
+            _extensionObjects,
+            _dataValues,
+            _variants,
+            _enumeratedValues
+        );
     }
 
     static {

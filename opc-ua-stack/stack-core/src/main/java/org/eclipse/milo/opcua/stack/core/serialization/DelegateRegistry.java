@@ -60,8 +60,7 @@ public class DelegateRegistry {
         try {
             return (EncoderDelegate<T>) encodersByClass.get(t.getClass());
         } catch (NullPointerException e) {
-            throw new UaSerializationException(StatusCodes.Bad_EncodingError,
-                "no encoder registered for class=" + t);
+            throw new UaSerializationException(StatusCodes.Bad_EncodingError, "no encoder registered for class=" + t);
         }
     }
 
@@ -70,8 +69,10 @@ public class DelegateRegistry {
         try {
             return (EncoderDelegate<T>) encodersByClass.get(clazz);
         } catch (NullPointerException e) {
-            throw new UaSerializationException(StatusCodes.Bad_EncodingError,
-                "no encoder registered for class=" + clazz);
+            throw new UaSerializationException(
+                StatusCodes.Bad_EncodingError,
+                "no encoder registered for class=" + clazz
+            );
         }
     }
 
@@ -80,8 +81,10 @@ public class DelegateRegistry {
         try {
             return (EncoderDelegate<T>) encodersById.get(encodingId);
         } catch (NullPointerException e) {
-            throw new UaSerializationException(StatusCodes.Bad_EncodingError,
-                "no encoder registered for encodingId=" + encodingId);
+            throw new UaSerializationException(
+                StatusCodes.Bad_EncodingError,
+                "no encoder registered for encodingId=" + encodingId
+            );
         }
     }
 
@@ -90,8 +93,7 @@ public class DelegateRegistry {
         try {
             return (DecoderDelegate<T>) decodersByClass.get(t.getClass());
         } catch (NullPointerException e) {
-            throw new UaSerializationException(StatusCodes.Bad_DecodingError,
-                "no decoder registered for class=" + t);
+            throw new UaSerializationException(StatusCodes.Bad_DecodingError, "no decoder registered for class=" + t);
         }
     }
 
@@ -100,8 +102,10 @@ public class DelegateRegistry {
         try {
             return (DecoderDelegate<T>) decodersByClass.get(clazz);
         } catch (NullPointerException e) {
-            throw new UaSerializationException(StatusCodes.Bad_DecodingError,
-                "no decoder registered for class=" + clazz);
+            throw new UaSerializationException(
+                StatusCodes.Bad_DecodingError,
+                "no decoder registered for class=" + clazz
+            );
         }
     }
 
@@ -110,8 +114,10 @@ public class DelegateRegistry {
         DecoderDelegate<T> decoder = (DecoderDelegate<T>) decodersById.get(encodingId);
 
         if (decoder == null) {
-            throw new UaSerializationException(StatusCodes.Bad_DecodingError,
-                "no decoder registered for encodingId=" + encodingId);
+            throw new UaSerializationException(
+                StatusCodes.Bad_DecodingError,
+                "no decoder registered for encodingId=" + encodingId
+            );
         }
 
         return decoder;
@@ -124,8 +130,7 @@ public class DelegateRegistry {
          */
         Logger logger = LoggerFactory.getLogger(DelegateRegistry.class);
 
-        ClassLoader classLoader = Stack.getCustomClassLoader()
-            .orElse(DelegateRegistry.class.getClassLoader());
+        ClassLoader classLoader = Stack.getCustomClassLoader().orElse(DelegateRegistry.class.getClassLoader());
 
         try {
             loadGeneratedClasses(classLoader);
@@ -151,11 +156,11 @@ public class DelegateRegistry {
     private static void loadGeneratedClasses(ClassLoader classLoader) throws IOException, ClassNotFoundException {
         ClassPath classPath = ClassPath.from(classLoader);
 
-        ImmutableSet<ClassInfo> structures =
-            classPath.getTopLevelClasses("org.eclipse.milo.opcua.stack.core.types.structured");
+        ImmutableSet<ClassInfo> structures = classPath
+            .getTopLevelClasses("org.eclipse.milo.opcua.stack.core.types.structured");
 
-        ImmutableSet<ClassInfo> enumerations =
-            classPath.getTopLevelClasses("org.eclipse.milo.opcua.stack.core.types.enumerated");
+        ImmutableSet<ClassInfo> enumerations = classPath
+            .getTopLevelClasses("org.eclipse.milo.opcua.stack.core.types.enumerated");
 
         for (ClassInfo classInfo : Sets.union(structures, enumerations)) {
             Class<?> clazz = classInfo.load();

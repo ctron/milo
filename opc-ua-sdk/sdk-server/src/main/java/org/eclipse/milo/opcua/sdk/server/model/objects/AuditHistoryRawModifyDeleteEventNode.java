@@ -29,17 +29,17 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UByte;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 
 @UaObjectNode(typeName = "0:AuditHistoryRawModifyDeleteEventType")
-public class AuditHistoryRawModifyDeleteEventNode extends AuditHistoryDeleteEventNode implements AuditHistoryRawModifyDeleteEventType {
+public class AuditHistoryRawModifyDeleteEventNode extends AuditHistoryDeleteEventNode
+        implements AuditHistoryRawModifyDeleteEventType {
 
-    public AuditHistoryRawModifyDeleteEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditHistoryRawModifyDeleteEventNode(UaNodeManager nodeManager,
+                                                NodeId nodeId,
+                                                QualifiedName browseName,
+                                                LocalizedText displayName,
+                                                Optional<LocalizedText> description,
+                                                Optional<UInteger> writeMask,
+                                                Optional<UInteger> userWriteMask,
+                                                UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -53,7 +53,9 @@ public class AuditHistoryRawModifyDeleteEventNode extends AuditHistoryDeleteEven
 
     @Override
     public PropertyNode getIsDeleteModifiedNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditHistoryRawModifyDeleteEventType.IS_DELETE_MODIFIED.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditHistoryRawModifyDeleteEventType.IS_DELETE_MODIFIED.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -72,7 +74,9 @@ public class AuditHistoryRawModifyDeleteEventNode extends AuditHistoryDeleteEven
 
     @Override
     public PropertyNode getStartTimeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditHistoryRawModifyDeleteEventType.START_TIME.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditHistoryRawModifyDeleteEventType.START_TIME.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -91,7 +95,9 @@ public class AuditHistoryRawModifyDeleteEventNode extends AuditHistoryDeleteEven
 
     @Override
     public PropertyNode getEndTimeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditHistoryRawModifyDeleteEventType.END_TIME.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditHistoryRawModifyDeleteEventType.END_TIME.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -110,7 +116,9 @@ public class AuditHistoryRawModifyDeleteEventNode extends AuditHistoryDeleteEven
 
     @Override
     public PropertyNode getOldValuesNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditHistoryRawModifyDeleteEventType.OLD_VALUES.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditHistoryRawModifyDeleteEventType.OLD_VALUES.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

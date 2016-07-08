@@ -71,8 +71,16 @@ public abstract class UaNode implements ServerNode {
                      QualifiedName browseName,
                      LocalizedText displayName) {
 
-        this(nodeManager, nodeId, nodeClass, browseName, displayName,
-            Optional.empty(), Optional.empty(), Optional.empty());
+        this(
+            nodeManager,
+            nodeId,
+            nodeClass,
+            browseName,
+            displayName,
+            Optional.empty(),
+            Optional.empty(),
+            Optional.empty()
+        );
     }
 
     protected UaNode(UaNodeManager nodeManager,
@@ -234,13 +242,16 @@ public abstract class UaNode implements ServerNode {
 
         ExpandedNodeId expanded = getNodeId().expanded();
 
-        List<UaNode> referencedNodes = getReferences().stream()
+        List<UaNode> referencedNodes = getReferences()
+            .stream()
             .filter(Reference::isForward)
             .flatMap(r -> StreamUtil.opt2stream(getNode(r.getTargetNodeId())))
             .collect(Collectors.toList());
 
         for (UaNode node : referencedNodes) {
-            List<Reference> inverseReferences = node.getReferences().stream()
+            List<Reference> inverseReferences = node
+                .getReferences()
+                .stream()
                 .filter(Reference::isInverse)
                 .filter(r -> r.getTargetNodeId().equals(expanded))
                 .collect(Collectors.toList());
@@ -270,29 +281,31 @@ public abstract class UaNode implements ServerNode {
     }
 
     public <T> void setProperty(Property<T> property, T value) {
-        VariableNode node = getPropertyNode(property.getBrowseName()).orElseGet(() -> {
-            QualifiedName browseName = property.getBrowseName();
+        VariableNode node = getPropertyNode(property.getBrowseName()).orElseGet(
+            () -> {
+                QualifiedName browseName = property.getBrowseName();
 
-            NodeId propertyNodeId = new NodeId(
-                getNodeId().getNamespaceIndex(),
-                String.format("%s.%s", getNodeId().getIdentifier().toString(), browseName.getName())
-            );
+                NodeId propertyNodeId = new NodeId(
+                    getNodeId().getNamespaceIndex(),
+                    String.format("%s.%s", getNodeId().getIdentifier().toString(), browseName.getName())
+                );
 
-            UaPropertyNode propertyNode = new UaPropertyNode(
-                getNodeManager(),
-                propertyNodeId,
-                browseName,
-                LocalizedText.english(browseName.getName())
-            );
+                UaPropertyNode propertyNode = new UaPropertyNode(
+                    getNodeManager(),
+                    propertyNodeId,
+                    browseName,
+                    LocalizedText.english(browseName.getName())
+                );
 
-            propertyNode.setDataType(property.getDataType());
-            propertyNode.setValueRank(property.getValueRank());
-            propertyNode.setArrayDimensions(property.getArrayDimensions());
+                propertyNode.setDataType(property.getDataType());
+                propertyNode.setValueRank(property.getValueRank());
+                propertyNode.setArrayDimensions(property.getArrayDimensions());
 
-            addProperty(propertyNode);
+                addProperty(propertyNode);
 
-            return propertyNode;
-        });
+                return propertyNode;
+            }
+        );
 
         node.setValue(new DataValue(new Variant(value)));
     }
@@ -302,11 +315,13 @@ public abstract class UaNode implements ServerNode {
     }
 
     public Optional<VariableNode> getPropertyNode(QualifiedName browseName) {
-        Node node = references.stream()
+        Node node = references
+            .stream()
             .filter(Reference.HAS_PROPERTY_PREDICATE)
             .flatMap(r -> StreamUtil.opt2stream(getNode(r.getTargetNodeId())))
             .filter(n -> n.getBrowseName().equals(browseName))
-            .findFirst().orElse(null);
+            .findFirst()
+            .orElse(null);
 
         try {
             return Optional.ofNullable((VariableNode) node);
@@ -316,39 +331,23 @@ public abstract class UaNode implements ServerNode {
     }
 
     public void addProperty(UaVariableNode node) {
-        addReference(new Reference(
-            getNodeId(),
-            Identifiers.HasProperty,
-            node.getNodeId().expanded(),
-            NodeClass.Variable,
-            true
-        ));
+        addReference(
+            new Reference(getNodeId(), Identifiers.HasProperty, node.getNodeId().expanded(), NodeClass.Variable, true)
+        );
 
-        node.addReference(new Reference(
-            node.getNodeId(),
-            Identifiers.HasProperty,
-            getNodeId().expanded(),
-            getNodeClass(),
-            false
-        ));
+        node.addReference(
+            new Reference(node.getNodeId(), Identifiers.HasProperty, getNodeId().expanded(), getNodeClass(), false)
+        );
     }
 
     public void removeProperty(UaVariableNode node) {
-        removeReference(new Reference(
-            getNodeId(),
-            Identifiers.HasProperty,
-            node.getNodeId().expanded(),
-            NodeClass.Variable,
-            true
-        ));
+        removeReference(
+            new Reference(getNodeId(), Identifiers.HasProperty, node.getNodeId().expanded(), NodeClass.Variable, true)
+        );
 
-        node.removeReference(new Reference(
-            node.getNodeId(),
-            Identifiers.HasProperty,
-            getNodeId().expanded(),
-            getNodeClass(),
-            false
-        ));
+        node.removeReference(
+            new Reference(node.getNodeId(), Identifiers.HasProperty, getNodeId().expanded(), getNodeClass(), false)
+        );
     }
 
     protected Optional<ObjectNode> getObjectComponent(String browseName) {
@@ -356,11 +355,13 @@ public abstract class UaNode implements ServerNode {
     }
 
     protected Optional<ObjectNode> getObjectComponent(QualifiedName browseName) {
-        ObjectNode node = (ObjectNode) references.stream()
+        ObjectNode node = (ObjectNode) references
+            .stream()
             .filter(Reference.HAS_COMPONENT_PREDICATE.and(r -> r.getTargetNodeClass() == NodeClass.Object))
             .flatMap(r -> StreamUtil.opt2stream(getNode(r.getTargetNodeId())))
             .filter(n -> n.getBrowseName().equals(browseName))
-            .findFirst().orElse(null);
+            .findFirst()
+            .orElse(null);
 
         return Optional.ofNullable(node);
     }
@@ -370,11 +371,13 @@ public abstract class UaNode implements ServerNode {
     }
 
     protected Optional<VariableNode> getVariableComponent(QualifiedName browseName) {
-        VariableNode node = (VariableNode) references.stream()
+        VariableNode node = (VariableNode) references
+            .stream()
             .filter(Reference.HAS_COMPONENT_PREDICATE.and(r -> r.getTargetNodeClass() == NodeClass.Variable))
             .flatMap(r -> StreamUtil.opt2stream(getNode(r.getTargetNodeId())))
             .filter(n -> n.getBrowseName().equals(browseName))
-            .findFirst().orElse(null);
+            .findFirst()
+            .orElse(null);
 
         return Optional.ofNullable(node);
     }

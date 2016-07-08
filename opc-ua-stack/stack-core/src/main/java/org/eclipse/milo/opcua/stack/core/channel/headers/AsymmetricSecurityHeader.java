@@ -41,11 +41,15 @@ public class AsymmetricSecurityHeader {
                                     @Nonnull ByteString receiverThumbprint) {
 
         Preconditions.checkNotNull(securityPolicyUri);
-        Preconditions.checkArgument(securityPolicyUri.getBytes(Charset.forName("UTF-8")).length <= 255,
-            "securityPolicyUri length cannot be greater than 255 bytes");
+        Preconditions.checkArgument(
+            securityPolicyUri.getBytes(Charset.forName("UTF-8")).length <= 255,
+            "securityPolicyUri length cannot be greater than 255 bytes"
+        );
 
-        Preconditions.checkArgument(receiverThumbprint.bytes() == null || receiverThumbprint.length() == 20,
-            "receiverThumbprint length must be either null or exactly 20 bytes");
+        Preconditions.checkArgument(
+            receiverThumbprint.bytes() == null || receiverThumbprint.length() == 20,
+            "receiverThumbprint length must be either null or exactly 20 bytes"
+        );
 
         this.securityPolicyUri = securityPolicyUri;
         this.senderCertificate = senderCertificate;
@@ -89,7 +93,8 @@ public class AsymmetricSecurityHeader {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects
+            .toStringHelper(this)
             .add("securityPolicyUri", securityPolicyUri)
             .add("senderCertificate", senderCertificate)
             .add("receiverThumbprint", receiverThumbprint)
@@ -124,10 +129,7 @@ public class AsymmetricSecurityHeader {
         byte[] securityPolicyUriBytes = new byte[securityPolicyUriLength];
         buffer.readBytes(securityPolicyUriBytes);
 
-        String securityPolicyUri = new String(
-            securityPolicyUriBytes,
-            Charset.forName("UTF-8")
-        );
+        String securityPolicyUri = new String(securityPolicyUriBytes, Charset.forName("UTF-8"));
 
         /* SenderCertificate */
         int senderCertificateLength = buffer.readInt();

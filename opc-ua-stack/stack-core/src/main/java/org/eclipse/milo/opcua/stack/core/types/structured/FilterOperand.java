@@ -28,23 +28,24 @@ public class FilterOperand implements UaStructure {
     public static final NodeId BinaryEncodingId = Identifiers.FilterOperand_Encoding_DefaultBinary;
     public static final NodeId XmlEncodingId = Identifiers.FilterOperand_Encoding_DefaultXml;
 
+    public FilterOperand() {}
 
-    public FilterOperand() {
+    @Override
+    public NodeId getTypeId() {
+        return TypeId;
     }
 
-
     @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
-
-    @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
-
-    public static void encode(FilterOperand filterOperand, UaEncoder encoder) {
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
     }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
+
+    public static void encode(FilterOperand filterOperand, UaEncoder encoder) {}
 
     public static FilterOperand decode(UaDecoder decoder) {
 

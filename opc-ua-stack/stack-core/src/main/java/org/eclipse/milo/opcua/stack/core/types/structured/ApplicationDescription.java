@@ -48,7 +48,13 @@ public class ApplicationDescription implements UaStructure {
         this._discoveryUrls = null;
     }
 
-    public ApplicationDescription(String _applicationUri, String _productUri, LocalizedText _applicationName, ApplicationType _applicationType, String _gatewayServerUri, String _discoveryProfileUri, String[] _discoveryUrls) {
+    public ApplicationDescription(String _applicationUri,
+                                  String _productUri,
+                                  LocalizedText _applicationName,
+                                  ApplicationType _applicationType,
+                                  String _gatewayServerUri,
+                                  String _discoveryProfileUri,
+                                  String[] _discoveryUrls) {
         this._applicationUri = _applicationUri;
         this._productUri = _productUri;
         this._applicationName = _applicationName;
@@ -58,29 +64,48 @@ public class ApplicationDescription implements UaStructure {
         this._discoveryUrls = _discoveryUrls;
     }
 
-    public String getApplicationUri() { return _applicationUri; }
+    public String getApplicationUri() {
+        return _applicationUri;
+    }
 
-    public String getProductUri() { return _productUri; }
+    public String getProductUri() {
+        return _productUri;
+    }
 
-    public LocalizedText getApplicationName() { return _applicationName; }
+    public LocalizedText getApplicationName() {
+        return _applicationName;
+    }
 
-    public ApplicationType getApplicationType() { return _applicationType; }
+    public ApplicationType getApplicationType() {
+        return _applicationType;
+    }
 
-    public String getGatewayServerUri() { return _gatewayServerUri; }
+    public String getGatewayServerUri() {
+        return _gatewayServerUri;
+    }
 
-    public String getDiscoveryProfileUri() { return _discoveryProfileUri; }
+    public String getDiscoveryProfileUri() {
+        return _discoveryProfileUri;
+    }
 
-    public String[] getDiscoveryUrls() { return _discoveryUrls; }
+    public String[] getDiscoveryUrls() {
+        return _discoveryUrls;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ApplicationDescription applicationDescription, UaEncoder encoder) {
         encoder.encodeString("ApplicationUri", applicationDescription._applicationUri);
@@ -101,12 +126,30 @@ public class ApplicationDescription implements UaStructure {
         String _discoveryProfileUri = decoder.decodeString("DiscoveryProfileUri");
         String[] _discoveryUrls = decoder.decodeArray("DiscoveryUrls", decoder::decodeString, String.class);
 
-        return new ApplicationDescription(_applicationUri, _productUri, _applicationName, _applicationType, _gatewayServerUri, _discoveryProfileUri, _discoveryUrls);
+        return new ApplicationDescription(
+            _applicationUri,
+            _productUri,
+            _applicationName,
+            _applicationType,
+            _gatewayServerUri,
+            _discoveryProfileUri,
+            _discoveryUrls
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(ApplicationDescription::encode, ApplicationDescription.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ApplicationDescription::decode, ApplicationDescription.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            ApplicationDescription::encode,
+            ApplicationDescription.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            ApplicationDescription::decode,
+            ApplicationDescription.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

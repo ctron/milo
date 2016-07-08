@@ -30,18 +30,20 @@ import org.jooq.lambda.tuple.Tuple2;
 public class AnonymousProvider implements IdentityProvider {
 
     @Override
-    public Tuple2<UserIdentityToken, SignatureData> getIdentityToken(
-        EndpointDescription endpoint,
-        ByteString serverNonce) throws Exception {
+    public Tuple2<UserIdentityToken, SignatureData> getIdentityToken(EndpointDescription endpoint,
+                                                                     ByteString serverNonce) throws Exception {
 
-        return Arrays.stream(endpoint.getUserIdentityTokens())
+        return Arrays
+            .stream(endpoint.getUserIdentityTokens())
             .filter(t -> t.getTokenType() == UserTokenType.Anonymous)
             .findFirst()
-            .map(policy -> {
-                UserIdentityToken token = new AnonymousIdentityToken(policy.getPolicyId());
+            .map(
+                policy -> {
+                    UserIdentityToken token = new AnonymousIdentityToken(policy.getPolicyId());
 
-                return new Tuple2<>(token, new SignatureData());
-            })
+                    return new Tuple2<>(token, new SignatureData());
+                }
+            )
             .orElseThrow(() -> new Exception("no anonymous token policy found"));
     }
 

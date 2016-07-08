@@ -23,11 +23,26 @@ public class SequenceHeaderTest extends SerializationFixture2 {
     @DataProvider(name = "parameters")
     public Object[][] getParameters() {
         return new Object[][]{
-                {0, 0},
-                {Integer.MAX_VALUE - 1, Integer.MAX_VALUE - 1},
-                {Integer.MAX_VALUE, Integer.MAX_VALUE},
-                {Integer.MAX_VALUE + 1L, Integer.MAX_VALUE + 1L},
-                {UnsignedInteger.MAX_VALUE.longValue(), UnsignedInteger.MAX_VALUE.longValue()}
+            {
+                0,
+                0
+            },
+            {
+                Integer.MAX_VALUE - 1,
+                Integer.MAX_VALUE - 1
+            },
+            {
+                Integer.MAX_VALUE,
+                Integer.MAX_VALUE
+            },
+            {
+                Integer.MAX_VALUE + 1L,
+                Integer.MAX_VALUE + 1L
+            },
+            {
+                UnsignedInteger.MAX_VALUE.longValue(),
+                UnsignedInteger.MAX_VALUE.longValue()
+            }
         };
     }
 

@@ -29,15 +29,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:OperationLimitsType")
 public class OperationLimitsNode extends BaseObjectNode implements OperationLimitsType {
 
-    public OperationLimitsNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public OperationLimitsNode(UaNodeManager nodeManager,
+                               NodeId nodeId,
+                               QualifiedName browseName,
+                               LocalizedText displayName,
+                               Optional<LocalizedText> description,
+                               Optional<UInteger> writeMask,
+                               Optional<UInteger> userWriteMask,
+                               UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -70,7 +69,9 @@ public class OperationLimitsNode extends BaseObjectNode implements OperationLimi
 
     @Override
     public PropertyNode getMaxNodesPerHistoryReadDataNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(OperationLimitsType.MAX_NODES_PER_HISTORY_READ_DATA.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            OperationLimitsType.MAX_NODES_PER_HISTORY_READ_DATA.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -89,7 +90,9 @@ public class OperationLimitsNode extends BaseObjectNode implements OperationLimi
 
     @Override
     public PropertyNode getMaxNodesPerHistoryReadEventsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(OperationLimitsType.MAX_NODES_PER_HISTORY_READ_EVENTS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            OperationLimitsType.MAX_NODES_PER_HISTORY_READ_EVENTS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -127,7 +130,9 @@ public class OperationLimitsNode extends BaseObjectNode implements OperationLimi
 
     @Override
     public PropertyNode getMaxNodesPerHistoryUpdateDataNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(OperationLimitsType.MAX_NODES_PER_HISTORY_UPDATE_DATA.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            OperationLimitsType.MAX_NODES_PER_HISTORY_UPDATE_DATA.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -146,7 +151,9 @@ public class OperationLimitsNode extends BaseObjectNode implements OperationLimi
 
     @Override
     public PropertyNode getMaxNodesPerHistoryUpdateEventsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(OperationLimitsType.MAX_NODES_PER_HISTORY_UPDATE_EVENTS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            OperationLimitsType.MAX_NODES_PER_HISTORY_UPDATE_EVENTS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -165,7 +172,9 @@ public class OperationLimitsNode extends BaseObjectNode implements OperationLimi
 
     @Override
     public PropertyNode getMaxNodesPerMethodCallNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(OperationLimitsType.MAX_NODES_PER_METHOD_CALL.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            OperationLimitsType.MAX_NODES_PER_METHOD_CALL.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -203,7 +212,9 @@ public class OperationLimitsNode extends BaseObjectNode implements OperationLimi
 
     @Override
     public PropertyNode getMaxNodesPerRegisterNodesNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(OperationLimitsType.MAX_NODES_PER_REGISTER_NODES.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            OperationLimitsType.MAX_NODES_PER_REGISTER_NODES.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -222,7 +233,9 @@ public class OperationLimitsNode extends BaseObjectNode implements OperationLimi
 
     @Override
     public PropertyNode getMaxNodesPerTranslateBrowsePathsToNodeIdsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(OperationLimitsType.MAX_NODES_PER_TRANSLATE_BROWSE_PATHS_TO_NODE_IDS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            OperationLimitsType.MAX_NODES_PER_TRANSLATE_BROWSE_PATHS_TO_NODE_IDS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -241,7 +254,9 @@ public class OperationLimitsNode extends BaseObjectNode implements OperationLimi
 
     @Override
     public PropertyNode getMaxNodesPerNodeManagementNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(OperationLimitsType.MAX_NODES_PER_NODE_MANAGEMENT.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            OperationLimitsType.MAX_NODES_PER_NODE_MANAGEMENT.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -260,7 +275,9 @@ public class OperationLimitsNode extends BaseObjectNode implements OperationLimi
 
     @Override
     public PropertyNode getMaxMonitoredItemsPerCallNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(OperationLimitsType.MAX_MONITORED_ITEMS_PER_CALL.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            OperationLimitsType.MAX_MONITORED_ITEMS_PER_CALL.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

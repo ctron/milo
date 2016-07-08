@@ -91,11 +91,9 @@ public class OpcUaClientIT {
                 String user1 = new String(cs);
                 String pass1 = new String(cs);
 
-                boolean match0 = user0.equals(challenge.getUsername()) &&
-                    pass0.equals(challenge.getPassword());
+                boolean match0 = user0.equals(challenge.getUsername()) && pass0.equals(challenge.getPassword());
 
-                boolean match1 = user1.equals(challenge.getUsername()) &&
-                    pass1.equals(challenge.getPassword());
+                boolean match1 = user1.equals(challenge.getUsername()) && pass1.equals(challenge.getPassword());
 
                 return match0 || match1;
             }
@@ -113,11 +111,10 @@ public class OpcUaClientIT {
             loader.getServerCertificate()
         );
 
-        TestCertificateValidator certificateValidator = new TestCertificateValidator(
-            loader.getClientCertificate()
-        );
+        TestCertificateValidator certificateValidator = new TestCertificateValidator(loader.getClientCertificate());
 
-        OpcUaServerConfig serverConfig = OpcUaServerConfig.builder()
+        OpcUaServerConfig serverConfig = OpcUaServerConfig
+            .builder()
             .setApplicationName(LocalizedText.english("digitalpetri opc-ua server"))
             .setApplicationUri("urn:digitalpetri:opcua:server")
             .setBindAddresses(newArrayList("localhost"))
@@ -134,19 +131,20 @@ public class OpcUaClientIT {
         server = new OpcUaServer(serverConfig);
 
         // register a CttNamespace so we have some nodes to play with
-        server.getNamespaceManager().registerAndAdd(
-            TestNamespace.NAMESPACE_URI,
-            idx -> new TestNamespace(server, idx));
+        server.getNamespaceManager().registerAndAdd(TestNamespace.NAMESPACE_URI, idx -> new TestNamespace(server, idx));
 
         server.startup();
 
         EndpointDescription[] endpoints = UaTcpStackClient.getEndpoints("opc.tcp://localhost:12686/test-server").get();
 
-        EndpointDescription endpoint = Arrays.stream(endpoints)
+        EndpointDescription endpoint = Arrays
+            .stream(endpoints)
             .filter(e -> e.getSecurityPolicyUri().equals(SecurityPolicy.None.getSecurityPolicyUri()))
-            .findFirst().orElseThrow(() -> new Exception("no desired endpoints returned"));
+            .findFirst()
+            .orElseThrow(() -> new Exception("no desired endpoints returned"));
 
-        OpcUaClientConfig clientConfig = OpcUaClientConfig.builder()
+        OpcUaClientConfig clientConfig = OpcUaClientConfig
+            .builder()
             .setApplicationName(LocalizedText.english("digitalpetri opc-ua client"))
             .setApplicationUri("urn:digitalpetri:opcua:client")
             .setEndpoint(endpoint)
@@ -173,7 +171,8 @@ public class OpcUaClientIT {
     public void testRead() throws Exception {
         logger.info("testRead()");
 
-        UaVariableNode currentTimeNode = client.getAddressSpace()
+        UaVariableNode currentTimeNode = client
+            .getAddressSpace()
             .getVariableNode(Identifiers.Server_ServerStatus_CurrentTime);
 
         assertNotNull(currentTimeNode.readValueAttribute().get());
@@ -212,20 +211,28 @@ public class OpcUaClientIT {
 
         ReadValueId readValueId = new ReadValueId(
             Identifiers.Server_ServerStatus_CurrentTime,
-            AttributeId.Value.uid(), null, QualifiedName.NULL_VALUE);
+            AttributeId.Value.uid(),
+            null,
+            QualifiedName.NULL_VALUE
+        );
 
         MonitoringParameters parameters = new MonitoringParameters(
-            uint(1),    // client handle
-            1000.0,     // sampling interval
-            null,       // no (default) filter
-            uint(10),   // queue size
-            true);      // discard oldest
+            uint(1), // client handle
+            1000.0, // sampling interval
+            null, // no (default) filter
+            uint(10), // queue size
+            true
+        ); // discard oldest
 
         MonitoredItemCreateRequest request = new MonitoredItemCreateRequest(
-            readValueId, MonitoringMode.Reporting, parameters);
+            readValueId,
+            MonitoringMode.Reporting,
+            parameters
+        );
 
         List<UaMonitoredItem> items = subscription
-            .createMonitoredItems(TimestampsToReturn.Both, newArrayList(request)).get();
+            .createMonitoredItems(TimestampsToReturn.Both, newArrayList(request))
+            .get();
 
         // do something with the value updates
         UaMonitoredItem item = items.get(0);
@@ -245,61 +252,68 @@ public class OpcUaClientIT {
 
         NodeId nodeId = new NodeId(2, "/Static/AllProfiles/Scalar/Int32");
 
-        ReadValueId readValueId = new ReadValueId(
-            nodeId, AttributeId.Value.uid(),
-            null, QualifiedName.NULL_VALUE);
+        ReadValueId readValueId = new ReadValueId(nodeId, AttributeId.Value.uid(), null, QualifiedName.NULL_VALUE);
 
         MonitoringParameters parameters = new MonitoringParameters(
-            uint(1),    // client handle
-            100.0,      // sampling interval
-            null,       // no (default) filter
-            uint(10),   // queue size
-            true);      // discard oldest
+            uint(1), // client handle
+            100.0, // sampling interval
+            null, // no (default) filter
+            uint(10), // queue size
+            true
+        ); // discard oldest
 
         MonitoredItemCreateRequest request = new MonitoredItemCreateRequest(
-            readValueId, MonitoringMode.Reporting, parameters);
+            readValueId,
+            MonitoringMode.Reporting,
+            parameters
+        );
 
         List<UaMonitoredItem> items = subscription
-            .createMonitoredItems(TimestampsToReturn.Both, newArrayList(request)).get();
+            .createMonitoredItems(TimestampsToReturn.Both, newArrayList(request))
+            .get();
 
         // do something with the value updates
         UaMonitoredItem item = items.get(0);
 
         AtomicInteger updateCount = new AtomicInteger(0);
 
-        item.setValueConsumer(v -> {
-            int count = updateCount.incrementAndGet();
-            logger.info("updateCount={}", count);
-        });
+        item.setValueConsumer(
+            v -> {
+                int count = updateCount.incrementAndGet();
+                logger.info("updateCount={}", count);
+            }
+        );
 
         AtomicBoolean subscriptionTransferred = new AtomicBoolean(true);
 
-        client.getSubscriptionManager().addSubscriptionListener(new UaSubscriptionManager.SubscriptionListener() {
-            @Override
-            public void onKeepAlive(UaSubscription subscription, DateTime publishTime) {
+        client.getSubscriptionManager().addSubscriptionListener(
+            new UaSubscriptionManager.SubscriptionListener() {
+                @Override
+                public void onKeepAlive(UaSubscription subscription, DateTime publishTime) {
 
             }
 
-            @Override
-            public void onStatusChanged(UaSubscription subscription, StatusCode status) {
+                @Override
+                public void onStatusChanged(UaSubscription subscription, StatusCode status) {
 
             }
 
-            @Override
-            public void onPublishFailure(UaException exception) {
+                @Override
+                public void onPublishFailure(UaException exception) {
 
             }
 
-            @Override
-            public void onNotificationDataLost(UaSubscription subscription) {
+                @Override
+                public void onNotificationDataLost(UaSubscription subscription) {
 
             }
 
-            @Override
-            public void onSubscriptionTransferFailed(UaSubscription subscription, StatusCode statusCode) {
-                subscriptionTransferred.set(false);
+                @Override
+                public void onSubscriptionTransferFailed(UaSubscription subscription, StatusCode statusCode) {
+                    subscriptionTransferred.set(false);
+                }
             }
-        });
+        );
 
         logger.info("killing the session...");
         UaSession uaSession = client.getSession().get();
@@ -322,13 +336,16 @@ public class OpcUaClientIT {
 
         EndpointDescription[] endpoints = UaTcpStackClient.getEndpoints("opc.tcp://localhost:12686/test-server").get();
 
-        EndpointDescription endpoint = Arrays.stream(endpoints)
+        EndpointDescription endpoint = Arrays
+            .stream(endpoints)
             .filter(e -> e.getSecurityPolicyUri().equals(SecurityPolicy.None.getSecurityPolicyUri()))
-            .findFirst().orElseThrow(() -> new Exception("no desired endpoints returned"));
+            .findFirst()
+            .orElseThrow(() -> new Exception("no desired endpoints returned"));
 
         KeyStoreLoader loader = new KeyStoreLoader().load();
 
-        OpcUaClientConfig clientConfig = OpcUaClientConfig.builder()
+        OpcUaClientConfig clientConfig = OpcUaClientConfig
+            .builder()
             .setApplicationName(LocalizedText.english("digitalpetri opc-ua client"))
             .setApplicationUri("urn:digitalpetri:opcua:client")
             .setCertificate(loader.getClientCertificate())
@@ -354,16 +371,19 @@ public class OpcUaClientIT {
 
         EndpointDescription[] endpoints = UaTcpStackClient.getEndpoints("opc.tcp://localhost:12686/test-server").get();
 
-        EndpointDescription endpoint = Arrays.stream(endpoints)
+        EndpointDescription endpoint = Arrays
+            .stream(endpoints)
             .filter(e -> e.getSecurityPolicyUri().equals(SecurityPolicy.None.getSecurityPolicyUri()))
-            .findFirst().orElseThrow(() -> new Exception("no desired endpoints returned"));
+            .findFirst()
+            .orElseThrow(() -> new Exception("no desired endpoints returned"));
 
         char[] cs = new char[1000];
         Arrays.fill(cs, 'a');
         String user = new String(cs);
         String pass = new String(cs);
 
-        OpcUaClientConfig clientConfig = OpcUaClientConfig.builder()
+        OpcUaClientConfig clientConfig = OpcUaClientConfig
+            .builder()
             .setApplicationName(LocalizedText.english("digitalpetri opc-ua client"))
             .setApplicationUri("urn:digitalpetri:opcua:client")
             .setEndpoint(endpoint)
@@ -382,9 +402,11 @@ public class OpcUaClientIT {
 
         EndpointDescription[] endpoints = UaTcpStackClient.getEndpoints("opc.tcp://localhost:12686/test-server").get();
 
-        EndpointDescription endpoint = Arrays.stream(endpoints)
+        EndpointDescription endpoint = Arrays
+            .stream(endpoints)
             .filter(e -> e.getSecurityPolicyUri().equals(SecurityPolicy.None.getSecurityPolicyUri()))
-            .findFirst().orElseThrow(() -> new Exception("no desired endpoints returned"));
+            .findFirst()
+            .orElseThrow(() -> new Exception("no desired endpoints returned"));
 
         class ConnectDisconnect implements Runnable {
             private final int threadNumber;
@@ -393,7 +415,8 @@ public class OpcUaClientIT {
                 this.threadNumber = threadNumber;
             }
 
-            private OpcUaClientConfig clientConfig = OpcUaClientConfig.builder()
+            private OpcUaClientConfig clientConfig = OpcUaClientConfig
+                .builder()
                 .setApplicationName(LocalizedText.english("digitalpetri opc-ua client"))
                 .setApplicationUri("urn:digitalpetri:opcua:client")
                 .setEndpoint(endpoint)
@@ -408,11 +431,13 @@ public class OpcUaClientIT {
                     try {
                         client.connect().get();
 
-                        client.readValues(
-                            0.0,
-                            TimestampsToReturn.Both,
-                            newArrayList(Identifiers.Server_ServerStatus_CurrentTime)
-                        ).get();
+                        client
+                            .readValues(
+                                0.0,
+                                TimestampsToReturn.Both,
+                                newArrayList(Identifiers.Server_ServerStatus_CurrentTime)
+                            )
+                            .get();
 
                         client.disconnect().get();
 
@@ -443,11 +468,14 @@ public class OpcUaClientIT {
 
         EndpointDescription[] endpoints = UaTcpStackClient.getEndpoints("opc.tcp://localhost:12686/test-server").get();
 
-        EndpointDescription endpoint = Arrays.stream(endpoints)
+        EndpointDescription endpoint = Arrays
+            .stream(endpoints)
             .filter(e -> e.getSecurityPolicyUri().equals(SecurityPolicy.None.getSecurityPolicyUri()))
-            .findFirst().orElseThrow(() -> new Exception("no desired endpoints returned"));
+            .findFirst()
+            .orElseThrow(() -> new Exception("no desired endpoints returned"));
 
-        OpcUaClientConfig clientConfig = OpcUaClientConfig.builder()
+        OpcUaClientConfig clientConfig = OpcUaClientConfig
+            .builder()
             .setApplicationName(LocalizedText.english("digitalpetri opc-ua client"))
             .setApplicationUri("urn:digitalpetri:opcua:client")
             .setEndpoint(endpoint)
@@ -456,7 +484,8 @@ public class OpcUaClientIT {
 
         OpcUaClient client = new OpcUaClient(clientConfig);
 
-        UaVariableNode currentTimeNode = client.getAddressSpace()
+        UaVariableNode currentTimeNode = client
+            .getAddressSpace()
             .getVariableNode(Identifiers.Server_ServerStatus_CurrentTime);
 
         assertNotNull(currentTimeNode.readValueAttribute().get());
@@ -471,7 +500,8 @@ public class OpcUaClientIT {
             logger.info("reading, expecting failure...");
             currentTimeNode.readValueAttribute().get();
         } catch (Throwable t) {
-            StatusCode statusCode = UaServiceFaultException.extract(t)
+            StatusCode statusCode = UaServiceFaultException
+                .extract(t)
                 .map(UaException::getStatusCode)
                 .orElse(StatusCode.BAD);
 

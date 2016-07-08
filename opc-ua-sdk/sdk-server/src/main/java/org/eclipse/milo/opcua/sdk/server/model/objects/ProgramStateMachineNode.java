@@ -36,15 +36,14 @@ import org.eclipse.milo.opcua.stack.core.types.structured.ProgramDiagnosticDataT
 @UaObjectNode(typeName = "0:ProgramStateMachineType")
 public class ProgramStateMachineNode extends FiniteStateMachineNode implements ProgramStateMachineType {
 
-    public ProgramStateMachineNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ProgramStateMachineNode(UaNodeManager nodeManager,
+                                   NodeId nodeId,
+                                   QualifiedName browseName,
+                                   LocalizedText displayName,
+                                   Optional<LocalizedText> description,
+                                   Optional<UInteger> writeMask,
+                                   Optional<UInteger> userWriteMask,
+                                   UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -153,7 +152,9 @@ public class ProgramStateMachineNode extends FiniteStateMachineNode implements P
 
     @Override
     public PropertyNode getMaxInstanceCountNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ProgramStateMachineType.MAX_INSTANCE_COUNT.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ProgramStateMachineType.MAX_INSTANCE_COUNT.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -172,7 +173,9 @@ public class ProgramStateMachineNode extends FiniteStateMachineNode implements P
 
     @Override
     public PropertyNode getMaxRecycleCountNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ProgramStateMachineType.MAX_RECYCLE_COUNT.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ProgramStateMachineType.MAX_RECYCLE_COUNT.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -296,8 +299,7 @@ public class ProgramStateMachineNode extends FiniteStateMachineNode implements P
 
     @Override
     public void setCurrentState(LocalizedText value) {
-        getVariableComponent("CurrentState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CurrentState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -316,8 +318,7 @@ public class ProgramStateMachineNode extends FiniteStateMachineNode implements P
 
     @Override
     public void setLastTransition(LocalizedText value) {
-        getVariableComponent("LastTransition")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("LastTransition").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -336,8 +337,7 @@ public class ProgramStateMachineNode extends FiniteStateMachineNode implements P
 
     @Override
     public void setProgramDiagnostics(ProgramDiagnosticDataType value) {
-        getVariableComponent("ProgramDiagnostics")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ProgramDiagnostics").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

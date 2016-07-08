@@ -38,20 +38,32 @@ public class RegisterServerResponse implements UaResponseMessage {
         this._responseHeader = _responseHeader;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(RegisterServerResponse registerServerResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", registerServerResponse._responseHeader != null ? registerServerResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            registerServerResponse._responseHeader != null ?
+                registerServerResponse._responseHeader :
+                new ResponseHeader()
+        );
     }
 
     public static RegisterServerResponse decode(UaDecoder decoder) {
@@ -61,8 +73,18 @@ public class RegisterServerResponse implements UaResponseMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(RegisterServerResponse::encode, RegisterServerResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(RegisterServerResponse::decode, RegisterServerResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            RegisterServerResponse::encode,
+            RegisterServerResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            RegisterServerResponse::decode,
+            RegisterServerResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

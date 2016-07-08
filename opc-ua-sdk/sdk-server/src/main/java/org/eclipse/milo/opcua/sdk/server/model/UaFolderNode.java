@@ -26,13 +26,15 @@ public class UaFolderNode extends UaObjectNode {
     public UaFolderNode(UaNodeManager nodeManager, NodeId nodeId, QualifiedName browseName, LocalizedText displayName) {
         super(nodeManager, nodeId, browseName, displayName);
 
-        addReference(new Reference(
-            getNodeId(),
-            Identifiers.HasTypeDefinition,
-            Identifiers.FolderType.expanded(),
-            NodeClass.ObjectType,
-            true
-        ));
+        addReference(
+            new Reference(
+                getNodeId(),
+                Identifiers.HasTypeDefinition,
+                Identifiers.FolderType.expanded(),
+                NodeClass.ObjectType,
+                true
+            )
+        );
     }
 
     /**
@@ -42,21 +44,13 @@ public class UaFolderNode extends UaObjectNode {
      * @param node the node to be organized by this folder.
      */
     public void addOrganizes(UaNode node) {
-        addReference(new Reference(
-            getNodeId(),
-            Identifiers.Organizes,
-            node.getNodeId().expanded(),
-            node.getNodeClass(),
-            true
-        ));
+        addReference(
+            new Reference(getNodeId(), Identifiers.Organizes, node.getNodeId().expanded(), node.getNodeClass(), true)
+        );
 
-        node.addReference(new Reference(
-            node.getNodeId(),
-            Identifiers.Organizes,
-            getNodeId().expanded(),
-            getNodeClass(),
-            false
-        ));
+        node.addReference(
+            new Reference(node.getNodeId(), Identifiers.Organizes, getNodeId().expanded(), getNodeClass(), false)
+        );
     }
 
     /**
@@ -66,21 +60,13 @@ public class UaFolderNode extends UaObjectNode {
      * @param node the node to be organized by this folder.
      */
     public void removeOrganizes(UaNode node) {
-        removeReference(new Reference(
-            getNodeId(),
-            Identifiers.Organizes,
-            node.getNodeId().expanded(),
-            node.getNodeClass(),
-            true
-        ));
+        removeReference(
+            new Reference(getNodeId(), Identifiers.Organizes, node.getNodeId().expanded(), node.getNodeClass(), true)
+        );
 
-        node.removeReference(new Reference(
-            node.getNodeId(),
-            Identifiers.Organizes,
-            getNodeId().expanded(),
-            getNodeClass(),
-            false
-        ));
+        node.removeReference(
+            new Reference(node.getNodeId(), Identifiers.Organizes, getNodeId().expanded(), getNodeClass(), false)
+        );
     }
 
 }

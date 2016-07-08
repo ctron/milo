@@ -32,15 +32,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:DialogConditionType")
 public class DialogConditionNode extends ConditionNode implements DialogConditionType {
 
-    public DialogConditionNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public DialogConditionNode(UaNodeManager nodeManager,
+                               NodeId nodeId,
+                               QualifiedName browseName,
+                               LocalizedText displayName,
+                               Optional<LocalizedText> description,
+                               Optional<UInteger> writeMask,
+                               Optional<UInteger> userWriteMask,
+                               UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -175,8 +174,7 @@ public class DialogConditionNode extends ConditionNode implements DialogConditio
 
     @Override
     public void setEnabledState(LocalizedText value) {
-        getVariableComponent("EnabledState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("EnabledState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -195,8 +193,7 @@ public class DialogConditionNode extends ConditionNode implements DialogConditio
 
     @Override
     public void setDialogState(LocalizedText value) {
-        getVariableComponent("DialogState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("DialogState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

@@ -29,17 +29,17 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 import org.eclipse.milo.opcua.stack.core.types.structured.HistoryEventFieldList;
 
 @UaObjectNode(typeName = "0:AuditHistoryEventDeleteEventType")
-public class AuditHistoryEventDeleteEventNode extends AuditHistoryDeleteEventNode implements AuditHistoryEventDeleteEventType {
+public class AuditHistoryEventDeleteEventNode extends AuditHistoryDeleteEventNode
+        implements AuditHistoryEventDeleteEventType {
 
-    public AuditHistoryEventDeleteEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditHistoryEventDeleteEventNode(UaNodeManager nodeManager,
+                                            NodeId nodeId,
+                                            QualifiedName browseName,
+                                            LocalizedText displayName,
+                                            Optional<LocalizedText> description,
+                                            Optional<UInteger> writeMask,
+                                            Optional<UInteger> userWriteMask,
+                                            UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -53,7 +53,9 @@ public class AuditHistoryEventDeleteEventNode extends AuditHistoryDeleteEventNod
 
     @Override
     public PropertyNode getEventIdsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditHistoryEventDeleteEventType.EVENT_IDS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditHistoryEventDeleteEventType.EVENT_IDS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -72,7 +74,9 @@ public class AuditHistoryEventDeleteEventNode extends AuditHistoryDeleteEventNod
 
     @Override
     public PropertyNode getOldValuesNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditHistoryEventDeleteEventType.OLD_VALUES.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditHistoryEventDeleteEventType.OLD_VALUES.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

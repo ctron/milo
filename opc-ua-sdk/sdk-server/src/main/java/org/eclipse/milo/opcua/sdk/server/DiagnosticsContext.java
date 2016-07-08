@@ -42,8 +42,7 @@ public class DiagnosticsContext<T> {
             DiagnosticInfo[] diagnostics = new DiagnosticInfo[ts.length];
 
             for (int i = 0; i < ts.length; i++) {
-                DiagnosticInfo diagnosticInfo = diagnosticsMap.getOrDefault(
-                    ts[i], DiagnosticInfo.NULL_VALUE);
+                DiagnosticInfo diagnosticInfo = diagnosticsMap.getOrDefault(ts[i], DiagnosticInfo.NULL_VALUE);
 
                 diagnostics[i] = diagnosticInfo;
             }

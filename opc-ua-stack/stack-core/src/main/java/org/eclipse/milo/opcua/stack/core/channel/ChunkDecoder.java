@@ -106,8 +106,8 @@ public class ChunkDecoder {
                 lastSequenceNumber = sequenceNumber;
             } else {
                 if (lastSequenceNumber + 1 != sequenceNumber) {
-                    String message = String.format("expected sequence number %s but received %s",
-                        lastSequenceNumber + 1, sequenceNumber);
+                    String message = String
+                        .format("expected sequence number %s but received %s", lastSequenceNumber + 1, sequenceNumber);
 
                     logger.error(message);
                     logger.error(ByteBufUtil.hexDump(chunkBuffer, 0, chunkBuffer.writerIndex()));
@@ -148,9 +148,7 @@ public class ChunkDecoder {
 
         ByteBuf plainTextBuffer = BufferUtil.buffer(plainTextBufferSize);
 
-        ByteBuffer plainTextNioBuffer = plainTextBuffer
-            .writerIndex(plainTextBufferSize)
-            .nioBuffer();
+        ByteBuffer plainTextNioBuffer = plainTextBuffer.writerIndex(plainTextBufferSize).nioBuffer();
 
         ByteBuffer chunkNioBuffer = chunkBuffer.nioBuffer();
 
@@ -216,7 +214,10 @@ public class ChunkDecoder {
         @Override
         public Cipher getCipher(SecureChannel channel) throws UaException {
             try {
-                String transformation = channel.getSecurityPolicy().getAsymmetricEncryptionAlgorithm().getTransformation();
+                String transformation = channel
+                    .getSecurityPolicy()
+                    .getAsymmetricEncryptionAlgorithm()
+                    .getTransformation();
                 Cipher cipher = Cipher.getInstance(transformation);
                 cipher.init(Cipher.DECRYPT_MODE, channel.getKeyPair().getPrivate());
                 return cipher;
@@ -289,8 +290,10 @@ public class ChunkDecoder {
 
             if (channelSecurity == null) {
                 if (receivedTokenId != 0L) {
-                    throw new UaException(StatusCodes.Bad_SecureChannelTokenUnknown,
-                        "unknown secure channel token: " + receivedTokenId);
+                    throw new UaException(
+                        StatusCodes.Bad_SecureChannelTokenUnknown,
+                        "unknown secure channel token: " + receivedTokenId
+                    );
                 }
             } else {
                 long currentTokenId = channelSecurity.getCurrentToken().getTokenId().longValue();
@@ -298,17 +301,24 @@ public class ChunkDecoder {
                 if (receivedTokenId == currentTokenId) {
                     securitySecrets = channelSecurity.getCurrentKeys();
                 } else {
-                    long previousTokenId = channelSecurity.getPreviousToken()
+                    long previousTokenId = channelSecurity
+                        .getPreviousToken()
                         .map(t -> t.getTokenId().longValue())
                         .orElse(-1L);
 
                     logger.debug("Attempting to use SecuritySecrets from previousTokenId={}", previousTokenId);
 
                     if (receivedTokenId != previousTokenId) {
-                        logger.warn("receivedTokenId={} did not match previousTokenId={}", receivedTokenId, previousTokenId);
+                        logger.warn(
+                            "receivedTokenId={} did not match previousTokenId={}",
+                            receivedTokenId,
+                            previousTokenId
+                        );
 
-                        throw new UaException(StatusCodes.Bad_SecureChannelTokenUnknown,
-                            "unknown secure channel token: " + receivedTokenId);
+                        throw new UaException(
+                            StatusCodes.Bad_SecureChannelTokenUnknown,
+                            "unknown secure channel token: " + receivedTokenId
+                        );
                     }
 
                     if (channel.isSymmetricEncryptionEnabled() && channelSecurity.getPreviousKeys().isPresent()) {
@@ -321,7 +331,10 @@ public class ChunkDecoder {
         @Override
         public Cipher getCipher(SecureChannel channel) throws UaException {
             try {
-                String transformation = channel.getSecurityPolicy().getSymmetricEncryptionAlgorithm().getTransformation();
+                String transformation = channel
+                    .getSecurityPolicy()
+                    .getSymmetricEncryptionAlgorithm()
+                    .getTransformation();
                 ChannelSecurity.SecretKeys decryptionKeys = channel.getDecryptionKeys(securitySecrets);
 
                 SecretKeySpec keySpec = new SecretKeySpec(decryptionKeys.getEncryptionKey(), "AES");

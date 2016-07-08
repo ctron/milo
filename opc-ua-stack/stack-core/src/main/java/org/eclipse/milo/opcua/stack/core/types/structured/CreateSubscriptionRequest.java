@@ -48,7 +48,13 @@ public class CreateSubscriptionRequest implements UaRequestMessage {
         this._priority = null;
     }
 
-    public CreateSubscriptionRequest(RequestHeader _requestHeader, Double _requestedPublishingInterval, UInteger _requestedLifetimeCount, UInteger _requestedMaxKeepAliveCount, UInteger _maxNotificationsPerPublish, Boolean _publishingEnabled, UByte _priority) {
+    public CreateSubscriptionRequest(RequestHeader _requestHeader,
+                                     Double _requestedPublishingInterval,
+                                     UInteger _requestedLifetimeCount,
+                                     UInteger _requestedMaxKeepAliveCount,
+                                     UInteger _maxNotificationsPerPublish,
+                                     Boolean _publishingEnabled,
+                                     UByte _priority) {
         this._requestHeader = _requestHeader;
         this._requestedPublishingInterval = _requestedPublishingInterval;
         this._requestedLifetimeCount = _requestedLifetimeCount;
@@ -58,32 +64,56 @@ public class CreateSubscriptionRequest implements UaRequestMessage {
         this._priority = _priority;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public Double getRequestedPublishingInterval() { return _requestedPublishingInterval; }
+    public Double getRequestedPublishingInterval() {
+        return _requestedPublishingInterval;
+    }
 
-    public UInteger getRequestedLifetimeCount() { return _requestedLifetimeCount; }
+    public UInteger getRequestedLifetimeCount() {
+        return _requestedLifetimeCount;
+    }
 
-    public UInteger getRequestedMaxKeepAliveCount() { return _requestedMaxKeepAliveCount; }
+    public UInteger getRequestedMaxKeepAliveCount() {
+        return _requestedMaxKeepAliveCount;
+    }
 
-    public UInteger getMaxNotificationsPerPublish() { return _maxNotificationsPerPublish; }
+    public UInteger getMaxNotificationsPerPublish() {
+        return _maxNotificationsPerPublish;
+    }
 
-    public Boolean getPublishingEnabled() { return _publishingEnabled; }
+    public Boolean getPublishingEnabled() {
+        return _publishingEnabled;
+    }
 
-    public UByte getPriority() { return _priority; }
+    public UByte getPriority() {
+        return _priority;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CreateSubscriptionRequest createSubscriptionRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", createSubscriptionRequest._requestHeader != null ? createSubscriptionRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            createSubscriptionRequest._requestHeader != null ?
+                createSubscriptionRequest._requestHeader :
+                new RequestHeader()
+        );
         encoder.encodeDouble("RequestedPublishingInterval", createSubscriptionRequest._requestedPublishingInterval);
         encoder.encodeUInt32("RequestedLifetimeCount", createSubscriptionRequest._requestedLifetimeCount);
         encoder.encodeUInt32("RequestedMaxKeepAliveCount", createSubscriptionRequest._requestedMaxKeepAliveCount);
@@ -101,12 +131,30 @@ public class CreateSubscriptionRequest implements UaRequestMessage {
         Boolean _publishingEnabled = decoder.decodeBoolean("PublishingEnabled");
         UByte _priority = decoder.decodeByte("Priority");
 
-        return new CreateSubscriptionRequest(_requestHeader, _requestedPublishingInterval, _requestedLifetimeCount, _requestedMaxKeepAliveCount, _maxNotificationsPerPublish, _publishingEnabled, _priority);
+        return new CreateSubscriptionRequest(
+            _requestHeader,
+            _requestedPublishingInterval,
+            _requestedLifetimeCount,
+            _requestedMaxKeepAliveCount,
+            _maxNotificationsPerPublish,
+            _publishingEnabled,
+            _priority
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(CreateSubscriptionRequest::encode, CreateSubscriptionRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(CreateSubscriptionRequest::decode, CreateSubscriptionRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            CreateSubscriptionRequest::encode,
+            CreateSubscriptionRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            CreateSubscriptionRequest::decode,
+            CreateSubscriptionRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

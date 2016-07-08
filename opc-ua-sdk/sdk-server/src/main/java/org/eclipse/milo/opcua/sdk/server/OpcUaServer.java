@@ -72,8 +72,7 @@ import static com.google.common.collect.Sets.newHashSet;
 
 public class OpcUaServer {
 
-    public static final String SDK_VERSION =
-        ManifestUtil.read("X-SDK-Version").orElse("dev");
+    public static final String SDK_VERSION = ManifestUtil.read("X-SDK-Version").orElse("dev");
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -114,7 +113,8 @@ public class OpcUaServer {
 
         vendorNamespace = namespaceManager.registerAndAdd(
             config.getApplicationUri(),
-            index -> new VendorNamespace(OpcUaServer.this, config.getApplicationUri()));
+            index -> new VendorNamespace(OpcUaServer.this, config.getApplicationUri())
+        );
 
         serverTable.addUri(stackServer.getApplicationDescription().getApplicationUri());
 
@@ -125,30 +125,40 @@ public class OpcUaServer {
         String configuredHostname = config.getHostname();
 
         for (String bindAddress : config.getBindAddresses()) {
-            Set<String> hostnames = Sets.union(
-                newHashSet(configuredHostname),
-                getHostnames(bindAddress));
+            Set<String> hostnames = Sets.union(newHashSet(configuredHostname), getHostnames(bindAddress));
 
             for (String hostname : hostnames) {
                 for (SecurityPolicy securityPolicy : config.getSecurityPolicies()) {
                     MessageSecurityMode messageSecurity = securityPolicy == SecurityPolicy.None ?
-                        MessageSecurityMode.None : MessageSecurityMode.SignAndEncrypt;
+                        MessageSecurityMode.None :
+                        MessageSecurityMode.SignAndEncrypt;
 
                     String endpointUrl = endpointUrl(hostname, config.getBindPort(), config.getServerName());
 
                     Set<X509Certificate> certificates = config.getCertificateManager().getCertificates();
 
                     if (certificates.isEmpty() && securityPolicy == SecurityPolicy.None) {
-                        logger.info("Binding endpoint {} to {} [{}/{}]",
-                            endpointUrl, bindAddress, securityPolicy, messageSecurity);
+                        logger.info(
+                            "Binding endpoint {} to {} [{}/{}]",
+                            endpointUrl,
+                            bindAddress,
+                            securityPolicy,
+                            messageSecurity
+                        );
 
                         stackServer.addEndpoint(endpointUrl, bindAddress, null, securityPolicy, messageSecurity);
                     } else {
                         for (X509Certificate certificate : certificates) {
-                            logger.info("Binding endpoint {} to {} [{}/{}]",
-                                endpointUrl, bindAddress, securityPolicy, messageSecurity);
+                            logger.info(
+                                "Binding endpoint {} to {} [{}/{}]",
+                                endpointUrl,
+                                bindAddress,
+                                securityPolicy,
+                                messageSecurity
+                            );
 
-                            stackServer.addEndpoint(endpointUrl, bindAddress, certificate, securityPolicy, messageSecurity);
+                            stackServer
+                                .addEndpoint(endpointUrl, bindAddress, certificate, securityPolicy, messageSecurity);
                         }
                     }
                 }
@@ -172,13 +182,17 @@ public class OpcUaServer {
                     Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
 
                     for (NetworkInterface ni : Collections.list(nis)) {
-                        Collections.list(ni.getInetAddresses()).stream()
+                        Collections
+                            .list(ni.getInetAddresses())
+                            .stream()
                             .filter(ia -> ia instanceof Inet4Address)
-                            .forEach(ia -> {
-                                hostnames.add(ia.getHostName());
-                                hostnames.add(ia.getHostAddress());
-                                hostnames.add(ia.getCanonicalHostName());
-                            });
+                            .forEach(
+                                ia -> {
+                                    hostnames.add(ia.getHostName());
+                                    hostnames.add(ia.getHostAddress());
+                                    hostnames.add(ia.getCanonicalHostName());
+                                }
+                            );
                     }
                 } catch (SocketException e) {
                     logger.warn("Failed to NetworkInterfaces for bind address: {}", bindAddress, e);
@@ -297,6 +311,7 @@ public class OpcUaServer {
         return browseContinuationPoints;
     }
 
-    private static class OpcUaNodeManager extends AbstractUaNodeManager {}
+    private static class OpcUaNodeManager extends AbstractUaNodeManager {
+    }
 
 }

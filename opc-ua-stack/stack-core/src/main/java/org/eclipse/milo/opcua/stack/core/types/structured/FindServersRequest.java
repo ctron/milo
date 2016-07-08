@@ -40,33 +40,52 @@ public class FindServersRequest implements UaRequestMessage {
         this._serverUris = null;
     }
 
-    public FindServersRequest(RequestHeader _requestHeader, String _endpointUrl, String[] _localeIds, String[] _serverUris) {
+    public FindServersRequest(RequestHeader _requestHeader,
+                              String _endpointUrl,
+                              String[] _localeIds,
+                              String[] _serverUris) {
         this._requestHeader = _requestHeader;
         this._endpointUrl = _endpointUrl;
         this._localeIds = _localeIds;
         this._serverUris = _serverUris;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public String getEndpointUrl() { return _endpointUrl; }
+    public String getEndpointUrl() {
+        return _endpointUrl;
+    }
 
-    public String[] getLocaleIds() { return _localeIds; }
+    public String[] getLocaleIds() {
+        return _localeIds;
+    }
 
-    public String[] getServerUris() { return _serverUris; }
+    public String[] getServerUris() {
+        return _serverUris;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(FindServersRequest findServersRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", findServersRequest._requestHeader != null ? findServersRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            findServersRequest._requestHeader != null ? findServersRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeString("EndpointUrl", findServersRequest._endpointUrl);
         encoder.encodeArray("LocaleIds", findServersRequest._localeIds, encoder::encodeString);
         encoder.encodeArray("ServerUris", findServersRequest._serverUris, encoder::encodeString);
@@ -82,8 +101,10 @@ public class FindServersRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(FindServersRequest::encode, FindServersRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(FindServersRequest::decode, FindServersRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(FindServersRequest::encode, FindServersRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(FindServersRequest::decode, FindServersRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

@@ -65,9 +65,11 @@ public class TestStackResponse implements UaResponseMessage {
         return XmlEncodingId;
     }
 
-
     public static void encode(TestStackResponse testStackResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", testStackResponse._responseHeader != null ? testStackResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            testStackResponse._responseHeader != null ? testStackResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeVariant("Output", testStackResponse._output);
     }
 
@@ -79,8 +81,10 @@ public class TestStackResponse implements UaResponseMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(TestStackResponse::encode, TestStackResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(TestStackResponse::decode, TestStackResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(TestStackResponse::encode, TestStackResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(TestStackResponse::decode, TestStackResponse.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

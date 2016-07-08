@@ -29,8 +29,7 @@ import org.eclipse.milo.opcua.stack.core.types.structured.UserTokenPolicy;
 public class UaTcpStackServerConfigBuilder {
 
     private String serverName = "";
-    private LocalizedText applicationName = LocalizedText
-        .english("server application name not configured");
+    private LocalizedText applicationName = LocalizedText.english("server application name not configured");
     private String applicationUri = "server application uri not configured";
     private String productUri = "server product uri not configured";
 
@@ -43,7 +42,6 @@ public class UaTcpStackServerConfigBuilder {
     private ExecutorService executor;
     private List<UserTokenPolicy> userTokenPolicies = new ArrayList<>();
     private List<SignedSoftwareCertificate> softwareCertificates = new ArrayList<>();
-
 
     public UaTcpStackServerConfigBuilder setServerName(String serverName) {
         this.serverName = serverName;

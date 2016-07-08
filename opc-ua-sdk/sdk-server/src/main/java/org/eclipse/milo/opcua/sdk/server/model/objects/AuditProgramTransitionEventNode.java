@@ -27,17 +27,17 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UByte;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 
 @UaObjectNode(typeName = "0:AuditProgramTransitionEventType")
-public class AuditProgramTransitionEventNode extends AuditUpdateStateEventNode implements AuditProgramTransitionEventType {
+public class AuditProgramTransitionEventNode extends AuditUpdateStateEventNode
+        implements AuditProgramTransitionEventType {
 
-    public AuditProgramTransitionEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditProgramTransitionEventNode(UaNodeManager nodeManager,
+                                           NodeId nodeId,
+                                           QualifiedName browseName,
+                                           LocalizedText displayName,
+                                           Optional<LocalizedText> description,
+                                           Optional<UInteger> writeMask,
+                                           Optional<UInteger> userWriteMask,
+                                           UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -51,7 +51,9 @@ public class AuditProgramTransitionEventNode extends AuditUpdateStateEventNode i
 
     @Override
     public PropertyNode getTransitionNumberNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditProgramTransitionEventType.TRANSITION_NUMBER.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditProgramTransitionEventType.TRANSITION_NUMBER.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

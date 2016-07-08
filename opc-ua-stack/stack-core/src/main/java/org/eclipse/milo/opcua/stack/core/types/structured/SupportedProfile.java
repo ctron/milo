@@ -46,7 +46,12 @@ public class SupportedProfile implements UaStructure {
         this._unsupportedUnitIds = null;
     }
 
-    public SupportedProfile(String _organizationUri, String _profileId, String _complianceTool, DateTime _complianceDate, ComplianceLevel _complianceLevel, String[] _unsupportedUnitIds) {
+    public SupportedProfile(String _organizationUri,
+                            String _profileId,
+                            String _complianceTool,
+                            DateTime _complianceDate,
+                            ComplianceLevel _complianceLevel,
+                            String[] _unsupportedUnitIds) {
         this._organizationUri = _organizationUri;
         this._profileId = _profileId;
         this._complianceTool = _complianceTool;
@@ -55,27 +60,44 @@ public class SupportedProfile implements UaStructure {
         this._unsupportedUnitIds = _unsupportedUnitIds;
     }
 
-    public String getOrganizationUri() { return _organizationUri; }
+    public String getOrganizationUri() {
+        return _organizationUri;
+    }
 
-    public String getProfileId() { return _profileId; }
+    public String getProfileId() {
+        return _profileId;
+    }
 
-    public String getComplianceTool() { return _complianceTool; }
+    public String getComplianceTool() {
+        return _complianceTool;
+    }
 
-    public DateTime getComplianceDate() { return _complianceDate; }
+    public DateTime getComplianceDate() {
+        return _complianceDate;
+    }
 
-    public ComplianceLevel getComplianceLevel() { return _complianceLevel; }
+    public ComplianceLevel getComplianceLevel() {
+        return _complianceLevel;
+    }
 
-    public String[] getUnsupportedUnitIds() { return _unsupportedUnitIds; }
+    public String[] getUnsupportedUnitIds() {
+        return _unsupportedUnitIds;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(SupportedProfile supportedProfile, UaEncoder encoder) {
         encoder.encodeString("OrganizationUri", supportedProfile._organizationUri);
@@ -94,12 +116,21 @@ public class SupportedProfile implements UaStructure {
         ComplianceLevel _complianceLevel = decoder.decodeEnumeration("ComplianceLevel", ComplianceLevel.class);
         String[] _unsupportedUnitIds = decoder.decodeArray("UnsupportedUnitIds", decoder::decodeString, String.class);
 
-        return new SupportedProfile(_organizationUri, _profileId, _complianceTool, _complianceDate, _complianceLevel, _unsupportedUnitIds);
+        return new SupportedProfile(
+            _organizationUri,
+            _profileId,
+            _complianceTool,
+            _complianceDate,
+            _complianceLevel,
+            _unsupportedUnitIds
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(SupportedProfile::encode, SupportedProfile.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(SupportedProfile::decode, SupportedProfile.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(SupportedProfile::encode, SupportedProfile.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(SupportedProfile::decode, SupportedProfile.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

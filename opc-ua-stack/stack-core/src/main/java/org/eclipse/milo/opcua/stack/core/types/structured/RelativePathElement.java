@@ -41,30 +41,46 @@ public class RelativePathElement implements UaStructure {
         this._targetName = null;
     }
 
-    public RelativePathElement(NodeId _referenceTypeId, Boolean _isInverse, Boolean _includeSubtypes, QualifiedName _targetName) {
+    public RelativePathElement(NodeId _referenceTypeId,
+                               Boolean _isInverse,
+                               Boolean _includeSubtypes,
+                               QualifiedName _targetName) {
         this._referenceTypeId = _referenceTypeId;
         this._isInverse = _isInverse;
         this._includeSubtypes = _includeSubtypes;
         this._targetName = _targetName;
     }
 
-    public NodeId getReferenceTypeId() { return _referenceTypeId; }
+    public NodeId getReferenceTypeId() {
+        return _referenceTypeId;
+    }
 
-    public Boolean getIsInverse() { return _isInverse; }
+    public Boolean getIsInverse() {
+        return _isInverse;
+    }
 
-    public Boolean getIncludeSubtypes() { return _includeSubtypes; }
+    public Boolean getIncludeSubtypes() {
+        return _includeSubtypes;
+    }
 
-    public QualifiedName getTargetName() { return _targetName; }
+    public QualifiedName getTargetName() {
+        return _targetName;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(RelativePathElement relativePathElement, UaEncoder encoder) {
         encoder.encodeNodeId("ReferenceTypeId", relativePathElement._referenceTypeId);
@@ -83,8 +99,10 @@ public class RelativePathElement implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(RelativePathElement::encode, RelativePathElement.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(RelativePathElement::decode, RelativePathElement.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(RelativePathElement::encode, RelativePathElement.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(RelativePathElement::decode, RelativePathElement.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

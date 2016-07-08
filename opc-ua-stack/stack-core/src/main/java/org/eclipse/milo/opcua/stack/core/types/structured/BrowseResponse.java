@@ -45,24 +45,38 @@ public class BrowseResponse implements UaResponseMessage {
         this._diagnosticInfos = _diagnosticInfos;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public BrowseResult[] getResults() { return _results; }
+    public BrowseResult[] getResults() {
+        return _results;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(BrowseResponse browseResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", browseResponse._responseHeader != null ? browseResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            browseResponse._responseHeader != null ? browseResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeArray("Results", browseResponse._results, encoder::encodeSerializable);
         encoder.encodeArray("DiagnosticInfos", browseResponse._diagnosticInfos, encoder::encodeDiagnosticInfo);
     }
@@ -70,7 +84,8 @@ public class BrowseResponse implements UaResponseMessage {
     public static BrowseResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
         BrowseResult[] _results = decoder.decodeArray("Results", decoder::decodeSerializable, BrowseResult.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
         return new BrowseResponse(_responseHeader, _results, _diagnosticInfos);
     }

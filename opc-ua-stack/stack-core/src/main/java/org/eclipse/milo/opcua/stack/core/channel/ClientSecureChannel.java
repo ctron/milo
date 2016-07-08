@@ -28,8 +28,8 @@ import org.eclipse.milo.opcua.stack.core.util.LongSequence;
 
 public class ClientSecureChannel extends DefaultAttributeMap implements SecureChannel {
 
-    public static final AttributeKey<LongSequence> KEY_REQUEST_ID_SEQUENCE =
-        AttributeKey.valueOf("request-id-sequence");
+    public static final AttributeKey<LongSequence> KEY_REQUEST_ID_SEQUENCE = AttributeKey
+        .valueOf("request-id-sequence");
 
     private volatile Channel channel;
     private volatile long channelId = 0;
@@ -149,7 +149,8 @@ public class ClientSecureChannel extends DefaultAttributeMap implements SecureCh
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects
+            .toStringHelper(this)
             .add("channelId", channelId)
             .add("securityPolicy", securityPolicy)
             .toString();

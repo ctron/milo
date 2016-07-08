@@ -41,33 +41,54 @@ public class ModifySubscriptionResponse implements UaResponseMessage {
         this._revisedMaxKeepAliveCount = null;
     }
 
-    public ModifySubscriptionResponse(ResponseHeader _responseHeader, Double _revisedPublishingInterval, UInteger _revisedLifetimeCount, UInteger _revisedMaxKeepAliveCount) {
+    public ModifySubscriptionResponse(ResponseHeader _responseHeader,
+                                      Double _revisedPublishingInterval,
+                                      UInteger _revisedLifetimeCount,
+                                      UInteger _revisedMaxKeepAliveCount) {
         this._responseHeader = _responseHeader;
         this._revisedPublishingInterval = _revisedPublishingInterval;
         this._revisedLifetimeCount = _revisedLifetimeCount;
         this._revisedMaxKeepAliveCount = _revisedMaxKeepAliveCount;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public Double getRevisedPublishingInterval() { return _revisedPublishingInterval; }
+    public Double getRevisedPublishingInterval() {
+        return _revisedPublishingInterval;
+    }
 
-    public UInteger getRevisedLifetimeCount() { return _revisedLifetimeCount; }
+    public UInteger getRevisedLifetimeCount() {
+        return _revisedLifetimeCount;
+    }
 
-    public UInteger getRevisedMaxKeepAliveCount() { return _revisedMaxKeepAliveCount; }
+    public UInteger getRevisedMaxKeepAliveCount() {
+        return _revisedMaxKeepAliveCount;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ModifySubscriptionResponse modifySubscriptionResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", modifySubscriptionResponse._responseHeader != null ? modifySubscriptionResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            modifySubscriptionResponse._responseHeader != null ?
+                modifySubscriptionResponse._responseHeader :
+                new ResponseHeader()
+        );
         encoder.encodeDouble("RevisedPublishingInterval", modifySubscriptionResponse._revisedPublishingInterval);
         encoder.encodeUInt32("RevisedLifetimeCount", modifySubscriptionResponse._revisedLifetimeCount);
         encoder.encodeUInt32("RevisedMaxKeepAliveCount", modifySubscriptionResponse._revisedMaxKeepAliveCount);
@@ -79,12 +100,27 @@ public class ModifySubscriptionResponse implements UaResponseMessage {
         UInteger _revisedLifetimeCount = decoder.decodeUInt32("RevisedLifetimeCount");
         UInteger _revisedMaxKeepAliveCount = decoder.decodeUInt32("RevisedMaxKeepAliveCount");
 
-        return new ModifySubscriptionResponse(_responseHeader, _revisedPublishingInterval, _revisedLifetimeCount, _revisedMaxKeepAliveCount);
+        return new ModifySubscriptionResponse(
+            _responseHeader,
+            _revisedPublishingInterval,
+            _revisedLifetimeCount,
+            _revisedMaxKeepAliveCount
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(ModifySubscriptionResponse::encode, ModifySubscriptionResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ModifySubscriptionResponse::decode, ModifySubscriptionResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            ModifySubscriptionResponse::encode,
+            ModifySubscriptionResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            ModifySubscriptionResponse::decode,
+            ModifySubscriptionResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

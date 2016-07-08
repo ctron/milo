@@ -46,24 +46,38 @@ public class ReadResponse implements UaResponseMessage {
         this._diagnosticInfos = _diagnosticInfos;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public DataValue[] getResults() { return _results; }
+    public DataValue[] getResults() {
+        return _results;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ReadResponse readResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", readResponse._responseHeader != null ? readResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            readResponse._responseHeader != null ? readResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeArray("Results", readResponse._results, encoder::encodeDataValue);
         encoder.encodeArray("DiagnosticInfos", readResponse._diagnosticInfos, encoder::encodeDiagnosticInfo);
     }
@@ -71,7 +85,8 @@ public class ReadResponse implements UaResponseMessage {
     public static ReadResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
         DataValue[] _results = decoder.decodeArray("Results", decoder::decodeDataValue, DataValue.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
         return new ReadResponse(_responseHeader, _results, _diagnosticInfos);
     }

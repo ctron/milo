@@ -31,29 +31,32 @@ import org.eclipse.milo.opcua.stack.core.types.structured.UserIdentityToken;
 @UaObjectNode(typeName = "0:AuditActivateSessionEventType")
 public class AuditActivateSessionEventNode extends AuditSessionEventNode implements AuditActivateSessionEventType {
 
-    public AuditActivateSessionEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditActivateSessionEventNode(UaNodeManager nodeManager,
+                                         NodeId nodeId,
+                                         QualifiedName browseName,
+                                         LocalizedText displayName,
+                                         Optional<LocalizedText> description,
+                                         Optional<UInteger> writeMask,
+                                         Optional<UInteger> userWriteMask,
+                                         UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
 
     @Override
     public SignedSoftwareCertificate[] getClientSoftwareCertificates() {
-        Optional<SignedSoftwareCertificate[]> property = getProperty(AuditActivateSessionEventType.CLIENT_SOFTWARE_CERTIFICATES);
+        Optional<SignedSoftwareCertificate[]> property = getProperty(
+            AuditActivateSessionEventType.CLIENT_SOFTWARE_CERTIFICATES
+        );
 
         return property.orElse(null);
     }
 
     @Override
     public PropertyNode getClientSoftwareCertificatesNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditActivateSessionEventType.CLIENT_SOFTWARE_CERTIFICATES.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditActivateSessionEventType.CLIENT_SOFTWARE_CERTIFICATES.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -72,7 +75,9 @@ public class AuditActivateSessionEventNode extends AuditSessionEventNode impleme
 
     @Override
     public PropertyNode getUserIdentityTokenNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditActivateSessionEventType.USER_IDENTITY_TOKEN.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditActivateSessionEventType.USER_IDENTITY_TOKEN.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -91,7 +96,9 @@ public class AuditActivateSessionEventNode extends AuditSessionEventNode impleme
 
     @Override
     public PropertyNode getSecureChannelIdNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditActivateSessionEventType.SECURE_CHANNEL_ID.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditActivateSessionEventType.SECURE_CHANNEL_ID.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

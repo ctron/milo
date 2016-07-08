@@ -63,15 +63,17 @@ public class BrowsePathsHelper {
         this.namespaceManager = namespaceManager;
     }
 
-    public void onTranslateBrowsePaths(
-        ServiceRequest<TranslateBrowsePathsToNodeIdsRequest, TranslateBrowsePathsToNodeIdsResponse> service) {
+    public void onTranslateBrowsePaths(ServiceRequest<TranslateBrowsePathsToNodeIdsRequest, TranslateBrowsePathsToNodeIdsResponse> service) {
 
         OpcUaServer server = service.attr(ServiceAttributes.SERVER_KEY).get();
 
         BrowsePath[] browsePaths = service.getRequest().getBrowsePaths();
 
-        if (browsePaths.length >
-            server.getConfig().getLimits().getMaxNodesPerTranslateBrowsePathsToNodeIds().intValue()) {
+        if (browsePaths.length > server
+            .getConfig()
+            .getLimits()
+            .getMaxNodesPerTranslateBrowsePathsToNodeIds()
+            .intValue()) {
 
             service.setServiceFault(StatusCodes.Bad_TooManyOperations);
         } else {
@@ -81,13 +83,19 @@ public class BrowsePathsHelper {
                 futures.add(translate(browsePath));
             }
 
-            sequence(futures).thenAcceptAsync(results -> {
-                ResponseHeader header = service.createResponseHeader();
-                TranslateBrowsePathsToNodeIdsResponse response = new TranslateBrowsePathsToNodeIdsResponse(
-                    header, a(results, BrowsePathResult.class), new DiagnosticInfo[0]);
+            sequence(futures).thenAcceptAsync(
+                results -> {
+                    ResponseHeader header = service.createResponseHeader();
+                    TranslateBrowsePathsToNodeIdsResponse response = new TranslateBrowsePathsToNodeIdsResponse(
+                        header,
+                        a(results, BrowsePathResult.class),
+                        new DiagnosticInfo[0]
+                    );
 
-                service.setResponse(response);
-            }, server.getExecutorService());
+                    service.setResponse(response);
+                },
+                server.getExecutorService()
+            );
         }
     }
 
@@ -97,59 +105,58 @@ public class BrowsePathsHelper {
         NodeId startingNode = browsePath.getStartingNode();
         RelativePath relativePath = browsePath.getRelativePath();
 
-        follow(startingNode, newArrayList(relativePath.getElements())).whenComplete((targets, ex) -> {
-            if (targets != null) {
-                BrowsePathResult result;
+        follow(startingNode, newArrayList(relativePath.getElements())).whenComplete(
+            (targets, ex) -> {
+                if (targets != null) {
+                    BrowsePathResult result;
 
-                if (!targets.isEmpty()) {
-                    result = new BrowsePathResult(
-                        StatusCode.GOOD, a(targets, BrowsePathTarget.class));
+                    if (!targets.isEmpty()) {
+                        result = new BrowsePathResult(StatusCode.GOOD, a(targets, BrowsePathTarget.class));
+                    } else {
+                        result = new BrowsePathResult(new StatusCode(StatusCodes.Bad_NoMatch), new BrowsePathTarget[0]);
+                    }
+
+                    future.complete(result);
                 } else {
-                    result = new BrowsePathResult(
-                        new StatusCode(StatusCodes.Bad_NoMatch), new BrowsePathTarget[0]);
+                    StatusCode statusCode = new StatusCode(StatusCodes.Bad_NoMatch);
+
+                    if (ex instanceof UaException) {
+                        statusCode = ((UaException) ex).getStatusCode();
+                    }
+
+                    BrowsePathResult result = new BrowsePathResult(statusCode, new BrowsePathTarget[0]);
+
+                    future.complete(result);
                 }
-
-                future.complete(result);
-            } else {
-                StatusCode statusCode = new StatusCode(StatusCodes.Bad_NoMatch);
-
-                if (ex instanceof UaException) {
-                    statusCode = ((UaException) ex).getStatusCode();
-                }
-
-                BrowsePathResult result = new BrowsePathResult(
-                    statusCode, new BrowsePathTarget[0]);
-
-                future.complete(result);
             }
-        });
+        );
 
         return future;
     }
 
-    private CompletableFuture<List<BrowsePathTarget>> follow(NodeId nodeId,
-                                                             List<RelativePathElement> elements) {
+    private CompletableFuture<List<BrowsePathTarget>> follow(NodeId nodeId, List<RelativePathElement> elements) {
 
         if (elements.size() == 1) {
-            return target(nodeId, elements.get(0)).thenApply(targets ->
-                targets.stream()
-                    .map(n -> new BrowsePathTarget(n, uint(0)))
-                    .collect(toList()));
+            return target(nodeId, elements.get(0))
+                .thenApply(targets -> targets.stream().map(n -> new BrowsePathTarget(n, uint(0))).collect(toList()));
         } else {
             RelativePathElement e = elements.remove(0);
 
-            return next(nodeId, e).thenCompose(nextExId -> {
-                Optional<NodeId> nextId = namespaceManager.toNodeId(nextExId);
+            return next(nodeId, e).thenCompose(
+                nextExId -> {
+                    Optional<NodeId> nextId = namespaceManager.toNodeId(nextExId);
 
-                if (nextId.isPresent()) {
-                    return follow(nextId.get(), elements);
-                } else {
-                    List<BrowsePathTarget> targets = newArrayList(
-                        new BrowsePathTarget(nextExId, uint(elements.size())));
+                    if (nextId.isPresent()) {
+                        return follow(nextId.get(), elements);
+                    } else {
+                        List<BrowsePathTarget> targets = newArrayList(
+                            new BrowsePathTarget(nextExId, uint(elements.size()))
+                        );
 
-                    return completedFuture(targets);
+                        return completedFuture(targets);
+                    }
                 }
-            });
+            );
         }
     }
 
@@ -162,32 +169,39 @@ public class BrowsePathsHelper {
 
         CompletableFuture<List<Reference>> future = namespace.getReferences(nodeId);
 
-        return future.thenCompose(references -> {
-            List<ExpandedNodeId> targetNodeIds = references.stream()
+        return future.thenCompose(
+            references -> {
+                List<ExpandedNodeId> targetNodeIds = references
+                    .stream()
                     /* Filter for references of the requested type or its subtype, if allowed... */
-                .filter(r -> referenceTypeId.isNull() ||
-                    r.getReferenceTypeId().equals(referenceTypeId) ||
-                    (includeSubtypes && r.subtypeOf(referenceTypeId, server.getReferenceTypes())))
+                    .filter(
+                        r -> referenceTypeId.isNull() ||
+                            r.getReferenceTypeId().equals(referenceTypeId) ||
+                            (includeSubtypes && r.subtypeOf(referenceTypeId, server.getReferenceTypes()))
+                    )
 
                     /* Filter for reference direction... */
-                .filter(r -> r.isInverse() == element.getIsInverse())
+                    .filter(r -> r.isInverse() == element.getIsInverse())
 
                     /* Map to target ExpandedNodeId... */
-                .map(Reference::getTargetNodeId)
-                .collect(toList());
+                    .map(Reference::getTargetNodeId)
+                    .collect(toList());
 
-            return readTargetBrowseNames(targetNodeIds).thenApply(browseNames -> {
-                for (int i = 0; i < targetNodeIds.size(); i++) {
-                    ExpandedNodeId targetNodeId = targetNodeIds.get(i);
-                    QualifiedName browseName = browseNames.get(i);
-                    if (browseName.equals(targetName)) {
-                        return targetNodeId;
+                return readTargetBrowseNames(targetNodeIds).thenApply(
+                    browseNames -> {
+                        for (int i = 0; i < targetNodeIds.size(); i++) {
+                            ExpandedNodeId targetNodeId = targetNodeIds.get(i);
+                            QualifiedName browseName = browseNames.get(i);
+                            if (browseName.equals(targetName)) {
+                                return targetNodeId;
+                            }
+                        }
+
+                        return ExpandedNodeId.NULL_VALUE;
                     }
-                }
-
-                return ExpandedNodeId.NULL_VALUE;
-            });
-        });
+                );
+            }
+        );
     }
 
     private CompletableFuture<List<ExpandedNodeId>> target(NodeId nodeId, RelativePathElement element) {
@@ -199,70 +213,83 @@ public class BrowsePathsHelper {
 
         CompletableFuture<List<Reference>> future = namespace.getReferences(nodeId);
 
-        return future.thenCompose(references -> {
-            List<ExpandedNodeId> targetNodeIds = references.stream()
+        return future.thenCompose(
+            references -> {
+                List<ExpandedNodeId> targetNodeIds = references
+                    .stream()
                     /* Filter for references of the requested type or its subtype, if allowed... */
-                .filter(r -> referenceTypeId.isNull() ||
-                    r.getReferenceTypeId().equals(referenceTypeId) ||
-                    (includeSubtypes && r.subtypeOf(referenceTypeId, server.getReferenceTypes())))
+                    .filter(
+                        r -> referenceTypeId.isNull() ||
+                            r.getReferenceTypeId().equals(referenceTypeId) ||
+                            (includeSubtypes && r.subtypeOf(referenceTypeId, server.getReferenceTypes()))
+                    )
 
                     /* Filter for reference direction... */
-                .filter(r -> r.isInverse() == element.getIsInverse())
+                    .filter(r -> r.isInverse() == element.getIsInverse())
 
                     /* Map to target ExpandedNodeId... */
-                .map(Reference::getTargetNodeId)
-                .collect(toList());
+                    .map(Reference::getTargetNodeId)
+                    .collect(toList());
 
-            return readTargetBrowseNames(targetNodeIds).thenApply(browseNames -> {
-                List<ExpandedNodeId> targets = newArrayList();
+                return readTargetBrowseNames(targetNodeIds).thenApply(
+                    browseNames -> {
+                        List<ExpandedNodeId> targets = newArrayList();
 
-                for (int i = 0; i < targetNodeIds.size(); i++) {
-                    ExpandedNodeId targetNodeId = targetNodeIds.get(i);
-                    QualifiedName browseName = browseNames.get(i);
-                    if (matchesTarget(browseName, targetName)) {
-                        targets.add(targetNodeId);
+                        for (int i = 0; i < targetNodeIds.size(); i++) {
+                            ExpandedNodeId targetNodeId = targetNodeIds.get(i);
+                            QualifiedName browseName = browseNames.get(i);
+                            if (matchesTarget(browseName, targetName)) {
+                                targets.add(targetNodeId);
+                            }
+                        }
+
+                        return targets;
                     }
-                }
-
-                return targets;
-            });
-        });
+                );
+            }
+        );
     }
 
     private CompletableFuture<List<QualifiedName>> readTargetBrowseNames(List<ExpandedNodeId> targetNodeIds) {
         List<CompletableFuture<List<DataValue>>> futures = newArrayListWithCapacity(targetNodeIds.size());
 
         for (ExpandedNodeId xni : targetNodeIds) {
-            CompletableFuture<List<DataValue>> future = xni.local().map(nodeId -> {
-                Namespace namespace = namespaceManager.getNamespace(nodeId.getNamespaceIndex());
+            CompletableFuture<List<DataValue>> future = xni.local().map(
+                nodeId -> {
+                    Namespace namespace = namespaceManager.getNamespace(nodeId.getNamespaceIndex());
 
-                ReadValueId readValueId = new ReadValueId(
-                    nodeId, AttributeId.BrowseName.uid(), null, QualifiedName.NULL_VALUE);
+                    ReadValueId readValueId = new ReadValueId(
+                        nodeId,
+                        AttributeId.BrowseName.uid(),
+                        null,
+                        QualifiedName.NULL_VALUE
+                    );
 
-                CompletableFuture<List<DataValue>> readFuture = new CompletableFuture<>();
+                    CompletableFuture<List<DataValue>> readFuture = new CompletableFuture<>();
 
-                ReadContext context = new ReadContext(
-                    server, null, readFuture, new DiagnosticsContext<>());
+                    ReadContext context = new ReadContext(server, null, readFuture, new DiagnosticsContext<>());
 
-                namespace.read(context, 0.0, TimestampsToReturn.Neither, newArrayList(readValueId));
+                    namespace.read(context, 0.0, TimestampsToReturn.Neither, newArrayList(readValueId));
 
-                return readFuture;
-            }).orElse(completedFuture(newArrayList(new DataValue(StatusCodes.Bad_NodeIdUnknown))));
+                    return readFuture;
+                }
+            ).orElse(completedFuture(newArrayList(new DataValue(StatusCodes.Bad_NodeIdUnknown))));
 
             futures.add(future);
         }
 
-        return sequence(futures).thenApply(values ->
-            values.stream().map(l -> {
-                DataValue v = l.get(0);
-                return (QualifiedName) v.getValue().getValue();
-            }).collect(toList()));
+        return sequence(futures).thenApply(
+            values -> values.stream().map(
+                l -> {
+                    DataValue v = l.get(0);
+                    return (QualifiedName) v.getValue().getValue();
+                }
+            ).collect(toList())
+        );
     }
 
     private boolean matchesTarget(QualifiedName browseName, QualifiedName targetName) {
-        return targetName == null ||
-            targetName.equals(QualifiedName.NULL_VALUE) ||
-            targetName.equals(browseName);
+        return targetName == null || targetName.equals(QualifiedName.NULL_VALUE) || targetName.equals(browseName);
     }
 
 }

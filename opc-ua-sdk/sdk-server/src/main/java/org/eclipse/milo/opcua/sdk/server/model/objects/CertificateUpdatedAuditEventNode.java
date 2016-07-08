@@ -27,17 +27,17 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UByte;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 
 @UaObjectNode(typeName = "0:CertificateUpdatedAuditEventType")
-public class CertificateUpdatedAuditEventNode extends AuditUpdateMethodEventNode implements CertificateUpdatedAuditEventType {
+public class CertificateUpdatedAuditEventNode extends AuditUpdateMethodEventNode
+        implements CertificateUpdatedAuditEventType {
 
-    public CertificateUpdatedAuditEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public CertificateUpdatedAuditEventNode(UaNodeManager nodeManager,
+                                            NodeId nodeId,
+                                            QualifiedName browseName,
+                                            LocalizedText displayName,
+                                            Optional<LocalizedText> description,
+                                            Optional<UInteger> writeMask,
+                                            Optional<UInteger> userWriteMask,
+                                            UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -51,7 +51,9 @@ public class CertificateUpdatedAuditEventNode extends AuditUpdateMethodEventNode
 
     @Override
     public PropertyNode getCertificateGroupNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(CertificateUpdatedAuditEventType.CERTIFICATE_GROUP.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            CertificateUpdatedAuditEventType.CERTIFICATE_GROUP.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -70,7 +72,9 @@ public class CertificateUpdatedAuditEventNode extends AuditUpdateMethodEventNode
 
     @Override
     public PropertyNode getCertificateTypeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(CertificateUpdatedAuditEventType.CERTIFICATE_TYPE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            CertificateUpdatedAuditEventType.CERTIFICATE_TYPE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

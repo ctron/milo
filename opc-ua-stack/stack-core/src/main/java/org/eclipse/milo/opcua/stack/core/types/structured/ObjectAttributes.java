@@ -37,22 +37,34 @@ public class ObjectAttributes extends NodeAttributes {
         this._eventNotifier = null;
     }
 
-    public ObjectAttributes(UInteger _specifiedAttributes, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask, UByte _eventNotifier) {
+    public ObjectAttributes(UInteger _specifiedAttributes,
+                            LocalizedText _displayName,
+                            LocalizedText _description,
+                            UInteger _writeMask,
+                            UInteger _userWriteMask,
+                            UByte _eventNotifier) {
         super(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask);
         this._eventNotifier = _eventNotifier;
     }
 
-    public UByte getEventNotifier() { return _eventNotifier; }
+    public UByte getEventNotifier() {
+        return _eventNotifier;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ObjectAttributes objectAttributes, UaEncoder encoder) {
         encoder.encodeUInt32("SpecifiedAttributes", objectAttributes._specifiedAttributes);
@@ -71,12 +83,21 @@ public class ObjectAttributes extends NodeAttributes {
         UInteger _userWriteMask = decoder.decodeUInt32("UserWriteMask");
         UByte _eventNotifier = decoder.decodeByte("EventNotifier");
 
-        return new ObjectAttributes(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask, _eventNotifier);
+        return new ObjectAttributes(
+            _specifiedAttributes,
+            _displayName,
+            _description,
+            _writeMask,
+            _userWriteMask,
+            _eventNotifier
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(ObjectAttributes::encode, ObjectAttributes.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ObjectAttributes::decode, ObjectAttributes.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(ObjectAttributes::encode, ObjectAttributes.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(ObjectAttributes::decode, ObjectAttributes.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

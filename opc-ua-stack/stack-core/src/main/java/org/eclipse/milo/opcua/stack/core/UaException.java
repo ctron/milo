@@ -109,8 +109,7 @@ public class UaException extends Exception {
             return Optional.of((UaException) ex);
         } else {
             Throwable cause = ex.getCause();
-            return cause != null ?
-                extract(cause) : Optional.empty();
+            return cause != null ? extract(cause) : Optional.empty();
         }
     }
 

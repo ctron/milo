@@ -40,10 +40,7 @@ public class ErrorMessage {
     @Override
     public String toString() {
 
-        return MoreObjects.toStringHelper(this)
-            .add("error", error)
-            .add("reason", reason)
-            .toString();
+        return MoreObjects.toStringHelper(this).add("error", error).add("reason", reason).toString();
     }
 
     public static void encode(ErrorMessage message, ByteBuf buffer) {
@@ -52,9 +49,7 @@ public class ErrorMessage {
     }
 
     public static ErrorMessage decode(ByteBuf buffer) {
-        return new ErrorMessage(
-            buffer.readUnsignedInt(),
-            decodeString(buffer));
+        return new ErrorMessage(buffer.readUnsignedInt(), decodeString(buffer));
     }
 
     private static void encodeString(String s, ByteBuf buffer) {

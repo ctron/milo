@@ -15,9 +15,7 @@ package org.eclipse.milo.opcua.sdk.core.model.variables;
 
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 
-
 public interface ServerDiagnosticsSummaryType extends BaseDataVariableType {
-
 
     UInteger getServerViewCount();
 

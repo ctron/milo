@@ -41,35 +41,50 @@ public class DeleteNodesRequest implements UaRequestMessage {
         this._nodesToDelete = _nodesToDelete;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public DeleteNodesItem[] getNodesToDelete() { return _nodesToDelete; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public DeleteNodesItem[] getNodesToDelete() {
+        return _nodesToDelete;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DeleteNodesRequest deleteNodesRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", deleteNodesRequest._requestHeader != null ? deleteNodesRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            deleteNodesRequest._requestHeader != null ? deleteNodesRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeArray("NodesToDelete", deleteNodesRequest._nodesToDelete, encoder::encodeSerializable);
     }
 
     public static DeleteNodesRequest decode(UaDecoder decoder) {
         RequestHeader _requestHeader = decoder.decodeSerializable("RequestHeader", RequestHeader.class);
-        DeleteNodesItem[] _nodesToDelete = decoder.decodeArray("NodesToDelete", decoder::decodeSerializable, DeleteNodesItem.class);
+        DeleteNodesItem[] _nodesToDelete = decoder
+            .decodeArray("NodesToDelete", decoder::decodeSerializable, DeleteNodesItem.class);
 
         return new DeleteNodesRequest(_requestHeader, _nodesToDelete);
     }
 
     static {
-        DelegateRegistry.registerEncoder(DeleteNodesRequest::encode, DeleteNodesRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DeleteNodesRequest::decode, DeleteNodesRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(DeleteNodesRequest::encode, DeleteNodesRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(DeleteNodesRequest::decode, DeleteNodesRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

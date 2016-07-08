@@ -40,17 +40,24 @@ public class X509IdentityToken extends UserIdentityToken {
         this._certificateData = _certificateData;
     }
 
-    public ByteString getCertificateData() { return _certificateData; }
+    public ByteString getCertificateData() {
+        return _certificateData;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(X509IdentityToken x509IdentityToken, UaEncoder encoder) {
         encoder.encodeString("PolicyId", x509IdentityToken._policyId);
@@ -65,8 +72,10 @@ public class X509IdentityToken extends UserIdentityToken {
     }
 
     static {
-        DelegateRegistry.registerEncoder(X509IdentityToken::encode, X509IdentityToken.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(X509IdentityToken::decode, X509IdentityToken.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(X509IdentityToken::encode, X509IdentityToken.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(X509IdentityToken::decode, X509IdentityToken.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

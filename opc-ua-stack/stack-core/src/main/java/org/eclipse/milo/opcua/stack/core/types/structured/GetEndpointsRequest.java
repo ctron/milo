@@ -40,33 +40,52 @@ public class GetEndpointsRequest implements UaRequestMessage {
         this._profileUris = null;
     }
 
-    public GetEndpointsRequest(RequestHeader _requestHeader, String _endpointUrl, String[] _localeIds, String[] _profileUris) {
+    public GetEndpointsRequest(RequestHeader _requestHeader,
+                               String _endpointUrl,
+                               String[] _localeIds,
+                               String[] _profileUris) {
         this._requestHeader = _requestHeader;
         this._endpointUrl = _endpointUrl;
         this._localeIds = _localeIds;
         this._profileUris = _profileUris;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public String getEndpointUrl() { return _endpointUrl; }
+    public String getEndpointUrl() {
+        return _endpointUrl;
+    }
 
-    public String[] getLocaleIds() { return _localeIds; }
+    public String[] getLocaleIds() {
+        return _localeIds;
+    }
 
-    public String[] getProfileUris() { return _profileUris; }
+    public String[] getProfileUris() {
+        return _profileUris;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(GetEndpointsRequest getEndpointsRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", getEndpointsRequest._requestHeader != null ? getEndpointsRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            getEndpointsRequest._requestHeader != null ? getEndpointsRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeString("EndpointUrl", getEndpointsRequest._endpointUrl);
         encoder.encodeArray("LocaleIds", getEndpointsRequest._localeIds, encoder::encodeString);
         encoder.encodeArray("ProfileUris", getEndpointsRequest._profileUris, encoder::encodeString);
@@ -82,8 +101,10 @@ public class GetEndpointsRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(GetEndpointsRequest::encode, GetEndpointsRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(GetEndpointsRequest::decode, GetEndpointsRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(GetEndpointsRequest::encode, GetEndpointsRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(GetEndpointsRequest::decode, GetEndpointsRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

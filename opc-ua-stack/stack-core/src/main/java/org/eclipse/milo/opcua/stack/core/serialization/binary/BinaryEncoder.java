@@ -182,8 +182,10 @@ public class BinaryEncoder implements UaEncoder {
             buffer.writeInt(-1);
         } else {
             if (value.length() > maxStringLength) {
-                throw new UaSerializationException(StatusCodes.Bad_EncodingLimitsExceeded,
-                    "max string length exceeded");
+                throw new UaSerializationException(
+                    StatusCodes.Bad_EncodingLimitsExceeded,
+                    "max string length exceeded"
+                );
             }
 
             try {
@@ -305,7 +307,10 @@ public class BinaryEncoder implements UaEncoder {
             buffer.writeShort(namespaceIndex);
             encodeByteString(null, identifier);
         } else {
-            throw new UaSerializationException(StatusCodes.Bad_EncodingError, "invalid identifier: " + value.getIdentifier());
+            throw new UaSerializationException(
+                StatusCodes.Bad_EncodingError,
+                "invalid identifier: " + value.getIdentifier()
+            );
         }
     }
 
@@ -365,7 +370,10 @@ public class BinaryEncoder implements UaEncoder {
             buffer.writeShort(namespaceIndex);
             encodeByteString(null, identifier);
         } else {
-            throw new UaSerializationException(StatusCodes.Bad_EncodingError, "invalid identifier: " + value.getIdentifier());
+            throw new UaSerializationException(
+                StatusCodes.Bad_EncodingError,
+                "invalid identifier: " + value.getIdentifier()
+            );
         }
 
         if (namespaceUri != null && namespaceUri.length() > 0) {
@@ -428,26 +436,26 @@ public class BinaryEncoder implements UaEncoder {
             Object object = value.getEncoded();
 
             switch (value.getBodyType()) {
-                case ByteString: {
-                    ByteString byteString = (ByteString) object;
+            case ByteString: {
+                ByteString byteString = (ByteString) object;
 
-                    encodeNodeId(null, value.getEncodingTypeId());
-                    buffer.writeByte(1); // Body is binary encoded
+                encodeNodeId(null, value.getEncodingTypeId());
+                buffer.writeByte(1); // Body is binary encoded
 
-                    encodeByteString(null, byteString);
+                encodeByteString(null, byteString);
 
-                    break;
-                }
-                case XmlElement: {
-                    XmlElement xmlElement = (XmlElement) object;
+                break;
+            }
+            case XmlElement: {
+                XmlElement xmlElement = (XmlElement) object;
 
-                    encodeNodeId(null, value.getEncodingTypeId());
-                    buffer.writeByte(2);
+                encodeNodeId(null, value.getEncodingTypeId());
+                buffer.writeByte(2);
 
-                    encodeXmlElement(null, xmlElement);
+                encodeXmlElement(null, xmlElement);
 
-                    break;
-                }
+                break;
+            }
             }
         }
     }
@@ -495,8 +503,7 @@ public class BinaryEncoder implements UaEncoder {
             int typeId = TypeUtil.getBuiltinTypeId(valueClass);
 
             if (typeId == -1) {
-                LoggerFactory.getLogger(getClass())
-                    .warn("Not a built-in type: {}", valueClass);
+                LoggerFactory.getLogger(getClass()).warn("Not a built-in type: {}", valueClass);
             }
 
             if (value.getClass().isArray()) {
@@ -559,7 +566,6 @@ public class BinaryEncoder implements UaEncoder {
         }
     }
 
-
     @Override
     public void encodeDiagnosticInfo(String field, DiagnosticInfo value) throws UaSerializationException {
         if (value == null) {
@@ -615,13 +621,14 @@ public class BinaryEncoder implements UaEncoder {
     }
 
     @Override
-    public <T> void encodeArray(String field, T[] values, BiConsumer<String, T> consumer) throws UaSerializationException {
+    public <T> void encodeArray(String field,
+                                T[] values,
+                                BiConsumer<String, T> consumer) throws UaSerializationException {
         if (values == null) {
             buffer.writeInt(-1);
         } else {
             if (values.length > maxArrayLength) {
-                throw new UaSerializationException(StatusCodes.Bad_EncodingLimitsExceeded,
-                    "max array length exceeded");
+                throw new UaSerializationException(StatusCodes.Bad_EncodingLimitsExceeded, "max array length exceeded");
             }
 
             encodeInt32(null, values.length);
@@ -633,83 +640,83 @@ public class BinaryEncoder implements UaEncoder {
 
     private void encodeBuiltinType(int typeId, Object value) throws UaSerializationException {
         switch (typeId) {
-            case 1:
-                encodeBoolean(null, (Boolean) value);
-                break;
-            case 2:
-                encodeSByte(null, (Byte) value);
-                break;
-            case 3:
-                encodeByte(null, (UByte) value);
-                break;
-            case 4:
-                encodeInt16(null, (Short) value);
-                break;
-            case 5:
-                encodeUInt16(null, (UShort) value);
-                break;
-            case 6:
-                encodeInt32(null, (Integer) value);
-                break;
-            case 7:
-                encodeUInt32(null, (UInteger) value);
-                break;
-            case 8:
-                encodeInt64(null, (Long) value);
-                break;
-            case 9:
-                encodeUInt64(null, (ULong) value);
-                break;
-            case 10:
-                encodeFloat(null, (Float) value);
-                break;
-            case 11:
-                encodeDouble(null, (Double) value);
-                break;
-            case 12:
-                encodeString(null, (String) value);
-                break;
-            case 13:
-                encodeDateTime(null, (DateTime) value);
-                break;
-            case 14:
-                encodeGuid(null, (UUID) value);
-                break;
-            case 15:
-                encodeByteString(null, (ByteString) value);
-                break;
-            case 16:
-                encodeXmlElement(null, (XmlElement) value);
-                break;
-            case 17:
-                encodeNodeId(null, (NodeId) value);
-                break;
-            case 18:
-                encodeExpandedNodeId(null, (ExpandedNodeId) value);
-                break;
-            case 19:
-                encodeStatusCode(null, (StatusCode) value);
-                break;
-            case 20:
-                encodeQualifiedName(null, (QualifiedName) value);
-                break;
-            case 21:
-                encodeLocalizedText(null, (LocalizedText) value);
-                break;
-            case 22:
-                encodeExtensionObject(null, (ExtensionObject) value);
-                break;
-            case 23:
-                encodeDataValue(null, (DataValue) value);
-                break;
-            case 24:
-                encodeVariant(null, (Variant) value);
-                break;
-            case 25:
-                encodeDiagnosticInfo(null, (DiagnosticInfo) value);
-                break;
-            default:
-                throw new UaSerializationException(StatusCodes.Bad_DecodingError, "unknown builtin type: " + typeId);
+        case 1:
+            encodeBoolean(null, (Boolean) value);
+            break;
+        case 2:
+            encodeSByte(null, (Byte) value);
+            break;
+        case 3:
+            encodeByte(null, (UByte) value);
+            break;
+        case 4:
+            encodeInt16(null, (Short) value);
+            break;
+        case 5:
+            encodeUInt16(null, (UShort) value);
+            break;
+        case 6:
+            encodeInt32(null, (Integer) value);
+            break;
+        case 7:
+            encodeUInt32(null, (UInteger) value);
+            break;
+        case 8:
+            encodeInt64(null, (Long) value);
+            break;
+        case 9:
+            encodeUInt64(null, (ULong) value);
+            break;
+        case 10:
+            encodeFloat(null, (Float) value);
+            break;
+        case 11:
+            encodeDouble(null, (Double) value);
+            break;
+        case 12:
+            encodeString(null, (String) value);
+            break;
+        case 13:
+            encodeDateTime(null, (DateTime) value);
+            break;
+        case 14:
+            encodeGuid(null, (UUID) value);
+            break;
+        case 15:
+            encodeByteString(null, (ByteString) value);
+            break;
+        case 16:
+            encodeXmlElement(null, (XmlElement) value);
+            break;
+        case 17:
+            encodeNodeId(null, (NodeId) value);
+            break;
+        case 18:
+            encodeExpandedNodeId(null, (ExpandedNodeId) value);
+            break;
+        case 19:
+            encodeStatusCode(null, (StatusCode) value);
+            break;
+        case 20:
+            encodeQualifiedName(null, (QualifiedName) value);
+            break;
+        case 21:
+            encodeLocalizedText(null, (LocalizedText) value);
+            break;
+        case 22:
+            encodeExtensionObject(null, (ExtensionObject) value);
+            break;
+        case 23:
+            encodeDataValue(null, (DataValue) value);
+            break;
+        case 24:
+            encodeVariant(null, (Variant) value);
+            break;
+        case 25:
+            encodeDiagnosticInfo(null, (DiagnosticInfo) value);
+            break;
+        default:
+            throw new UaSerializationException(StatusCodes.Bad_DecodingError, "unknown builtin type: " + typeId);
         }
     }
 

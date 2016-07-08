@@ -29,34 +29,44 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaVariableNode(typeName = "0:ServerVendorCapabilityType")
 public class ServerVendorCapabilityNode extends BaseDataVariableNode implements ServerVendorCapabilityType {
 
-    public ServerVendorCapabilityNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public ServerVendorCapabilityNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public ServerVendorCapabilityNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public ServerVendorCapabilityNode(UaNodeManager nodeManager,
+                                      NodeId nodeId,
+                                      QualifiedName browseName,
+                                      LocalizedText displayName,
+                                      Optional<LocalizedText> description,
+                                      Optional<UInteger> writeMask,
+                                      Optional<UInteger> userWriteMask,
+                                      DataValue value,
+                                      NodeId dataType,
+                                      Integer valueRank,
+                                      Optional<UInteger[]> arrayDimensions,
+                                      UByte accessLevel,
+                                      UByte userAccessLevel,
+                                      Optional<Double> minimumSamplingInterval,
+                                      boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
-
 
 }

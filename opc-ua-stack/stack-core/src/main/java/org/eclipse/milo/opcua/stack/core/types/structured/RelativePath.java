@@ -38,24 +38,32 @@ public class RelativePath implements UaStructure {
         this._elements = _elements;
     }
 
-    public RelativePathElement[] getElements() { return _elements; }
+    public RelativePathElement[] getElements() {
+        return _elements;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(RelativePath relativePath, UaEncoder encoder) {
         encoder.encodeArray("Elements", relativePath._elements, encoder::encodeSerializable);
     }
 
     public static RelativePath decode(UaDecoder decoder) {
-        RelativePathElement[] _elements = decoder.decodeArray("Elements", decoder::decodeSerializable, RelativePathElement.class);
+        RelativePathElement[] _elements = decoder
+            .decodeArray("Elements", decoder::decodeSerializable, RelativePathElement.class);
 
         return new RelativePath(_elements);
     }

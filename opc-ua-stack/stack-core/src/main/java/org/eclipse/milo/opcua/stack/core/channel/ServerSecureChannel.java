@@ -150,7 +150,8 @@ public class ServerSecureChannel extends DefaultAttributeMap implements SecureCh
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects
+            .toStringHelper(this)
             .add("channelId", channelId)
             .add("securityPolicy", securityPolicy)
             .toString();

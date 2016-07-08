@@ -39,30 +39,46 @@ public class RepublishRequest implements UaRequestMessage {
         this._retransmitSequenceNumber = null;
     }
 
-    public RepublishRequest(RequestHeader _requestHeader, UInteger _subscriptionId, UInteger _retransmitSequenceNumber) {
+    public RepublishRequest(RequestHeader _requestHeader,
+                            UInteger _subscriptionId,
+                            UInteger _retransmitSequenceNumber) {
         this._requestHeader = _requestHeader;
         this._subscriptionId = _subscriptionId;
         this._retransmitSequenceNumber = _retransmitSequenceNumber;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public UInteger getSubscriptionId() { return _subscriptionId; }
+    public UInteger getSubscriptionId() {
+        return _subscriptionId;
+    }
 
-    public UInteger getRetransmitSequenceNumber() { return _retransmitSequenceNumber; }
+    public UInteger getRetransmitSequenceNumber() {
+        return _retransmitSequenceNumber;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(RepublishRequest republishRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", republishRequest._requestHeader != null ? republishRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            republishRequest._requestHeader != null ? republishRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeUInt32("SubscriptionId", republishRequest._subscriptionId);
         encoder.encodeUInt32("RetransmitSequenceNumber", republishRequest._retransmitSequenceNumber);
     }
@@ -76,8 +92,10 @@ public class RepublishRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(RepublishRequest::encode, RepublishRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(RepublishRequest::decode, RepublishRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(RepublishRequest::encode, RepublishRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(RepublishRequest::decode, RepublishRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

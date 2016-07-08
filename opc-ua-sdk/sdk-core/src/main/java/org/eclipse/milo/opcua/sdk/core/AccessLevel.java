@@ -45,13 +45,15 @@ public enum AccessLevel {
 
     public static int getMask(AccessLevel... levels) {
         short result = 0;
-        for (AccessLevel level : levels) result |= level.value;
+        for (AccessLevel level : levels)
+            result |= level.value;
         return result;
     }
 
     public static int getMask(Set<AccessLevel> levels) {
         int result = 0;
-        for (AccessLevel level : levels) result |= level.value;
+        for (AccessLevel level : levels)
+            result |= level.value;
         return result;
     }
 

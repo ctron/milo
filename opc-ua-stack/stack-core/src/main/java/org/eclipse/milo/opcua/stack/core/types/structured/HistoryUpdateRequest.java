@@ -42,35 +42,54 @@ public class HistoryUpdateRequest implements UaRequestMessage {
         this._historyUpdateDetails = _historyUpdateDetails;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public ExtensionObject[] getHistoryUpdateDetails() { return _historyUpdateDetails; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public ExtensionObject[] getHistoryUpdateDetails() {
+        return _historyUpdateDetails;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(HistoryUpdateRequest historyUpdateRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", historyUpdateRequest._requestHeader != null ? historyUpdateRequest._requestHeader : new RequestHeader());
-        encoder.encodeArray("HistoryUpdateDetails", historyUpdateRequest._historyUpdateDetails, encoder::encodeExtensionObject);
+        encoder.encodeSerializable(
+            "RequestHeader",
+            historyUpdateRequest._requestHeader != null ? historyUpdateRequest._requestHeader : new RequestHeader()
+        );
+        encoder.encodeArray(
+            "HistoryUpdateDetails",
+            historyUpdateRequest._historyUpdateDetails,
+            encoder::encodeExtensionObject
+        );
     }
 
     public static HistoryUpdateRequest decode(UaDecoder decoder) {
         RequestHeader _requestHeader = decoder.decodeSerializable("RequestHeader", RequestHeader.class);
-        ExtensionObject[] _historyUpdateDetails = decoder.decodeArray("HistoryUpdateDetails", decoder::decodeExtensionObject, ExtensionObject.class);
+        ExtensionObject[] _historyUpdateDetails = decoder
+            .decodeArray("HistoryUpdateDetails", decoder::decodeExtensionObject, ExtensionObject.class);
 
         return new HistoryUpdateRequest(_requestHeader, _historyUpdateDetails);
     }
 
     static {
-        DelegateRegistry.registerEncoder(HistoryUpdateRequest::encode, HistoryUpdateRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(HistoryUpdateRequest::decode, HistoryUpdateRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(HistoryUpdateRequest::encode, HistoryUpdateRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(HistoryUpdateRequest::decode, HistoryUpdateRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

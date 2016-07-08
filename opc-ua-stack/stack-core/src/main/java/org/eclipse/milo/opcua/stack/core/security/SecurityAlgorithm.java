@@ -124,8 +124,10 @@ public enum SecurityAlgorithm {
             }
         }
 
-        throw new UaException(StatusCodes.Bad_SecurityChecksFailed,
-            "unknown securityAlgorithmUri: " + securityAlgorithmUri);
+        throw new UaException(
+            StatusCodes.Bad_SecurityChecksFailed,
+            "unknown securityAlgorithmUri: " + securityAlgorithmUri
+        );
     }
 
 }

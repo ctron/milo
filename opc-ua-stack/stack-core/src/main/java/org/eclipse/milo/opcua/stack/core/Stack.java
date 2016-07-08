@@ -29,14 +29,11 @@ import org.slf4j.LoggerFactory;
 
 public final class Stack {
 
-    public static final String VERSION =
-        ManifestUtil.read("X-Stack-Version").orElse("dev");
+    public static final String VERSION = ManifestUtil.read("X-Stack-Version").orElse("dev");
 
-    public static final String UA_TCP_BINARY_TRANSPORT_URI =
-        "http://opcfoundation.org/UA-Profile/Transport/uatcp-uasc-uabinary";
+    public static final String UA_TCP_BINARY_TRANSPORT_URI = "http://opcfoundation.org/UA-Profile/Transport/uatcp-uasc-uabinary";
 
     public static final int DEFAULT_PORT = 12685;
-
 
     private static NioEventLoopGroup EVENT_LOOP;
     private static ExecutorService EXECUTOR_SERVICE;
@@ -162,8 +159,7 @@ public final class Stack {
             try {
                 EVENT_LOOP.shutdownGracefully().await(timeout, unit);
             } catch (InterruptedException e) {
-                LoggerFactory.getLogger(Stack.class)
-                    .warn("Interrupted awaiting event loop shutdown.", e);
+                LoggerFactory.getLogger(Stack.class).warn("Interrupted awaiting event loop shutdown.", e);
             }
             EVENT_LOOP = null;
         }

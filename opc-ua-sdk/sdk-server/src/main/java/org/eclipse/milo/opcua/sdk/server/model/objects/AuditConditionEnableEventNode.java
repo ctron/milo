@@ -27,15 +27,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:AuditConditionEnableEventType")
 public class AuditConditionEnableEventNode extends AuditConditionEventNode implements AuditConditionEnableEventType {
 
-    public AuditConditionEnableEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditConditionEnableEventNode(UaNodeManager nodeManager,
+                                         NodeId nodeId,
+                                         QualifiedName browseName,
+                                         LocalizedText displayName,
+                                         Optional<LocalizedText> description,
+                                         Optional<UInteger> writeMask,
+                                         Optional<UInteger> userWriteMask,
+                                         UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }

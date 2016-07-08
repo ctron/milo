@@ -32,15 +32,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:ExclusiveLimitAlarmType")
 public class ExclusiveLimitAlarmNode extends LimitAlarmNode implements ExclusiveLimitAlarmType {
 
-    public ExclusiveLimitAlarmNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ExclusiveLimitAlarmNode(UaNodeManager nodeManager,
+                                   NodeId nodeId,
+                                   QualifiedName browseName,
+                                   LocalizedText displayName,
+                                   Optional<LocalizedText> description,
+                                   Optional<UInteger> writeMask,
+                                   Optional<UInteger> userWriteMask,
+                                   UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -68,8 +67,7 @@ public class ExclusiveLimitAlarmNode extends LimitAlarmNode implements Exclusive
 
     @Override
     public void setActiveState(LocalizedText value) {
-        getVariableComponent("ActiveState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ActiveState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

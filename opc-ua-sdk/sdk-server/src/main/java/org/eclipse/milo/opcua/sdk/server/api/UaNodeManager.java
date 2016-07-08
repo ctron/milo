@@ -44,11 +44,13 @@ public interface UaNodeManager extends ConcurrentMap<NodeId, UaNode> {
      * @return {@code true} if the {@link UaNode} exists and the reference was added.
      */
     default boolean addReference(Reference reference) {
-        return getNode(reference.getSourceNodeId()).map(node -> {
-            node.addReference(reference);
+        return getNode(reference.getSourceNodeId()).map(
+            node -> {
+                node.addReference(reference);
 
-            return true;
-        }).orElse(false);
+                return true;
+            }
+        ).orElse(false);
     }
 
     /**

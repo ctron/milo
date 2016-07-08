@@ -46,9 +46,7 @@ public class DefaultNodeCache implements NodeCache {
         Map<AttributeId, DataValue> attributes = cache.getIfPresent(nodeId);
 
         try {
-            return attributes == null ?
-                Optional.empty() :
-                Optional.ofNullable(attributes.get(attributeId));
+            return attributes == null ? Optional.empty() : Optional.ofNullable(attributes.get(attributeId));
         } catch (ClassCastException e) {
             return Optional.empty();
         }
@@ -57,8 +55,8 @@ public class DefaultNodeCache implements NodeCache {
     @Override
     public void putAttribute(NodeId nodeId, AttributeId attributeId, DataValue attribute) {
         try {
-            Map<AttributeId, DataValue> attributes = cache.get(nodeId,
-                () -> Collections.synchronizedMap(Maps.newEnumMap(AttributeId.class)));
+            Map<AttributeId, DataValue> attributes = cache
+                .get(nodeId, () -> Collections.synchronizedMap(Maps.newEnumMap(AttributeId.class)));
 
             attributes.put(attributeId, attribute);
         } catch (ExecutionException e) {
@@ -73,8 +71,7 @@ public class DefaultNodeCache implements NodeCache {
 
     @Override
     public void invalidate(NodeId nodeId, AttributeId attributeId) {
-        Optional.ofNullable(cache.getIfPresent(nodeId))
-            .ifPresent(attributes -> attributes.remove(attributeId));
+        Optional.ofNullable(cache.getIfPresent(nodeId)).ifPresent(attributes -> attributes.remove(attributeId));
     }
 
     @Override
@@ -107,7 +104,8 @@ public class DefaultNodeCache implements NodeCache {
     }
 
     private Cache<NodeId, Map<AttributeId, DataValue>> buildCache() {
-        return CacheBuilder.newBuilder()
+        return CacheBuilder
+            .newBuilder()
             .expireAfterWrite(expireAfterNanos, TimeUnit.NANOSECONDS)
             .maximumSize(maximumSize)
             .recordStats()

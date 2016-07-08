@@ -54,7 +54,16 @@ public class CreateSessionResponse implements UaResponseMessage {
         this._maxRequestMessageSize = null;
     }
 
-    public CreateSessionResponse(ResponseHeader _responseHeader, NodeId _sessionId, NodeId _authenticationToken, Double _revisedSessionTimeout, ByteString _serverNonce, ByteString _serverCertificate, EndpointDescription[] _serverEndpoints, SignedSoftwareCertificate[] _serverSoftwareCertificates, SignatureData _serverSignature, UInteger _maxRequestMessageSize) {
+    public CreateSessionResponse(ResponseHeader _responseHeader,
+                                 NodeId _sessionId,
+                                 NodeId _authenticationToken,
+                                 Double _revisedSessionTimeout,
+                                 ByteString _serverNonce,
+                                 ByteString _serverCertificate,
+                                 EndpointDescription[] _serverEndpoints,
+                                 SignedSoftwareCertificate[] _serverSoftwareCertificates,
+                                 SignatureData _serverSignature,
+                                 UInteger _maxRequestMessageSize) {
         this._responseHeader = _responseHeader;
         this._sessionId = _sessionId;
         this._authenticationToken = _authenticationToken;
@@ -67,46 +76,83 @@ public class CreateSessionResponse implements UaResponseMessage {
         this._maxRequestMessageSize = _maxRequestMessageSize;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public NodeId getSessionId() { return _sessionId; }
+    public NodeId getSessionId() {
+        return _sessionId;
+    }
 
-    public NodeId getAuthenticationToken() { return _authenticationToken; }
+    public NodeId getAuthenticationToken() {
+        return _authenticationToken;
+    }
 
-    public Double getRevisedSessionTimeout() { return _revisedSessionTimeout; }
+    public Double getRevisedSessionTimeout() {
+        return _revisedSessionTimeout;
+    }
 
-    public ByteString getServerNonce() { return _serverNonce; }
+    public ByteString getServerNonce() {
+        return _serverNonce;
+    }
 
-    public ByteString getServerCertificate() { return _serverCertificate; }
+    public ByteString getServerCertificate() {
+        return _serverCertificate;
+    }
 
-    public EndpointDescription[] getServerEndpoints() { return _serverEndpoints; }
+    public EndpointDescription[] getServerEndpoints() {
+        return _serverEndpoints;
+    }
 
-    public SignedSoftwareCertificate[] getServerSoftwareCertificates() { return _serverSoftwareCertificates; }
+    public SignedSoftwareCertificate[] getServerSoftwareCertificates() {
+        return _serverSoftwareCertificates;
+    }
 
-    public SignatureData getServerSignature() { return _serverSignature; }
+    public SignatureData getServerSignature() {
+        return _serverSignature;
+    }
 
-    public UInteger getMaxRequestMessageSize() { return _maxRequestMessageSize; }
+    public UInteger getMaxRequestMessageSize() {
+        return _maxRequestMessageSize;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CreateSessionResponse createSessionResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", createSessionResponse._responseHeader != null ? createSessionResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            createSessionResponse._responseHeader != null ? createSessionResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeNodeId("SessionId", createSessionResponse._sessionId);
         encoder.encodeNodeId("AuthenticationToken", createSessionResponse._authenticationToken);
         encoder.encodeDouble("RevisedSessionTimeout", createSessionResponse._revisedSessionTimeout);
         encoder.encodeByteString("ServerNonce", createSessionResponse._serverNonce);
         encoder.encodeByteString("ServerCertificate", createSessionResponse._serverCertificate);
         encoder.encodeArray("ServerEndpoints", createSessionResponse._serverEndpoints, encoder::encodeSerializable);
-        encoder.encodeArray("ServerSoftwareCertificates", createSessionResponse._serverSoftwareCertificates, encoder::encodeSerializable);
-        encoder.encodeSerializable("ServerSignature", createSessionResponse._serverSignature != null ? createSessionResponse._serverSignature : new SignatureData());
+        encoder.encodeArray(
+            "ServerSoftwareCertificates",
+            createSessionResponse._serverSoftwareCertificates,
+            encoder::encodeSerializable
+        );
+        encoder.encodeSerializable(
+            "ServerSignature",
+            createSessionResponse._serverSignature != null ?
+                createSessionResponse._serverSignature :
+                new SignatureData()
+        );
         encoder.encodeUInt32("MaxRequestMessageSize", createSessionResponse._maxRequestMessageSize);
     }
 
@@ -117,17 +163,40 @@ public class CreateSessionResponse implements UaResponseMessage {
         Double _revisedSessionTimeout = decoder.decodeDouble("RevisedSessionTimeout");
         ByteString _serverNonce = decoder.decodeByteString("ServerNonce");
         ByteString _serverCertificate = decoder.decodeByteString("ServerCertificate");
-        EndpointDescription[] _serverEndpoints = decoder.decodeArray("ServerEndpoints", decoder::decodeSerializable, EndpointDescription.class);
-        SignedSoftwareCertificate[] _serverSoftwareCertificates = decoder.decodeArray("ServerSoftwareCertificates", decoder::decodeSerializable, SignedSoftwareCertificate.class);
+        EndpointDescription[] _serverEndpoints = decoder
+            .decodeArray("ServerEndpoints", decoder::decodeSerializable, EndpointDescription.class);
+        SignedSoftwareCertificate[] _serverSoftwareCertificates = decoder
+            .decodeArray("ServerSoftwareCertificates", decoder::decodeSerializable, SignedSoftwareCertificate.class);
         SignatureData _serverSignature = decoder.decodeSerializable("ServerSignature", SignatureData.class);
         UInteger _maxRequestMessageSize = decoder.decodeUInt32("MaxRequestMessageSize");
 
-        return new CreateSessionResponse(_responseHeader, _sessionId, _authenticationToken, _revisedSessionTimeout, _serverNonce, _serverCertificate, _serverEndpoints, _serverSoftwareCertificates, _serverSignature, _maxRequestMessageSize);
+        return new CreateSessionResponse(
+            _responseHeader,
+            _sessionId,
+            _authenticationToken,
+            _revisedSessionTimeout,
+            _serverNonce,
+            _serverCertificate,
+            _serverEndpoints,
+            _serverSoftwareCertificates,
+            _serverSignature,
+            _maxRequestMessageSize
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(CreateSessionResponse::encode, CreateSessionResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(CreateSessionResponse::decode, CreateSessionResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            CreateSessionResponse::encode,
+            CreateSessionResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            CreateSessionResponse::decode,
+            CreateSessionResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

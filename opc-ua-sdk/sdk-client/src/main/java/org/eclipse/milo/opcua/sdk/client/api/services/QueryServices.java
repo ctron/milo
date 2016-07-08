@@ -60,7 +60,6 @@ public interface QueryServices {
      * @param continuationPoint        a server-defined opaque value that represents the continuation point.
      * @return a {@link CompletableFuture} containing the {@link QueryNextResponse}.
      */
-    CompletableFuture<QueryNextResponse> queryNext(boolean releaseContinuationPoint,
-                                                   ByteString continuationPoint);
+    CompletableFuture<QueryNextResponse> queryNext(boolean releaseContinuationPoint, ByteString continuationPoint);
 
 }

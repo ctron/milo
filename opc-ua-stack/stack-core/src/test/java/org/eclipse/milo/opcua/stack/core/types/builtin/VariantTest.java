@@ -19,7 +19,13 @@ public class VariantTest {
 
     @Test
     public void testVariantCanContainVariantArray() {
-        new Variant(new Variant[] {new Variant(0), new Variant(1), new Variant(2)});
+        new Variant(
+            new Variant[]{
+                new Variant(0),
+                new Variant(1),
+                new Variant(2)
+            }
+        );
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

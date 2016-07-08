@@ -30,15 +30,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:AuditCreateSessionEventType")
 public class AuditCreateSessionEventNode extends AuditSessionEventNode implements AuditCreateSessionEventType {
 
-    public AuditCreateSessionEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditCreateSessionEventNode(UaNodeManager nodeManager,
+                                       NodeId nodeId,
+                                       QualifiedName browseName,
+                                       LocalizedText displayName,
+                                       Optional<LocalizedText> description,
+                                       Optional<UInteger> writeMask,
+                                       Optional<UInteger> userWriteMask,
+                                       UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -52,7 +51,9 @@ public class AuditCreateSessionEventNode extends AuditSessionEventNode implement
 
     @Override
     public PropertyNode getSecureChannelIdNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditCreateSessionEventType.SECURE_CHANNEL_ID.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditCreateSessionEventType.SECURE_CHANNEL_ID.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -71,7 +72,9 @@ public class AuditCreateSessionEventNode extends AuditSessionEventNode implement
 
     @Override
     public PropertyNode getClientCertificateNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditCreateSessionEventType.CLIENT_CERTIFICATE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditCreateSessionEventType.CLIENT_CERTIFICATE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -90,7 +93,9 @@ public class AuditCreateSessionEventNode extends AuditSessionEventNode implement
 
     @Override
     public PropertyNode getClientCertificateThumbprintNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditCreateSessionEventType.CLIENT_CERTIFICATE_THUMBPRINT.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditCreateSessionEventType.CLIENT_CERTIFICATE_THUMBPRINT.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -109,7 +114,9 @@ public class AuditCreateSessionEventNode extends AuditSessionEventNode implement
 
     @Override
     public PropertyNode getRevisedSessionTimeoutNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditCreateSessionEventType.REVISED_SESSION_TIMEOUT.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditCreateSessionEventType.REVISED_SESSION_TIMEOUT.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

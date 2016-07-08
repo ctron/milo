@@ -20,20 +20,19 @@ public class AnonymousProviderTest {
     @Test
     public void testGetIdentityToken() throws Exception {
         EndpointDescription endpoint = new EndpointDescription(
-            null, null, null, null, null,
+            null,
+            null,
+            null,
+            null,
+            null,
             new UserTokenPolicy[]{
-                new UserTokenPolicy(
-                    "anonymous",
-                    UserTokenType.Anonymous,
-                    null, null, null)
-            },
-            null, null
+                new UserTokenPolicy("anonymous", UserTokenType.Anonymous, null, null, null)
+            }, null, null
         );
 
         AnonymousProvider p = new AnonymousProvider();
 
-        Tuple2<UserIdentityToken, SignatureData> t2 =
-            p.getIdentityToken(endpoint, ByteString.NULL_VALUE);
+        Tuple2<UserIdentityToken, SignatureData> t2 = p.getIdentityToken(endpoint, ByteString.NULL_VALUE);
 
         assertEquals(t2.v1().getPolicyId(), "anonymous");
         assertTrue(t2.v1() instanceof AnonymousIdentityToken);
@@ -42,20 +41,19 @@ public class AnonymousProviderTest {
     @Test
     public void testGetIdentityToken_EmptyPolicyId() throws Exception {
         EndpointDescription endpoint = new EndpointDescription(
-            null, null, null, null, null,
+            null,
+            null,
+            null,
+            null,
+            null,
             new UserTokenPolicy[]{
-                new UserTokenPolicy(
-                    "",
-                    UserTokenType.Anonymous,
-                    null, null, null)
-            },
-            null, null
+                new UserTokenPolicy("", UserTokenType.Anonymous, null, null, null)
+            }, null, null
         );
 
         AnonymousProvider p = new AnonymousProvider();
 
-        Tuple2<UserIdentityToken, SignatureData> t2 =
-            p.getIdentityToken(endpoint, ByteString.NULL_VALUE);
+        Tuple2<UserIdentityToken, SignatureData> t2 = p.getIdentityToken(endpoint, ByteString.NULL_VALUE);
 
         assertEquals(t2.v1().getPolicyId(), "");
         assertTrue(t2.v1() instanceof AnonymousIdentityToken);
@@ -64,20 +62,19 @@ public class AnonymousProviderTest {
     @Test
     public void testGetIdentityToken_NullPolicyId() throws Exception {
         EndpointDescription endpoint = new EndpointDescription(
-            null, null, null, null, null,
+            null,
+            null,
+            null,
+            null,
+            null,
             new UserTokenPolicy[]{
-                new UserTokenPolicy(
-                    null,
-                    UserTokenType.Anonymous,
-                    null, null, null)
-            },
-            null, null
+                new UserTokenPolicy(null, UserTokenType.Anonymous, null, null, null)
+            }, null, null
         );
 
         AnonymousProvider p = new AnonymousProvider();
 
-        Tuple2<UserIdentityToken, SignatureData> t2 =
-            p.getIdentityToken(endpoint, ByteString.NULL_VALUE);
+        Tuple2<UserIdentityToken, SignatureData> t2 = p.getIdentityToken(endpoint, ByteString.NULL_VALUE);
 
         assertNull(t2.v1().getPolicyId());
         assertTrue(t2.v1() instanceof AnonymousIdentityToken);
@@ -86,14 +83,14 @@ public class AnonymousProviderTest {
     @Test
     public void testGetIdentityToken_NoMatch_Throws() {
         EndpointDescription endpoint = new EndpointDescription(
-            null, null, null, null, null,
+            null,
+            null,
+            null,
+            null,
+            null,
             new UserTokenPolicy[]{
-                new UserTokenPolicy(
-                    "username",
-                    UserTokenType.UserName,
-                    null, null, null)
-            },
-            null, null
+                new UserTokenPolicy("username", UserTokenType.UserName, null, null, null)
+            }, null, null
         );
 
         AnonymousProvider p = new AnonymousProvider();

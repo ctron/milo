@@ -30,15 +30,14 @@ import org.eclipse.milo.opcua.stack.core.types.structured.AddReferencesItem;
 @UaObjectNode(typeName = "0:AuditAddReferencesEventType")
 public class AuditAddReferencesEventNode extends AuditNodeManagementEventNode implements AuditAddReferencesEventType {
 
-    public AuditAddReferencesEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditAddReferencesEventNode(UaNodeManager nodeManager,
+                                       NodeId nodeId,
+                                       QualifiedName browseName,
+                                       LocalizedText displayName,
+                                       Optional<LocalizedText> description,
+                                       Optional<UInteger> writeMask,
+                                       Optional<UInteger> userWriteMask,
+                                       UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -52,7 +51,9 @@ public class AuditAddReferencesEventNode extends AuditNodeManagementEventNode im
 
     @Override
     public PropertyNode getReferencesToAddNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditAddReferencesEventType.REFERENCES_TO_ADD.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditAddReferencesEventType.REFERENCES_TO_ADD.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

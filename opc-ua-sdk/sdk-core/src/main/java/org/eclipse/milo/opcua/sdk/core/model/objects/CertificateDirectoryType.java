@@ -15,5 +15,4 @@ package org.eclipse.milo.opcua.sdk.core.model.objects;
 
 public interface CertificateDirectoryType extends DirectoryType {
 
-
 }

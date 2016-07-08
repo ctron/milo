@@ -30,17 +30,17 @@ import org.eclipse.milo.opcua.stack.core.types.structured.EventFilter;
 import org.eclipse.milo.opcua.stack.core.types.structured.HistoryEventFieldList;
 
 @UaObjectNode(typeName = "0:AuditHistoryEventUpdateEventType")
-public class AuditHistoryEventUpdateEventNode extends AuditHistoryUpdateEventNode implements AuditHistoryEventUpdateEventType {
+public class AuditHistoryEventUpdateEventNode extends AuditHistoryUpdateEventNode
+        implements AuditHistoryEventUpdateEventType {
 
-    public AuditHistoryEventUpdateEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditHistoryEventUpdateEventNode(UaNodeManager nodeManager,
+                                            NodeId nodeId,
+                                            QualifiedName browseName,
+                                            LocalizedText displayName,
+                                            Optional<LocalizedText> description,
+                                            Optional<UInteger> writeMask,
+                                            Optional<UInteger> userWriteMask,
+                                            UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -54,7 +54,9 @@ public class AuditHistoryEventUpdateEventNode extends AuditHistoryUpdateEventNod
 
     @Override
     public PropertyNode getUpdatedNodeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditHistoryEventUpdateEventType.UPDATED_NODE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditHistoryEventUpdateEventType.UPDATED_NODE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -73,7 +75,9 @@ public class AuditHistoryEventUpdateEventNode extends AuditHistoryUpdateEventNod
 
     @Override
     public PropertyNode getPerformInsertReplaceNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditHistoryEventUpdateEventType.PERFORM_INSERT_REPLACE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditHistoryEventUpdateEventType.PERFORM_INSERT_REPLACE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -111,7 +115,9 @@ public class AuditHistoryEventUpdateEventNode extends AuditHistoryUpdateEventNod
 
     @Override
     public PropertyNode getNewValuesNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditHistoryEventUpdateEventType.NEW_VALUES.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditHistoryEventUpdateEventType.NEW_VALUES.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -130,7 +136,9 @@ public class AuditHistoryEventUpdateEventNode extends AuditHistoryUpdateEventNod
 
     @Override
     public PropertyNode getOldValuesNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditHistoryEventUpdateEventType.OLD_VALUES.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditHistoryEventUpdateEventType.OLD_VALUES.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

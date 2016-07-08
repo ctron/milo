@@ -39,17 +39,24 @@ public class HistoryEventFieldList implements UaStructure {
         this._eventFields = _eventFields;
     }
 
-    public Variant[] getEventFields() { return _eventFields; }
+    public Variant[] getEventFields() {
+        return _eventFields;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(HistoryEventFieldList historyEventFieldList, UaEncoder encoder) {
         encoder.encodeArray("EventFields", historyEventFieldList._eventFields, encoder::encodeVariant);
@@ -62,8 +69,18 @@ public class HistoryEventFieldList implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(HistoryEventFieldList::encode, HistoryEventFieldList.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(HistoryEventFieldList::decode, HistoryEventFieldList.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            HistoryEventFieldList::encode,
+            HistoryEventFieldList.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            HistoryEventFieldList::decode,
+            HistoryEventFieldList.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

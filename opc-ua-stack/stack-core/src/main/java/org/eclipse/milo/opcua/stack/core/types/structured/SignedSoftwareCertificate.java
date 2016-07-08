@@ -42,19 +42,28 @@ public class SignedSoftwareCertificate implements UaStructure {
         this._signature = _signature;
     }
 
-    public ByteString getCertificateData() { return _certificateData; }
+    public ByteString getCertificateData() {
+        return _certificateData;
+    }
 
-    public ByteString getSignature() { return _signature; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public ByteString getSignature() {
+        return _signature;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(SignedSoftwareCertificate signedSoftwareCertificate, UaEncoder encoder) {
         encoder.encodeByteString("CertificateData", signedSoftwareCertificate._certificateData);
@@ -69,8 +78,18 @@ public class SignedSoftwareCertificate implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(SignedSoftwareCertificate::encode, SignedSoftwareCertificate.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(SignedSoftwareCertificate::decode, SignedSoftwareCertificate.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            SignedSoftwareCertificate::encode,
+            SignedSoftwareCertificate.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            SignedSoftwareCertificate::decode,
+            SignedSoftwareCertificate.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

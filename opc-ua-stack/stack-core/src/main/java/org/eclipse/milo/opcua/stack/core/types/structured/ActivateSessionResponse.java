@@ -43,33 +43,54 @@ public class ActivateSessionResponse implements UaResponseMessage {
         this._diagnosticInfos = null;
     }
 
-    public ActivateSessionResponse(ResponseHeader _responseHeader, ByteString _serverNonce, StatusCode[] _results, DiagnosticInfo[] _diagnosticInfos) {
+    public ActivateSessionResponse(ResponseHeader _responseHeader,
+                                   ByteString _serverNonce,
+                                   StatusCode[] _results,
+                                   DiagnosticInfo[] _diagnosticInfos) {
         this._responseHeader = _responseHeader;
         this._serverNonce = _serverNonce;
         this._results = _results;
         this._diagnosticInfos = _diagnosticInfos;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public ByteString getServerNonce() { return _serverNonce; }
+    public ByteString getServerNonce() {
+        return _serverNonce;
+    }
 
-    public StatusCode[] getResults() { return _results; }
+    public StatusCode[] getResults() {
+        return _results;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ActivateSessionResponse activateSessionResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", activateSessionResponse._responseHeader != null ? activateSessionResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            activateSessionResponse._responseHeader != null ?
+                activateSessionResponse._responseHeader :
+                new ResponseHeader()
+        );
         encoder.encodeByteString("ServerNonce", activateSessionResponse._serverNonce);
         encoder.encodeArray("Results", activateSessionResponse._results, encoder::encodeStatusCode);
         encoder.encodeArray("DiagnosticInfos", activateSessionResponse._diagnosticInfos, encoder::encodeDiagnosticInfo);
@@ -79,14 +100,25 @@ public class ActivateSessionResponse implements UaResponseMessage {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
         ByteString _serverNonce = decoder.decodeByteString("ServerNonce");
         StatusCode[] _results = decoder.decodeArray("Results", decoder::decodeStatusCode, StatusCode.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
         return new ActivateSessionResponse(_responseHeader, _serverNonce, _results, _diagnosticInfos);
     }
 
     static {
-        DelegateRegistry.registerEncoder(ActivateSessionResponse::encode, ActivateSessionResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ActivateSessionResponse::decode, ActivateSessionResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            ActivateSessionResponse::encode,
+            ActivateSessionResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            ActivateSessionResponse::decode,
+            ActivateSessionResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

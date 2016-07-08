@@ -18,7 +18,6 @@ import org.eclipse.milo.opcua.sdk.core.model.Property;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 
-
 public interface DataTypeDictionaryType extends BaseDataVariableType {
 
     Property<String> DATA_TYPE_VERSION = new BasicProperty<>(
@@ -34,7 +33,6 @@ public interface DataTypeDictionaryType extends BaseDataVariableType {
         -1,
         String.class
     );
-
 
     String getDataTypeVersion();
 

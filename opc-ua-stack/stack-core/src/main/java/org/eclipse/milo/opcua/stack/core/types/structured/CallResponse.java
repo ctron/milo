@@ -39,38 +39,56 @@ public class CallResponse implements UaResponseMessage {
         this._diagnosticInfos = null;
     }
 
-    public CallResponse(ResponseHeader _responseHeader, CallMethodResult[] _results, DiagnosticInfo[] _diagnosticInfos) {
+    public CallResponse(ResponseHeader _responseHeader,
+                        CallMethodResult[] _results,
+                        DiagnosticInfo[] _diagnosticInfos) {
         this._responseHeader = _responseHeader;
         this._results = _results;
         this._diagnosticInfos = _diagnosticInfos;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public CallMethodResult[] getResults() { return _results; }
+    public CallMethodResult[] getResults() {
+        return _results;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CallResponse callResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", callResponse._responseHeader != null ? callResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            callResponse._responseHeader != null ? callResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeArray("Results", callResponse._results, encoder::encodeSerializable);
         encoder.encodeArray("DiagnosticInfos", callResponse._diagnosticInfos, encoder::encodeDiagnosticInfo);
     }
 
     public static CallResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
-        CallMethodResult[] _results = decoder.decodeArray("Results", decoder::decodeSerializable, CallMethodResult.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        CallMethodResult[] _results = decoder
+            .decodeArray("Results", decoder::decodeSerializable, CallMethodResult.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
         return new CallResponse(_responseHeader, _results, _diagnosticInfos);
     }

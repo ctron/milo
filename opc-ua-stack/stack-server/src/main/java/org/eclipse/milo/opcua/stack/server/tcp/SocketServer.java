@@ -56,17 +56,20 @@ public class SocketServer {
     private SocketServer(InetSocketAddress address) {
         this.address = address;
 
-        bootstrap.group(Stack.sharedEventLoop())
+        bootstrap
+            .group(Stack.sharedEventLoop())
             .handler(new LoggingHandler(SocketServer.class))
             .channel(NioServerSocketChannel.class)
             .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
             .childOption(ChannelOption.TCP_NODELAY, true)
-            .childHandler(new ChannelInitializer<SocketChannel>() {
-                @Override
-                protected void initChannel(SocketChannel channel) throws Exception {
-                    channel.pipeline().addLast(new UaTcpServerHelloHandler(SocketServer.this));
+            .childHandler(
+                new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel channel) throws Exception {
+                        channel.pipeline().addLast(new UaTcpServerHelloHandler(SocketServer.this));
+                    }
                 }
-            });
+            );
     }
 
     public synchronized void bind() throws ExecutionException, InterruptedException {
@@ -74,56 +77,66 @@ public class SocketServer {
 
         CompletableFuture<Unit> bindFuture = new CompletableFuture<>();
 
-        bootstrap.bind(address).addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture future) throws Exception {
-                if (future.isSuccess()) {
-                    channel = future.channel();
-                    bindFuture.complete(Unit.VALUE);
-                } else {
-                    bindFuture.completeExceptionally(future.cause());
+        bootstrap.bind(address).addListener(
+            new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception {
+                    if (future.isSuccess()) {
+                        channel = future.channel();
+                        bindFuture.complete(Unit.VALUE);
+                    } else {
+                        bindFuture.completeExceptionally(future.cause());
+                    }
                 }
             }
-        });
+        );
 
         bindFuture.get();
     }
 
     public void addServer(UaTcpStackServer server) {
-        server.getEndpointUrls().forEach(url -> {
-            String key = pathOrUrl(url);
+        server.getEndpointUrls().forEach(
+            url -> {
+                String key = pathOrUrl(url);
 
-            if (!servers.containsKey(key)) {
-                servers.put(key, server);
-                logger.debug("Added server at path: \"{}\"", key);
+                if (!servers.containsKey(key)) {
+                    servers.put(key, server);
+                    logger.debug("Added server at path: \"{}\"", key);
+                }
             }
-        });
+        );
 
-        server.getDiscoveryUrls().forEach(url -> {
-            String key = pathOrUrl(url);
+        server.getDiscoveryUrls().forEach(
+            url -> {
+                String key = pathOrUrl(url);
 
-            if (!servers.containsKey(key)) {
-                servers.put(key, server);
-                logger.debug("Added server at path: \"{}\"", key);
+                if (!servers.containsKey(key)) {
+                    servers.put(key, server);
+                    logger.debug("Added server at path: \"{}\"", key);
+                }
             }
-        });
+        );
     }
 
     public void removeServer(UaTcpStackServer server) {
-        server.getEndpointUrls().forEach(url -> {
-            String key = pathOrUrl(url);
+        server.getEndpointUrls().forEach(
+            url -> {
+                String key = pathOrUrl(url);
 
-            if (servers.remove(key) != null) {
-                logger.debug("Removed server at path: \"{}\"", key);
+                if (servers.remove(key) != null) {
+                    logger.debug("Removed server at path: \"{}\"", key);
+                }
             }
-        });
-        server.getDiscoveryUrls().forEach(url -> {
-            String key = pathOrUrl(url);
+        );
+        server.getDiscoveryUrls().forEach(
+            url -> {
+                String key = pathOrUrl(url);
 
-            if (servers.remove(key) != null) {
-                logger.debug("Removed server at path: \"{}\"", key);
+                if (servers.remove(key) != null) {
+                    logger.debug("Removed server at path: \"{}\"", key);
+                }
             }
-        });
+        );
     }
 
     /**

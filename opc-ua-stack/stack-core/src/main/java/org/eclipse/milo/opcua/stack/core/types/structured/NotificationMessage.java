@@ -47,21 +47,32 @@ public class NotificationMessage implements UaStructure {
         this._notificationData = _notificationData;
     }
 
-    public UInteger getSequenceNumber() { return _sequenceNumber; }
+    public UInteger getSequenceNumber() {
+        return _sequenceNumber;
+    }
 
-    public DateTime getPublishTime() { return _publishTime; }
+    public DateTime getPublishTime() {
+        return _publishTime;
+    }
 
-    public ExtensionObject[] getNotificationData() { return _notificationData; }
+    public ExtensionObject[] getNotificationData() {
+        return _notificationData;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(NotificationMessage notificationMessage, UaEncoder encoder) {
         encoder.encodeUInt32("SequenceNumber", notificationMessage._sequenceNumber);
@@ -72,14 +83,17 @@ public class NotificationMessage implements UaStructure {
     public static NotificationMessage decode(UaDecoder decoder) {
         UInteger _sequenceNumber = decoder.decodeUInt32("SequenceNumber");
         DateTime _publishTime = decoder.decodeDateTime("PublishTime");
-        ExtensionObject[] _notificationData = decoder.decodeArray("NotificationData", decoder::decodeExtensionObject, ExtensionObject.class);
+        ExtensionObject[] _notificationData = decoder
+            .decodeArray("NotificationData", decoder::decodeExtensionObject, ExtensionObject.class);
 
         return new NotificationMessage(_sequenceNumber, _publishTime, _notificationData);
     }
 
     static {
-        DelegateRegistry.registerEncoder(NotificationMessage::encode, NotificationMessage.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(NotificationMessage::decode, NotificationMessage.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(NotificationMessage::encode, NotificationMessage.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(NotificationMessage::decode, NotificationMessage.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

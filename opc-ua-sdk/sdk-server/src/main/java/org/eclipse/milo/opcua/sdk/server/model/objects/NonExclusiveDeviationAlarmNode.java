@@ -27,17 +27,17 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UByte;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 
 @UaObjectNode(typeName = "0:NonExclusiveDeviationAlarmType")
-public class NonExclusiveDeviationAlarmNode extends NonExclusiveLimitAlarmNode implements NonExclusiveDeviationAlarmType {
+public class NonExclusiveDeviationAlarmNode extends NonExclusiveLimitAlarmNode
+        implements NonExclusiveDeviationAlarmType {
 
-    public NonExclusiveDeviationAlarmNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public NonExclusiveDeviationAlarmNode(UaNodeManager nodeManager,
+                                          NodeId nodeId,
+                                          QualifiedName browseName,
+                                          LocalizedText displayName,
+                                          Optional<LocalizedText> description,
+                                          Optional<UInteger> writeMask,
+                                          Optional<UInteger> userWriteMask,
+                                          UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -51,7 +51,9 @@ public class NonExclusiveDeviationAlarmNode extends NonExclusiveLimitAlarmNode i
 
     @Override
     public PropertyNode getSetpointNodeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(NonExclusiveDeviationAlarmType.SETPOINT_NODE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            NonExclusiveDeviationAlarmType.SETPOINT_NODE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

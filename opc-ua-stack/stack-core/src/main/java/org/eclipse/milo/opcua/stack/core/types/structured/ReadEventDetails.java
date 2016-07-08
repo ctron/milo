@@ -50,29 +50,45 @@ public class ReadEventDetails extends HistoryReadDetails {
         this._filter = _filter;
     }
 
-    public UInteger getNumValuesPerNode() { return _numValuesPerNode; }
+    public UInteger getNumValuesPerNode() {
+        return _numValuesPerNode;
+    }
 
-    public DateTime getStartTime() { return _startTime; }
+    public DateTime getStartTime() {
+        return _startTime;
+    }
 
-    public DateTime getEndTime() { return _endTime; }
+    public DateTime getEndTime() {
+        return _endTime;
+    }
 
-    public EventFilter getFilter() { return _filter; }
+    public EventFilter getFilter() {
+        return _filter;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ReadEventDetails readEventDetails, UaEncoder encoder) {
         encoder.encodeUInt32("NumValuesPerNode", readEventDetails._numValuesPerNode);
         encoder.encodeDateTime("StartTime", readEventDetails._startTime);
         encoder.encodeDateTime("EndTime", readEventDetails._endTime);
-        encoder.encodeSerializable("Filter", readEventDetails._filter != null ? readEventDetails._filter : new EventFilter());
+        encoder.encodeSerializable(
+            "Filter",
+            readEventDetails._filter != null ? readEventDetails._filter : new EventFilter()
+        );
     }
 
     public static ReadEventDetails decode(UaDecoder decoder) {
@@ -85,8 +101,10 @@ public class ReadEventDetails extends HistoryReadDetails {
     }
 
     static {
-        DelegateRegistry.registerEncoder(ReadEventDetails::encode, ReadEventDetails.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ReadEventDetails::decode, ReadEventDetails.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(ReadEventDetails::encode, ReadEventDetails.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(ReadEventDetails::decode, ReadEventDetails.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

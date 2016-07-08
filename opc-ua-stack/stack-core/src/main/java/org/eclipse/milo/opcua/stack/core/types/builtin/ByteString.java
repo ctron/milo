@@ -89,9 +89,7 @@ public final class ByteString {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("bytes", Arrays.toString(bytes))
-            .toString();
+        return MoreObjects.toStringHelper(this).add("bytes", Arrays.toString(bytes)).toString();
     }
 
 }

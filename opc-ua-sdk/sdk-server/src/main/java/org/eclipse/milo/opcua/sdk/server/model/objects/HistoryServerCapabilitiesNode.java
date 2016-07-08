@@ -30,15 +30,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:HistoryServerCapabilitiesType")
 public class HistoryServerCapabilitiesNode extends BaseObjectNode implements HistoryServerCapabilitiesType {
 
-    public HistoryServerCapabilitiesNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public HistoryServerCapabilitiesNode(UaNodeManager nodeManager,
+                                         NodeId nodeId,
+                                         QualifiedName browseName,
+                                         LocalizedText displayName,
+                                         Optional<LocalizedText> description,
+                                         Optional<UInteger> writeMask,
+                                         Optional<UInteger> userWriteMask,
+                                         UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -52,7 +51,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getAccessHistoryDataCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.ACCESS_HISTORY_DATA_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.ACCESS_HISTORY_DATA_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -71,7 +72,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getAccessHistoryEventsCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.ACCESS_HISTORY_EVENTS_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.ACCESS_HISTORY_EVENTS_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -90,7 +93,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getMaxReturnDataValuesNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.MAX_RETURN_DATA_VALUES.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.MAX_RETURN_DATA_VALUES.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -109,7 +114,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getMaxReturnEventValuesNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.MAX_RETURN_EVENT_VALUES.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.MAX_RETURN_EVENT_VALUES.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -128,7 +135,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getInsertDataCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.INSERT_DATA_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.INSERT_DATA_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -147,7 +156,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getReplaceDataCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.REPLACE_DATA_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.REPLACE_DATA_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -166,7 +177,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getUpdateDataCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.UPDATE_DATA_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.UPDATE_DATA_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -185,7 +198,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getDeleteRawCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.DELETE_RAW_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.DELETE_RAW_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -204,7 +219,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getDeleteAtTimeCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.DELETE_AT_TIME_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.DELETE_AT_TIME_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -223,7 +240,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getInsertEventCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.INSERT_EVENT_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.INSERT_EVENT_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -242,7 +261,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getReplaceEventCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.REPLACE_EVENT_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.REPLACE_EVENT_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -261,7 +282,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getUpdateEventCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.UPDATE_EVENT_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.UPDATE_EVENT_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -280,7 +303,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getDeleteEventCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.DELETE_EVENT_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.DELETE_EVENT_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -299,7 +324,9 @@ public class HistoryServerCapabilitiesNode extends BaseObjectNode implements His
 
     @Override
     public PropertyNode getInsertAnnotationCapabilityNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoryServerCapabilitiesType.INSERT_ANNOTATION_CAPABILITY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoryServerCapabilitiesType.INSERT_ANNOTATION_CAPABILITY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

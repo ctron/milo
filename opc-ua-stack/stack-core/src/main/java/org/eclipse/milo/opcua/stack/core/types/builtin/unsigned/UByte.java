@@ -264,8 +264,7 @@ public final class UByte extends UNumber implements Comparable<UByte> {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
+        if (this == obj) return true;
         if (obj instanceof UByte) {
             return value == ((UByte) obj).value;
         }

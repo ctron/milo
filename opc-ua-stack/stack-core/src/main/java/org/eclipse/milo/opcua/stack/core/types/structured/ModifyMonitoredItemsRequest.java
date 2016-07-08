@@ -42,33 +42,54 @@ public class ModifyMonitoredItemsRequest implements UaRequestMessage {
         this._itemsToModify = null;
     }
 
-    public ModifyMonitoredItemsRequest(RequestHeader _requestHeader, UInteger _subscriptionId, TimestampsToReturn _timestampsToReturn, MonitoredItemModifyRequest[] _itemsToModify) {
+    public ModifyMonitoredItemsRequest(RequestHeader _requestHeader,
+                                       UInteger _subscriptionId,
+                                       TimestampsToReturn _timestampsToReturn,
+                                       MonitoredItemModifyRequest[] _itemsToModify) {
         this._requestHeader = _requestHeader;
         this._subscriptionId = _subscriptionId;
         this._timestampsToReturn = _timestampsToReturn;
         this._itemsToModify = _itemsToModify;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public UInteger getSubscriptionId() { return _subscriptionId; }
+    public UInteger getSubscriptionId() {
+        return _subscriptionId;
+    }
 
-    public TimestampsToReturn getTimestampsToReturn() { return _timestampsToReturn; }
+    public TimestampsToReturn getTimestampsToReturn() {
+        return _timestampsToReturn;
+    }
 
-    public MonitoredItemModifyRequest[] getItemsToModify() { return _itemsToModify; }
+    public MonitoredItemModifyRequest[] getItemsToModify() {
+        return _itemsToModify;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ModifyMonitoredItemsRequest modifyMonitoredItemsRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", modifyMonitoredItemsRequest._requestHeader != null ? modifyMonitoredItemsRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            modifyMonitoredItemsRequest._requestHeader != null ?
+                modifyMonitoredItemsRequest._requestHeader :
+                new RequestHeader()
+        );
         encoder.encodeUInt32("SubscriptionId", modifyMonitoredItemsRequest._subscriptionId);
         encoder.encodeEnumeration("TimestampsToReturn", modifyMonitoredItemsRequest._timestampsToReturn);
         encoder.encodeArray("ItemsToModify", modifyMonitoredItemsRequest._itemsToModify, encoder::encodeSerializable);
@@ -77,15 +98,27 @@ public class ModifyMonitoredItemsRequest implements UaRequestMessage {
     public static ModifyMonitoredItemsRequest decode(UaDecoder decoder) {
         RequestHeader _requestHeader = decoder.decodeSerializable("RequestHeader", RequestHeader.class);
         UInteger _subscriptionId = decoder.decodeUInt32("SubscriptionId");
-        TimestampsToReturn _timestampsToReturn = decoder.decodeEnumeration("TimestampsToReturn", TimestampsToReturn.class);
-        MonitoredItemModifyRequest[] _itemsToModify = decoder.decodeArray("ItemsToModify", decoder::decodeSerializable, MonitoredItemModifyRequest.class);
+        TimestampsToReturn _timestampsToReturn = decoder
+            .decodeEnumeration("TimestampsToReturn", TimestampsToReturn.class);
+        MonitoredItemModifyRequest[] _itemsToModify = decoder
+            .decodeArray("ItemsToModify", decoder::decodeSerializable, MonitoredItemModifyRequest.class);
 
         return new ModifyMonitoredItemsRequest(_requestHeader, _subscriptionId, _timestampsToReturn, _itemsToModify);
     }
 
     static {
-        DelegateRegistry.registerEncoder(ModifyMonitoredItemsRequest::encode, ModifyMonitoredItemsRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ModifyMonitoredItemsRequest::decode, ModifyMonitoredItemsRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            ModifyMonitoredItemsRequest::encode,
+            ModifyMonitoredItemsRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            ModifyMonitoredItemsRequest::decode,
+            ModifyMonitoredItemsRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

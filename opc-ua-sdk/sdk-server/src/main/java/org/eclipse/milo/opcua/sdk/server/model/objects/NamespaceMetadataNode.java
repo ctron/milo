@@ -32,15 +32,14 @@ import org.eclipse.milo.opcua.stack.core.types.enumerated.IdType;
 @UaObjectNode(typeName = "0:NamespaceMetadataType")
 public class NamespaceMetadataNode extends BaseObjectNode implements NamespaceMetadataType {
 
-    public NamespaceMetadataNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public NamespaceMetadataNode(UaNodeManager nodeManager,
+                                 NodeId nodeId,
+                                 QualifiedName browseName,
+                                 LocalizedText displayName,
+                                 Optional<LocalizedText> description,
+                                 Optional<UInteger> writeMask,
+                                 Optional<UInteger> userWriteMask,
+                                 UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -92,7 +91,9 @@ public class NamespaceMetadataNode extends BaseObjectNode implements NamespaceMe
 
     @Override
     public PropertyNode getNamespacePublicationDateNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(NamespaceMetadataType.NAMESPACE_PUBLICATION_DATE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            NamespaceMetadataType.NAMESPACE_PUBLICATION_DATE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -111,7 +112,9 @@ public class NamespaceMetadataNode extends BaseObjectNode implements NamespaceMe
 
     @Override
     public PropertyNode getIsNamespaceSubsetNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(NamespaceMetadataType.IS_NAMESPACE_SUBSET.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            NamespaceMetadataType.IS_NAMESPACE_SUBSET.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -130,7 +133,9 @@ public class NamespaceMetadataNode extends BaseObjectNode implements NamespaceMe
 
     @Override
     public PropertyNode getStaticNodeIdIdentifierTypesNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(NamespaceMetadataType.STATIC_NODE_ID_IDENTIFIER_TYPES.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            NamespaceMetadataType.STATIC_NODE_ID_IDENTIFIER_TYPES.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -149,7 +154,9 @@ public class NamespaceMetadataNode extends BaseObjectNode implements NamespaceMe
 
     @Override
     public PropertyNode getStaticNumericNodeIdRangeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(NamespaceMetadataType.STATIC_NUMERIC_NODE_ID_RANGE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            NamespaceMetadataType.STATIC_NUMERIC_NODE_ID_RANGE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -168,7 +175,9 @@ public class NamespaceMetadataNode extends BaseObjectNode implements NamespaceMe
 
     @Override
     public PropertyNode getStaticStringNodeIdPatternNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(NamespaceMetadataType.STATIC_STRING_NODE_ID_PATTERN.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            NamespaceMetadataType.STATIC_STRING_NODE_ID_PATTERN.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

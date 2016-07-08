@@ -41,22 +41,34 @@ public class CloseSessionRequest implements UaRequestMessage {
         this._deleteSubscriptions = _deleteSubscriptions;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public Boolean getDeleteSubscriptions() { return _deleteSubscriptions; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public Boolean getDeleteSubscriptions() {
+        return _deleteSubscriptions;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CloseSessionRequest closeSessionRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", closeSessionRequest._requestHeader != null ? closeSessionRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            closeSessionRequest._requestHeader != null ? closeSessionRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeBoolean("DeleteSubscriptions", closeSessionRequest._deleteSubscriptions);
     }
 
@@ -68,8 +80,10 @@ public class CloseSessionRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(CloseSessionRequest::encode, CloseSessionRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(CloseSessionRequest::decode, CloseSessionRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(CloseSessionRequest::encode, CloseSessionRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(CloseSessionRequest::decode, CloseSessionRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

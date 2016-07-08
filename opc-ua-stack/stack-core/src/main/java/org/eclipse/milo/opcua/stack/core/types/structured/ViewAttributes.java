@@ -39,25 +39,40 @@ public class ViewAttributes extends NodeAttributes {
         this._eventNotifier = null;
     }
 
-    public ViewAttributes(UInteger _specifiedAttributes, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask, Boolean _containsNoLoops, UByte _eventNotifier) {
+    public ViewAttributes(UInteger _specifiedAttributes,
+                          LocalizedText _displayName,
+                          LocalizedText _description,
+                          UInteger _writeMask,
+                          UInteger _userWriteMask,
+                          Boolean _containsNoLoops,
+                          UByte _eventNotifier) {
         super(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask);
         this._containsNoLoops = _containsNoLoops;
         this._eventNotifier = _eventNotifier;
     }
 
-    public Boolean getContainsNoLoops() { return _containsNoLoops; }
+    public Boolean getContainsNoLoops() {
+        return _containsNoLoops;
+    }
 
-    public UByte getEventNotifier() { return _eventNotifier; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public UByte getEventNotifier() {
+        return _eventNotifier;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ViewAttributes viewAttributes, UaEncoder encoder) {
         encoder.encodeUInt32("SpecifiedAttributes", viewAttributes._specifiedAttributes);
@@ -78,7 +93,15 @@ public class ViewAttributes extends NodeAttributes {
         Boolean _containsNoLoops = decoder.decodeBoolean("ContainsNoLoops");
         UByte _eventNotifier = decoder.decodeByte("EventNotifier");
 
-        return new ViewAttributes(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask, _containsNoLoops, _eventNotifier);
+        return new ViewAttributes(
+            _specifiedAttributes,
+            _displayName,
+            _description,
+            _writeMask,
+            _userWriteMask,
+            _containsNoLoops,
+            _eventNotifier
+        );
     }
 
     static {

@@ -81,8 +81,18 @@ public class ChannelSecurity {
             PShaUtil.createPSha256Key(serverNonce.bytes(), clientNonce.bytes(), signatureKeySize, encryptionKeySize);
 
         byte[] clientInitializationVector = (keyDerivation == SecurityAlgorithm.PSha1) ?
-            PShaUtil.createPSha1Key(serverNonce.bytes(), clientNonce.bytes(), signatureKeySize + encryptionKeySize, cipherTextBlockSize) :
-            PShaUtil.createPSha256Key(serverNonce.bytes(), clientNonce.bytes(), signatureKeySize + encryptionKeySize, cipherTextBlockSize);
+            PShaUtil.createPSha1Key(
+                serverNonce.bytes(),
+                clientNonce.bytes(),
+                signatureKeySize + encryptionKeySize,
+                cipherTextBlockSize
+            ) :
+            PShaUtil.createPSha256Key(
+                serverNonce.bytes(),
+                clientNonce.bytes(),
+                signatureKeySize + encryptionKeySize,
+                cipherTextBlockSize
+            );
 
         byte[] serverSignatureKey = (keyDerivation == SecurityAlgorithm.PSha1) ?
             PShaUtil.createPSha1Key(clientNonce.bytes(), serverNonce.bytes(), 0, signatureKeySize) :
@@ -93,8 +103,18 @@ public class ChannelSecurity {
             PShaUtil.createPSha256Key(clientNonce.bytes(), serverNonce.bytes(), signatureKeySize, encryptionKeySize);
 
         byte[] serverInitializationVector = (keyDerivation == SecurityAlgorithm.PSha1) ?
-            PShaUtil.createPSha1Key(clientNonce.bytes(), serverNonce.bytes(), signatureKeySize + encryptionKeySize, cipherTextBlockSize) :
-            PShaUtil.createPSha256Key(clientNonce.bytes(), serverNonce.bytes(), signatureKeySize + encryptionKeySize, cipherTextBlockSize);
+            PShaUtil.createPSha1Key(
+                clientNonce.bytes(),
+                serverNonce.bytes(),
+                signatureKeySize + encryptionKeySize,
+                cipherTextBlockSize
+            ) :
+            PShaUtil.createPSha256Key(
+                clientNonce.bytes(),
+                serverNonce.bytes(),
+                signatureKeySize + encryptionKeySize,
+                cipherTextBlockSize
+            );
 
         return new SecuritySecrets(
             new SecretKeys(clientSignatureKey, clientEncryptionKey, clientInitializationVector),

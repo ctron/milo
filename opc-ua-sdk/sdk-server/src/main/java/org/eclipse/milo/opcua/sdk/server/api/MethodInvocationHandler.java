@@ -41,7 +41,8 @@ public interface MethodInvocationHandler {
                 new StatusCode(StatusCodes.Bad_NodeIdUnknown),
                 new StatusCode[0],
                 new DiagnosticInfo[0],
-                new Variant[0]);
+                new Variant[0]
+            );
 
             future.complete(nodeIdUnknown);
         }
@@ -54,7 +55,8 @@ public interface MethodInvocationHandler {
                 new StatusCode(StatusCodes.Bad_NotImplemented),
                 new StatusCode[0],
                 new DiagnosticInfo[0],
-                new Variant[0]);
+                new Variant[0]
+            );
 
             future.complete(nodeIdUnknown);
         }

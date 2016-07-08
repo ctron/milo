@@ -39,27 +39,40 @@ public class NodeTypeDescription implements UaStructure {
         this._dataToReturn = null;
     }
 
-    public NodeTypeDescription(ExpandedNodeId _typeDefinitionNode, Boolean _includeSubTypes, QueryDataDescription[] _dataToReturn) {
+    public NodeTypeDescription(ExpandedNodeId _typeDefinitionNode,
+                               Boolean _includeSubTypes,
+                               QueryDataDescription[] _dataToReturn) {
         this._typeDefinitionNode = _typeDefinitionNode;
         this._includeSubTypes = _includeSubTypes;
         this._dataToReturn = _dataToReturn;
     }
 
-    public ExpandedNodeId getTypeDefinitionNode() { return _typeDefinitionNode; }
+    public ExpandedNodeId getTypeDefinitionNode() {
+        return _typeDefinitionNode;
+    }
 
-    public Boolean getIncludeSubTypes() { return _includeSubTypes; }
+    public Boolean getIncludeSubTypes() {
+        return _includeSubTypes;
+    }
 
-    public QueryDataDescription[] getDataToReturn() { return _dataToReturn; }
+    public QueryDataDescription[] getDataToReturn() {
+        return _dataToReturn;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(NodeTypeDescription nodeTypeDescription, UaEncoder encoder) {
         encoder.encodeExpandedNodeId("TypeDefinitionNode", nodeTypeDescription._typeDefinitionNode);
@@ -70,14 +83,17 @@ public class NodeTypeDescription implements UaStructure {
     public static NodeTypeDescription decode(UaDecoder decoder) {
         ExpandedNodeId _typeDefinitionNode = decoder.decodeExpandedNodeId("TypeDefinitionNode");
         Boolean _includeSubTypes = decoder.decodeBoolean("IncludeSubTypes");
-        QueryDataDescription[] _dataToReturn = decoder.decodeArray("DataToReturn", decoder::decodeSerializable, QueryDataDescription.class);
+        QueryDataDescription[] _dataToReturn = decoder
+            .decodeArray("DataToReturn", decoder::decodeSerializable, QueryDataDescription.class);
 
         return new NodeTypeDescription(_typeDefinitionNode, _includeSubTypes, _dataToReturn);
     }
 
     static {
-        DelegateRegistry.registerEncoder(NodeTypeDescription::encode, NodeTypeDescription.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(NodeTypeDescription::decode, NodeTypeDescription.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(NodeTypeDescription::encode, NodeTypeDescription.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(NodeTypeDescription::decode, NodeTypeDescription.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

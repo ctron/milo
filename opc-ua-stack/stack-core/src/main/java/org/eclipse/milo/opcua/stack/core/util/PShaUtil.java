@@ -13,13 +13,11 @@
 
 package org.eclipse.milo.opcua.stack.core.util;
 
-
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.eclipse.milo.opcua.stack.core.StatusCodes;
 import org.eclipse.milo.opcua.stack.core.UaRuntimeException;
-
 
 /**
  * <pre>
@@ -59,7 +57,11 @@ public class PShaUtil {
         }
     }
 
-    private static byte[] P_hash(String transformation, byte[] secret, byte[] seed, Mac mac, int required) throws Exception {
+    private static byte[] P_hash(String transformation,
+                                 byte[] secret,
+                                 byte[] seed,
+                                 Mac mac,
+                                 int required) throws Exception {
         byte[] out = new byte[required];
         int offset = 0;
         int toCopy;

@@ -40,17 +40,13 @@ public class GetMonitoredItems {
     }
 
     @UaMethod
-    public void invoke(
-        InvocationContext context,
+    public void invoke(InvocationContext context,
 
-        @UaInputArgument(name = "subscriptionId")
-            UInteger subscriptionId,
+                       @UaInputArgument(name = "subscriptionId") UInteger subscriptionId,
 
-        @UaOutputArgument(name = "serverHandles")
-            Out<UInteger[]> serverHandles,
+                       @UaOutputArgument(name = "serverHandles") Out<UInteger[]> serverHandles,
 
-        @UaOutputArgument(name = "clientHandles")
-            Out<UInteger[]> clientHandles) throws UaException {
+                       @UaOutputArgument(name = "clientHandles") Out<UInteger[]> clientHandles) throws UaException {
 
         Subscription subscription = server.getSubscriptions().get(subscriptionId);
 

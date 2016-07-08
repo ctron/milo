@@ -150,8 +150,10 @@ public final class NodeId {
 
     public boolean isNull() {
         return namespaceIndex.intValue() == 0 &&
-            (NULL_NUMERIC.equals(this) || NULL_STRING.equals(this) ||
-                NULL_GUID.equals(this) || NULL_OPAQUE.equals(this));
+            (NULL_NUMERIC.equals(this) ||
+                NULL_STRING.equals(this) ||
+                NULL_GUID.equals(this) ||
+                NULL_OPAQUE.equals(this));
     }
 
     public boolean isNotNull() {
@@ -165,8 +167,7 @@ public final class NodeId {
 
         NodeId nodeId = (NodeId) o;
 
-        return identifier.equals(nodeId.identifier) &&
-            namespaceIndex.equals(nodeId.namespaceIndex);
+        return identifier.equals(nodeId.identifier) && namespaceIndex.equals(nodeId.namespaceIndex);
     }
 
     @Override
@@ -178,10 +179,7 @@ public final class NodeId {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("ns", namespaceIndex)
-            .add("id", identifier)
-            .toString();
+        return MoreObjects.toStringHelper(this).add("ns", namespaceIndex).add("id", identifier).toString();
     }
 
     public String toParseableString() {
@@ -190,20 +188,22 @@ public final class NodeId {
         sb.append("ns=").append(namespaceIndex).append(";");
 
         switch (getType()) {
-            case Numeric:
-                sb.append("i=").append(identifier);
-                break;
-            case String:
-                sb.append("s=").append(identifier);
-                break;
-            case Guid:
-                sb.append("g=").append(identifier);
-                break;
-            case Opaque:
-                ByteString bs = (ByteString) identifier;
-                if (bs.isNull()) sb.append("b=");
-                else sb.append("b=").append(DatatypeConverter.printBase64Binary(bs.bytes()));
-                break;
+        case Numeric:
+            sb.append("i=").append(identifier);
+            break;
+        case String:
+            sb.append("s=").append(identifier);
+            break;
+        case Guid:
+            sb.append("g=").append(identifier);
+            break;
+        case Opaque:
+            ByteString bs = (ByteString) identifier;
+            if (bs.isNull())
+                sb.append("b=");
+            else
+                sb.append("b=").append(DatatypeConverter.printBase64Binary(bs.bytes()));
+            break;
         }
 
         return sb.toString();
@@ -217,8 +217,10 @@ public final class NodeId {
     private static final Pattern INT_STRING = Pattern.compile("ns=(\\d*);s=(.*)");
     private static final Pattern NONE_STRING = Pattern.compile("s=(.*)");
 
-    private static final Pattern INT_GUID = Pattern.compile("ns=(\\d*);g=([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})");
-    private static final Pattern NONE_GUID = Pattern.compile("g=([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})");
+    private static final Pattern INT_GUID = Pattern
+        .compile("ns=(\\d*);g=([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})");
+    private static final Pattern NONE_GUID = Pattern
+        .compile("g=([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})");
 
     private static final Pattern INT_OPAQUE = Pattern.compile("ns=(\\d*);b=([0-9a-zA-Z\\+/=]*)");
     private static final Pattern NONE_OPAQUE = Pattern.compile("b=([0-9a-zA-Z\\+/=]*)");

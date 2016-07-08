@@ -34,28 +34,29 @@ public abstract class AbstractUaMethod {
     }
 
     public CompletableFuture<Variant[]> invoke(Variant[] inputArguments) {
-        CallMethodRequest request = new CallMethodRequest(
-            objectId, methodId, inputArguments);
+        CallMethodRequest request = new CallMethodRequest(objectId, methodId, inputArguments);
 
-        return client.call(request).thenCompose(result -> {
-            StatusCode statusCode = result.getStatusCode();
+        return client.call(request).thenCompose(
+            result -> {
+                StatusCode statusCode = result.getStatusCode();
 
-            if (statusCode.isGood()) {
-                Variant[] outputArguments = result.getOutputArguments();
+                if (statusCode.isGood()) {
+                    Variant[] outputArguments = result.getOutputArguments();
 
-                return CompletableFuture.completedFuture(outputArguments);
-            } else {
-                UaMethodException ex = new UaMethodException(
-                    statusCode,
-                    result.getInputArgumentResults(),
-                    result.getInputArgumentDiagnosticInfos()
-                );
+                    return CompletableFuture.completedFuture(outputArguments);
+                } else {
+                    UaMethodException ex = new UaMethodException(
+                        statusCode,
+                        result.getInputArgumentResults(),
+                        result.getInputArgumentDiagnosticInfos()
+                    );
 
-                CompletableFuture<Variant[]> f = new CompletableFuture<>();
-                f.completeExceptionally(ex);
-                return f;
+                    CompletableFuture<Variant[]> f = new CompletableFuture<>();
+                    f.completeExceptionally(ex);
+                    return f;
+                }
             }
-        });
+        );
     }
 
 }

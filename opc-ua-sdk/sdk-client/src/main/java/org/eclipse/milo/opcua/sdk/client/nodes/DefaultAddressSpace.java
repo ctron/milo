@@ -56,24 +56,25 @@ public class DefaultAddressSpace implements AddressSpace {
 
     @Override
     public CompletableFuture<UaNode> getNode(NodeId nodeId) {
-        ReadValueId readValueId = new ReadValueId(
-            nodeId, AttributeId.NodeClass.uid(), null, QualifiedName.NULL_VALUE);
+        ReadValueId readValueId = new ReadValueId(nodeId, AttributeId.NodeClass.uid(), null, QualifiedName.NULL_VALUE);
 
-        CompletableFuture<ReadResponse> future =
-            client.read(0.0, TimestampsToReturn.Neither, newArrayList(readValueId));
+        CompletableFuture<ReadResponse> future = client
+            .read(0.0, TimestampsToReturn.Neither, newArrayList(readValueId));
 
-        return future.thenCompose(response -> {
-            DataValue value = response.getResults()[0];
-            NodeClass nodeClass = (NodeClass) value.getValue().getValue();
+        return future.thenCompose(
+            response -> {
+                DataValue value = response.getResults()[0];
+                NodeClass nodeClass = (NodeClass) value.getValue().getValue();
 
-            if (nodeClass != null) {
-                client.getNodeCache().putAttribute(nodeId, AttributeId.NodeClass, value);
+                if (nodeClass != null) {
+                    client.getNodeCache().putAttribute(nodeId, AttributeId.NodeClass, value);
 
-                return CompletableFuture.completedFuture(createNode(nodeId, nodeClass));
-            } else {
-                return failedFuture(new UaException(value.getStatusCode(), "NodeClass was null"));
+                    return CompletableFuture.completedFuture(createNode(nodeId, nodeClass));
+                } else {
+                    return failedFuture(new UaException(value.getStatusCode(), "NodeClass was null"));
+                }
             }
-        });
+        );
     }
 
     @Override
@@ -118,24 +119,24 @@ public class DefaultAddressSpace implements AddressSpace {
 
     private UaNode createNode(NodeId nodeId, NodeClass nodeClass) {
         switch (nodeClass) {
-            case DataType:
-                return new AttachedDataTypeNode(client, nodeId);
-            case Method:
-                return new AttachedMethodNode(client, nodeId);
-            case Object:
-                return new AttachedObjectNode(client, nodeId);
-            case ObjectType:
-                return new AttachedObjectTypeNode(client, nodeId);
-            case ReferenceType:
-                return new AttachedReferenceTypeNode(client, nodeId);
-            case Variable:
-                return new AttachedVariableNode(client, nodeId);
-            case VariableType:
-                return new AttachedVariableTypeNode(client, nodeId);
-            case View:
-                return new AttachedViewNode(client, nodeId);
-            default:
-                throw new IllegalStateException("unhandled NodeClass: " + nodeClass);
+        case DataType:
+            return new AttachedDataTypeNode(client, nodeId);
+        case Method:
+            return new AttachedMethodNode(client, nodeId);
+        case Object:
+            return new AttachedObjectNode(client, nodeId);
+        case ObjectType:
+            return new AttachedObjectTypeNode(client, nodeId);
+        case ReferenceType:
+            return new AttachedReferenceTypeNode(client, nodeId);
+        case Variable:
+            return new AttachedVariableNode(client, nodeId);
+        case VariableType:
+            return new AttachedVariableTypeNode(client, nodeId);
+        case View:
+            return new AttachedViewNode(client, nodeId);
+        default:
+            throw new IllegalStateException("unhandled NodeClass: " + nodeClass);
         }
     }
 

@@ -36,15 +36,14 @@ import org.eclipse.milo.opcua.stack.core.types.structured.SubscriptionDiagnostic
 @UaObjectNode(typeName = "0:SessionDiagnosticsObjectType")
 public class SessionDiagnosticsObjectNode extends BaseObjectNode implements SessionDiagnosticsObjectType {
 
-    public SessionDiagnosticsObjectNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public SessionDiagnosticsObjectNode(UaNodeManager nodeManager,
+                                        NodeId nodeId,
+                                        QualifiedName browseName,
+                                        LocalizedText displayName,
+                                        Optional<LocalizedText> description,
+                                        Optional<UInteger> writeMask,
+                                        Optional<UInteger> userWriteMask,
+                                        UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -65,15 +64,16 @@ public class SessionDiagnosticsObjectNode extends BaseObjectNode implements Sess
 
     @Override
     public void setSessionDiagnostics(SessionDiagnosticsDataType value) {
-        getVariableComponent("SessionDiagnostics")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SessionDiagnostics").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
     public SessionSecurityDiagnosticsDataType getSessionSecurityDiagnostics() {
         Optional<VariableNode> component = getVariableComponent("SessionSecurityDiagnostics");
 
-        return component.map(node -> (SessionSecurityDiagnosticsDataType) node.getValue().getValue().getValue()).orElse(null);
+        return component
+            .map(node -> (SessionSecurityDiagnosticsDataType) node.getValue().getValue().getValue())
+            .orElse(null);
     }
 
     @Override
@@ -93,7 +93,9 @@ public class SessionDiagnosticsObjectNode extends BaseObjectNode implements Sess
     public SubscriptionDiagnosticsDataType[] getSubscriptionDiagnosticsArray() {
         Optional<VariableNode> component = getVariableComponent("SubscriptionDiagnosticsArray");
 
-        return component.map(node -> (SubscriptionDiagnosticsDataType[]) node.getValue().getValue().getValue()).orElse(null);
+        return component
+            .map(node -> (SubscriptionDiagnosticsDataType[]) node.getValue().getValue().getValue())
+            .orElse(null);
     }
 
     @Override

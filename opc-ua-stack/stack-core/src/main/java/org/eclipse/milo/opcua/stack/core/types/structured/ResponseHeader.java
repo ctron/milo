@@ -49,7 +49,12 @@ public class ResponseHeader implements UaStructure {
         this._additionalHeader = null;
     }
 
-    public ResponseHeader(DateTime _timestamp, UInteger _requestHandle, StatusCode _serviceResult, DiagnosticInfo _serviceDiagnostics, String[] _stringTable, ExtensionObject _additionalHeader) {
+    public ResponseHeader(DateTime _timestamp,
+                          UInteger _requestHandle,
+                          StatusCode _serviceResult,
+                          DiagnosticInfo _serviceDiagnostics,
+                          String[] _stringTable,
+                          ExtensionObject _additionalHeader) {
         this._timestamp = _timestamp;
         this._requestHandle = _requestHandle;
         this._serviceResult = _serviceResult;
@@ -58,27 +63,44 @@ public class ResponseHeader implements UaStructure {
         this._additionalHeader = _additionalHeader;
     }
 
-    public DateTime getTimestamp() { return _timestamp; }
+    public DateTime getTimestamp() {
+        return _timestamp;
+    }
 
-    public UInteger getRequestHandle() { return _requestHandle; }
+    public UInteger getRequestHandle() {
+        return _requestHandle;
+    }
 
-    public StatusCode getServiceResult() { return _serviceResult; }
+    public StatusCode getServiceResult() {
+        return _serviceResult;
+    }
 
-    public DiagnosticInfo getServiceDiagnostics() { return _serviceDiagnostics; }
+    public DiagnosticInfo getServiceDiagnostics() {
+        return _serviceDiagnostics;
+    }
 
-    public String[] getStringTable() { return _stringTable; }
+    public String[] getStringTable() {
+        return _stringTable;
+    }
 
-    public ExtensionObject getAdditionalHeader() { return _additionalHeader; }
+    public ExtensionObject getAdditionalHeader() {
+        return _additionalHeader;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ResponseHeader responseHeader, UaEncoder encoder) {
         encoder.encodeDateTime("Timestamp", responseHeader._timestamp);
@@ -97,7 +119,14 @@ public class ResponseHeader implements UaStructure {
         String[] _stringTable = decoder.decodeArray("StringTable", decoder::decodeString, String.class);
         ExtensionObject _additionalHeader = decoder.decodeExtensionObject("AdditionalHeader");
 
-        return new ResponseHeader(_timestamp, _requestHandle, _serviceResult, _serviceDiagnostics, _stringTable, _additionalHeader);
+        return new ResponseHeader(
+            _timestamp,
+            _requestHandle,
+            _serviceResult,
+            _serviceDiagnostics,
+            _stringTable,
+            _additionalHeader
+        );
     }
 
     static {

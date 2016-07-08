@@ -43,19 +43,28 @@ public class IssuedIdentityToken extends UserIdentityToken {
         this._encryptionAlgorithm = _encryptionAlgorithm;
     }
 
-    public ByteString getTokenData() { return _tokenData; }
+    public ByteString getTokenData() {
+        return _tokenData;
+    }
 
-    public String getEncryptionAlgorithm() { return _encryptionAlgorithm; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public String getEncryptionAlgorithm() {
+        return _encryptionAlgorithm;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(IssuedIdentityToken issuedIdentityToken, UaEncoder encoder) {
         encoder.encodeString("PolicyId", issuedIdentityToken._policyId);
@@ -72,8 +81,10 @@ public class IssuedIdentityToken extends UserIdentityToken {
     }
 
     static {
-        DelegateRegistry.registerEncoder(IssuedIdentityToken::encode, IssuedIdentityToken.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(IssuedIdentityToken::decode, IssuedIdentityToken.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(IssuedIdentityToken::encode, IssuedIdentityToken.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(IssuedIdentityToken::decode, IssuedIdentityToken.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

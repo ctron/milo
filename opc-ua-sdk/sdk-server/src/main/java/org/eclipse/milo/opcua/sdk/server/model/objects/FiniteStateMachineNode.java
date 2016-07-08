@@ -32,15 +32,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:FiniteStateMachineType")
 public class FiniteStateMachineNode extends StateMachineNode implements FiniteStateMachineType {
 
-    public FiniteStateMachineNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public FiniteStateMachineNode(UaNodeManager nodeManager,
+                                  NodeId nodeId,
+                                  QualifiedName browseName,
+                                  LocalizedText displayName,
+                                  Optional<LocalizedText> description,
+                                  Optional<UInteger> writeMask,
+                                  Optional<UInteger> userWriteMask,
+                                  UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -61,8 +60,7 @@ public class FiniteStateMachineNode extends StateMachineNode implements FiniteSt
 
     @Override
     public void setCurrentState(LocalizedText value) {
-        getVariableComponent("CurrentState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CurrentState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -81,8 +79,7 @@ public class FiniteStateMachineNode extends StateMachineNode implements FiniteSt
 
     @Override
     public void setLastTransition(LocalizedText value) {
-        getVariableComponent("LastTransition")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("LastTransition").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

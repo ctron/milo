@@ -32,15 +32,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:TransitionEventType")
 public class TransitionEventNode extends BaseEventNode implements TransitionEventType {
 
-    public TransitionEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public TransitionEventNode(UaNodeManager nodeManager,
+                               NodeId nodeId,
+                               QualifiedName browseName,
+                               LocalizedText displayName,
+                               Optional<LocalizedText> description,
+                               Optional<UInteger> writeMask,
+                               Optional<UInteger> userWriteMask,
+                               UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -61,8 +60,7 @@ public class TransitionEventNode extends BaseEventNode implements TransitionEven
 
     @Override
     public void setTransition(LocalizedText value) {
-        getVariableComponent("Transition")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("Transition").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -81,8 +79,7 @@ public class TransitionEventNode extends BaseEventNode implements TransitionEven
 
     @Override
     public void setFromState(LocalizedText value) {
-        getVariableComponent("FromState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("FromState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -101,8 +98,7 @@ public class TransitionEventNode extends BaseEventNode implements TransitionEven
 
     @Override
     public void setToState(LocalizedText value) {
-        getVariableComponent("ToState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ToState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

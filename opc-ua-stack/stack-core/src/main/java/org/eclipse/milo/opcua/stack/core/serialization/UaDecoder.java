@@ -95,6 +95,8 @@ public interface UaDecoder {
 
     <T> T[] decodeArray(String field, Function<String, T> decoder, Class<T> clazz) throws UaSerializationException;
 
-    <T> T[] decodeArray(String field, BiFunction<String, Class<T>, T> decoder, Class<T> clazz) throws UaSerializationException;
+    <T> T[] decodeArray(String field,
+                        BiFunction<String, Class<T>, T> decoder,
+                        Class<T> clazz) throws UaSerializationException;
 
 }

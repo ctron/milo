@@ -52,9 +52,7 @@ public class SymmetricSecurityHeader {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("tokenId", tokenId)
-            .toString();
+        return MoreObjects.toStringHelper(this).add("tokenId", tokenId).toString();
     }
 
     public static ByteBuf encode(SymmetricSecurityHeader header, ByteBuf buffer) {

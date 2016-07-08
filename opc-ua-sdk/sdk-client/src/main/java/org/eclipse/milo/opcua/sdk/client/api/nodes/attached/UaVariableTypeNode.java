@@ -40,15 +40,17 @@ public interface UaVariableTypeNode extends UaNode {
      * @return the Value attribute value.
      */
     default CompletableFuture<Optional<Object>> readValueAttribute() {
-        return readValue().thenApply(v -> {
-            StatusCode statusCode = v.getStatusCode();
+        return readValue().thenApply(
+            v -> {
+                StatusCode statusCode = v.getStatusCode();
 
-            if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
-                return Optional.empty();
-            } else {
-                return Optional.ofNullable(v.getValue().getValue());
+                if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
+                    return Optional.empty();
+                } else {
+                    return Optional.ofNullable(v.getValue().getValue());
+                }
             }
-        });
+        );
     }
 
     /**
@@ -96,15 +98,17 @@ public interface UaVariableTypeNode extends UaNode {
      * @return the ArrayDimensions attribute value.
      */
     default CompletableFuture<Optional<UInteger[]>> readArrayDimensionsAttribute() {
-        return readArrayDimensions().thenApply(v -> {
-            StatusCode statusCode = v.getStatusCode();
+        return readArrayDimensions().thenApply(
+            v -> {
+                StatusCode statusCode = v.getStatusCode();
 
-            if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
-                return Optional.empty();
-            } else {
-                return Optional.ofNullable((UInteger[]) v.getValue().getValue());
+                if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
+                    return Optional.empty();
+                } else {
+                    return Optional.ofNullable((UInteger[]) v.getValue().getValue());
+                }
             }
-        });
+        );
     }
 
     /**

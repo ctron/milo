@@ -24,8 +24,12 @@ public class XmlElementSerializationTest extends BinarySerializationFixture {
     @DataProvider(name = "XmlElementProvider")
     public Object[][] getXmlElements() {
         return new Object[][]{
-                {new XmlElement(null)},
-                {new XmlElement("<tag>hello, world</tag>")},
+            {
+                new XmlElement(null)
+            },
+            {
+                new XmlElement("<tag>hello, world</tag>")
+            },
         };
     }
 

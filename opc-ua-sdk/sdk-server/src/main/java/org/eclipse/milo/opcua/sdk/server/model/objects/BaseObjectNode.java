@@ -26,15 +26,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @org.eclipse.milo.opcua.sdk.server.util.UaObjectNode(typeName = "0:BaseObjectType")
 public class BaseObjectNode extends org.eclipse.milo.opcua.sdk.server.model.UaObjectNode implements BaseObjectType {
 
-    public BaseObjectNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public BaseObjectNode(UaNodeManager nodeManager,
+                          NodeId nodeId,
+                          QualifiedName browseName,
+                          LocalizedText displayName,
+                          Optional<LocalizedText> description,
+                          Optional<UInteger> writeMask,
+                          Optional<UInteger> userWriteMask,
+                          UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }

@@ -99,7 +99,31 @@ public class ScalarTestType implements UaStructure {
         this._enumeratedValue = null;
     }
 
-    public ScalarTestType(Boolean _boolean, Byte _sByte, UByte _byte, Short _int16, UShort _uInt16, Integer _int32, UInteger _uInt32, Long _int64, ULong _uInt64, Float _float, Double _double, String _string, DateTime _dateTime, UUID _guid, ByteString _byteString, XmlElement _xmlElement, NodeId _nodeId, ExpandedNodeId _expandedNodeId, StatusCode _statusCode, DiagnosticInfo _diagnosticInfo, QualifiedName _qualifiedName, LocalizedText _localizedText, ExtensionObject _extensionObject, DataValue _dataValue, EnumeratedTestType _enumeratedValue) {
+    public ScalarTestType(Boolean _boolean,
+                          Byte _sByte,
+                          UByte _byte,
+                          Short _int16,
+                          UShort _uInt16,
+                          Integer _int32,
+                          UInteger _uInt32,
+                          Long _int64,
+                          ULong _uInt64,
+                          Float _float,
+                          Double _double,
+                          String _string,
+                          DateTime _dateTime,
+                          UUID _guid,
+                          ByteString _byteString,
+                          XmlElement _xmlElement,
+                          NodeId _nodeId,
+                          ExpandedNodeId _expandedNodeId,
+                          StatusCode _statusCode,
+                          DiagnosticInfo _diagnosticInfo,
+                          QualifiedName _qualifiedName,
+                          LocalizedText _localizedText,
+                          ExtensionObject _extensionObject,
+                          DataValue _dataValue,
+                          EnumeratedTestType _enumeratedValue) {
         this._boolean = _boolean;
         this._sByte = _sByte;
         this._byte = _byte;
@@ -242,7 +266,6 @@ public class ScalarTestType implements UaStructure {
         return XmlEncodingId;
     }
 
-
     public static void encode(ScalarTestType scalarTestType, UaEncoder encoder) {
         encoder.encodeBoolean("Boolean", scalarTestType._boolean);
         encoder.encodeSByte("SByte", scalarTestType._sByte);
@@ -298,7 +321,33 @@ public class ScalarTestType implements UaStructure {
         DataValue _dataValue = decoder.decodeDataValue("DataValue");
         EnumeratedTestType _enumeratedValue = decoder.decodeEnumeration("EnumeratedValue", EnumeratedTestType.class);
 
-        return new ScalarTestType(_boolean, _sByte, _byte, _int16, _uInt16, _int32, _uInt32, _int64, _uInt64, _float, _double, _string, _dateTime, _guid, _byteString, _xmlElement, _nodeId, _expandedNodeId, _statusCode, _diagnosticInfo, _qualifiedName, _localizedText, _extensionObject, _dataValue, _enumeratedValue);
+        return new ScalarTestType(
+            _boolean,
+            _sByte,
+            _byte,
+            _int16,
+            _uInt16,
+            _int32,
+            _uInt32,
+            _int64,
+            _uInt64,
+            _float,
+            _double,
+            _string,
+            _dateTime,
+            _guid,
+            _byteString,
+            _xmlElement,
+            _nodeId,
+            _expandedNodeId,
+            _statusCode,
+            _diagnosticInfo,
+            _qualifiedName,
+            _localizedText,
+            _extensionObject,
+            _dataValue,
+            _enumeratedValue
+        );
     }
 
     static {

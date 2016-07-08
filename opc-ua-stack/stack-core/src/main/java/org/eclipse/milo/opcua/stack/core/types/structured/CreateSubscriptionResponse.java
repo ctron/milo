@@ -43,7 +43,11 @@ public class CreateSubscriptionResponse implements UaResponseMessage {
         this._revisedMaxKeepAliveCount = null;
     }
 
-    public CreateSubscriptionResponse(ResponseHeader _responseHeader, UInteger _subscriptionId, Double _revisedPublishingInterval, UInteger _revisedLifetimeCount, UInteger _revisedMaxKeepAliveCount) {
+    public CreateSubscriptionResponse(ResponseHeader _responseHeader,
+                                      UInteger _subscriptionId,
+                                      Double _revisedPublishingInterval,
+                                      UInteger _revisedLifetimeCount,
+                                      UInteger _revisedMaxKeepAliveCount) {
         this._responseHeader = _responseHeader;
         this._subscriptionId = _subscriptionId;
         this._revisedPublishingInterval = _revisedPublishingInterval;
@@ -51,28 +55,48 @@ public class CreateSubscriptionResponse implements UaResponseMessage {
         this._revisedMaxKeepAliveCount = _revisedMaxKeepAliveCount;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public UInteger getSubscriptionId() { return _subscriptionId; }
+    public UInteger getSubscriptionId() {
+        return _subscriptionId;
+    }
 
-    public Double getRevisedPublishingInterval() { return _revisedPublishingInterval; }
+    public Double getRevisedPublishingInterval() {
+        return _revisedPublishingInterval;
+    }
 
-    public UInteger getRevisedLifetimeCount() { return _revisedLifetimeCount; }
+    public UInteger getRevisedLifetimeCount() {
+        return _revisedLifetimeCount;
+    }
 
-    public UInteger getRevisedMaxKeepAliveCount() { return _revisedMaxKeepAliveCount; }
+    public UInteger getRevisedMaxKeepAliveCount() {
+        return _revisedMaxKeepAliveCount;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CreateSubscriptionResponse createSubscriptionResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", createSubscriptionResponse._responseHeader != null ? createSubscriptionResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            createSubscriptionResponse._responseHeader != null ?
+                createSubscriptionResponse._responseHeader :
+                new ResponseHeader()
+        );
         encoder.encodeUInt32("SubscriptionId", createSubscriptionResponse._subscriptionId);
         encoder.encodeDouble("RevisedPublishingInterval", createSubscriptionResponse._revisedPublishingInterval);
         encoder.encodeUInt32("RevisedLifetimeCount", createSubscriptionResponse._revisedLifetimeCount);
@@ -86,12 +110,28 @@ public class CreateSubscriptionResponse implements UaResponseMessage {
         UInteger _revisedLifetimeCount = decoder.decodeUInt32("RevisedLifetimeCount");
         UInteger _revisedMaxKeepAliveCount = decoder.decodeUInt32("RevisedMaxKeepAliveCount");
 
-        return new CreateSubscriptionResponse(_responseHeader, _subscriptionId, _revisedPublishingInterval, _revisedLifetimeCount, _revisedMaxKeepAliveCount);
+        return new CreateSubscriptionResponse(
+            _responseHeader,
+            _subscriptionId,
+            _revisedPublishingInterval,
+            _revisedLifetimeCount,
+            _revisedMaxKeepAliveCount
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(CreateSubscriptionResponse::encode, CreateSubscriptionResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(CreateSubscriptionResponse::decode, CreateSubscriptionResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            CreateSubscriptionResponse::encode,
+            CreateSubscriptionResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            CreateSubscriptionResponse::decode,
+            CreateSubscriptionResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

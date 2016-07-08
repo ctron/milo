@@ -39,28 +39,42 @@ public class UserNameIdentityToken extends UserIdentityToken {
         this._encryptionAlgorithm = null;
     }
 
-    public UserNameIdentityToken(String _policyId, String _userName, ByteString _password, String _encryptionAlgorithm) {
+    public UserNameIdentityToken(String _policyId,
+                                 String _userName,
+                                 ByteString _password,
+                                 String _encryptionAlgorithm) {
         super(_policyId);
         this._userName = _userName;
         this._password = _password;
         this._encryptionAlgorithm = _encryptionAlgorithm;
     }
 
-    public String getUserName() { return _userName; }
+    public String getUserName() {
+        return _userName;
+    }
 
-    public ByteString getPassword() { return _password; }
+    public ByteString getPassword() {
+        return _password;
+    }
 
-    public String getEncryptionAlgorithm() { return _encryptionAlgorithm; }
+    public String getEncryptionAlgorithm() {
+        return _encryptionAlgorithm;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(UserNameIdentityToken userNameIdentityToken, UaEncoder encoder) {
         encoder.encodeString("PolicyId", userNameIdentityToken._policyId);
@@ -79,8 +93,18 @@ public class UserNameIdentityToken extends UserIdentityToken {
     }
 
     static {
-        DelegateRegistry.registerEncoder(UserNameIdentityToken::encode, UserNameIdentityToken.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(UserNameIdentityToken::decode, UserNameIdentityToken.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            UserNameIdentityToken::encode,
+            UserNameIdentityToken.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            UserNameIdentityToken::decode,
+            UserNameIdentityToken.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

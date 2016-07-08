@@ -43,7 +43,11 @@ public class DeleteReferencesItem implements UaStructure {
         this._deleteBidirectional = null;
     }
 
-    public DeleteReferencesItem(NodeId _sourceNodeId, NodeId _referenceTypeId, Boolean _isForward, ExpandedNodeId _targetNodeId, Boolean _deleteBidirectional) {
+    public DeleteReferencesItem(NodeId _sourceNodeId,
+                                NodeId _referenceTypeId,
+                                Boolean _isForward,
+                                ExpandedNodeId _targetNodeId,
+                                Boolean _deleteBidirectional) {
         this._sourceNodeId = _sourceNodeId;
         this._referenceTypeId = _referenceTypeId;
         this._isForward = _isForward;
@@ -51,25 +55,40 @@ public class DeleteReferencesItem implements UaStructure {
         this._deleteBidirectional = _deleteBidirectional;
     }
 
-    public NodeId getSourceNodeId() { return _sourceNodeId; }
+    public NodeId getSourceNodeId() {
+        return _sourceNodeId;
+    }
 
-    public NodeId getReferenceTypeId() { return _referenceTypeId; }
+    public NodeId getReferenceTypeId() {
+        return _referenceTypeId;
+    }
 
-    public Boolean getIsForward() { return _isForward; }
+    public Boolean getIsForward() {
+        return _isForward;
+    }
 
-    public ExpandedNodeId getTargetNodeId() { return _targetNodeId; }
+    public ExpandedNodeId getTargetNodeId() {
+        return _targetNodeId;
+    }
 
-    public Boolean getDeleteBidirectional() { return _deleteBidirectional; }
+    public Boolean getDeleteBidirectional() {
+        return _deleteBidirectional;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DeleteReferencesItem deleteReferencesItem, UaEncoder encoder) {
         encoder.encodeNodeId("SourceNodeId", deleteReferencesItem._sourceNodeId);
@@ -86,12 +105,20 @@ public class DeleteReferencesItem implements UaStructure {
         ExpandedNodeId _targetNodeId = decoder.decodeExpandedNodeId("TargetNodeId");
         Boolean _deleteBidirectional = decoder.decodeBoolean("DeleteBidirectional");
 
-        return new DeleteReferencesItem(_sourceNodeId, _referenceTypeId, _isForward, _targetNodeId, _deleteBidirectional);
+        return new DeleteReferencesItem(
+            _sourceNodeId,
+            _referenceTypeId,
+            _isForward,
+            _targetNodeId,
+            _deleteBidirectional
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(DeleteReferencesItem::encode, DeleteReferencesItem.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DeleteReferencesItem::decode, DeleteReferencesItem.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(DeleteReferencesItem::encode, DeleteReferencesItem.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(DeleteReferencesItem::decode, DeleteReferencesItem.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

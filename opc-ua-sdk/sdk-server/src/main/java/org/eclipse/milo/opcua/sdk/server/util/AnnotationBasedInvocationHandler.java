@@ -70,9 +70,11 @@ public class AnnotationBasedInvocationHandler implements MethodInvocationHandler
         this.outputArguments = outputArguments;
         this.annotatedObject = annotatedObject;
 
-        annotatedMethod = Arrays.stream(annotatedObject.getClass().getMethods())
+        annotatedMethod = Arrays
+            .stream(annotatedObject.getClass().getMethods())
             .filter(m -> m.isAnnotationPresent(UaMethod.class))
-            .findFirst().orElseThrow(() -> new RuntimeException("no @UaMethod annotated annotatedMethod found"));
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("no @UaMethod annotated annotatedMethod found"));
     }
 
     public Argument[] getInputArguments() {
@@ -90,10 +92,14 @@ public class AnnotationBasedInvocationHandler implements MethodInvocationHandler
         Variant[] inputVariants = request.getInputArguments();
 
         if (inputVariants.length != inputArguments.size()) {
-            future.complete(new CallMethodResult(
-                new StatusCode(StatusCodes.Bad_ArgumentsMissing),
-                new StatusCode[0], new DiagnosticInfo[0], new Variant[0]
-            ));
+            future.complete(
+                new CallMethodResult(
+                    new StatusCode(StatusCodes.Bad_ArgumentsMissing),
+                    new StatusCode[0],
+                    new DiagnosticInfo[0],
+                    new Variant[0]
+                )
+            );
         }
 
         Object[] inputs = new Object[inputVariants.length];
@@ -104,7 +110,8 @@ public class AnnotationBasedInvocationHandler implements MethodInvocationHandler
 
             Variant variant = inputVariants[i];
 
-            boolean dataTypeMatch = variant.getDataType()
+            boolean dataTypeMatch = variant
+                .getDataType()
                 .map(type -> type.equals(argument.getDataType()))
                 .orElse(false);
 
@@ -127,67 +134,88 @@ public class AnnotationBasedInvocationHandler implements MethodInvocationHandler
 
         // TODO Implement an AsyncCountDownLatch and ditch this thread
 
-        new Thread(() -> {
-            try {
-                Object[] parameters = new Object[1 + inputs.length + outputs.length];
+        new Thread(
+            () -> {
+                try {
+                    Object[] parameters = new Object[1 + inputs.length + outputs.length];
 
-                org.eclipse.milo.opcua.sdk.server.model.UaObjectNode objectNode = (org.eclipse.milo.opcua.sdk.server.model.UaObjectNode) nodeManager.getNode(objectId)
-                    .orElseThrow(() -> new Exception("owner Object node found"));
+                    org.eclipse.milo.opcua.sdk.server.model.UaObjectNode objectNode = (org.eclipse.milo.opcua.sdk.server.model.UaObjectNode) nodeManager
+                        .getNode(objectId)
+                        .orElseThrow(() -> new Exception("owner Object node found"));
 
-                InvocationContext context = new InvocationContextImpl(objectNode, future, inputArgumentResults, latch);
+                    InvocationContext context = new InvocationContextImpl(
+                        objectNode,
+                        future,
+                        inputArgumentResults,
+                        latch
+                    );
 
-                parameters[0] = context;
+                    parameters[0] = context;
 
-                System.arraycopy(inputs, 0, parameters, 1, inputs.length);
-                System.arraycopy(outputs, 0, parameters, 1 + inputs.length, outputs.length);
+                    System.arraycopy(inputs, 0, parameters, 1, inputs.length);
+                    System.arraycopy(outputs, 0, parameters, 1 + inputs.length, outputs.length);
 
-                annotatedMethod.invoke(annotatedObject, parameters);
-                latch.await();
+                    annotatedMethod.invoke(annotatedObject, parameters);
+                    latch.await();
 
-                // Check if they called context.setFailure(...)
-                if (!future.isDone()) {
-                    Variant[] values = new Variant[outputCount];
-                    for (int i = 0; i < outputCount; i++) {
-                        values[i] = new Variant(((OutImpl<?>) outputs[i]).get());
+                    // Check if they called context.setFailure(...)
+                    if (!future.isDone()) {
+                        Variant[] values = new Variant[outputCount];
+                        for (int i = 0; i < outputCount; i++) {
+                            values[i] = new Variant(((OutImpl<?>) outputs[i]).get());
+                        }
+
+                        future.complete(
+                            new CallMethodResult(StatusCode.GOOD, inputArgumentResults, new DiagnosticInfo[0], values)
+                        );
                     }
+                } catch (InvocationTargetException e) {
+                    Throwable targetException = e.getTargetException();
 
-                    future.complete(new CallMethodResult(
-                        StatusCode.GOOD, inputArgumentResults,
-                        new DiagnosticInfo[0], values
-                    ));
+                    if (targetException instanceof UaException) {
+                        StatusCode statusCode = ((UaException) targetException).getStatusCode();
+
+                        future.complete(
+                            new CallMethodResult(
+                                statusCode,
+                                inputArgumentResults,
+                                new DiagnosticInfo[0],
+                                new Variant[0]
+                            )
+                        );
+                    } else {
+                        future.complete(
+                            new CallMethodResult(
+                                new StatusCode(StatusCodes.Bad_InternalError),
+                                inputArgumentResults,
+                                new DiagnosticInfo[0],
+                                new Variant[0]
+                            )
+                        );
+                    }
+                } catch (Throwable t) {
+                    future.complete(
+                        new CallMethodResult(
+                            new StatusCode(StatusCodes.Bad_InternalError),
+                            inputArgumentResults,
+                            new DiagnosticInfo[0],
+                            new Variant[0]
+                        )
+                    );
                 }
-            } catch (InvocationTargetException e) {
-                Throwable targetException = e.getTargetException();
-
-                if (targetException instanceof UaException) {
-                    StatusCode statusCode = ((UaException) targetException).getStatusCode();
-
-                    future.complete(new CallMethodResult(
-                        statusCode, inputArgumentResults,
-                        new DiagnosticInfo[0], new Variant[0]
-                    ));
-                } else {
-                    future.complete(new CallMethodResult(
-                        new StatusCode(StatusCodes.Bad_InternalError),
-                        inputArgumentResults, new DiagnosticInfo[0], new Variant[0]
-                    ));
-                }
-            } catch (Throwable t) {
-                future.complete(new CallMethodResult(
-                    new StatusCode(StatusCodes.Bad_InternalError),
-                    inputArgumentResults, new DiagnosticInfo[0], new Variant[0]
-                ));
             }
-        }).start();
+        ).start();
     }
 
-
-    public static AnnotationBasedInvocationHandler fromAnnotatedObject(UaNodeManager nodeManager, Object annotatedObject) throws Exception {
+    public static AnnotationBasedInvocationHandler fromAnnotatedObject(UaNodeManager nodeManager,
+                                                                       Object annotatedObject) throws Exception {
         // TODO Make this work when parameter types are not built-in types
 
-        Method annotatedMethod = Arrays.stream(annotatedObject.getClass().getMethods())
+        Method annotatedMethod = Arrays
+            .stream(annotatedObject.getClass().getMethods())
             .filter(m -> m.isAnnotationPresent(UaMethod.class))
-            .findFirst().orElseThrow(() -> new Exception("no @UaMethod annotated annotatedMethod found"));
+            .findFirst()
+            .orElseThrow(() -> new Exception("no @UaMethod annotated annotatedMethod found"));
 
         Parameter[] parameters = annotatedMethod.getParameters();
         Type[] parameterTypes = annotatedMethod.getGenericParameterTypes();
@@ -214,13 +242,15 @@ public class AnnotationBasedInvocationHandler implements MethodInvocationHandler
 
                 UInteger[] arrayDimensions = dimensions > 0 ? new UInteger[dimensions] : null;
 
-                inputArguments.add(new Argument(
-                    name,
-                    getDataType(parameterType),
-                    dimensions > 0 ? dimensions : ValueRanks.Scalar,
-                    arrayDimensions,
-                    LocalizedText.english(description)
-                ));
+                inputArguments.add(
+                    new Argument(
+                        name,
+                        getDataType(parameterType),
+                        dimensions > 0 ? dimensions : ValueRanks.Scalar,
+                        arrayDimensions,
+                        LocalizedText.english(description)
+                    )
+                );
             }
 
             if (parameter.isAnnotationPresent(UaOutputArgument.class)) {
@@ -238,22 +268,19 @@ public class AnnotationBasedInvocationHandler implements MethodInvocationHandler
 
                 UInteger[] arrayDimensions = dimensions > 0 ? new UInteger[dimensions] : null;
 
-                outputArguments.add(new Argument(
-                    name,
-                    getDataType(actualType),
-                    dimensions > 0 ? dimensions : ValueRanks.Scalar,
-                    arrayDimensions,
-                    LocalizedText.english(description)
-                ));
+                outputArguments.add(
+                    new Argument(
+                        name,
+                        getDataType(actualType),
+                        dimensions > 0 ? dimensions : ValueRanks.Scalar,
+                        arrayDimensions,
+                        LocalizedText.english(description)
+                    )
+                );
             }
         }
 
-        return new AnnotationBasedInvocationHandler(
-            nodeManager,
-            inputArguments,
-            outputArguments,
-            annotatedObject
-        );
+        return new AnnotationBasedInvocationHandler(nodeManager, inputArguments, outputArguments, annotatedObject);
     }
 
     private static NodeId getDataType(Class<?> clazz) {
@@ -323,12 +350,12 @@ public class AnnotationBasedInvocationHandler implements MethodInvocationHandler
         public void setFailure(UaException failure) {
             StatusCode statusCode = failure.getStatusCode();
 
-            future.complete(new CallMethodResult(
-                statusCode, inputArgumentResults,
-                new DiagnosticInfo[0], new Variant[0]
-            ));
+            future.complete(
+                new CallMethodResult(statusCode, inputArgumentResults, new DiagnosticInfo[0], new Variant[0])
+            );
 
-            while (latch.getCount() > 0) latch.countDown();
+            while (latch.getCount() > 0)
+                latch.countDown();
         }
     }
 

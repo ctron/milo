@@ -31,15 +31,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:CertificateExpirationAlarmType")
 public class CertificateExpirationAlarmNode extends SystemOffNormalAlarmNode implements CertificateExpirationAlarmType {
 
-    public CertificateExpirationAlarmNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public CertificateExpirationAlarmNode(UaNodeManager nodeManager,
+                                          NodeId nodeId,
+                                          QualifiedName browseName,
+                                          LocalizedText displayName,
+                                          Optional<LocalizedText> description,
+                                          Optional<UInteger> writeMask,
+                                          Optional<UInteger> userWriteMask,
+                                          UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -53,7 +52,9 @@ public class CertificateExpirationAlarmNode extends SystemOffNormalAlarmNode imp
 
     @Override
     public PropertyNode getExpirationDateNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(CertificateExpirationAlarmType.EXPIRATION_DATE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            CertificateExpirationAlarmType.EXPIRATION_DATE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -72,7 +73,9 @@ public class CertificateExpirationAlarmNode extends SystemOffNormalAlarmNode imp
 
     @Override
     public PropertyNode getCertificateTypeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(CertificateExpirationAlarmType.CERTIFICATE_TYPE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            CertificateExpirationAlarmType.CERTIFICATE_TYPE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -91,7 +94,9 @@ public class CertificateExpirationAlarmNode extends SystemOffNormalAlarmNode imp
 
     @Override
     public PropertyNode getCertificateNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(CertificateExpirationAlarmType.CERTIFICATE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            CertificateExpirationAlarmType.CERTIFICATE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

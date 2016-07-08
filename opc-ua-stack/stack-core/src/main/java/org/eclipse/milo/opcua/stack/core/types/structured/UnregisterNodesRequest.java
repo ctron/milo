@@ -41,22 +41,34 @@ public class UnregisterNodesRequest implements UaRequestMessage {
         this._nodesToUnregister = _nodesToUnregister;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public NodeId[] getNodesToUnregister() { return _nodesToUnregister; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId[] getNodesToUnregister() {
+        return _nodesToUnregister;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(UnregisterNodesRequest unregisterNodesRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", unregisterNodesRequest._requestHeader != null ? unregisterNodesRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            unregisterNodesRequest._requestHeader != null ? unregisterNodesRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeArray("NodesToUnregister", unregisterNodesRequest._nodesToUnregister, encoder::encodeNodeId);
     }
 
@@ -68,8 +80,18 @@ public class UnregisterNodesRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(UnregisterNodesRequest::encode, UnregisterNodesRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(UnregisterNodesRequest::decode, UnregisterNodesRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            UnregisterNodesRequest::encode,
+            UnregisterNodesRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            UnregisterNodesRequest::decode,
+            UnregisterNodesRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

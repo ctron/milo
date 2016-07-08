@@ -42,30 +42,46 @@ public class HistoryReadValueId implements UaStructure {
         this._continuationPoint = null;
     }
 
-    public HistoryReadValueId(NodeId _nodeId, String _indexRange, QualifiedName _dataEncoding, ByteString _continuationPoint) {
+    public HistoryReadValueId(NodeId _nodeId,
+                              String _indexRange,
+                              QualifiedName _dataEncoding,
+                              ByteString _continuationPoint) {
         this._nodeId = _nodeId;
         this._indexRange = _indexRange;
         this._dataEncoding = _dataEncoding;
         this._continuationPoint = _continuationPoint;
     }
 
-    public NodeId getNodeId() { return _nodeId; }
+    public NodeId getNodeId() {
+        return _nodeId;
+    }
 
-    public String getIndexRange() { return _indexRange; }
+    public String getIndexRange() {
+        return _indexRange;
+    }
 
-    public QualifiedName getDataEncoding() { return _dataEncoding; }
+    public QualifiedName getDataEncoding() {
+        return _dataEncoding;
+    }
 
-    public ByteString getContinuationPoint() { return _continuationPoint; }
+    public ByteString getContinuationPoint() {
+        return _continuationPoint;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(HistoryReadValueId historyReadValueId, UaEncoder encoder) {
         encoder.encodeNodeId("NodeId", historyReadValueId._nodeId);
@@ -84,8 +100,10 @@ public class HistoryReadValueId implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(HistoryReadValueId::encode, HistoryReadValueId.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(HistoryReadValueId::decode, HistoryReadValueId.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(HistoryReadValueId::encode, HistoryReadValueId.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(HistoryReadValueId::decode, HistoryReadValueId.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

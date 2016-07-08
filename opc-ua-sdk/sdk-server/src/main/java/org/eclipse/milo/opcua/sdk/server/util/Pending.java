@@ -45,19 +45,22 @@ public interface Pending<I, O> {
     public static <I, O> CompletableFuture<List<O>> callback(List<? extends Pending<I, O>> pending) {
         CompletableFuture<List<O>> future = new CompletableFuture<>();
 
-        future.thenAccept(results -> {
-            if (results.size() != pending.size()) {
-                String message = String.format("result size (%s) does not match pending size (%s)", results.size(), pending.size());
-                throw new RuntimeException(message);
-            }
+        future.thenAccept(
+            results -> {
+                if (results.size() != pending.size()) {
+                    String message = String
+                        .format("result size (%s) does not match pending size (%s)", results.size(), pending.size());
+                    throw new RuntimeException(message);
+                }
 
-            Iterator<? extends Pending<I, O>> pi = pending.iterator();
-            Iterator<O> ri = results.iterator();
+                Iterator<? extends Pending<I, O>> pi = pending.iterator();
+                Iterator<O> ri = results.iterator();
 
-            while (pi.hasNext() && ri.hasNext()) {
-                pi.next().getFuture().complete(ri.next());
+                while (pi.hasNext() && ri.hasNext()) {
+                    pi.next().getFuture().complete(ri.next());
+                }
             }
-        });
+        );
 
         return future;
     }

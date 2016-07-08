@@ -39,22 +39,37 @@ public class ObjectNode extends InstanceNode {
         this._eventNotifier = null;
     }
 
-    public ObjectNode(NodeId _nodeId, NodeClass _nodeClass, QualifiedName _browseName, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask, ReferenceNode[] _references, UByte _eventNotifier) {
+    public ObjectNode(NodeId _nodeId,
+                      NodeClass _nodeClass,
+                      QualifiedName _browseName,
+                      LocalizedText _displayName,
+                      LocalizedText _description,
+                      UInteger _writeMask,
+                      UInteger _userWriteMask,
+                      ReferenceNode[] _references,
+                      UByte _eventNotifier) {
         super(_nodeId, _nodeClass, _browseName, _displayName, _description, _writeMask, _userWriteMask, _references);
         this._eventNotifier = _eventNotifier;
     }
 
-    public UByte getEventNotifier() { return _eventNotifier; }
+    public UByte getEventNotifier() {
+        return _eventNotifier;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ObjectNode objectNode, UaEncoder encoder) {
         encoder.encodeNodeId("NodeId", objectNode._nodeId);
@@ -76,10 +91,21 @@ public class ObjectNode extends InstanceNode {
         LocalizedText _description = decoder.decodeLocalizedText("Description");
         UInteger _writeMask = decoder.decodeUInt32("WriteMask");
         UInteger _userWriteMask = decoder.decodeUInt32("UserWriteMask");
-        ReferenceNode[] _references = decoder.decodeArray("References", decoder::decodeSerializable, ReferenceNode.class);
+        ReferenceNode[] _references = decoder
+            .decodeArray("References", decoder::decodeSerializable, ReferenceNode.class);
         UByte _eventNotifier = decoder.decodeByte("EventNotifier");
 
-        return new ObjectNode(_nodeId, _nodeClass, _browseName, _displayName, _description, _writeMask, _userWriteMask, _references, _eventNotifier);
+        return new ObjectNode(
+            _nodeId,
+            _nodeClass,
+            _browseName,
+            _displayName,
+            _description,
+            _writeMask,
+            _userWriteMask,
+            _references,
+            _eventNotifier
+        );
     }
 
     static {

@@ -43,19 +43,28 @@ public class DataChangeNotification extends NotificationData {
         this._diagnosticInfos = _diagnosticInfos;
     }
 
-    public MonitoredItemNotification[] getMonitoredItems() { return _monitoredItems; }
+    public MonitoredItemNotification[] getMonitoredItems() {
+        return _monitoredItems;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DataChangeNotification dataChangeNotification, UaEncoder encoder) {
         encoder.encodeArray("MonitoredItems", dataChangeNotification._monitoredItems, encoder::encodeSerializable);
@@ -63,15 +72,27 @@ public class DataChangeNotification extends NotificationData {
     }
 
     public static DataChangeNotification decode(UaDecoder decoder) {
-        MonitoredItemNotification[] _monitoredItems = decoder.decodeArray("MonitoredItems", decoder::decodeSerializable, MonitoredItemNotification.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        MonitoredItemNotification[] _monitoredItems = decoder
+            .decodeArray("MonitoredItems", decoder::decodeSerializable, MonitoredItemNotification.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
         return new DataChangeNotification(_monitoredItems, _diagnosticInfos);
     }
 
     static {
-        DelegateRegistry.registerEncoder(DataChangeNotification::encode, DataChangeNotification.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DataChangeNotification::decode, DataChangeNotification.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            DataChangeNotification::encode,
+            DataChangeNotification.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            DataChangeNotification::decode,
+            DataChangeNotification.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

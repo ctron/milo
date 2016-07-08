@@ -41,23 +41,39 @@ public class TranslateBrowsePathsToNodeIdsRequest implements UaRequestMessage {
         this._browsePaths = _browsePaths;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public BrowsePath[] getBrowsePaths() { return _browsePaths; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public BrowsePath[] getBrowsePaths() {
+        return _browsePaths;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
-    public static void encode(TranslateBrowsePathsToNodeIdsRequest translateBrowsePathsToNodeIdsRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", translateBrowsePathsToNodeIdsRequest._requestHeader != null ? translateBrowsePathsToNodeIdsRequest._requestHeader : new RequestHeader());
-        encoder.encodeArray("BrowsePaths", translateBrowsePathsToNodeIdsRequest._browsePaths, encoder::encodeSerializable);
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
+
+    public static void encode(TranslateBrowsePathsToNodeIdsRequest translateBrowsePathsToNodeIdsRequest,
+                              UaEncoder encoder) {
+        encoder.encodeSerializable(
+            "RequestHeader",
+            translateBrowsePathsToNodeIdsRequest._requestHeader != null ?
+                translateBrowsePathsToNodeIdsRequest._requestHeader :
+                new RequestHeader()
+        );
+        encoder
+            .encodeArray("BrowsePaths", translateBrowsePathsToNodeIdsRequest._browsePaths, encoder::encodeSerializable);
     }
 
     public static TranslateBrowsePathsToNodeIdsRequest decode(UaDecoder decoder) {
@@ -68,8 +84,18 @@ public class TranslateBrowsePathsToNodeIdsRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(TranslateBrowsePathsToNodeIdsRequest::encode, TranslateBrowsePathsToNodeIdsRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(TranslateBrowsePathsToNodeIdsRequest::decode, TranslateBrowsePathsToNodeIdsRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            TranslateBrowsePathsToNodeIdsRequest::encode,
+            TranslateBrowsePathsToNodeIdsRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            TranslateBrowsePathsToNodeIdsRequest::decode,
+            TranslateBrowsePathsToNodeIdsRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

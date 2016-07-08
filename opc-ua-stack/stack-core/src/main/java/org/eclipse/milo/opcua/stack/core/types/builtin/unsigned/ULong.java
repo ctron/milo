@@ -141,8 +141,7 @@ public final class ULong extends UNumber implements Comparable<ULong> {
         }
 
         if (value.charAt(0) == '-') {
-            throw new NumberFormatException(
-                String.format("Illegal leading minus sign on unsigned string %s", value));
+            throw new NumberFormatException(String.format("Illegal leading minus sign on unsigned string %s", value));
         }
 
         if (length <= 18) {
@@ -157,8 +156,7 @@ public final class ULong extends UNumber implements Comparable<ULong> {
         }
         long result = first * 10 + second;
         if (compare(result, first) < 0) {
-            throw new NumberFormatException(
-                String.format("String value %s exceeds range of unsigned long", value));
+            throw new NumberFormatException(String.format("String value %s exceeds range of unsigned long", value));
         }
 
         this.value = result;

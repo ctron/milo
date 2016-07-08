@@ -32,13 +32,10 @@ import org.eclipse.milo.opcua.stack.core.types.structured.DeleteReferencesItem;
 public interface NodeManager {
 
     default void addNode(AddNodesContext context, List<AddNodesItem> nodesToAdd) {
-        AddNodesResult result = new AddNodesResult(
-            new StatusCode(StatusCodes.Bad_NotSupported),
-            NodeId.NULL_VALUE);
+        AddNodesResult result = new AddNodesResult(new StatusCode(StatusCodes.Bad_NotSupported), NodeId.NULL_VALUE);
 
         context.complete(Collections.nCopies(nodesToAdd.size(), result));
     }
-
 
     default void deleteNode(DeleteNodesContext context, List<DeleteNodesItem> nodesToDelete) {
         StatusCode statusCode = new StatusCode(StatusCodes.Bad_NotSupported);
@@ -59,7 +56,8 @@ public interface NodeManager {
     }
 
     final class AddNodesContext extends OperationContext<AddNodesItem, AddNodesResult> {
-        public AddNodesContext(OpcUaServer server, @Nullable Session session,
+        public AddNodesContext(OpcUaServer server,
+                               @Nullable Session session,
                                DiagnosticsContext<AddNodesItem> diagnosticsContext) {
 
             super(server, session, diagnosticsContext);
@@ -67,7 +65,8 @@ public interface NodeManager {
     }
 
     final class DeleteNodesContext extends OperationContext<DeleteNodesItem, StatusCode> {
-        public DeleteNodesContext(OpcUaServer server, @Nullable Session session,
+        public DeleteNodesContext(OpcUaServer server,
+                                  @Nullable Session session,
                                   DiagnosticsContext<DeleteNodesItem> diagnosticsContext) {
 
             super(server, session, diagnosticsContext);
@@ -75,7 +74,8 @@ public interface NodeManager {
     }
 
     final class AddReferencesContext extends OperationContext<AddReferencesItem, StatusCode> {
-        public AddReferencesContext(OpcUaServer server, @Nullable Session session,
+        public AddReferencesContext(OpcUaServer server,
+                                    @Nullable Session session,
                                     DiagnosticsContext<AddReferencesItem> diagnosticsContext) {
 
             super(server, session, diagnosticsContext);
@@ -83,7 +83,8 @@ public interface NodeManager {
     }
 
     final class DeleteReferencesContext extends OperationContext<DeleteReferencesItem, StatusCode> {
-        public DeleteReferencesContext(OpcUaServer server, @Nullable Session session,
+        public DeleteReferencesContext(OpcUaServer server,
+                                       @Nullable Session session,
                                        DiagnosticsContext<DeleteReferencesItem> diagnosticsContext) {
 
             super(server, session, diagnosticsContext);

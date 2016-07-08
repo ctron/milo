@@ -75,15 +75,17 @@ public interface UaReferenceTypeNode {
      * @return the InverseName attribute.
      */
     default CompletableFuture<Optional<LocalizedText>> readInverseNameAttribute() {
-        return readInverseName().thenApply(v -> {
-            StatusCode statusCode = v.getStatusCode();
+        return readInverseName().thenApply(
+            v -> {
+                StatusCode statusCode = v.getStatusCode();
 
-            if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
-                return Optional.empty();
-            } else {
-                return Optional.ofNullable((LocalizedText) v.getValue().getValue());
+                if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
+                    return Optional.empty();
+                } else {
+                    return Optional.ofNullable((LocalizedText) v.getValue().getValue());
+                }
             }
-        });
+        );
     }
 
     /**

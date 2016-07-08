@@ -43,30 +43,46 @@ public class MonitoredItemModifyResult implements UaStructure {
         this._filterResult = null;
     }
 
-    public MonitoredItemModifyResult(StatusCode _statusCode, Double _revisedSamplingInterval, UInteger _revisedQueueSize, ExtensionObject _filterResult) {
+    public MonitoredItemModifyResult(StatusCode _statusCode,
+                                     Double _revisedSamplingInterval,
+                                     UInteger _revisedQueueSize,
+                                     ExtensionObject _filterResult) {
         this._statusCode = _statusCode;
         this._revisedSamplingInterval = _revisedSamplingInterval;
         this._revisedQueueSize = _revisedQueueSize;
         this._filterResult = _filterResult;
     }
 
-    public StatusCode getStatusCode() { return _statusCode; }
+    public StatusCode getStatusCode() {
+        return _statusCode;
+    }
 
-    public Double getRevisedSamplingInterval() { return _revisedSamplingInterval; }
+    public Double getRevisedSamplingInterval() {
+        return _revisedSamplingInterval;
+    }
 
-    public UInteger getRevisedQueueSize() { return _revisedQueueSize; }
+    public UInteger getRevisedQueueSize() {
+        return _revisedQueueSize;
+    }
 
-    public ExtensionObject getFilterResult() { return _filterResult; }
+    public ExtensionObject getFilterResult() {
+        return _filterResult;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(MonitoredItemModifyResult monitoredItemModifyResult, UaEncoder encoder) {
         encoder.encodeStatusCode("StatusCode", monitoredItemModifyResult._statusCode);
@@ -85,8 +101,18 @@ public class MonitoredItemModifyResult implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(MonitoredItemModifyResult::encode, MonitoredItemModifyResult.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(MonitoredItemModifyResult::decode, MonitoredItemModifyResult.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            MonitoredItemModifyResult::encode,
+            MonitoredItemModifyResult.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            MonitoredItemModifyResult::decode,
+            MonitoredItemModifyResult.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

@@ -39,45 +39,80 @@ public class TranslateBrowsePathsToNodeIdsResponse implements UaResponseMessage 
         this._diagnosticInfos = null;
     }
 
-    public TranslateBrowsePathsToNodeIdsResponse(ResponseHeader _responseHeader, BrowsePathResult[] _results, DiagnosticInfo[] _diagnosticInfos) {
+    public TranslateBrowsePathsToNodeIdsResponse(ResponseHeader _responseHeader,
+                                                 BrowsePathResult[] _results,
+                                                 DiagnosticInfo[] _diagnosticInfos) {
         this._responseHeader = _responseHeader;
         this._results = _results;
         this._diagnosticInfos = _diagnosticInfos;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public BrowsePathResult[] getResults() { return _results; }
+    public BrowsePathResult[] getResults() {
+        return _results;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
-
-    public static void encode(TranslateBrowsePathsToNodeIdsResponse translateBrowsePathsToNodeIdsResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", translateBrowsePathsToNodeIdsResponse._responseHeader != null ? translateBrowsePathsToNodeIdsResponse._responseHeader : new ResponseHeader());
+    public static void encode(TranslateBrowsePathsToNodeIdsResponse translateBrowsePathsToNodeIdsResponse,
+                              UaEncoder encoder) {
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            translateBrowsePathsToNodeIdsResponse._responseHeader != null ?
+                translateBrowsePathsToNodeIdsResponse._responseHeader :
+                new ResponseHeader()
+        );
         encoder.encodeArray("Results", translateBrowsePathsToNodeIdsResponse._results, encoder::encodeSerializable);
-        encoder.encodeArray("DiagnosticInfos", translateBrowsePathsToNodeIdsResponse._diagnosticInfos, encoder::encodeDiagnosticInfo);
+        encoder.encodeArray(
+            "DiagnosticInfos",
+            translateBrowsePathsToNodeIdsResponse._diagnosticInfos,
+            encoder::encodeDiagnosticInfo
+        );
     }
 
     public static TranslateBrowsePathsToNodeIdsResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
-        BrowsePathResult[] _results = decoder.decodeArray("Results", decoder::decodeSerializable, BrowsePathResult.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        BrowsePathResult[] _results = decoder
+            .decodeArray("Results", decoder::decodeSerializable, BrowsePathResult.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
         return new TranslateBrowsePathsToNodeIdsResponse(_responseHeader, _results, _diagnosticInfos);
     }
 
     static {
-        DelegateRegistry.registerEncoder(TranslateBrowsePathsToNodeIdsResponse::encode, TranslateBrowsePathsToNodeIdsResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(TranslateBrowsePathsToNodeIdsResponse::decode, TranslateBrowsePathsToNodeIdsResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            TranslateBrowsePathsToNodeIdsResponse::encode,
+            TranslateBrowsePathsToNodeIdsResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            TranslateBrowsePathsToNodeIdsResponse::decode,
+            TranslateBrowsePathsToNodeIdsResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

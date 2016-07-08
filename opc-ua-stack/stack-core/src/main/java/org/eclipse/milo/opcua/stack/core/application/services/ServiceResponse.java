@@ -58,7 +58,8 @@ public class ServiceResponse {
 
     @Override
     public String toString() {
-        ToStringHelper helper = MoreObjects.toStringHelper(this)
+        ToStringHelper helper = MoreObjects
+            .toStringHelper(this)
             .add("requestId", requestId)
             .add("request", request.getClass().getSimpleName())
             .add("response", response.getClass().getSimpleName());

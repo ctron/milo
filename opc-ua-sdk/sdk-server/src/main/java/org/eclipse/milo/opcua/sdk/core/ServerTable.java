@@ -51,7 +51,9 @@ public class ServerTable {
     }
 
     public synchronized String[] toArray() {
-        List<String> uris = uriTable.entrySet().stream()
+        List<String> uris = uriTable
+            .entrySet()
+            .stream()
             .sorted((e1, e2) -> e1.getKey() - e2.getKey())
             .map(Map.Entry::getValue)
             .collect(Collectors.toList());

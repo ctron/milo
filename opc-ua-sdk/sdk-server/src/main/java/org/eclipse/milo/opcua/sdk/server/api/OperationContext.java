@@ -30,9 +30,7 @@ public class OperationContext<T, U> {
     private final Session session;
     private final DiagnosticsContext<T> diagnostics;
 
-    public OperationContext(OpcUaServer server,
-                            @Nullable Session session,
-                            DiagnosticsContext<T> diagnostics) {
+    public OperationContext(OpcUaServer server, @Nullable Session session, DiagnosticsContext<T> diagnostics) {
 
         this(server, session, new CompletableFuture<List<U>>(), diagnostics);
     }

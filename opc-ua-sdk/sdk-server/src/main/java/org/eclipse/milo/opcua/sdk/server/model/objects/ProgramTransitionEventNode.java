@@ -29,15 +29,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:ProgramTransitionEventType")
 public class ProgramTransitionEventNode extends TransitionEventNode implements ProgramTransitionEventType {
 
-    public ProgramTransitionEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ProgramTransitionEventNode(UaNodeManager nodeManager,
+                                      NodeId nodeId,
+                                      QualifiedName browseName,
+                                      LocalizedText displayName,
+                                      Optional<LocalizedText> description,
+                                      Optional<UInteger> writeMask,
+                                      Optional<UInteger> userWriteMask,
+                                      UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -51,7 +50,9 @@ public class ProgramTransitionEventNode extends TransitionEventNode implements P
 
     @Override
     public PropertyNode getIntermediateResultNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ProgramTransitionEventType.INTERMEDIATE_RESULT.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ProgramTransitionEventType.INTERMEDIATE_RESULT.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

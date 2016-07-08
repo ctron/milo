@@ -87,50 +87,53 @@ public class UaTcpServerSymmetricHandler extends ByteToMessageCodec<ServiceRespo
 
     @Override
     protected void encode(ChannelHandlerContext ctx, ServiceResponse message, ByteBuf out) throws Exception {
-        serializationQueue.encode((binaryEncoder, chunkEncoder) -> {
-            ByteBuf messageBuffer = BufferUtil.buffer();
+        serializationQueue.encode(
+            (binaryEncoder, chunkEncoder) -> {
+                ByteBuf messageBuffer = BufferUtil.buffer();
 
-            try {
-                binaryEncoder.setBuffer(messageBuffer);
-                binaryEncoder.encodeMessage(null, message.getResponse());
+                try {
+                    binaryEncoder.setBuffer(messageBuffer);
+                    binaryEncoder.encodeMessage(null, message.getResponse());
 
-                final List<ByteBuf> chunks = chunkEncoder.encodeSymmetric(
-                    secureChannel,
-                    MessageType.SecureMessage,
-                    messageBuffer,
-                    message.getRequestId()
-                );
+                    final List<ByteBuf> chunks = chunkEncoder.encodeSymmetric(
+                        secureChannel,
+                        MessageType.SecureMessage,
+                        messageBuffer,
+                        message.getRequestId()
+                    );
 
-                ctx.executor().execute(() -> {
-                    chunks.forEach(c -> ctx.write(c, ctx.voidPromise()));
-                    ctx.flush();
-                });
-            } catch (UaException e) {
-                logger.error("Error encoding {}: {}", message.getResponse().getClass(), e.getMessage(), e);
-                ctx.close();
-            } finally {
-                messageBuffer.release();
+                    ctx.executor().execute(
+                        () -> {
+                            chunks.forEach(c -> ctx.write(c, ctx.voidPromise()));
+                            ctx.flush();
+                        }
+                    );
+                } catch (UaException e) {
+                    logger.error("Error encoding {}: {}", message.getResponse().getClass(), e.getMessage(), e);
+                    ctx.close();
+                } finally {
+                    messageBuffer.release();
+                }
             }
-        });
+        );
     }
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) throws Exception {
         buffer = buffer.order(ByteOrder.LITTLE_ENDIAN);
 
-        while (buffer.readableBytes() >= HEADER_LENGTH &&
-            buffer.readableBytes() >= getMessageLength(buffer)) {
+        while (buffer.readableBytes() >= HEADER_LENGTH && buffer.readableBytes() >= getMessageLength(buffer)) {
 
             int messageLength = getMessageLength(buffer);
             MessageType messageType = MessageType.fromMediumInt(buffer.getMedium(buffer.readerIndex()));
 
             switch (messageType) {
-                case SecureMessage:
-                    onSecureMessage(ctx, buffer.readSlice(messageLength), out);
-                    break;
+            case SecureMessage:
+                onSecureMessage(ctx, buffer.readSlice(messageLength), out);
+                break;
 
-                default:
-                    out.add(buffer.readSlice(messageLength).retain());
+            default:
+                out.add(buffer.readSlice(messageLength).retain());
             }
         }
     }
@@ -148,63 +151,68 @@ public class UaTcpServerSymmetricHandler extends ByteToMessageCodec<ServiceRespo
 
             long secureChannelId = buffer.readUnsignedInt();
             if (secureChannelId != secureChannel.getChannelId()) {
-                throw new UaException(StatusCodes.Bad_SecureChannelIdInvalid,
-                    "invalid secure channel id: " + secureChannelId);
+                throw new UaException(
+                    StatusCodes.Bad_SecureChannelIdInvalid,
+                    "invalid secure channel id: " + secureChannelId
+                );
             }
 
             int chunkSize = buffer.readerIndex(0).readableBytes();
             if (chunkSize > maxChunkSize) {
-                throw new UaException(StatusCodes.Bad_TcpMessageTooLarge,
-                    String.format("max chunk size exceeded (%s)", maxChunkSize));
+                throw new UaException(
+                    StatusCodes.Bad_TcpMessageTooLarge,
+                    String.format("max chunk size exceeded (%s)", maxChunkSize)
+                );
             }
 
             chunkBuffers.add(buffer.retain());
 
             if (chunkBuffers.size() > maxChunkCount) {
-                throw new UaException(StatusCodes.Bad_TcpMessageTooLarge,
-                    String.format("max chunk count exceeded (%s)", maxChunkCount));
+                throw new UaException(
+                    StatusCodes.Bad_TcpMessageTooLarge,
+                    String.format("max chunk count exceeded (%s)", maxChunkCount)
+                );
             }
 
             if (chunkType == 'F') {
                 final List<ByteBuf> buffersToDecode = chunkBuffers;
                 chunkBuffers = new ArrayList<>(maxChunkCount);
 
-                serializationQueue.decode((binaryDecoder, chunkDecoder) -> {
-                    try {
-                        validateChunkHeaders(buffersToDecode);
+                serializationQueue.decode(
+                    (binaryDecoder, chunkDecoder) -> {
+                        try {
+                            validateChunkHeaders(buffersToDecode);
 
-                        ByteBuf messageBuffer = chunkDecoder.decodeSymmetric(secureChannel, buffersToDecode);
+                            ByteBuf messageBuffer = chunkDecoder.decodeSymmetric(secureChannel, buffersToDecode);
 
-                        binaryDecoder.setBuffer(messageBuffer);
-                        UaRequestMessage request = binaryDecoder.decodeMessage(null);
+                            binaryDecoder.setBuffer(messageBuffer);
+                            UaRequestMessage request = binaryDecoder.decodeMessage(null);
 
-                        ServiceRequest<UaRequestMessage, UaResponseMessage> serviceRequest = new ServiceRequest<>(
-                            request,
-                            chunkDecoder.getLastRequestId(),
-                            server,
-                            secureChannel
-                        );
+                            ServiceRequest<UaRequestMessage, UaResponseMessage> serviceRequest = new ServiceRequest<>(
+                                request,
+                                chunkDecoder.getLastRequestId(),
+                                server,
+                                secureChannel
+                            );
 
-                        server.getExecutorService().execute(() -> server.receiveRequest(serviceRequest));
+                            server.getExecutorService().execute(() -> server.receiveRequest(serviceRequest));
 
-                        messageBuffer.release();
-                        buffersToDecode.clear();
-                    } catch (UaException e) {
-                        logger.error("Error decoding symmetric message: {}", e.getMessage(), e);
-                        ctx.close();
+                            messageBuffer.release();
+                            buffersToDecode.clear();
+                        } catch (UaException e) {
+                            logger.error("Error decoding symmetric message: {}", e.getMessage(), e);
+                            ctx.close();
+                        }
                     }
-                });
+                );
             }
         }
     }
 
-
     private void validateChunkHeaders(List<ByteBuf> chunkBuffers) throws UaException {
         ChannelSecurity channelSecurity = secureChannel.getChannelSecurity();
         long currentTokenId = channelSecurity.getCurrentToken().getTokenId().longValue();
-        long previousTokenId = channelSecurity.getPreviousToken()
-            .map(t -> t.getTokenId().longValue())
-            .orElse(-1L);
+        long previousTokenId = channelSecurity.getPreviousToken().map(t -> t.getTokenId().longValue()).orElse(-1L);
 
         for (ByteBuf chunkBuffer : chunkBuffers) {
             chunkBuffer.skipBytes(3 + 1 + 4 + 4); // skip messageType, chunkType, messageSize, secureChannelId
@@ -214,9 +222,11 @@ public class UaTcpServerSymmetricHandler extends ByteToMessageCodec<ServiceRespo
             if (securityHeader.getTokenId() != currentTokenId) {
                 if (securityHeader.getTokenId() != previousTokenId) {
                     String message = String.format(
-                        "received unknown secure channel token. " +
-                            "tokenId=%s, currentTokenId=%s, previousTokenId=%s",
-                        securityHeader.getTokenId(), currentTokenId, previousTokenId);
+                        "received unknown secure channel token. " + "tokenId=%s, currentTokenId=%s, previousTokenId=%s",
+                        securityHeader.getTokenId(),
+                        currentTokenId,
+                        previousTokenId
+                    );
 
                     throw new UaException(StatusCodes.Bad_SecureChannelTokenUnknown, message);
                 }
@@ -238,11 +248,15 @@ public class UaTcpServerSymmetricHandler extends ByteToMessageCodec<ServiceRespo
             ErrorMessage errorMessage = ExceptionHandler.sendErrorMessage(ctx, cause);
 
             if (cause instanceof UaException) {
-                logger.debug("[remote={}] UaException caught; sent {}",
-                    ctx.channel().remoteAddress(), errorMessage, cause);
+                logger.debug(
+                    "[remote={}] UaException caught; sent {}",
+                    ctx.channel().remoteAddress(),
+                    errorMessage,
+                    cause
+                );
             } else {
-                logger.error("[remote={}] Exception caught; sent {}",
-                    ctx.channel().remoteAddress(), errorMessage, cause);
+                logger
+                    .error("[remote={}] Exception caught; sent {}", ctx.channel().remoteAddress(), errorMessage, cause);
             }
         }
     }

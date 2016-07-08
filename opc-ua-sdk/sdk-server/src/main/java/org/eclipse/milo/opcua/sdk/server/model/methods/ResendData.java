@@ -32,11 +32,9 @@ public class ResendData {
     }
 
     @UaMethod
-    public void invoke(
-        InvocationContext context,
+    public void invoke(InvocationContext context,
 
-        @UaInputArgument(name = "subscriptionId")
-            UInteger subscriptionId) throws UaException {
+                       @UaInputArgument(name = "subscriptionId") UInteger subscriptionId) throws UaException {
 
         Subscription subscription = server.getSubscriptions().get(subscriptionId);
 

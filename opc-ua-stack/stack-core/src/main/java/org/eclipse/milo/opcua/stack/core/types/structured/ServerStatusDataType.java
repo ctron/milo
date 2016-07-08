@@ -48,7 +48,12 @@ public class ServerStatusDataType implements UaStructure {
         this._shutdownReason = null;
     }
 
-    public ServerStatusDataType(DateTime _startTime, DateTime _currentTime, ServerState _state, BuildInfo _buildInfo, UInteger _secondsTillShutdown, LocalizedText _shutdownReason) {
+    public ServerStatusDataType(DateTime _startTime,
+                                DateTime _currentTime,
+                                ServerState _state,
+                                BuildInfo _buildInfo,
+                                UInteger _secondsTillShutdown,
+                                LocalizedText _shutdownReason) {
         this._startTime = _startTime;
         this._currentTime = _currentTime;
         this._state = _state;
@@ -57,33 +62,53 @@ public class ServerStatusDataType implements UaStructure {
         this._shutdownReason = _shutdownReason;
     }
 
-    public DateTime getStartTime() { return _startTime; }
+    public DateTime getStartTime() {
+        return _startTime;
+    }
 
-    public DateTime getCurrentTime() { return _currentTime; }
+    public DateTime getCurrentTime() {
+        return _currentTime;
+    }
 
-    public ServerState getState() { return _state; }
+    public ServerState getState() {
+        return _state;
+    }
 
-    public BuildInfo getBuildInfo() { return _buildInfo; }
+    public BuildInfo getBuildInfo() {
+        return _buildInfo;
+    }
 
-    public UInteger getSecondsTillShutdown() { return _secondsTillShutdown; }
+    public UInteger getSecondsTillShutdown() {
+        return _secondsTillShutdown;
+    }
 
-    public LocalizedText getShutdownReason() { return _shutdownReason; }
+    public LocalizedText getShutdownReason() {
+        return _shutdownReason;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ServerStatusDataType serverStatusDataType, UaEncoder encoder) {
         encoder.encodeDateTime("StartTime", serverStatusDataType._startTime);
         encoder.encodeDateTime("CurrentTime", serverStatusDataType._currentTime);
         encoder.encodeEnumeration("State", serverStatusDataType._state);
-        encoder.encodeSerializable("BuildInfo", serverStatusDataType._buildInfo != null ? serverStatusDataType._buildInfo : new BuildInfo());
+        encoder.encodeSerializable(
+            "BuildInfo",
+            serverStatusDataType._buildInfo != null ? serverStatusDataType._buildInfo : new BuildInfo()
+        );
         encoder.encodeUInt32("SecondsTillShutdown", serverStatusDataType._secondsTillShutdown);
         encoder.encodeLocalizedText("ShutdownReason", serverStatusDataType._shutdownReason);
     }
@@ -96,12 +121,21 @@ public class ServerStatusDataType implements UaStructure {
         UInteger _secondsTillShutdown = decoder.decodeUInt32("SecondsTillShutdown");
         LocalizedText _shutdownReason = decoder.decodeLocalizedText("ShutdownReason");
 
-        return new ServerStatusDataType(_startTime, _currentTime, _state, _buildInfo, _secondsTillShutdown, _shutdownReason);
+        return new ServerStatusDataType(
+            _startTime,
+            _currentTime,
+            _state,
+            _buildInfo,
+            _secondsTillShutdown,
+            _shutdownReason
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(ServerStatusDataType::encode, ServerStatusDataType.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ServerStatusDataType::decode, ServerStatusDataType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(ServerStatusDataType::encode, ServerStatusDataType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(ServerStatusDataType::decode, ServerStatusDataType.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

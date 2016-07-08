@@ -31,16 +31,19 @@ public class NonceUtil {
          * The first call to a SecureRandom causes it to seed, which is potentially blocking, so don't make the
          * SecureRandom instance available until after its seeded and generated output already.
          */
-        new Thread(() -> {
-            SecureRandom sr;
-            try {
-                sr = SecureRandom.getInstanceStrong();
-            } catch (NoSuchAlgorithmException e) {
-                sr = new SecureRandom();
-            }
-            sr.nextBytes(new byte[32]);
-            secureRandom = sr;
-        }, "SecureRandomGetInstanceStrong").start();
+        new Thread(
+            () -> {
+                SecureRandom sr;
+                try {
+                    sr = SecureRandom.getInstanceStrong();
+                } catch (NoSuchAlgorithmException e) {
+                    sr = new SecureRandom();
+                }
+                sr.nextBytes(new byte[32]);
+                secureRandom = sr;
+            },
+            "SecureRandomGetInstanceStrong"
+        ).start();
     }
 
     public static void enableSecureRandom() {
@@ -91,12 +94,12 @@ public class NonceUtil {
      */
     public static int getNonceLength(SecurityAlgorithm algorithm) {
         switch (algorithm) {
-            case Aes128:
-                return 16;
-            case Aes256:
-                return 32;
-            default:
-                return 0;
+        case Aes128:
+            return 16;
+        case Aes256:
+            return 32;
+        default:
+            return 0;
         }
     }
 

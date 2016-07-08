@@ -59,8 +59,7 @@ public interface UaSubscriptionManager {
      * @param requestedPublishingInterval the requested publishing interval.
      * @return a {@link CompletableFuture} containing the {@link UaSubscription}.
      */
-    CompletableFuture<UaSubscription> modifySubscription(UInteger subscriptionId,
-                                                         double requestedPublishingInterval);
+    CompletableFuture<UaSubscription> modifySubscription(UInteger subscriptionId, double requestedPublishingInterval);
 
     /**
      * Modify a {@link UaSubscription}.

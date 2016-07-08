@@ -42,30 +42,46 @@ public class ChannelSecurityToken implements UaStructure {
         this._revisedLifetime = null;
     }
 
-    public ChannelSecurityToken(UInteger _channelId, UInteger _tokenId, DateTime _createdAt, UInteger _revisedLifetime) {
+    public ChannelSecurityToken(UInteger _channelId,
+                                UInteger _tokenId,
+                                DateTime _createdAt,
+                                UInteger _revisedLifetime) {
         this._channelId = _channelId;
         this._tokenId = _tokenId;
         this._createdAt = _createdAt;
         this._revisedLifetime = _revisedLifetime;
     }
 
-    public UInteger getChannelId() { return _channelId; }
+    public UInteger getChannelId() {
+        return _channelId;
+    }
 
-    public UInteger getTokenId() { return _tokenId; }
+    public UInteger getTokenId() {
+        return _tokenId;
+    }
 
-    public DateTime getCreatedAt() { return _createdAt; }
+    public DateTime getCreatedAt() {
+        return _createdAt;
+    }
 
-    public UInteger getRevisedLifetime() { return _revisedLifetime; }
+    public UInteger getRevisedLifetime() {
+        return _revisedLifetime;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ChannelSecurityToken channelSecurityToken, UaEncoder encoder) {
         encoder.encodeUInt32("ChannelId", channelSecurityToken._channelId);
@@ -84,8 +100,10 @@ public class ChannelSecurityToken implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(ChannelSecurityToken::encode, ChannelSecurityToken.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ChannelSecurityToken::decode, ChannelSecurityToken.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(ChannelSecurityToken::encode, ChannelSecurityToken.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(ChannelSecurityToken::decode, ChannelSecurityToken.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

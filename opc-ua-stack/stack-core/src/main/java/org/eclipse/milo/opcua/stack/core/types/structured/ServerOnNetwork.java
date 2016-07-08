@@ -48,23 +48,36 @@ public class ServerOnNetwork implements UaStructure {
         this._serverCapabilities = _serverCapabilities;
     }
 
-    public UInteger getRecordId() { return _recordId; }
+    public UInteger getRecordId() {
+        return _recordId;
+    }
 
-    public String getServerName() { return _serverName; }
+    public String getServerName() {
+        return _serverName;
+    }
 
-    public String getDiscoveryUrl() { return _discoveryUrl; }
+    public String getDiscoveryUrl() {
+        return _discoveryUrl;
+    }
 
-    public String[] getServerCapabilities() { return _serverCapabilities; }
+    public String[] getServerCapabilities() {
+        return _serverCapabilities;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ServerOnNetwork serverOnNetwork, UaEncoder encoder) {
         encoder.encodeUInt32("RecordId", serverOnNetwork._recordId);
@@ -83,8 +96,10 @@ public class ServerOnNetwork implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(ServerOnNetwork::encode, ServerOnNetwork.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ServerOnNetwork::decode, ServerOnNetwork.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(ServerOnNetwork::encode, ServerOnNetwork.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(ServerOnNetwork::decode, ServerOnNetwork.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

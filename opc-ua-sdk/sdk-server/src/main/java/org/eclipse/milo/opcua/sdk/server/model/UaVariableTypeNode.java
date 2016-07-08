@@ -51,7 +51,16 @@ public class UaVariableTypeNode extends UaNode implements VariableTypeNode {
                               Optional<UInteger[]> arrayDimensions,
                               boolean isAbstract) {
 
-        super(nodeManager, nodeId, NodeClass.VariableType, browseName, displayName, description, writeMask, userWriteMask);
+        super(
+            nodeManager,
+            nodeId,
+            NodeClass.VariableType,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask
+        );
 
         this.value = value;
         this.dataType = dataType;

@@ -40,7 +40,8 @@ public interface ViewManager {
 
         OpcUaServer server = context.getServer();
 
-        List<CompletableFuture<BrowseResult>> futures = nodesToBrowse.stream()
+        List<CompletableFuture<BrowseResult>> futures = nodesToBrowse
+            .stream()
             .map(browseDescription -> BrowseHelper.browse(server, view, maxReferencesPerNode, browseDescription))
             .collect(toList());
 
@@ -55,7 +56,6 @@ public interface ViewManager {
      * future exceptionally.
      */
     CompletableFuture<List<Reference>> getReferences(NodeId nodeId);
-
 
     final class BrowseContext extends OperationContext<BrowseDescription, BrowseResult> {
         public BrowseContext(OpcUaServer server,

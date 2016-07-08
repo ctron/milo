@@ -28,23 +28,24 @@ public class Union implements UaStructure {
     public static final NodeId BinaryEncodingId = Identifiers.Union_Encoding_DefaultBinary;
     public static final NodeId XmlEncodingId = Identifiers.Union_Encoding_DefaultXml;
 
+    public Union() {}
 
-    public Union() {
+    @Override
+    public NodeId getTypeId() {
+        return TypeId;
     }
 
-
     @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
-
-    @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
-
-    public static void encode(Union union, UaEncoder encoder) {
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
     }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
+
+    public static void encode(Union union, UaEncoder encoder) {}
 
     public static Union decode(UaDecoder decoder) {
 

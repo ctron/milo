@@ -52,24 +52,21 @@ public interface MonitoredItemManager {
      *
      * @param eventItems the {@link EventItem}s that were created.
      */
-    default void onEventItemsCreated(List<EventItem> eventItems) {
-    }
+    default void onEventItemsCreated(List<EventItem> eventItems) {}
 
     /**
      * {@link EventItem}s have been modified for nodes belonging to this {@link NodeManager}.
      *
      * @param eventItems the {@link EventItem}s that were modified.
      */
-    default void onEventItemsModified(List<EventItem> eventItems) {
-    }
+    default void onEventItemsModified(List<EventItem> eventItems) {}
 
     /**
      * {@link EventItem}s have been deleted for nodes belonging to this {@link NodeManager}.
      *
      * @param eventItems the {@link EventItem}s that were deleted.
      */
-    default void onEventItemsDeleted(List<EventItem> eventItems) {
-    }
+    default void onEventItemsDeleted(List<EventItem> eventItems) {}
 
     /**
      * {@link MonitoredItem}s have had their {@link MonitoringMode} modified by a client.

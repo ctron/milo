@@ -64,10 +64,15 @@ public class TestStackExResponse implements UaResponseMessage {
         return XmlEncodingId;
     }
 
-
     public static void encode(TestStackExResponse testStackExResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", testStackExResponse._responseHeader != null ? testStackExResponse._responseHeader : new ResponseHeader());
-        encoder.encodeSerializable("Output", testStackExResponse._output != null ? testStackExResponse._output : new CompositeTestType());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            testStackExResponse._responseHeader != null ? testStackExResponse._responseHeader : new ResponseHeader()
+        );
+        encoder.encodeSerializable(
+            "Output",
+            testStackExResponse._output != null ? testStackExResponse._output : new CompositeTestType()
+        );
     }
 
     public static TestStackExResponse decode(UaDecoder decoder) {
@@ -78,8 +83,10 @@ public class TestStackExResponse implements UaResponseMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(TestStackExResponse::encode, TestStackExResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(TestStackExResponse::decode, TestStackExResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(TestStackExResponse::encode, TestStackExResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(TestStackExResponse::decode, TestStackExResponse.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

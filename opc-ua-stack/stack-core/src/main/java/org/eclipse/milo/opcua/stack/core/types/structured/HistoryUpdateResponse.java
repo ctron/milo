@@ -39,45 +39,73 @@ public class HistoryUpdateResponse implements UaResponseMessage {
         this._diagnosticInfos = null;
     }
 
-    public HistoryUpdateResponse(ResponseHeader _responseHeader, HistoryUpdateResult[] _results, DiagnosticInfo[] _diagnosticInfos) {
+    public HistoryUpdateResponse(ResponseHeader _responseHeader,
+                                 HistoryUpdateResult[] _results,
+                                 DiagnosticInfo[] _diagnosticInfos) {
         this._responseHeader = _responseHeader;
         this._results = _results;
         this._diagnosticInfos = _diagnosticInfos;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public HistoryUpdateResult[] getResults() { return _results; }
+    public HistoryUpdateResult[] getResults() {
+        return _results;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(HistoryUpdateResponse historyUpdateResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", historyUpdateResponse._responseHeader != null ? historyUpdateResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            historyUpdateResponse._responseHeader != null ? historyUpdateResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeArray("Results", historyUpdateResponse._results, encoder::encodeSerializable);
         encoder.encodeArray("DiagnosticInfos", historyUpdateResponse._diagnosticInfos, encoder::encodeDiagnosticInfo);
     }
 
     public static HistoryUpdateResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
-        HistoryUpdateResult[] _results = decoder.decodeArray("Results", decoder::decodeSerializable, HistoryUpdateResult.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        HistoryUpdateResult[] _results = decoder
+            .decodeArray("Results", decoder::decodeSerializable, HistoryUpdateResult.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
         return new HistoryUpdateResponse(_responseHeader, _results, _diagnosticInfos);
     }
 
     static {
-        DelegateRegistry.registerEncoder(HistoryUpdateResponse::encode, HistoryUpdateResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(HistoryUpdateResponse::decode, HistoryUpdateResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            HistoryUpdateResponse::encode,
+            HistoryUpdateResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            HistoryUpdateResponse::decode,
+            HistoryUpdateResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

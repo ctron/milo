@@ -49,7 +49,13 @@ public class PublishResponse implements UaResponseMessage {
         this._diagnosticInfos = null;
     }
 
-    public PublishResponse(ResponseHeader _responseHeader, UInteger _subscriptionId, UInteger[] _availableSequenceNumbers, Boolean _moreNotifications, NotificationMessage _notificationMessage, StatusCode[] _results, DiagnosticInfo[] _diagnosticInfos) {
+    public PublishResponse(ResponseHeader _responseHeader,
+                           UInteger _subscriptionId,
+                           UInteger[] _availableSequenceNumbers,
+                           Boolean _moreNotifications,
+                           NotificationMessage _notificationMessage,
+                           StatusCode[] _results,
+                           DiagnosticInfo[] _diagnosticInfos) {
         this._responseHeader = _responseHeader;
         this._subscriptionId = _subscriptionId;
         this._availableSequenceNumbers = _availableSequenceNumbers;
@@ -59,36 +65,64 @@ public class PublishResponse implements UaResponseMessage {
         this._diagnosticInfos = _diagnosticInfos;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public UInteger getSubscriptionId() { return _subscriptionId; }
+    public UInteger getSubscriptionId() {
+        return _subscriptionId;
+    }
 
-    public UInteger[] getAvailableSequenceNumbers() { return _availableSequenceNumbers; }
+    public UInteger[] getAvailableSequenceNumbers() {
+        return _availableSequenceNumbers;
+    }
 
-    public Boolean getMoreNotifications() { return _moreNotifications; }
+    public Boolean getMoreNotifications() {
+        return _moreNotifications;
+    }
 
-    public NotificationMessage getNotificationMessage() { return _notificationMessage; }
+    public NotificationMessage getNotificationMessage() {
+        return _notificationMessage;
+    }
 
-    public StatusCode[] getResults() { return _results; }
+    public StatusCode[] getResults() {
+        return _results;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(PublishResponse publishResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", publishResponse._responseHeader != null ? publishResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            publishResponse._responseHeader != null ? publishResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeUInt32("SubscriptionId", publishResponse._subscriptionId);
-        encoder.encodeArray("AvailableSequenceNumbers", publishResponse._availableSequenceNumbers, encoder::encodeUInt32);
+        encoder
+            .encodeArray("AvailableSequenceNumbers", publishResponse._availableSequenceNumbers, encoder::encodeUInt32);
         encoder.encodeBoolean("MoreNotifications", publishResponse._moreNotifications);
-        encoder.encodeSerializable("NotificationMessage", publishResponse._notificationMessage != null ? publishResponse._notificationMessage : new NotificationMessage());
+        encoder.encodeSerializable(
+            "NotificationMessage",
+            publishResponse._notificationMessage != null ?
+                publishResponse._notificationMessage :
+                new NotificationMessage()
+        );
         encoder.encodeArray("Results", publishResponse._results, encoder::encodeStatusCode);
         encoder.encodeArray("DiagnosticInfos", publishResponse._diagnosticInfos, encoder::encodeDiagnosticInfo);
     }
@@ -96,18 +130,31 @@ public class PublishResponse implements UaResponseMessage {
     public static PublishResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
         UInteger _subscriptionId = decoder.decodeUInt32("SubscriptionId");
-        UInteger[] _availableSequenceNumbers = decoder.decodeArray("AvailableSequenceNumbers", decoder::decodeUInt32, UInteger.class);
+        UInteger[] _availableSequenceNumbers = decoder
+            .decodeArray("AvailableSequenceNumbers", decoder::decodeUInt32, UInteger.class);
         Boolean _moreNotifications = decoder.decodeBoolean("MoreNotifications");
-        NotificationMessage _notificationMessage = decoder.decodeSerializable("NotificationMessage", NotificationMessage.class);
+        NotificationMessage _notificationMessage = decoder
+            .decodeSerializable("NotificationMessage", NotificationMessage.class);
         StatusCode[] _results = decoder.decodeArray("Results", decoder::decodeStatusCode, StatusCode.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
-        return new PublishResponse(_responseHeader, _subscriptionId, _availableSequenceNumbers, _moreNotifications, _notificationMessage, _results, _diagnosticInfos);
+        return new PublishResponse(
+            _responseHeader,
+            _subscriptionId,
+            _availableSequenceNumbers,
+            _moreNotifications,
+            _notificationMessage,
+            _results,
+            _diagnosticInfos
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(PublishResponse::encode, PublishResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(PublishResponse::decode, PublishResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(PublishResponse::encode, PublishResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(PublishResponse::decode, PublishResponse.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

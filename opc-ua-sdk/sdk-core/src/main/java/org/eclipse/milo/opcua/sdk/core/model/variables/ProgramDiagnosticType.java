@@ -21,7 +21,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.structured.Argument;
 import org.eclipse.milo.opcua.stack.core.types.structured.StatusResult;
 
-
 public interface ProgramDiagnosticType extends BaseDataVariableType {
 
     Property<NodeId> CREATE_SESSION_ID = new BasicProperty<>(
@@ -93,7 +92,6 @@ public interface ProgramDiagnosticType extends BaseDataVariableType {
         -1,
         StatusResult.class
     );
-
 
     NodeId getCreateSessionId();
 

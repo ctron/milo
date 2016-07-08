@@ -135,8 +135,10 @@ public class BinaryDecoder implements UaDecoder {
             return null;
         } else {
             if (length > maxStringLength) {
-                throw new UaSerializationException(StatusCodes.Bad_EncodingLimitsExceeded,
-                    String.format("max string length exceeded (length=%s, max=%s)", length, maxStringLength));
+                throw new UaSerializationException(
+                    StatusCodes.Bad_EncodingLimitsExceeded,
+                    String.format("max string length exceeded (length=%s, max=%s)", length, maxStringLength)
+                );
             }
 
             String s = buffer.toString(buffer.readerIndex(), length, Charset.forName("UTF-8"));
@@ -195,7 +197,6 @@ public class BinaryDecoder implements UaDecoder {
     @Override
     public NodeId decodeNodeId(String field) throws UaSerializationException {
         int format = buffer.readByte() & 0x0F;
-
 
         if (format == 0x00) {
             /* Two-byte format */
@@ -287,7 +288,10 @@ public class BinaryDecoder implements UaDecoder {
 
             return new ExtensionObject(xmlElement, encodingTypeId);
         } else {
-            throw new UaSerializationException(StatusCodes.Bad_DecodingError, "unknown ExtensionObject encoding: " + encoding);
+            throw new UaSerializationException(
+                StatusCodes.Bad_DecodingError,
+                "unknown ExtensionObject encoding: " + encoding
+            );
         }
     }
 
@@ -325,7 +329,9 @@ public class BinaryDecoder implements UaDecoder {
                     Array.set(flatArray, i, element);
                 }
 
-                int[] dimensions = dimensionsEncoded ? decodeDimensions() : new int[]{length};
+                int[] dimensions = dimensionsEncoded ? decodeDimensions() : new int[]{
+                    length
+                };
                 Object array = dimensions.length > 1 ? ArrayUtil.unflatten(flatArray, dimensions) : flatArray;
 
                 return new Variant(array);
@@ -352,7 +358,15 @@ public class BinaryDecoder implements UaDecoder {
             StatusCode innerStatusCode = ((mask & 0x20) == 0x20) ? decodeStatusCode(null) : null;
             DiagnosticInfo innerDiagnosticInfo = ((mask & 0x40) == 0x40) ? decodeDiagnosticInfo(null) : null;
 
-            return new DiagnosticInfo(namespaceUri, symbolicId, locale, localizedText, additionalInfo, innerStatusCode, innerDiagnosticInfo);
+            return new DiagnosticInfo(
+                namespaceUri,
+                symbolicId,
+                locale,
+                localizedText,
+                additionalInfo,
+                innerStatusCode,
+                innerDiagnosticInfo
+            );
         }
     }
 
@@ -374,7 +388,8 @@ public class BinaryDecoder implements UaDecoder {
     }
 
     @Override
-    public <T extends UaSerializable> T decodeSerializable(String field, Class<T> clazz) throws UaSerializationException {
+    public <T extends UaSerializable> T decodeSerializable(String field,
+                                                           Class<T> clazz) throws UaSerializationException {
         DecoderDelegate<T> delegate = DelegateRegistry.getDecoder(clazz);
 
         return delegate.decode(this);
@@ -382,15 +397,16 @@ public class BinaryDecoder implements UaDecoder {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T[] decodeArray(String field, Function<String, T> decoder, Class<T> clazz) throws UaSerializationException {
+    public <T> T[] decodeArray(String field,
+                               Function<String, T> decoder,
+                               Class<T> clazz) throws UaSerializationException {
         int length = decodeInt32(null);
 
         if (length == -1) {
             return (T[]) Array.newInstance(clazz, 0);
         } else {
             if (length > maxArrayLength) {
-                throw new UaSerializationException(StatusCodes.Bad_EncodingLimitsExceeded,
-                    "max array length exceeded");
+                throw new UaSerializationException(StatusCodes.Bad_EncodingLimitsExceeded, "max array length exceeded");
             }
 
             Object array = Array.newInstance(clazz, length);
@@ -405,15 +421,19 @@ public class BinaryDecoder implements UaDecoder {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T[] decodeArray(String field, BiFunction<String, Class<T>, T> decoder, Class<T> clazz) throws UaSerializationException {
+    public <T> T[] decodeArray(String field,
+                               BiFunction<String, Class<T>, T> decoder,
+                               Class<T> clazz) throws UaSerializationException {
         int length = decodeInt32(null);
 
         if (length == -1) {
             return (T[]) Array.newInstance(clazz, 0);
         } else {
             if (length > maxArrayLength) {
-                throw new UaSerializationException(StatusCodes.Bad_EncodingLimitsExceeded,
-                    String.format("max array length exceeded (length=%s, max=%s", length, maxArrayLength));
+                throw new UaSerializationException(
+                    StatusCodes.Bad_EncodingLimitsExceeded,
+                    String.format("max array length exceeded (length=%s, max=%s", length, maxArrayLength)
+                );
             }
 
             T[] array = (T[]) Array.newInstance(clazz, length);
@@ -440,58 +460,58 @@ public class BinaryDecoder implements UaDecoder {
 
     private Object decodeBuiltinType(int typeId) throws UaSerializationException {
         switch (typeId) {
-            case 1:
-                return decodeBoolean(null);
-            case 2:
-                return decodeSByte(null);
-            case 3:
-                return decodeByte(null);
-            case 4:
-                return decodeInt16(null);
-            case 5:
-                return decodeUInt16(null);
-            case 6:
-                return decodeInt32(null);
-            case 7:
-                return decodeUInt32(null);
-            case 8:
-                return decodeInt64(null);
-            case 9:
-                return decodeUInt64(null);
-            case 10:
-                return decodeFloat(null);
-            case 11:
-                return decodeDouble(null);
-            case 12:
-                return decodeString(null);
-            case 13:
-                return decodeDateTime(null);
-            case 14:
-                return decodeGuid(null);
-            case 15:
-                return decodeByteString(null);
-            case 16:
-                return decodeXmlElement(null);
-            case 17:
-                return decodeNodeId(null);
-            case 18:
-                return decodeExpandedNodeId(null);
-            case 19:
-                return decodeStatusCode(null);
-            case 20:
-                return decodeQualifiedName(null);
-            case 21:
-                return decodeLocalizedText(null);
-            case 22:
-                return decodeExtensionObject(null);
-            case 23:
-                return decodeDataValue(null);
-            case 24:
-                return decodeVariant(null);
-            case 25:
-                return decodeDiagnosticInfo(null);
-            default:
-                throw new UaSerializationException(StatusCodes.Bad_DecodingError, "unknown builtin type: " + typeId);
+        case 1:
+            return decodeBoolean(null);
+        case 2:
+            return decodeSByte(null);
+        case 3:
+            return decodeByte(null);
+        case 4:
+            return decodeInt16(null);
+        case 5:
+            return decodeUInt16(null);
+        case 6:
+            return decodeInt32(null);
+        case 7:
+            return decodeUInt32(null);
+        case 8:
+            return decodeInt64(null);
+        case 9:
+            return decodeUInt64(null);
+        case 10:
+            return decodeFloat(null);
+        case 11:
+            return decodeDouble(null);
+        case 12:
+            return decodeString(null);
+        case 13:
+            return decodeDateTime(null);
+        case 14:
+            return decodeGuid(null);
+        case 15:
+            return decodeByteString(null);
+        case 16:
+            return decodeXmlElement(null);
+        case 17:
+            return decodeNodeId(null);
+        case 18:
+            return decodeExpandedNodeId(null);
+        case 19:
+            return decodeStatusCode(null);
+        case 20:
+            return decodeQualifiedName(null);
+        case 21:
+            return decodeLocalizedText(null);
+        case 22:
+            return decodeExtensionObject(null);
+        case 23:
+            return decodeDataValue(null);
+        case 24:
+            return decodeVariant(null);
+        case 25:
+            return decodeDiagnosticInfo(null);
+        default:
+            throw new UaSerializationException(StatusCodes.Bad_DecodingError, "unknown builtin type: " + typeId);
         }
     }
 

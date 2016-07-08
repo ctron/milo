@@ -93,12 +93,10 @@ public class CertificateUtil {
         }
 
         try {
-            Collection<? extends Certificate> certificates =
-                factory.generateCertificates(new ByteArrayInputStream(certificateBytes));
+            Collection<? extends Certificate> certificates = factory
+                .generateCertificates(new ByteArrayInputStream(certificateBytes));
 
-            return certificates.stream()
-                .map(X509Certificate.class::cast)
-                .collect(Collectors.toList());
+            return certificates.stream().map(X509Certificate.class::cast).collect(Collectors.toList());
         } catch (CertificateException e) {
             throw new UaException(StatusCodes.Bad_CertificateInvalid, e);
         }

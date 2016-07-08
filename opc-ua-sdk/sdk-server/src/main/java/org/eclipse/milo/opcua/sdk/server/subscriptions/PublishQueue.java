@@ -72,8 +72,8 @@ public class PublishQueue {
             if (subscription != null) {
                 waitList.remove(subscription.subscription.getId());
 
-                logger.debug("Delivering PublishRequest to Subscription [id={}]",
-                    subscription.getSubscription().getId());
+                logger
+                    .debug("Delivering PublishRequest to Subscription [id={}]", subscription.getSubscription().getId());
 
                 subscription.subscription.onPublish(service);
             } else {

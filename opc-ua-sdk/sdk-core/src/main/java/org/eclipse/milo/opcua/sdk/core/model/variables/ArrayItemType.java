@@ -22,7 +22,6 @@ import org.eclipse.milo.opcua.stack.core.types.enumerated.AxisScaleEnumeration;
 import org.eclipse.milo.opcua.stack.core.types.structured.EUInformation;
 import org.eclipse.milo.opcua.stack.core.types.structured.Range;
 
-
 public interface ArrayItemType extends DataItemType {
 
     Property<Range> INSTRUMENT_RANGE = new BasicProperty<>(
@@ -59,7 +58,6 @@ public interface ArrayItemType extends DataItemType {
         -1,
         AxisScaleEnumeration.class
     );
-
 
     Range getInstrumentRange();
 

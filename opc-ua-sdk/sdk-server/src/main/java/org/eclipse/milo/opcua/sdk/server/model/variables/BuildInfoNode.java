@@ -33,33 +33,44 @@ import org.eclipse.milo.opcua.stack.core.types.structured.BuildInfo;
 @UaVariableNode(typeName = "0:BuildInfoType")
 public class BuildInfoNode extends BaseDataVariableNode implements BuildInfoType {
 
-    public BuildInfoNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public BuildInfoNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public BuildInfoNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public BuildInfoNode(UaNodeManager nodeManager,
+                         NodeId nodeId,
+                         QualifiedName browseName,
+                         LocalizedText displayName,
+                         Optional<LocalizedText> description,
+                         Optional<UInteger> writeMask,
+                         Optional<UInteger> userWriteMask,
+                         DataValue value,
+                         NodeId dataType,
+                         Integer valueRank,
+                         Optional<UInteger[]> arrayDimensions,
+                         UByte accessLevel,
+                         UByte userAccessLevel,
+                         Optional<Double> minimumSamplingInterval,
+                         boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
 
     @Override
@@ -92,8 +103,7 @@ public class BuildInfoNode extends BaseDataVariableNode implements BuildInfoType
 
     @Override
     public void setProductUri(String value) {
-        getVariableComponent("ProductUri")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ProductUri").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -112,8 +122,7 @@ public class BuildInfoNode extends BaseDataVariableNode implements BuildInfoType
 
     @Override
     public void setManufacturerName(String value) {
-        getVariableComponent("ManufacturerName")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ManufacturerName").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -132,8 +141,7 @@ public class BuildInfoNode extends BaseDataVariableNode implements BuildInfoType
 
     @Override
     public void setProductName(String value) {
-        getVariableComponent("ProductName")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ProductName").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -152,8 +160,7 @@ public class BuildInfoNode extends BaseDataVariableNode implements BuildInfoType
 
     @Override
     public void setSoftwareVersion(String value) {
-        getVariableComponent("SoftwareVersion")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SoftwareVersion").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -172,8 +179,7 @@ public class BuildInfoNode extends BaseDataVariableNode implements BuildInfoType
 
     @Override
     public void setBuildNumber(String value) {
-        getVariableComponent("BuildNumber")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("BuildNumber").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -192,8 +198,7 @@ public class BuildInfoNode extends BaseDataVariableNode implements BuildInfoType
 
     @Override
     public void setBuildDate(DateTime value) {
-        getVariableComponent("BuildDate")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("BuildDate").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

@@ -40,45 +40,79 @@ public class RegisterServer2Response implements UaResponseMessage {
         this._diagnosticInfos = null;
     }
 
-    public RegisterServer2Response(ResponseHeader _responseHeader, StatusCode[] _configurationResults, DiagnosticInfo[] _diagnosticInfos) {
+    public RegisterServer2Response(ResponseHeader _responseHeader,
+                                   StatusCode[] _configurationResults,
+                                   DiagnosticInfo[] _diagnosticInfos) {
         this._responseHeader = _responseHeader;
         this._configurationResults = _configurationResults;
         this._diagnosticInfos = _diagnosticInfos;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public StatusCode[] getConfigurationResults() { return _configurationResults; }
+    public StatusCode[] getConfigurationResults() {
+        return _configurationResults;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(RegisterServer2Response registerServer2Response, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", registerServer2Response._responseHeader != null ? registerServer2Response._responseHeader : new ResponseHeader());
-        encoder.encodeArray("ConfigurationResults", registerServer2Response._configurationResults, encoder::encodeStatusCode);
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            registerServer2Response._responseHeader != null ?
+                registerServer2Response._responseHeader :
+                new ResponseHeader()
+        );
+        encoder.encodeArray(
+            "ConfigurationResults",
+            registerServer2Response._configurationResults,
+            encoder::encodeStatusCode
+        );
         encoder.encodeArray("DiagnosticInfos", registerServer2Response._diagnosticInfos, encoder::encodeDiagnosticInfo);
     }
 
     public static RegisterServer2Response decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
-        StatusCode[] _configurationResults = decoder.decodeArray("ConfigurationResults", decoder::decodeStatusCode, StatusCode.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        StatusCode[] _configurationResults = decoder
+            .decodeArray("ConfigurationResults", decoder::decodeStatusCode, StatusCode.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
         return new RegisterServer2Response(_responseHeader, _configurationResults, _diagnosticInfos);
     }
 
     static {
-        DelegateRegistry.registerEncoder(RegisterServer2Response::encode, RegisterServer2Response.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(RegisterServer2Response::decode, RegisterServer2Response.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            RegisterServer2Response::encode,
+            RegisterServer2Response.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            RegisterServer2Response::decode,
+            RegisterServer2Response.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

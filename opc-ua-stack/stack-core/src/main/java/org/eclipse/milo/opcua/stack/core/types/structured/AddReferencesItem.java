@@ -46,7 +46,12 @@ public class AddReferencesItem implements UaStructure {
         this._targetNodeClass = null;
     }
 
-    public AddReferencesItem(NodeId _sourceNodeId, NodeId _referenceTypeId, Boolean _isForward, String _targetServerUri, ExpandedNodeId _targetNodeId, NodeClass _targetNodeClass) {
+    public AddReferencesItem(NodeId _sourceNodeId,
+                             NodeId _referenceTypeId,
+                             Boolean _isForward,
+                             String _targetServerUri,
+                             ExpandedNodeId _targetNodeId,
+                             NodeClass _targetNodeClass) {
         this._sourceNodeId = _sourceNodeId;
         this._referenceTypeId = _referenceTypeId;
         this._isForward = _isForward;
@@ -55,27 +60,44 @@ public class AddReferencesItem implements UaStructure {
         this._targetNodeClass = _targetNodeClass;
     }
 
-    public NodeId getSourceNodeId() { return _sourceNodeId; }
+    public NodeId getSourceNodeId() {
+        return _sourceNodeId;
+    }
 
-    public NodeId getReferenceTypeId() { return _referenceTypeId; }
+    public NodeId getReferenceTypeId() {
+        return _referenceTypeId;
+    }
 
-    public Boolean getIsForward() { return _isForward; }
+    public Boolean getIsForward() {
+        return _isForward;
+    }
 
-    public String getTargetServerUri() { return _targetServerUri; }
+    public String getTargetServerUri() {
+        return _targetServerUri;
+    }
 
-    public ExpandedNodeId getTargetNodeId() { return _targetNodeId; }
+    public ExpandedNodeId getTargetNodeId() {
+        return _targetNodeId;
+    }
 
-    public NodeClass getTargetNodeClass() { return _targetNodeClass; }
+    public NodeClass getTargetNodeClass() {
+        return _targetNodeClass;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(AddReferencesItem addReferencesItem, UaEncoder encoder) {
         encoder.encodeNodeId("SourceNodeId", addReferencesItem._sourceNodeId);
@@ -94,12 +116,21 @@ public class AddReferencesItem implements UaStructure {
         ExpandedNodeId _targetNodeId = decoder.decodeExpandedNodeId("TargetNodeId");
         NodeClass _targetNodeClass = decoder.decodeEnumeration("TargetNodeClass", NodeClass.class);
 
-        return new AddReferencesItem(_sourceNodeId, _referenceTypeId, _isForward, _targetServerUri, _targetNodeId, _targetNodeClass);
+        return new AddReferencesItem(
+            _sourceNodeId,
+            _referenceTypeId,
+            _isForward,
+            _targetServerUri,
+            _targetNodeId,
+            _targetNodeClass
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(AddReferencesItem::encode, AddReferencesItem.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(AddReferencesItem::decode, AddReferencesItem.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(AddReferencesItem::encode, AddReferencesItem.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(AddReferencesItem::decode, AddReferencesItem.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

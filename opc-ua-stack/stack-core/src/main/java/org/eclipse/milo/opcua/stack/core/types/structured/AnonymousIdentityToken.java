@@ -27,7 +27,6 @@ public class AnonymousIdentityToken extends UserIdentityToken {
     public static final NodeId BinaryEncodingId = Identifiers.AnonymousIdentityToken_Encoding_DefaultBinary;
     public static final NodeId XmlEncodingId = Identifiers.AnonymousIdentityToken_Encoding_DefaultXml;
 
-
     public AnonymousIdentityToken() {
         super(null);
     }
@@ -36,16 +35,20 @@ public class AnonymousIdentityToken extends UserIdentityToken {
         super(_policyId);
     }
 
+    @Override
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
-
-    @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(AnonymousIdentityToken anonymousIdentityToken, UaEncoder encoder) {
         encoder.encodeString("PolicyId", anonymousIdentityToken._policyId);
@@ -58,8 +61,18 @@ public class AnonymousIdentityToken extends UserIdentityToken {
     }
 
     static {
-        DelegateRegistry.registerEncoder(AnonymousIdentityToken::encode, AnonymousIdentityToken.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(AnonymousIdentityToken::decode, AnonymousIdentityToken.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            AnonymousIdentityToken::encode,
+            AnonymousIdentityToken.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            AnonymousIdentityToken::decode,
+            AnonymousIdentityToken.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

@@ -19,9 +19,7 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.ServerState;
 import org.eclipse.milo.opcua.stack.core.types.structured.BuildInfo;
 
-
 public interface ServerStatusType extends BaseDataVariableType {
-
 
     DateTime getStartTime();
 

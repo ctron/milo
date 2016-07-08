@@ -28,31 +28,35 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 import org.eclipse.milo.opcua.stack.core.types.structured.NetworkGroupDataType;
 
 @UaObjectNode(typeName = "0:NonTransparentNetworkRedundancyType")
-public class NonTransparentNetworkRedundancyNode extends NonTransparentRedundancyNode implements NonTransparentNetworkRedundancyType {
+public class NonTransparentNetworkRedundancyNode extends NonTransparentRedundancyNode
+        implements NonTransparentNetworkRedundancyType {
 
-    public NonTransparentNetworkRedundancyNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public NonTransparentNetworkRedundancyNode(UaNodeManager nodeManager,
+                                               NodeId nodeId,
+                                               QualifiedName browseName,
+                                               LocalizedText displayName,
+                                               Optional<LocalizedText> description,
+                                               Optional<UInteger> writeMask,
+                                               Optional<UInteger> userWriteMask,
+                                               UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
 
     @Override
     public NetworkGroupDataType[] getServerNetworkGroups() {
-        Optional<NetworkGroupDataType[]> property = getProperty(NonTransparentNetworkRedundancyType.SERVER_NETWORK_GROUPS);
+        Optional<NetworkGroupDataType[]> property = getProperty(
+            NonTransparentNetworkRedundancyType.SERVER_NETWORK_GROUPS
+        );
 
         return property.orElse(null);
     }
 
     @Override
     public PropertyNode getServerNetworkGroupsNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(NonTransparentNetworkRedundancyType.SERVER_NETWORK_GROUPS.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            NonTransparentNetworkRedundancyType.SERVER_NETWORK_GROUPS.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

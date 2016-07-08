@@ -39,30 +39,46 @@ public class BrowseNextRequest implements UaRequestMessage {
         this._continuationPoints = null;
     }
 
-    public BrowseNextRequest(RequestHeader _requestHeader, Boolean _releaseContinuationPoints, ByteString[] _continuationPoints) {
+    public BrowseNextRequest(RequestHeader _requestHeader,
+                             Boolean _releaseContinuationPoints,
+                             ByteString[] _continuationPoints) {
         this._requestHeader = _requestHeader;
         this._releaseContinuationPoints = _releaseContinuationPoints;
         this._continuationPoints = _continuationPoints;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public Boolean getReleaseContinuationPoints() { return _releaseContinuationPoints; }
+    public Boolean getReleaseContinuationPoints() {
+        return _releaseContinuationPoints;
+    }
 
-    public ByteString[] getContinuationPoints() { return _continuationPoints; }
+    public ByteString[] getContinuationPoints() {
+        return _continuationPoints;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(BrowseNextRequest browseNextRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", browseNextRequest._requestHeader != null ? browseNextRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            browseNextRequest._requestHeader != null ? browseNextRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeBoolean("ReleaseContinuationPoints", browseNextRequest._releaseContinuationPoints);
         encoder.encodeArray("ContinuationPoints", browseNextRequest._continuationPoints, encoder::encodeByteString);
     }
@@ -70,14 +86,17 @@ public class BrowseNextRequest implements UaRequestMessage {
     public static BrowseNextRequest decode(UaDecoder decoder) {
         RequestHeader _requestHeader = decoder.decodeSerializable("RequestHeader", RequestHeader.class);
         Boolean _releaseContinuationPoints = decoder.decodeBoolean("ReleaseContinuationPoints");
-        ByteString[] _continuationPoints = decoder.decodeArray("ContinuationPoints", decoder::decodeByteString, ByteString.class);
+        ByteString[] _continuationPoints = decoder
+            .decodeArray("ContinuationPoints", decoder::decodeByteString, ByteString.class);
 
         return new BrowseNextRequest(_requestHeader, _releaseContinuationPoints, _continuationPoints);
     }
 
     static {
-        DelegateRegistry.registerEncoder(BrowseNextRequest::encode, BrowseNextRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(BrowseNextRequest::decode, BrowseNextRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(BrowseNextRequest::encode, BrowseNextRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(BrowseNextRequest::decode, BrowseNextRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

@@ -137,7 +137,8 @@ public class UaTcpStackClientConfigBuilder {
             executor,
             eventLoop,
             wheelTimer,
-            secureChannelReauthenticationEnabled);
+            secureChannelReauthenticationEnabled
+        );
     }
 
     public static class UaTcpStackClientConfigImpl implements UaTcpStackClientConfig {

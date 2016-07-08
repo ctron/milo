@@ -38,20 +38,30 @@ public class ServiceFault implements UaResponseMessage {
         this._responseHeader = _responseHeader;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ServiceFault serviceFault, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", serviceFault._responseHeader != null ? serviceFault._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            serviceFault._responseHeader != null ? serviceFault._responseHeader : new ResponseHeader()
+        );
     }
 
     public static ServiceFault decode(UaDecoder decoder) {

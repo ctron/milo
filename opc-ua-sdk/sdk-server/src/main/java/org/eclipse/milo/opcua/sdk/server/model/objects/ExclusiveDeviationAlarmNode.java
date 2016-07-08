@@ -29,15 +29,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:ExclusiveDeviationAlarmType")
 public class ExclusiveDeviationAlarmNode extends ExclusiveLimitAlarmNode implements ExclusiveDeviationAlarmType {
 
-    public ExclusiveDeviationAlarmNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ExclusiveDeviationAlarmNode(UaNodeManager nodeManager,
+                                       NodeId nodeId,
+                                       QualifiedName browseName,
+                                       LocalizedText displayName,
+                                       Optional<LocalizedText> description,
+                                       Optional<UInteger> writeMask,
+                                       Optional<UInteger> userWriteMask,
+                                       UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -51,7 +50,9 @@ public class ExclusiveDeviationAlarmNode extends ExclusiveLimitAlarmNode impleme
 
     @Override
     public PropertyNode getSetpointNodeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(ExclusiveDeviationAlarmType.SETPOINT_NODE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            ExclusiveDeviationAlarmType.SETPOINT_NODE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

@@ -28,23 +28,24 @@ public class NotificationData implements UaStructure {
     public static final NodeId BinaryEncodingId = Identifiers.NotificationData_Encoding_DefaultBinary;
     public static final NodeId XmlEncodingId = Identifiers.NotificationData_Encoding_DefaultXml;
 
+    public NotificationData() {}
 
-    public NotificationData() {
+    @Override
+    public NodeId getTypeId() {
+        return TypeId;
     }
 
-
     @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
-
-    @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
-
-    public static void encode(NotificationData notificationData, UaEncoder encoder) {
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
     }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
+
+    public static void encode(NotificationData notificationData, UaEncoder encoder) {}
 
     public static NotificationData decode(UaDecoder decoder) {
 
@@ -52,8 +53,10 @@ public class NotificationData implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(NotificationData::encode, NotificationData.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(NotificationData::decode, NotificationData.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(NotificationData::encode, NotificationData.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(NotificationData::decode, NotificationData.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

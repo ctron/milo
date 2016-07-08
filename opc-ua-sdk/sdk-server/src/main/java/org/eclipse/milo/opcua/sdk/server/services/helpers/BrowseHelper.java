@@ -61,23 +61,28 @@ import static org.eclipse.milo.opcua.sdk.server.util.UaEnumUtil.nodeClasses;
 
 public class BrowseHelper {
 
-    private static final StatusCode BAD_CONTINUATION_POINT_INVALID =
-        new StatusCode(StatusCodes.Bad_ContinuationPointInvalid);
+    private static final StatusCode BAD_CONTINUATION_POINT_INVALID = new StatusCode(
+        StatusCodes.Bad_ContinuationPointInvalid
+    );
 
-    private static final StatusCode BAD_NO_CONTINUATION_POINTS =
-        new StatusCode(StatusCodes.Bad_NoContinuationPoints);
+    private static final StatusCode BAD_NO_CONTINUATION_POINTS = new StatusCode(StatusCodes.Bad_NoContinuationPoints);
 
     private static final BrowseResult NODE_ID_UNKNOWN_RESULT = new BrowseResult(
         new StatusCode(StatusCodes.Bad_NodeIdUnknown),
-        ByteString.NULL_VALUE, new ReferenceDescription[0]);
+        ByteString.NULL_VALUE,
+        new ReferenceDescription[0]
+    );
 
     public void browseNext(ServiceRequest<BrowseNextRequest, BrowseNextResponse> service) {
         OpcUaServer server = service.attr(ServiceAttributes.SERVER_KEY).get();
 
         BrowseNextRequest request = service.getRequest();
 
-        if (request.getContinuationPoints().length >
-            server.getConfig().getLimits().getMaxBrowseContinuationPoints().intValue()) {
+        if (request.getContinuationPoints().length > server
+            .getConfig()
+            .getLimits()
+            .getMaxBrowseContinuationPoints()
+            .intValue()) {
 
             service.setServiceFault(StatusCodes.Bad_TooManyOperations);
         } else {
@@ -90,10 +95,7 @@ public class BrowseHelper {
                                                          UInteger maxReferencesPerNode,
                                                          BrowseDescription browseDescription) {
 
-        Browse browse = new Browse(
-            server,
-            maxReferencesPerNode,
-            browseDescription);
+        Browse browse = new Browse(server, maxReferencesPerNode, browseDescription);
 
         server.getExecutorService().execute(browse);
 
@@ -108,9 +110,7 @@ public class BrowseHelper {
         private final UInteger maxReferencesPerNode;
         private final BrowseDescription browseDescription;
 
-        private Browse(OpcUaServer server,
-                       UInteger maxReferencesPerNode,
-                       BrowseDescription browseDescription) {
+        private Browse(OpcUaServer server, UInteger maxReferencesPerNode, BrowseDescription browseDescription) {
 
             this.browseDescription = browseDescription;
             this.maxReferencesPerNode = maxReferencesPerNode;
@@ -126,23 +126,30 @@ public class BrowseHelper {
             NamespaceManager namespaceManager = server.getNamespaceManager();
             Namespace namespace = namespaceManager.getNamespace(browseDescription.getNodeId().getNamespaceIndex());
 
-            CompletableFuture<List<Reference>> referencesFuture =
-                namespace.getReferences(browseDescription.getNodeId());
+            CompletableFuture<List<Reference>> referencesFuture = namespace
+                .getReferences(browseDescription.getNodeId());
 
-            referencesFuture.whenComplete((references, ex) -> {
-                if (references != null) {
-                    browse(references).whenComplete((result, ex2) -> {
-                        if (result != null) future.complete(result);
-                        else future.complete(NODE_ID_UNKNOWN_RESULT);
-                    });
-                } else {
-                    future.complete(NODE_ID_UNKNOWN_RESULT);
+            referencesFuture.whenComplete(
+                (references, ex) -> {
+                    if (references != null) {
+                        browse(references).whenComplete(
+                            (result, ex2) -> {
+                                if (result != null)
+                                    future.complete(result);
+                                else
+                                    future.complete(NODE_ID_UNKNOWN_RESULT);
+                            }
+                        );
+                    } else {
+                        future.complete(NODE_ID_UNKNOWN_RESULT);
+                    }
                 }
-            });
+            );
         }
 
         private CompletableFuture<BrowseResult> browse(List<Reference> references) {
-            List<CompletableFuture<ReferenceDescription>> fs = references.stream()
+            List<CompletableFuture<ReferenceDescription>> fs = references
+                .stream()
                 .filter(this::directionFilter)
                 .filter(this::referenceTypeFilter)
                 .filter(this::nodeClassFilter)
@@ -150,19 +157,24 @@ public class BrowseHelper {
                 .map(this::referenceDescription)
                 .collect(toList());
 
-            return FutureUtils.sequence(fs).thenApply(referenceDescriptions -> {
-                int max = maxReferencesPerNode.longValue() == 0 ?
-                    Integer.MAX_VALUE :
-                    Ints.saturatedCast(maxReferencesPerNode.longValue());
+            return FutureUtils.sequence(fs).thenApply(
+                referenceDescriptions -> {
+                    int max = maxReferencesPerNode.longValue() == 0 ?
+                        Integer.MAX_VALUE :
+                        Ints.saturatedCast(maxReferencesPerNode.longValue());
 
-                return browseResult(referenceDescriptions, max);
-            });
+                    return browseResult(referenceDescriptions, max);
+                }
+            );
         }
 
         private BrowseResult browseResult(List<ReferenceDescription> references, int max) {
             if (references.size() > max) {
-                if (server.getBrowseContinuationPoints().size() >
-                    server.getConfig().getLimits().getMaxBrowseContinuationPoints().intValue()) {
+                if (server.getBrowseContinuationPoints().size() > server
+                    .getConfig()
+                    .getLimits()
+                    .getMaxBrowseContinuationPoints()
+                    .intValue()) {
 
                     return new BrowseResult(BAD_NO_CONTINUATION_POINTS, null, new ReferenceDescription[0]);
                 } else {
@@ -173,22 +185,30 @@ public class BrowseHelper {
                     BrowseContinuationPoint c = new BrowseContinuationPoint(references, max);
                     server.getBrowseContinuationPoints().put(c.identifier, c);
 
-                    return new BrowseResult(StatusCode.GOOD, c.identifier, current.toArray(new ReferenceDescription[current.size()]));
+                    return new BrowseResult(
+                        StatusCode.GOOD,
+                        c.identifier,
+                        current.toArray(new ReferenceDescription[current.size()])
+                    );
                 }
             } else {
-                return new BrowseResult(StatusCode.GOOD, null, references.toArray(new ReferenceDescription[references.size()]));
+                return new BrowseResult(
+                    StatusCode.GOOD,
+                    null,
+                    references.toArray(new ReferenceDescription[references.size()])
+                );
             }
         }
 
         private boolean directionFilter(Reference reference) {
             switch (browseDescription.getBrowseDirection()) {
-                case Forward:
-                    return reference.isForward();
-                case Inverse:
-                    return reference.isInverse();
-                case Both:
-                default:
-                    return true;
+            case Forward:
+                return reference.isForward();
+            case Inverse:
+                return reference.isInverse();
+            case Both:
+            default:
+                return true;
             }
         }
 
@@ -198,15 +218,15 @@ public class BrowseHelper {
             boolean includeAny = referenceTypeId == null || referenceTypeId.isNull();
             boolean includeSubtypes = browseDescription.getIncludeSubtypes();
 
-            return includeAny || reference.getReferenceTypeId().equals(referenceTypeId) ||
+            return includeAny ||
+                reference.getReferenceTypeId().equals(referenceTypeId) ||
                 (includeSubtypes && reference.subtypeOf(referenceTypeId, server.getReferenceTypes()));
         }
 
         private boolean nodeClassFilter(Reference reference) {
             long mask = browseDescription.getNodeClassMask().longValue();
 
-            EnumSet<NodeClass> nodeClasses = (mask == 0L) ?
-                EnumSet.allOf(NodeClass.class) : nodeClasses(mask);
+            EnumSet<NodeClass> nodeClasses = (mask == 0L) ? EnumSet.allOf(NodeClass.class) : nodeClasses(mask);
 
             return nodeClasses.contains(reference.getTargetNodeClass());
         }
@@ -217,25 +237,38 @@ public class BrowseHelper {
             ExpandedNodeId targetNodeId = reference.getTargetNodeId();
 
             NodeId referenceTypeId = masks.contains(BrowseResultMask.ReferenceTypeId) ?
-                reference.getReferenceTypeId() : NodeId.NULL_VALUE;
+                reference.getReferenceTypeId() :
+                NodeId.NULL_VALUE;
 
-            return targetNodeId.local().map(nodeId -> {
-                CompletableFuture<BrowseAttributes> af = browseAttributes(nodeId, masks);
+            return targetNodeId.local().map(
+                nodeId -> {
+                    CompletableFuture<BrowseAttributes> af = browseAttributes(nodeId, masks);
 
-                return af.thenCombine(getTypeDefinition(nodeId), (as, typeDefinition) ->
+                    return af.thenCombine(
+                        getTypeDefinition(nodeId),
+                        (as, typeDefinition) -> new ReferenceDescription(
+                            referenceTypeId,
+                            reference.isForward(),
+                            targetNodeId,
+                            as.getBrowseName(),
+                            as.getDisplayName(),
+                            as.getNodeClass(),
+                            typeDefinition
+                        )
+                    );
+                }
+            ).orElse(
+                CompletableFuture.completedFuture(
                     new ReferenceDescription(
                         referenceTypeId,
                         reference.isForward(),
                         targetNodeId,
-                        as.getBrowseName(),
-                        as.getDisplayName(),
-                        as.getNodeClass(),
-                        typeDefinition));
-            }).orElse(
-                CompletableFuture.completedFuture(new ReferenceDescription(
-                    referenceTypeId, reference.isForward(), targetNodeId,
-                    QualifiedName.NULL_VALUE, LocalizedText.NULL_VALUE,
-                    NodeClass.Unspecified, ExpandedNodeId.NULL_VALUE))
+                        QualifiedName.NULL_VALUE,
+                        LocalizedText.NULL_VALUE,
+                        NodeClass.Unspecified,
+                        ExpandedNodeId.NULL_VALUE
+                    )
+                )
             );
         }
 
@@ -248,52 +281,58 @@ public class BrowseHelper {
 
             CompletableFuture<List<DataValue>> future = new CompletableFuture<>();
 
-            ReadContext context = new ReadContext(
-                server, null, future,
-                new DiagnosticsContext<>());
+            ReadContext context = new ReadContext(server, null, future, new DiagnosticsContext<>());
 
             server.getNamespaceManager().getNamespace(nodeId.getNamespaceIndex()).read(
-                context, 0.0, TimestampsToReturn.Neither, readValueIds);
+                context,
+                0.0,
+                TimestampsToReturn.Neither,
+                readValueIds
+            );
 
-            return future.thenApply(values -> {
-                QualifiedName browseName = QualifiedName.NULL_VALUE;
-                LocalizedText displayName = LocalizedText.NULL_VALUE;
-                NodeClass nodeClass = NodeClass.Unspecified;
+            return future.thenApply(
+                values -> {
+                    QualifiedName browseName = QualifiedName.NULL_VALUE;
+                    LocalizedText displayName = LocalizedText.NULL_VALUE;
+                    NodeClass nodeClass = NodeClass.Unspecified;
 
-                if (masks.contains(BrowseResultMask.BrowseName)) {
-                    DataValue value0 = values.get(0);
-                    if (value0.getStatusCode().isGood()) {
-                        browseName = (QualifiedName) value0.getValue().getValue();
+                    if (masks.contains(BrowseResultMask.BrowseName)) {
+                        DataValue value0 = values.get(0);
+                        if (value0.getStatusCode().isGood()) {
+                            browseName = (QualifiedName) value0.getValue().getValue();
+                        }
                     }
-                }
 
-                if (masks.contains(BrowseResultMask.DisplayName)) {
-                    DataValue value1 = values.get(1);
-                    if (value1.getStatusCode().isGood()) {
-                        displayName = (LocalizedText) value1.getValue().getValue();
+                    if (masks.contains(BrowseResultMask.DisplayName)) {
+                        DataValue value1 = values.get(1);
+                        if (value1.getStatusCode().isGood()) {
+                            displayName = (LocalizedText) value1.getValue().getValue();
+                        }
                     }
-                }
 
-                if (masks.contains(BrowseResultMask.NodeClass)) {
-                    DataValue value2 = values.get(2);
-                    if (value2.getStatusCode().isGood()) {
-                        nodeClass = (NodeClass) value2.getValue().getValue();
+                    if (masks.contains(BrowseResultMask.NodeClass)) {
+                        DataValue value2 = values.get(2);
+                        if (value2.getStatusCode().isGood()) {
+                            nodeClass = (NodeClass) value2.getValue().getValue();
+                        }
                     }
-                }
 
-                return new BrowseAttributes(browseName, displayName, nodeClass);
-            });
+                    return new BrowseAttributes(browseName, displayName, nodeClass);
+                }
+            );
         }
 
         private CompletableFuture<ExpandedNodeId> getTypeDefinition(NodeId nodeId) {
             Namespace namespace = server.getNamespaceManager().getNamespace(nodeId.getNamespaceIndex());
 
-            return namespace.getReferences(nodeId).thenApply(references ->
-                references.stream()
+            return namespace.getReferences(nodeId).thenApply(
+                references -> references
+                    .stream()
                     .filter(r -> Identifiers.HasTypeDefinition.equals(r.getReferenceTypeId()))
                     .findFirst()
                     .map(Reference::getTargetNodeId)
-                    .orElse(ExpandedNodeId.NULL_VALUE));
+                    .orElse(ExpandedNodeId.NULL_VALUE)
+            );
         }
 
     }
@@ -303,8 +342,7 @@ public class BrowseHelper {
         private final OpcUaServer server;
         private final ServiceRequest<BrowseNextRequest, BrowseNextResponse> service;
 
-        private BrowseNext(OpcUaServer server,
-                           ServiceRequest<BrowseNextRequest, BrowseNextResponse> service) {
+        private BrowseNext(OpcUaServer server, ServiceRequest<BrowseNextRequest, BrowseNextResponse> service) {
 
             this.server = server;
             this.service = service;
@@ -317,7 +355,8 @@ public class BrowseHelper {
             List<BrowseResult> results = Lists.newArrayList();
 
             ByteString[] cs = request.getContinuationPoints() != null ?
-                request.getContinuationPoints() : new ByteString[0];
+                request.getContinuationPoints() :
+                new ByteString[0];
 
             for (ByteString bs : cs) {
                 if (request.getReleaseContinuationPoints()) {
@@ -329,7 +368,10 @@ public class BrowseHelper {
 
             ResponseHeader header = service.createResponseHeader();
             BrowseNextResponse response = new BrowseNextResponse(
-                header, results.toArray(new BrowseResult[results.size()]), new DiagnosticInfo[0]);
+                header,
+                results.toArray(new BrowseResult[results.size()]),
+                new DiagnosticInfo[0]
+            );
 
             service.setResponse(response);
         }
@@ -359,12 +401,14 @@ public class BrowseHelper {
                     return new BrowseResult(
                         StatusCode.GOOD,
                         c.identifier,
-                        current.toArray(new ReferenceDescription[current.size()]));
+                        current.toArray(new ReferenceDescription[current.size()])
+                    );
                 } else {
                     return new BrowseResult(
                         StatusCode.GOOD,
                         null,
-                        references.toArray(new ReferenceDescription[references.size()]));
+                        references.toArray(new ReferenceDescription[references.size()])
+                    );
                 }
             } else {
                 return new BrowseResult(BAD_CONTINUATION_POINT_INVALID, null, null);

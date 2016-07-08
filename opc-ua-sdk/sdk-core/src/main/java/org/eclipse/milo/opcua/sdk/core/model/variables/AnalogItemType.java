@@ -20,7 +20,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.structured.EUInformation;
 import org.eclipse.milo.opcua.stack.core.types.structured.Range;
 
-
 public interface AnalogItemType extends DataItemType {
 
     Property<Range> INSTRUMENT_RANGE = new BasicProperty<>(
@@ -43,7 +42,6 @@ public interface AnalogItemType extends DataItemType {
         -1,
         EUInformation.class
     );
-
 
     Range getInstrumentRange();
 

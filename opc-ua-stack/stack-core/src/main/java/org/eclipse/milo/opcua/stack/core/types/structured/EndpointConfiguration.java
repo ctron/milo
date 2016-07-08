@@ -50,7 +50,15 @@ public class EndpointConfiguration implements UaStructure {
         this._securityTokenLifetime = null;
     }
 
-    public EndpointConfiguration(Integer _operationTimeout, Boolean _useBinaryEncoding, Integer _maxStringLength, Integer _maxByteStringLength, Integer _maxArrayLength, Integer _maxMessageSize, Integer _maxBufferSize, Integer _channelLifetime, Integer _securityTokenLifetime) {
+    public EndpointConfiguration(Integer _operationTimeout,
+                                 Boolean _useBinaryEncoding,
+                                 Integer _maxStringLength,
+                                 Integer _maxByteStringLength,
+                                 Integer _maxArrayLength,
+                                 Integer _maxMessageSize,
+                                 Integer _maxBufferSize,
+                                 Integer _channelLifetime,
+                                 Integer _securityTokenLifetime) {
         this._operationTimeout = _operationTimeout;
         this._useBinaryEncoding = _useBinaryEncoding;
         this._maxStringLength = _maxStringLength;
@@ -62,33 +70,56 @@ public class EndpointConfiguration implements UaStructure {
         this._securityTokenLifetime = _securityTokenLifetime;
     }
 
-    public Integer getOperationTimeout() { return _operationTimeout; }
+    public Integer getOperationTimeout() {
+        return _operationTimeout;
+    }
 
-    public Boolean getUseBinaryEncoding() { return _useBinaryEncoding; }
+    public Boolean getUseBinaryEncoding() {
+        return _useBinaryEncoding;
+    }
 
-    public Integer getMaxStringLength() { return _maxStringLength; }
+    public Integer getMaxStringLength() {
+        return _maxStringLength;
+    }
 
-    public Integer getMaxByteStringLength() { return _maxByteStringLength; }
+    public Integer getMaxByteStringLength() {
+        return _maxByteStringLength;
+    }
 
-    public Integer getMaxArrayLength() { return _maxArrayLength; }
+    public Integer getMaxArrayLength() {
+        return _maxArrayLength;
+    }
 
-    public Integer getMaxMessageSize() { return _maxMessageSize; }
+    public Integer getMaxMessageSize() {
+        return _maxMessageSize;
+    }
 
-    public Integer getMaxBufferSize() { return _maxBufferSize; }
+    public Integer getMaxBufferSize() {
+        return _maxBufferSize;
+    }
 
-    public Integer getChannelLifetime() { return _channelLifetime; }
+    public Integer getChannelLifetime() {
+        return _channelLifetime;
+    }
 
-    public Integer getSecurityTokenLifetime() { return _securityTokenLifetime; }
+    public Integer getSecurityTokenLifetime() {
+        return _securityTokenLifetime;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(EndpointConfiguration endpointConfiguration, UaEncoder encoder) {
         encoder.encodeInt32("OperationTimeout", endpointConfiguration._operationTimeout);
@@ -113,12 +144,32 @@ public class EndpointConfiguration implements UaStructure {
         Integer _channelLifetime = decoder.decodeInt32("ChannelLifetime");
         Integer _securityTokenLifetime = decoder.decodeInt32("SecurityTokenLifetime");
 
-        return new EndpointConfiguration(_operationTimeout, _useBinaryEncoding, _maxStringLength, _maxByteStringLength, _maxArrayLength, _maxMessageSize, _maxBufferSize, _channelLifetime, _securityTokenLifetime);
+        return new EndpointConfiguration(
+            _operationTimeout,
+            _useBinaryEncoding,
+            _maxStringLength,
+            _maxByteStringLength,
+            _maxArrayLength,
+            _maxMessageSize,
+            _maxBufferSize,
+            _channelLifetime,
+            _securityTokenLifetime
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(EndpointConfiguration::encode, EndpointConfiguration.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(EndpointConfiguration::decode, EndpointConfiguration.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            EndpointConfiguration::encode,
+            EndpointConfiguration.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            EndpointConfiguration::decode,
+            EndpointConfiguration.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

@@ -32,15 +32,14 @@ import org.eclipse.milo.opcua.stack.core.types.enumerated.SecurityTokenRequestTy
 @UaObjectNode(typeName = "0:AuditOpenSecureChannelEventType")
 public class AuditOpenSecureChannelEventNode extends AuditChannelEventNode implements AuditOpenSecureChannelEventType {
 
-    public AuditOpenSecureChannelEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditOpenSecureChannelEventNode(UaNodeManager nodeManager,
+                                           NodeId nodeId,
+                                           QualifiedName browseName,
+                                           LocalizedText displayName,
+                                           Optional<LocalizedText> description,
+                                           Optional<UInteger> writeMask,
+                                           Optional<UInteger> userWriteMask,
+                                           UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -54,7 +53,9 @@ public class AuditOpenSecureChannelEventNode extends AuditChannelEventNode imple
 
     @Override
     public PropertyNode getClientCertificateNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditOpenSecureChannelEventType.CLIENT_CERTIFICATE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditOpenSecureChannelEventType.CLIENT_CERTIFICATE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -73,7 +74,9 @@ public class AuditOpenSecureChannelEventNode extends AuditChannelEventNode imple
 
     @Override
     public PropertyNode getClientCertificateThumbprintNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditOpenSecureChannelEventType.CLIENT_CERTIFICATE_THUMBPRINT.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditOpenSecureChannelEventType.CLIENT_CERTIFICATE_THUMBPRINT.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -92,7 +95,9 @@ public class AuditOpenSecureChannelEventNode extends AuditChannelEventNode imple
 
     @Override
     public PropertyNode getRequestTypeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditOpenSecureChannelEventType.REQUEST_TYPE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditOpenSecureChannelEventType.REQUEST_TYPE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -111,7 +116,9 @@ public class AuditOpenSecureChannelEventNode extends AuditChannelEventNode imple
 
     @Override
     public PropertyNode getSecurityPolicyUriNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditOpenSecureChannelEventType.SECURITY_POLICY_URI.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditOpenSecureChannelEventType.SECURITY_POLICY_URI.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -130,7 +137,9 @@ public class AuditOpenSecureChannelEventNode extends AuditChannelEventNode imple
 
     @Override
     public PropertyNode getSecurityModeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditOpenSecureChannelEventType.SECURITY_MODE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditOpenSecureChannelEventType.SECURITY_MODE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -149,7 +158,9 @@ public class AuditOpenSecureChannelEventNode extends AuditChannelEventNode imple
 
     @Override
     public PropertyNode getRequestedLifetimeNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditOpenSecureChannelEventType.REQUESTED_LIFETIME.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditOpenSecureChannelEventType.REQUESTED_LIFETIME.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

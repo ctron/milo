@@ -27,8 +27,21 @@ public class ExtensionObjectSerializationTest extends BinarySerializationFixture
     @DataProvider
     public Object[][] getExtensionObjects() {
         return new Object[][]{
-                {new ExtensionObject(ByteString.of(new byte[]{1, 2, 3, 4}), new NodeId(1, 2))},
-                {new ExtensionObject(XmlElement.of("<a>hello</a>"), new NodeId(1, 2))},
+            {
+                new ExtensionObject(
+                    ByteString.of(
+                        new byte[]{
+                            1,
+                            2,
+                            3,
+                            4
+                        }
+                    ), new NodeId(1, 2)
+                )
+            },
+            {
+                new ExtensionObject(XmlElement.of("<a>hello</a>"), new NodeId(1, 2))
+            },
         };
     }
 

@@ -19,7 +19,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.LocalizedText;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 
-
 public interface TwoStateDiscreteType extends DiscreteItemType {
 
     Property<LocalizedText> FALSE_STATE = new BasicProperty<>(
@@ -35,7 +34,6 @@ public interface TwoStateDiscreteType extends DiscreteItemType {
         -1,
         LocalizedText.class
     );
-
 
     LocalizedText getFalseState();
 

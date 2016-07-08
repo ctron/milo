@@ -30,35 +30,45 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaVariableNode(typeName = "0:DataItemType")
 public class DataItemNode extends BaseDataVariableNode implements DataItemType {
 
-    public DataItemNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public DataItemNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public DataItemNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public DataItemNode(UaNodeManager nodeManager,
+                        NodeId nodeId,
+                        QualifiedName browseName,
+                        LocalizedText displayName,
+                        Optional<LocalizedText> description,
+                        Optional<UInteger> writeMask,
+                        Optional<UInteger> userWriteMask,
+                        DataValue value,
+                        NodeId dataType,
+                        Integer valueRank,
+                        Optional<UInteger[]> arrayDimensions,
+                        UByte accessLevel,
+                        UByte userAccessLevel,
+                        Optional<Double> minimumSamplingInterval,
+                        boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
-
 
     @Override
     public String getDefinition() {

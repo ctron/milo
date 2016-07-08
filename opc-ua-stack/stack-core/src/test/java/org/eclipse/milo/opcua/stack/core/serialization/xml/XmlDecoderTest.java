@@ -13,7 +13,6 @@
 
 package org.eclipse.milo.opcua.stack.core.serialization.xml;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import javax.xml.stream.XMLStreamException;
@@ -57,12 +56,13 @@ public class XmlDecoderTest {
         assertEquals(decoder.decodeStatusCode("Value").getValue(), 1);
     }
 
-
     @Test
     public void testDecodeQualifiedName() throws XMLStreamException {
         XmlDecoder decoder = new XmlDecoder();
 
-        decoder.setInput(new ByteArrayInputStream("<Value><NamespaceIndex>1</NamespaceIndex><Name>test</Name></Value>".getBytes()));
+        decoder.setInput(
+            new ByteArrayInputStream("<Value><NamespaceIndex>1</NamespaceIndex><Name>test</Name></Value>".getBytes())
+        );
         QualifiedName qualifiedName = decoder.decodeQualifiedName("Value");
 
         assertEquals(qualifiedName.getNamespaceIndex(), ushort(1));
@@ -81,31 +81,30 @@ public class XmlDecoderTest {
 
     @Test
     public void testDecodeVariantListOfLocalizedText() throws XMLStreamException {
-        String xmlString =
-                "    <Value>\n" +
-                        "      <ListOfLocalizedText xmlns=\"http://opcfoundation.org/UA/2008/02/Types.xsd\">\n" +
-                        "        <LocalizedText>\n" +
-                        "          <Locale>\n" +
-                        "          </Locale>\n" +
-                        "          <Text>Numeric</Text>\n" +
-                        "        </LocalizedText>\n" +
-                        "        <LocalizedText>\n" +
-                        "          <Locale>\n" +
-                        "          </Locale>\n" +
-                        "          <Text>String</Text>\n" +
-                        "        </LocalizedText>\n" +
-                        "        <LocalizedText>\n" +
-                        "          <Locale>\n" +
-                        "          </Locale>\n" +
-                        "          <Text>Guid</Text>\n" +
-                        "        </LocalizedText>\n" +
-                        "        <LocalizedText>\n" +
-                        "          <Locale>\n" +
-                        "          </Locale>\n" +
-                        "          <Text>Opaque</Text>\n" +
-                        "        </LocalizedText>\n" +
-                        "      </ListOfLocalizedText>\n" +
-                        "    </Value>";
+        String xmlString = "    <Value>\n" +
+            "      <ListOfLocalizedText xmlns=\"http://opcfoundation.org/UA/2008/02/Types.xsd\">\n" +
+            "        <LocalizedText>\n" +
+            "          <Locale>\n" +
+            "          </Locale>\n" +
+            "          <Text>Numeric</Text>\n" +
+            "        </LocalizedText>\n" +
+            "        <LocalizedText>\n" +
+            "          <Locale>\n" +
+            "          </Locale>\n" +
+            "          <Text>String</Text>\n" +
+            "        </LocalizedText>\n" +
+            "        <LocalizedText>\n" +
+            "          <Locale>\n" +
+            "          </Locale>\n" +
+            "          <Text>Guid</Text>\n" +
+            "        </LocalizedText>\n" +
+            "        <LocalizedText>\n" +
+            "          <Locale>\n" +
+            "          </Locale>\n" +
+            "          <Text>Opaque</Text>\n" +
+            "        </LocalizedText>\n" +
+            "      </ListOfLocalizedText>\n" +
+            "    </Value>";
 
         XmlDecoder decoder = new XmlDecoder();
 
@@ -118,71 +117,70 @@ public class XmlDecoderTest {
 
     @Test
     public void testDecodeVariantListOfExtensionObject() throws XMLStreamException {
-        String xmlString =
-                "    <Value>\n" +
-                        "      <ListOfExtensionObject xmlns=\"http://opcfoundation.org/UA/2008/02/Types.xsd\">\n" +
-                        "        <ExtensionObject>\n" +
-                        "          <TypeId>\n" +
-                        "            <Identifier>i=7616</Identifier>\n" +
-                        "          </TypeId>\n" +
-                        "          <Body>\n" +
-                        "            <EnumValueType>\n" +
-                        "              <Value>1</Value>\n" +
-                        "              <DisplayName>\n" +
-                        "                <Locale>\n" +
-                        "                </Locale>\n" +
-                        "                <Text>Mandatory</Text>\n" +
-                        "              </DisplayName>\n" +
-                        "              <Description>\n" +
-                        "                <Locale>\n" +
-                        "                </Locale>\n" +
-                        "                <Text>The BrowseName must appear in all instances of the type.</Text>\n" +
-                        "              </Description>\n" +
-                        "            </EnumValueType>\n" +
-                        "          </Body>\n" +
-                        "        </ExtensionObject>\n" +
-                        "        <ExtensionObject>\n" +
-                        "          <TypeId>\n" +
-                        "            <Identifier>i=7616</Identifier>\n" +
-                        "          </TypeId>\n" +
-                        "          <Body>\n" +
-                        "            <EnumValueType>\n" +
-                        "              <Value>2</Value>\n" +
-                        "              <DisplayName>\n" +
-                        "                <Locale>\n" +
-                        "                </Locale>\n" +
-                        "                <Text>Optional</Text>\n" +
-                        "              </DisplayName>\n" +
-                        "              <Description>\n" +
-                        "                <Locale>\n" +
-                        "                </Locale>\n" +
-                        "                <Text>The BrowseName may appear in an instance of the type.</Text>\n" +
-                        "              </Description>\n" +
-                        "            </EnumValueType>\n" +
-                        "          </Body>\n" +
-                        "        </ExtensionObject>\n" +
-                        "        <ExtensionObject>\n" +
-                        "          <TypeId>\n" +
-                        "            <Identifier>i=7616</Identifier>\n" +
-                        "          </TypeId>\n" +
-                        "          <Body>\n" +
-                        "            <EnumValueType>\n" +
-                        "              <Value>3</Value>\n" +
-                        "              <DisplayName>\n" +
-                        "                <Locale>\n" +
-                        "                </Locale>\n" +
-                        "                <Text>Constraint</Text>\n" +
-                        "              </DisplayName>\n" +
-                        "              <Description>\n" +
-                        "                <Locale>\n" +
-                        "                </Locale>\n" +
-                        "                <Text>The modelling rule defines a constraint and the BrowseName is not used in an instance of the type.</Text>\n" +
-                        "              </Description>\n" +
-                        "            </EnumValueType>\n" +
-                        "          </Body>\n" +
-                        "        </ExtensionObject>\n" +
-                        "      </ListOfExtensionObject>\n" +
-                        "    </Value>";
+        String xmlString = "    <Value>\n" +
+            "      <ListOfExtensionObject xmlns=\"http://opcfoundation.org/UA/2008/02/Types.xsd\">\n" +
+            "        <ExtensionObject>\n" +
+            "          <TypeId>\n" +
+            "            <Identifier>i=7616</Identifier>\n" +
+            "          </TypeId>\n" +
+            "          <Body>\n" +
+            "            <EnumValueType>\n" +
+            "              <Value>1</Value>\n" +
+            "              <DisplayName>\n" +
+            "                <Locale>\n" +
+            "                </Locale>\n" +
+            "                <Text>Mandatory</Text>\n" +
+            "              </DisplayName>\n" +
+            "              <Description>\n" +
+            "                <Locale>\n" +
+            "                </Locale>\n" +
+            "                <Text>The BrowseName must appear in all instances of the type.</Text>\n" +
+            "              </Description>\n" +
+            "            </EnumValueType>\n" +
+            "          </Body>\n" +
+            "        </ExtensionObject>\n" +
+            "        <ExtensionObject>\n" +
+            "          <TypeId>\n" +
+            "            <Identifier>i=7616</Identifier>\n" +
+            "          </TypeId>\n" +
+            "          <Body>\n" +
+            "            <EnumValueType>\n" +
+            "              <Value>2</Value>\n" +
+            "              <DisplayName>\n" +
+            "                <Locale>\n" +
+            "                </Locale>\n" +
+            "                <Text>Optional</Text>\n" +
+            "              </DisplayName>\n" +
+            "              <Description>\n" +
+            "                <Locale>\n" +
+            "                </Locale>\n" +
+            "                <Text>The BrowseName may appear in an instance of the type.</Text>\n" +
+            "              </Description>\n" +
+            "            </EnumValueType>\n" +
+            "          </Body>\n" +
+            "        </ExtensionObject>\n" +
+            "        <ExtensionObject>\n" +
+            "          <TypeId>\n" +
+            "            <Identifier>i=7616</Identifier>\n" +
+            "          </TypeId>\n" +
+            "          <Body>\n" +
+            "            <EnumValueType>\n" +
+            "              <Value>3</Value>\n" +
+            "              <DisplayName>\n" +
+            "                <Locale>\n" +
+            "                </Locale>\n" +
+            "                <Text>Constraint</Text>\n" +
+            "              </DisplayName>\n" +
+            "              <Description>\n" +
+            "                <Locale>\n" +
+            "                </Locale>\n" +
+            "                <Text>The modelling rule defines a constraint and the BrowseName is not used in an instance of the type.</Text>\n" +
+            "              </Description>\n" +
+            "            </EnumValueType>\n" +
+            "          </Body>\n" +
+            "        </ExtensionObject>\n" +
+            "      </ListOfExtensionObject>\n" +
+            "    </Value>";
 
         XmlDecoder decoder = new XmlDecoder();
 
@@ -196,19 +194,19 @@ public class XmlDecoderTest {
     @Test
     public void test() throws XMLStreamException {
         String xmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-                "<ListOfExtensionObject xmlns=\"http://opcfoundation.org/UA/2008/02/Types.xsd\" xmlns:ns2=\"http://opcfoundation.org/UA/2011/03/UANodeSet.xsd\">" +
-                "<ExtensionObject>" +
-                "<TypeId><Identifier>i=297</Identifier></TypeId>" +
-                "<Body>" +
-                "   <Argument>" +
-                "       <Name>FileHandle</Name>" +
-                "       <DataType><Identifier>i=7</Identifier></DataType>" +
-                "       <ValueRank>-1</ValueRank><ArrayDimensions/>" +
-                "       <Description xsi:nil=\"true\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>" +
-                "   </Argument>" +
-                "</Body>" +
-                "</ExtensionObject>" +
-                "</ListOfExtensionObject>";
+            "<ListOfExtensionObject xmlns=\"http://opcfoundation.org/UA/2008/02/Types.xsd\" xmlns:ns2=\"http://opcfoundation.org/UA/2011/03/UANodeSet.xsd\">" +
+            "<ExtensionObject>" +
+            "<TypeId><Identifier>i=297</Identifier></TypeId>" +
+            "<Body>" +
+            "   <Argument>" +
+            "       <Name>FileHandle</Name>" +
+            "       <DataType><Identifier>i=7</Identifier></DataType>" +
+            "       <ValueRank>-1</ValueRank><ArrayDimensions/>" +
+            "       <Description xsi:nil=\"true\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"/>" +
+            "   </Argument>" +
+            "</Body>" +
+            "</ExtensionObject>" +
+            "</ListOfExtensionObject>";
 
         XmlDecoder decoder = new XmlDecoder();
         decoder.setInput(new StringReader(xmlString));

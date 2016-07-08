@@ -60,9 +60,11 @@ public class UsernameProvider implements IdentityProvider {
     public Tuple2<UserIdentityToken, SignatureData> getIdentityToken(EndpointDescription endpoint,
                                                                      ByteString serverNonce) throws Exception {
 
-        UserTokenPolicy tokenPolicy = Arrays.stream(endpoint.getUserIdentityTokens())
+        UserTokenPolicy tokenPolicy = Arrays
+            .stream(endpoint.getUserIdentityTokens())
             .filter(t -> t.getTokenType() == UserTokenType.UserName)
-            .findFirst().orElseThrow(() -> new Exception("no username token policy found"));
+            .findFirst()
+            .orElseThrow(() -> new Exception("no username token policy found"));
 
         String policyId = tokenPolicy.getPolicyId();
 
@@ -101,7 +103,8 @@ public class UsernameProvider implements IdentityProvider {
             Cipher cipher = getAndInitializeCipher(certificate, securityPolicy);
 
             ByteBuffer plainTextNioBuffer = buffer.nioBuffer();
-            ByteBuffer cipherTextNioBuffer = Unpooled.buffer(cipherTextBlockSize * blockCount)
+            ByteBuffer cipherTextNioBuffer = Unpooled
+                .buffer(cipherTextBlockSize * blockCount)
                 .order(ByteOrder.LITTLE_ENDIAN)
                 .nioBuffer(0, cipherTextBlockSize * blockCount);
 
@@ -154,10 +157,10 @@ public class UsernameProvider implements IdentityProvider {
         SecurityAlgorithm algorithm = securityPolicy.getAsymmetricEncryptionAlgorithm();
 
         switch (algorithm) {
-            case Rsa15:
-                return (getAsymmetricKeyLength(certificate) + 1) / 8 - 11;
-            case RsaOaep:
-                return (getAsymmetricKeyLength(certificate) + 1) / 8 - 42;
+        case Rsa15:
+            return (getAsymmetricKeyLength(certificate) + 1) / 8 - 11;
+        case RsaOaep:
+            return (getAsymmetricKeyLength(certificate) + 1) / 8 - 42;
         }
 
         return 1;
@@ -167,28 +170,23 @@ public class UsernameProvider implements IdentityProvider {
         SecurityAlgorithm algorithm = securityPolicy.getAsymmetricEncryptionAlgorithm();
 
         switch (algorithm) {
-            case Rsa15:
-            case RsaOaep:
-                return (getAsymmetricKeyLength(certificate) + 1) / 8;
+        case Rsa15:
+        case RsaOaep:
+            return (getAsymmetricKeyLength(certificate) + 1) / 8;
         }
 
         return 1;
     }
 
-
     private int getAsymmetricKeyLength(X509Certificate certificate) {
-        PublicKey publicKey = certificate != null ?
-            certificate.getPublicKey() : null;
+        PublicKey publicKey = certificate != null ? certificate.getPublicKey() : null;
 
-        return (publicKey instanceof RSAPublicKey) ?
-            ((RSAPublicKey) publicKey).getModulus().bitLength() : 0;
+        return (publicKey instanceof RSAPublicKey) ? ((RSAPublicKey) publicKey).getModulus().bitLength() : 0;
     }
 
     @Override
     public String toString() {
-        return "UsernameProvider{" +
-            "username='" + username + '\'' +
-            '}';
+        return "UsernameProvider{" + "username='" + username + '\'' + '}';
     }
 
 }

@@ -30,15 +30,17 @@ public class FutureUtils {
 
         CompletableFuture[] fa = futures.toArray(new CompletableFuture[futures.size()]);
 
-        return CompletableFuture.allOf(fa).thenApply(v -> {
-            List<T> results = new ArrayList<>(futures.size());
+        return CompletableFuture.allOf(fa).thenApply(
+            v -> {
+                List<T> results = new ArrayList<>(futures.size());
 
-            for (CompletableFuture<T> cf : futures) {
-                results.add(cf.join());
+                for (CompletableFuture<T> cf : futures) {
+                    results.add(cf.join());
+                }
+
+                return results;
             }
-
-            return results;
-        });
+        );
     }
 
     public static <T> CompletableFuture<List<T>> sequence(CompletableFuture<T>[] futures) {
@@ -46,15 +48,17 @@ public class FutureUtils {
             return CompletableFuture.completedFuture(Collections.emptyList());
         }
 
-        return CompletableFuture.allOf(futures).thenApply(v -> {
-            List<T> results = new ArrayList<>(futures.length);
+        return CompletableFuture.allOf(futures).thenApply(
+            v -> {
+                List<T> results = new ArrayList<>(futures.length);
 
-            for (CompletableFuture<T> cf : futures) {
-                results.add(cf.join());
+                for (CompletableFuture<T> cf : futures) {
+                    results.add(cf.join());
+                }
+
+                return results;
             }
-
-            return results;
-        });
+        );
     }
 
     /**

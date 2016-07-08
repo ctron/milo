@@ -39,30 +39,48 @@ public class DeleteMonitoredItemsRequest implements UaRequestMessage {
         this._monitoredItemIds = null;
     }
 
-    public DeleteMonitoredItemsRequest(RequestHeader _requestHeader, UInteger _subscriptionId, UInteger[] _monitoredItemIds) {
+    public DeleteMonitoredItemsRequest(RequestHeader _requestHeader,
+                                       UInteger _subscriptionId,
+                                       UInteger[] _monitoredItemIds) {
         this._requestHeader = _requestHeader;
         this._subscriptionId = _subscriptionId;
         this._monitoredItemIds = _monitoredItemIds;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public UInteger getSubscriptionId() { return _subscriptionId; }
+    public UInteger getSubscriptionId() {
+        return _subscriptionId;
+    }
 
-    public UInteger[] getMonitoredItemIds() { return _monitoredItemIds; }
+    public UInteger[] getMonitoredItemIds() {
+        return _monitoredItemIds;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DeleteMonitoredItemsRequest deleteMonitoredItemsRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", deleteMonitoredItemsRequest._requestHeader != null ? deleteMonitoredItemsRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            deleteMonitoredItemsRequest._requestHeader != null ?
+                deleteMonitoredItemsRequest._requestHeader :
+                new RequestHeader()
+        );
         encoder.encodeUInt32("SubscriptionId", deleteMonitoredItemsRequest._subscriptionId);
         encoder.encodeArray("MonitoredItemIds", deleteMonitoredItemsRequest._monitoredItemIds, encoder::encodeUInt32);
     }
@@ -76,8 +94,18 @@ public class DeleteMonitoredItemsRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(DeleteMonitoredItemsRequest::encode, DeleteMonitoredItemsRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DeleteMonitoredItemsRequest::decode, DeleteMonitoredItemsRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            DeleteMonitoredItemsRequest::encode,
+            DeleteMonitoredItemsRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            DeleteMonitoredItemsRequest::decode,
+            DeleteMonitoredItemsRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

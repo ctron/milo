@@ -40,25 +40,43 @@ public class MethodNode extends InstanceNode {
         this._userExecutable = null;
     }
 
-    public MethodNode(NodeId _nodeId, NodeClass _nodeClass, QualifiedName _browseName, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask, ReferenceNode[] _references, Boolean _executable, Boolean _userExecutable) {
+    public MethodNode(NodeId _nodeId,
+                      NodeClass _nodeClass,
+                      QualifiedName _browseName,
+                      LocalizedText _displayName,
+                      LocalizedText _description,
+                      UInteger _writeMask,
+                      UInteger _userWriteMask,
+                      ReferenceNode[] _references,
+                      Boolean _executable,
+                      Boolean _userExecutable) {
         super(_nodeId, _nodeClass, _browseName, _displayName, _description, _writeMask, _userWriteMask, _references);
         this._executable = _executable;
         this._userExecutable = _userExecutable;
     }
 
-    public Boolean getExecutable() { return _executable; }
+    public Boolean getExecutable() {
+        return _executable;
+    }
 
-    public Boolean getUserExecutable() { return _userExecutable; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public Boolean getUserExecutable() {
+        return _userExecutable;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(MethodNode methodNode, UaEncoder encoder) {
         encoder.encodeNodeId("NodeId", methodNode._nodeId);
@@ -81,11 +99,23 @@ public class MethodNode extends InstanceNode {
         LocalizedText _description = decoder.decodeLocalizedText("Description");
         UInteger _writeMask = decoder.decodeUInt32("WriteMask");
         UInteger _userWriteMask = decoder.decodeUInt32("UserWriteMask");
-        ReferenceNode[] _references = decoder.decodeArray("References", decoder::decodeSerializable, ReferenceNode.class);
+        ReferenceNode[] _references = decoder
+            .decodeArray("References", decoder::decodeSerializable, ReferenceNode.class);
         Boolean _executable = decoder.decodeBoolean("Executable");
         Boolean _userExecutable = decoder.decodeBoolean("UserExecutable");
 
-        return new MethodNode(_nodeId, _nodeClass, _browseName, _displayName, _description, _writeMask, _userWriteMask, _references, _executable, _userExecutable);
+        return new MethodNode(
+            _nodeId,
+            _nodeClass,
+            _browseName,
+            _displayName,
+            _description,
+            _writeMask,
+            _userWriteMask,
+            _references,
+            _executable,
+            _userExecutable
+        );
     }
 
     static {

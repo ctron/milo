@@ -42,7 +42,17 @@ public class MonitoredEventItem extends BaseMonitoredItem<Variant[]> implements 
                               boolean discardOldest,
                               ExtensionObject filter) throws UaException {
 
-        super(id, subscriptionId, readValueId, monitoringMode, timestamps, clientHandle, samplingInterval, queueSize, discardOldest);
+        super(
+            id,
+            subscriptionId,
+            readValueId,
+            monitoringMode,
+            timestamps,
+            clientHandle,
+            samplingInterval,
+            queueSize,
+            discardOldest
+        );
 
         installFilter(filter);
     }

@@ -22,14 +22,12 @@ import org.eclipse.milo.opcua.stack.core.types.structured.UserTokenPolicy;
 public class AnonymousIdentityValidator extends IdentityValidator {
 
     @Override
-    public Object validateAnonymousToken(
-        AnonymousIdentityToken token,
-        UserTokenPolicy tokenPolicy,
-        SecureChannel channel,
-        Session session) throws UaException {
+    public Object validateAnonymousToken(AnonymousIdentityToken token,
+                                         UserTokenPolicy tokenPolicy,
+                                         SecureChannel channel,
+                                         Session session) throws UaException {
 
-        return String.format("anonymous_%s_%s",
-            session.getSessionName(), session.getSessionId().toParseableString());
+        return String.format("anonymous_%s_%s", session.getSessionName(), session.getSessionId().toParseableString());
     }
 
 }

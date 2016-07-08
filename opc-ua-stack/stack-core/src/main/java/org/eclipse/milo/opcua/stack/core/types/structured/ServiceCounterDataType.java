@@ -42,19 +42,28 @@ public class ServiceCounterDataType implements UaStructure {
         this._errorCount = _errorCount;
     }
 
-    public UInteger getTotalCount() { return _totalCount; }
+    public UInteger getTotalCount() {
+        return _totalCount;
+    }
 
-    public UInteger getErrorCount() { return _errorCount; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public UInteger getErrorCount() {
+        return _errorCount;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ServiceCounterDataType serviceCounterDataType, UaEncoder encoder) {
         encoder.encodeUInt32("TotalCount", serviceCounterDataType._totalCount);
@@ -69,8 +78,18 @@ public class ServiceCounterDataType implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(ServiceCounterDataType::encode, ServiceCounterDataType.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ServiceCounterDataType::decode, ServiceCounterDataType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            ServiceCounterDataType::encode,
+            ServiceCounterDataType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            ServiceCounterDataType::decode,
+            ServiceCounterDataType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

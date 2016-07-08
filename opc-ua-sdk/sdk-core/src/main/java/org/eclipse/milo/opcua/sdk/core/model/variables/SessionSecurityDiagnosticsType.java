@@ -17,9 +17,7 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.ByteString;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.MessageSecurityMode;
 
-
 public interface SessionSecurityDiagnosticsType extends BaseDataVariableType {
-
 
     NodeId getSessionId();
 

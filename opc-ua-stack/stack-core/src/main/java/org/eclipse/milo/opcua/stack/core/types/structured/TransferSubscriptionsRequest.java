@@ -39,30 +39,48 @@ public class TransferSubscriptionsRequest implements UaRequestMessage {
         this._sendInitialValues = null;
     }
 
-    public TransferSubscriptionsRequest(RequestHeader _requestHeader, UInteger[] _subscriptionIds, Boolean _sendInitialValues) {
+    public TransferSubscriptionsRequest(RequestHeader _requestHeader,
+                                        UInteger[] _subscriptionIds,
+                                        Boolean _sendInitialValues) {
         this._requestHeader = _requestHeader;
         this._subscriptionIds = _subscriptionIds;
         this._sendInitialValues = _sendInitialValues;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public UInteger[] getSubscriptionIds() { return _subscriptionIds; }
+    public UInteger[] getSubscriptionIds() {
+        return _subscriptionIds;
+    }
 
-    public Boolean getSendInitialValues() { return _sendInitialValues; }
+    public Boolean getSendInitialValues() {
+        return _sendInitialValues;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(TransferSubscriptionsRequest transferSubscriptionsRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", transferSubscriptionsRequest._requestHeader != null ? transferSubscriptionsRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            transferSubscriptionsRequest._requestHeader != null ?
+                transferSubscriptionsRequest._requestHeader :
+                new RequestHeader()
+        );
         encoder.encodeArray("SubscriptionIds", transferSubscriptionsRequest._subscriptionIds, encoder::encodeUInt32);
         encoder.encodeBoolean("SendInitialValues", transferSubscriptionsRequest._sendInitialValues);
     }
@@ -76,8 +94,18 @@ public class TransferSubscriptionsRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(TransferSubscriptionsRequest::encode, TransferSubscriptionsRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(TransferSubscriptionsRequest::decode, TransferSubscriptionsRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            TransferSubscriptionsRequest::encode,
+            TransferSubscriptionsRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            TransferSubscriptionsRequest::decode,
+            TransferSubscriptionsRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

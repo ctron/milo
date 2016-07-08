@@ -98,12 +98,18 @@ public enum BuiltinDataType {
      */
     public static int getBuiltinTypeId(Class<?> backingClass) {
         if (backingClass.isPrimitive()) {
-            if (backingClass == boolean.class) backingClass = Boolean.class;
-            else if (backingClass == byte.class) backingClass = Byte.class;
-            else if (backingClass == short.class) backingClass = Short.class;
-            else if (backingClass == int.class) backingClass = Integer.class;
-            else if (backingClass == long.class) backingClass = Long.class;
-            else if (backingClass == float.class) backingClass = Float.class;
+            if (backingClass == boolean.class)
+                backingClass = Boolean.class;
+            else if (backingClass == byte.class)
+                backingClass = Byte.class;
+            else if (backingClass == short.class)
+                backingClass = Short.class;
+            else if (backingClass == int.class)
+                backingClass = Integer.class;
+            else if (backingClass == long.class)
+                backingClass = Long.class;
+            else if (backingClass == float.class)
+                backingClass = Float.class;
             else if (backingClass == double.class) backingClass = Double.class;
         }
 

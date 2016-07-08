@@ -39,30 +39,48 @@ public class FindServersOnNetworkResponse implements UaResponseMessage {
         this._servers = null;
     }
 
-    public FindServersOnNetworkResponse(ResponseHeader _responseHeader, DateTime _lastCounterResetTime, ServerOnNetwork[] _servers) {
+    public FindServersOnNetworkResponse(ResponseHeader _responseHeader,
+                                        DateTime _lastCounterResetTime,
+                                        ServerOnNetwork[] _servers) {
         this._responseHeader = _responseHeader;
         this._lastCounterResetTime = _lastCounterResetTime;
         this._servers = _servers;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public DateTime getLastCounterResetTime() { return _lastCounterResetTime; }
+    public DateTime getLastCounterResetTime() {
+        return _lastCounterResetTime;
+    }
 
-    public ServerOnNetwork[] getServers() { return _servers; }
+    public ServerOnNetwork[] getServers() {
+        return _servers;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(FindServersOnNetworkResponse findServersOnNetworkResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", findServersOnNetworkResponse._responseHeader != null ? findServersOnNetworkResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            findServersOnNetworkResponse._responseHeader != null ?
+                findServersOnNetworkResponse._responseHeader :
+                new ResponseHeader()
+        );
         encoder.encodeDateTime("LastCounterResetTime", findServersOnNetworkResponse._lastCounterResetTime);
         encoder.encodeArray("Servers", findServersOnNetworkResponse._servers, encoder::encodeSerializable);
     }
@@ -76,8 +94,18 @@ public class FindServersOnNetworkResponse implements UaResponseMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(FindServersOnNetworkResponse::encode, FindServersOnNetworkResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(FindServersOnNetworkResponse::decode, FindServersOnNetworkResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            FindServersOnNetworkResponse::encode,
+            FindServersOnNetworkResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            FindServersOnNetworkResponse::decode,
+            FindServersOnNetworkResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

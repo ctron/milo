@@ -93,13 +93,21 @@ public class ChunkEncoder {
             int bodySize = Math.min(messageBuffer.readableBytes(), maxBodySize);
 
             int paddingSize = encrypted ?
-                plainTextBlockSize - (SequenceHeader.SEQUENCE_HEADER_SIZE + bodySize + signatureSize + paddingOverhead) % plainTextBlockSize : 0;
+                plainTextBlockSize -
+                    (SequenceHeader.SEQUENCE_HEADER_SIZE + bodySize + signatureSize + paddingOverhead) %
+                        plainTextBlockSize :
+                0;
 
-            int plainTextContentSize = SequenceHeader.SEQUENCE_HEADER_SIZE + bodySize + signatureSize + paddingSize + paddingOverhead;
+            int plainTextContentSize = SequenceHeader.SEQUENCE_HEADER_SIZE +
+                bodySize +
+                signatureSize +
+                paddingSize +
+                paddingOverhead;
 
             assert (plainTextContentSize % plainTextBlockSize == 0);
 
-            int chunkSize = SecureMessageHeader.SECURE_MESSAGE_HEADER_SIZE + securityHeaderSize +
+            int chunkSize = SecureMessageHeader.SECURE_MESSAGE_HEADER_SIZE +
+                securityHeaderSize +
                 (plainTextContentSize / plainTextBlockSize) * cipherTextBlockSize;
 
             ByteBuf chunkBuffer = BufferUtil.buffer(chunkSize);
@@ -118,10 +126,7 @@ public class ChunkEncoder {
             delegate.encodeSecurityHeader(channel, chunkBuffer);
 
             /* Sequence Header */
-            SequenceHeader sequenceHeader = new SequenceHeader(
-                sequenceNumber.getAndIncrement(),
-                requestId
-            );
+            SequenceHeader sequenceHeader = new SequenceHeader(sequenceNumber.getAndIncrement(), requestId);
 
             SequenceHeader.encode(sequenceHeader, chunkBuffer);
 
@@ -150,7 +155,8 @@ public class ChunkEncoder {
                 try {
                     int blockCount = chunkBuffer.readableBytes() / plainTextBlockSize;
 
-                    ByteBuffer chunkNioBuffer = chunkBuffer.nioBuffer(chunkBuffer.readerIndex(), blockCount * cipherTextBlockSize);
+                    ByteBuffer chunkNioBuffer = chunkBuffer
+                        .nioBuffer(chunkBuffer.readerIndex(), blockCount * cipherTextBlockSize);
                     ByteBuf copyBuffer = chunkBuffer.copy();
                     ByteBuffer plainTextNioBuffer = copyBuffer.nioBuffer();
 
@@ -248,7 +254,10 @@ public class ChunkEncoder {
             assert (remoteCertificate != null);
 
             try {
-                String transformation = channel.getSecurityPolicy().getAsymmetricEncryptionAlgorithm().getTransformation();
+                String transformation = channel
+                    .getSecurityPolicy()
+                    .getAsymmetricEncryptionAlgorithm()
+                    .getTransformation();
                 Cipher cipher = Cipher.getInstance(transformation);
                 cipher.init(Cipher.ENCRYPT_MODE, remoteCertificate.getPublicKey());
                 return cipher;
@@ -274,7 +283,8 @@ public class ChunkEncoder {
             byte[] localCertificateBytes = channel.getLocalCertificateBytes().bytes();
             byte[] remoteCertificateThumbprint = channel.getRemoteCertificateThumbprint().bytes();
 
-            return 12 + securityPolicyUri.length() +
+            return 12 +
+                securityPolicyUri.length() +
                 (localCertificateBytes != null ? localCertificateBytes.length : 0) +
                 (remoteCertificateThumbprint != null ? remoteCertificateThumbprint.length : 0);
         }
@@ -325,17 +335,16 @@ public class ChunkEncoder {
             SecurityAlgorithm signatureAlgorithm = channel.getSecurityPolicy().getSymmetricSignatureAlgorithm();
             byte[] signatureKey = channel.getEncryptionKeys(securitySecrets).getSignatureKey();
 
-            return SignatureUtil.hmac(
-                signatureAlgorithm,
-                signatureKey,
-                chunkNioBuffer
-            );
+            return SignatureUtil.hmac(signatureAlgorithm, signatureKey, chunkNioBuffer);
         }
 
         @Override
         public Cipher getAndInitializeCipher(SecureChannel channel) throws UaException {
             try {
-                String transformation = channel.getSecurityPolicy().getSymmetricEncryptionAlgorithm().getTransformation();
+                String transformation = channel
+                    .getSecurityPolicy()
+                    .getSymmetricEncryptionAlgorithm()
+                    .getTransformation();
                 ChannelSecurity.SecretKeys secretKeys = channel.getEncryptionKeys(securitySecrets);
 
                 SecretKeySpec keySpec = new SecretKeySpec(secretKeys.getEncryptionKey(), "AES");

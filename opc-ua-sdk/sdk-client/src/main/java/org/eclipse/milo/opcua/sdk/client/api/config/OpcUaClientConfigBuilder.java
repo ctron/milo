@@ -154,9 +154,11 @@ public class OpcUaClientConfigBuilder extends UaTcpStackClientConfigBuilder {
         UaTcpStackClientConfig stackClientConfig = super.build();
 
         if (sessionName == null) {
-            sessionName = () -> String.format("UaSession:%s:%s",
+            sessionName = () -> String.format(
+                "UaSession:%s:%s",
                 stackClientConfig.getApplicationName().getText(),
-                System.currentTimeMillis());
+                System.currentTimeMillis()
+            );
         }
 
         return new OpcUaClientConfigImpl(
@@ -166,7 +168,8 @@ public class OpcUaClientConfigBuilder extends UaTcpStackClientConfigBuilder {
             maxResponseMessageSize,
             maxPendingPublishRequests,
             requestTimeout,
-            identityProvider);
+            identityProvider
+        );
     }
 
     public static class OpcUaClientConfigImpl implements OpcUaClientConfig {

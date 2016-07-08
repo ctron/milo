@@ -41,35 +41,50 @@ public class FindServersResponse implements UaResponseMessage {
         this._servers = _servers;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public ApplicationDescription[] getServers() { return _servers; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public ApplicationDescription[] getServers() {
+        return _servers;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(FindServersResponse findServersResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", findServersResponse._responseHeader != null ? findServersResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            findServersResponse._responseHeader != null ? findServersResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeArray("Servers", findServersResponse._servers, encoder::encodeSerializable);
     }
 
     public static FindServersResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
-        ApplicationDescription[] _servers = decoder.decodeArray("Servers", decoder::decodeSerializable, ApplicationDescription.class);
+        ApplicationDescription[] _servers = decoder
+            .decodeArray("Servers", decoder::decodeSerializable, ApplicationDescription.class);
 
         return new FindServersResponse(_responseHeader, _servers);
     }
 
     static {
-        DelegateRegistry.registerEncoder(FindServersResponse::encode, FindServersResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(FindServersResponse::decode, FindServersResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(FindServersResponse::encode, FindServersResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(FindServersResponse::decode, FindServersResponse.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

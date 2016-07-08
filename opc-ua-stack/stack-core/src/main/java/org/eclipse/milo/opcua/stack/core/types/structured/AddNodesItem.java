@@ -50,7 +50,13 @@ public class AddNodesItem implements UaStructure {
         this._typeDefinition = null;
     }
 
-    public AddNodesItem(ExpandedNodeId _parentNodeId, NodeId _referenceTypeId, ExpandedNodeId _requestedNewNodeId, QualifiedName _browseName, NodeClass _nodeClass, ExtensionObject _nodeAttributes, ExpandedNodeId _typeDefinition) {
+    public AddNodesItem(ExpandedNodeId _parentNodeId,
+                        NodeId _referenceTypeId,
+                        ExpandedNodeId _requestedNewNodeId,
+                        QualifiedName _browseName,
+                        NodeClass _nodeClass,
+                        ExtensionObject _nodeAttributes,
+                        ExpandedNodeId _typeDefinition) {
         this._parentNodeId = _parentNodeId;
         this._referenceTypeId = _referenceTypeId;
         this._requestedNewNodeId = _requestedNewNodeId;
@@ -60,29 +66,48 @@ public class AddNodesItem implements UaStructure {
         this._typeDefinition = _typeDefinition;
     }
 
-    public ExpandedNodeId getParentNodeId() { return _parentNodeId; }
+    public ExpandedNodeId getParentNodeId() {
+        return _parentNodeId;
+    }
 
-    public NodeId getReferenceTypeId() { return _referenceTypeId; }
+    public NodeId getReferenceTypeId() {
+        return _referenceTypeId;
+    }
 
-    public ExpandedNodeId getRequestedNewNodeId() { return _requestedNewNodeId; }
+    public ExpandedNodeId getRequestedNewNodeId() {
+        return _requestedNewNodeId;
+    }
 
-    public QualifiedName getBrowseName() { return _browseName; }
+    public QualifiedName getBrowseName() {
+        return _browseName;
+    }
 
-    public NodeClass getNodeClass() { return _nodeClass; }
+    public NodeClass getNodeClass() {
+        return _nodeClass;
+    }
 
-    public ExtensionObject getNodeAttributes() { return _nodeAttributes; }
+    public ExtensionObject getNodeAttributes() {
+        return _nodeAttributes;
+    }
 
-    public ExpandedNodeId getTypeDefinition() { return _typeDefinition; }
+    public ExpandedNodeId getTypeDefinition() {
+        return _typeDefinition;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(AddNodesItem addNodesItem, UaEncoder encoder) {
         encoder.encodeExpandedNodeId("ParentNodeId", addNodesItem._parentNodeId);
@@ -103,7 +128,15 @@ public class AddNodesItem implements UaStructure {
         ExtensionObject _nodeAttributes = decoder.decodeExtensionObject("NodeAttributes");
         ExpandedNodeId _typeDefinition = decoder.decodeExpandedNodeId("TypeDefinition");
 
-        return new AddNodesItem(_parentNodeId, _referenceTypeId, _requestedNewNodeId, _browseName, _nodeClass, _nodeAttributes, _typeDefinition);
+        return new AddNodesItem(
+            _parentNodeId,
+            _referenceTypeId,
+            _requestedNewNodeId,
+            _browseName,
+            _nodeClass,
+            _nodeAttributes,
+            _typeDefinition
+        );
     }
 
     static {

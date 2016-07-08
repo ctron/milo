@@ -41,33 +41,52 @@ public class ReadRequest implements UaRequestMessage {
         this._nodesToRead = null;
     }
 
-    public ReadRequest(RequestHeader _requestHeader, Double _maxAge, TimestampsToReturn _timestampsToReturn, ReadValueId[] _nodesToRead) {
+    public ReadRequest(RequestHeader _requestHeader,
+                       Double _maxAge,
+                       TimestampsToReturn _timestampsToReturn,
+                       ReadValueId[] _nodesToRead) {
         this._requestHeader = _requestHeader;
         this._maxAge = _maxAge;
         this._timestampsToReturn = _timestampsToReturn;
         this._nodesToRead = _nodesToRead;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public Double getMaxAge() { return _maxAge; }
+    public Double getMaxAge() {
+        return _maxAge;
+    }
 
-    public TimestampsToReturn getTimestampsToReturn() { return _timestampsToReturn; }
+    public TimestampsToReturn getTimestampsToReturn() {
+        return _timestampsToReturn;
+    }
 
-    public ReadValueId[] getNodesToRead() { return _nodesToRead; }
+    public ReadValueId[] getNodesToRead() {
+        return _nodesToRead;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ReadRequest readRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", readRequest._requestHeader != null ? readRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            readRequest._requestHeader != null ? readRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeDouble("MaxAge", readRequest._maxAge);
         encoder.encodeEnumeration("TimestampsToReturn", readRequest._timestampsToReturn);
         encoder.encodeArray("NodesToRead", readRequest._nodesToRead, encoder::encodeSerializable);
@@ -76,7 +95,8 @@ public class ReadRequest implements UaRequestMessage {
     public static ReadRequest decode(UaDecoder decoder) {
         RequestHeader _requestHeader = decoder.decodeSerializable("RequestHeader", RequestHeader.class);
         Double _maxAge = decoder.decodeDouble("MaxAge");
-        TimestampsToReturn _timestampsToReturn = decoder.decodeEnumeration("TimestampsToReturn", TimestampsToReturn.class);
+        TimestampsToReturn _timestampsToReturn = decoder
+            .decodeEnumeration("TimestampsToReturn", TimestampsToReturn.class);
         ReadValueId[] _nodesToRead = decoder.decodeArray("NodesToRead", decoder::decodeSerializable, ReadValueId.class);
 
         return new ReadRequest(_requestHeader, _maxAge, _timestampsToReturn, _nodesToRead);

@@ -96,7 +96,37 @@ public class SubscriptionDiagnosticsDataType implements UaStructure {
         this._eventQueueOverFlowCount = null;
     }
 
-    public SubscriptionDiagnosticsDataType(NodeId _sessionId, UInteger _subscriptionId, UByte _priority, Double _publishingInterval, UInteger _maxKeepAliveCount, UInteger _maxLifetimeCount, UInteger _maxNotificationsPerPublish, Boolean _publishingEnabled, UInteger _modifyCount, UInteger _enableCount, UInteger _disableCount, UInteger _republishRequestCount, UInteger _republishMessageRequestCount, UInteger _republishMessageCount, UInteger _transferRequestCount, UInteger _transferredToAltClientCount, UInteger _transferredToSameClientCount, UInteger _publishRequestCount, UInteger _dataChangeNotificationsCount, UInteger _eventNotificationsCount, UInteger _notificationsCount, UInteger _latePublishRequestCount, UInteger _currentKeepAliveCount, UInteger _currentLifetimeCount, UInteger _unacknowledgedMessageCount, UInteger _discardedMessageCount, UInteger _monitoredItemCount, UInteger _disabledMonitoredItemCount, UInteger _monitoringQueueOverflowCount, UInteger _nextSequenceNumber, UInteger _eventQueueOverFlowCount) {
+    public SubscriptionDiagnosticsDataType(NodeId _sessionId,
+                                           UInteger _subscriptionId,
+                                           UByte _priority,
+                                           Double _publishingInterval,
+                                           UInteger _maxKeepAliveCount,
+                                           UInteger _maxLifetimeCount,
+                                           UInteger _maxNotificationsPerPublish,
+                                           Boolean _publishingEnabled,
+                                           UInteger _modifyCount,
+                                           UInteger _enableCount,
+                                           UInteger _disableCount,
+                                           UInteger _republishRequestCount,
+                                           UInteger _republishMessageRequestCount,
+                                           UInteger _republishMessageCount,
+                                           UInteger _transferRequestCount,
+                                           UInteger _transferredToAltClientCount,
+                                           UInteger _transferredToSameClientCount,
+                                           UInteger _publishRequestCount,
+                                           UInteger _dataChangeNotificationsCount,
+                                           UInteger _eventNotificationsCount,
+                                           UInteger _notificationsCount,
+                                           UInteger _latePublishRequestCount,
+                                           UInteger _currentKeepAliveCount,
+                                           UInteger _currentLifetimeCount,
+                                           UInteger _unacknowledgedMessageCount,
+                                           UInteger _discardedMessageCount,
+                                           UInteger _monitoredItemCount,
+                                           UInteger _disabledMonitoredItemCount,
+                                           UInteger _monitoringQueueOverflowCount,
+                                           UInteger _nextSequenceNumber,
+                                           UInteger _eventQueueOverFlowCount) {
         this._sessionId = _sessionId;
         this._subscriptionId = _subscriptionId;
         this._priority = _priority;
@@ -130,77 +160,144 @@ public class SubscriptionDiagnosticsDataType implements UaStructure {
         this._eventQueueOverFlowCount = _eventQueueOverFlowCount;
     }
 
-    public NodeId getSessionId() { return _sessionId; }
+    public NodeId getSessionId() {
+        return _sessionId;
+    }
 
-    public UInteger getSubscriptionId() { return _subscriptionId; }
+    public UInteger getSubscriptionId() {
+        return _subscriptionId;
+    }
 
-    public UByte getPriority() { return _priority; }
+    public UByte getPriority() {
+        return _priority;
+    }
 
-    public Double getPublishingInterval() { return _publishingInterval; }
+    public Double getPublishingInterval() {
+        return _publishingInterval;
+    }
 
-    public UInteger getMaxKeepAliveCount() { return _maxKeepAliveCount; }
+    public UInteger getMaxKeepAliveCount() {
+        return _maxKeepAliveCount;
+    }
 
-    public UInteger getMaxLifetimeCount() { return _maxLifetimeCount; }
+    public UInteger getMaxLifetimeCount() {
+        return _maxLifetimeCount;
+    }
 
-    public UInteger getMaxNotificationsPerPublish() { return _maxNotificationsPerPublish; }
+    public UInteger getMaxNotificationsPerPublish() {
+        return _maxNotificationsPerPublish;
+    }
 
-    public Boolean getPublishingEnabled() { return _publishingEnabled; }
+    public Boolean getPublishingEnabled() {
+        return _publishingEnabled;
+    }
 
-    public UInteger getModifyCount() { return _modifyCount; }
+    public UInteger getModifyCount() {
+        return _modifyCount;
+    }
 
-    public UInteger getEnableCount() { return _enableCount; }
+    public UInteger getEnableCount() {
+        return _enableCount;
+    }
 
-    public UInteger getDisableCount() { return _disableCount; }
+    public UInteger getDisableCount() {
+        return _disableCount;
+    }
 
-    public UInteger getRepublishRequestCount() { return _republishRequestCount; }
+    public UInteger getRepublishRequestCount() {
+        return _republishRequestCount;
+    }
 
-    public UInteger getRepublishMessageRequestCount() { return _republishMessageRequestCount; }
+    public UInteger getRepublishMessageRequestCount() {
+        return _republishMessageRequestCount;
+    }
 
-    public UInteger getRepublishMessageCount() { return _republishMessageCount; }
+    public UInteger getRepublishMessageCount() {
+        return _republishMessageCount;
+    }
 
-    public UInteger getTransferRequestCount() { return _transferRequestCount; }
+    public UInteger getTransferRequestCount() {
+        return _transferRequestCount;
+    }
 
-    public UInteger getTransferredToAltClientCount() { return _transferredToAltClientCount; }
+    public UInteger getTransferredToAltClientCount() {
+        return _transferredToAltClientCount;
+    }
 
-    public UInteger getTransferredToSameClientCount() { return _transferredToSameClientCount; }
+    public UInteger getTransferredToSameClientCount() {
+        return _transferredToSameClientCount;
+    }
 
-    public UInteger getPublishRequestCount() { return _publishRequestCount; }
+    public UInteger getPublishRequestCount() {
+        return _publishRequestCount;
+    }
 
-    public UInteger getDataChangeNotificationsCount() { return _dataChangeNotificationsCount; }
+    public UInteger getDataChangeNotificationsCount() {
+        return _dataChangeNotificationsCount;
+    }
 
-    public UInteger getEventNotificationsCount() { return _eventNotificationsCount; }
+    public UInteger getEventNotificationsCount() {
+        return _eventNotificationsCount;
+    }
 
-    public UInteger getNotificationsCount() { return _notificationsCount; }
+    public UInteger getNotificationsCount() {
+        return _notificationsCount;
+    }
 
-    public UInteger getLatePublishRequestCount() { return _latePublishRequestCount; }
+    public UInteger getLatePublishRequestCount() {
+        return _latePublishRequestCount;
+    }
 
-    public UInteger getCurrentKeepAliveCount() { return _currentKeepAliveCount; }
+    public UInteger getCurrentKeepAliveCount() {
+        return _currentKeepAliveCount;
+    }
 
-    public UInteger getCurrentLifetimeCount() { return _currentLifetimeCount; }
+    public UInteger getCurrentLifetimeCount() {
+        return _currentLifetimeCount;
+    }
 
-    public UInteger getUnacknowledgedMessageCount() { return _unacknowledgedMessageCount; }
+    public UInteger getUnacknowledgedMessageCount() {
+        return _unacknowledgedMessageCount;
+    }
 
-    public UInteger getDiscardedMessageCount() { return _discardedMessageCount; }
+    public UInteger getDiscardedMessageCount() {
+        return _discardedMessageCount;
+    }
 
-    public UInteger getMonitoredItemCount() { return _monitoredItemCount; }
+    public UInteger getMonitoredItemCount() {
+        return _monitoredItemCount;
+    }
 
-    public UInteger getDisabledMonitoredItemCount() { return _disabledMonitoredItemCount; }
+    public UInteger getDisabledMonitoredItemCount() {
+        return _disabledMonitoredItemCount;
+    }
 
-    public UInteger getMonitoringQueueOverflowCount() { return _monitoringQueueOverflowCount; }
+    public UInteger getMonitoringQueueOverflowCount() {
+        return _monitoringQueueOverflowCount;
+    }
 
-    public UInteger getNextSequenceNumber() { return _nextSequenceNumber; }
+    public UInteger getNextSequenceNumber() {
+        return _nextSequenceNumber;
+    }
 
-    public UInteger getEventQueueOverFlowCount() { return _eventQueueOverFlowCount; }
+    public UInteger getEventQueueOverFlowCount() {
+        return _eventQueueOverFlowCount;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(SubscriptionDiagnosticsDataType subscriptionDiagnosticsDataType, UaEncoder encoder) {
         encoder.encodeNodeId("SessionId", subscriptionDiagnosticsDataType._sessionId);
@@ -215,13 +312,23 @@ public class SubscriptionDiagnosticsDataType implements UaStructure {
         encoder.encodeUInt32("EnableCount", subscriptionDiagnosticsDataType._enableCount);
         encoder.encodeUInt32("DisableCount", subscriptionDiagnosticsDataType._disableCount);
         encoder.encodeUInt32("RepublishRequestCount", subscriptionDiagnosticsDataType._republishRequestCount);
-        encoder.encodeUInt32("RepublishMessageRequestCount", subscriptionDiagnosticsDataType._republishMessageRequestCount);
+        encoder.encodeUInt32(
+            "RepublishMessageRequestCount",
+            subscriptionDiagnosticsDataType._republishMessageRequestCount
+        );
         encoder.encodeUInt32("RepublishMessageCount", subscriptionDiagnosticsDataType._republishMessageCount);
         encoder.encodeUInt32("TransferRequestCount", subscriptionDiagnosticsDataType._transferRequestCount);
-        encoder.encodeUInt32("TransferredToAltClientCount", subscriptionDiagnosticsDataType._transferredToAltClientCount);
-        encoder.encodeUInt32("TransferredToSameClientCount", subscriptionDiagnosticsDataType._transferredToSameClientCount);
+        encoder
+            .encodeUInt32("TransferredToAltClientCount", subscriptionDiagnosticsDataType._transferredToAltClientCount);
+        encoder.encodeUInt32(
+            "TransferredToSameClientCount",
+            subscriptionDiagnosticsDataType._transferredToSameClientCount
+        );
         encoder.encodeUInt32("PublishRequestCount", subscriptionDiagnosticsDataType._publishRequestCount);
-        encoder.encodeUInt32("DataChangeNotificationsCount", subscriptionDiagnosticsDataType._dataChangeNotificationsCount);
+        encoder.encodeUInt32(
+            "DataChangeNotificationsCount",
+            subscriptionDiagnosticsDataType._dataChangeNotificationsCount
+        );
         encoder.encodeUInt32("EventNotificationsCount", subscriptionDiagnosticsDataType._eventNotificationsCount);
         encoder.encodeUInt32("NotificationsCount", subscriptionDiagnosticsDataType._notificationsCount);
         encoder.encodeUInt32("LatePublishRequestCount", subscriptionDiagnosticsDataType._latePublishRequestCount);
@@ -231,7 +338,10 @@ public class SubscriptionDiagnosticsDataType implements UaStructure {
         encoder.encodeUInt32("DiscardedMessageCount", subscriptionDiagnosticsDataType._discardedMessageCount);
         encoder.encodeUInt32("MonitoredItemCount", subscriptionDiagnosticsDataType._monitoredItemCount);
         encoder.encodeUInt32("DisabledMonitoredItemCount", subscriptionDiagnosticsDataType._disabledMonitoredItemCount);
-        encoder.encodeUInt32("MonitoringQueueOverflowCount", subscriptionDiagnosticsDataType._monitoringQueueOverflowCount);
+        encoder.encodeUInt32(
+            "MonitoringQueueOverflowCount",
+            subscriptionDiagnosticsDataType._monitoringQueueOverflowCount
+        );
         encoder.encodeUInt32("NextSequenceNumber", subscriptionDiagnosticsDataType._nextSequenceNumber);
         encoder.encodeUInt32("EventQueueOverFlowCount", subscriptionDiagnosticsDataType._eventQueueOverFlowCount);
     }
@@ -269,12 +379,54 @@ public class SubscriptionDiagnosticsDataType implements UaStructure {
         UInteger _nextSequenceNumber = decoder.decodeUInt32("NextSequenceNumber");
         UInteger _eventQueueOverFlowCount = decoder.decodeUInt32("EventQueueOverFlowCount");
 
-        return new SubscriptionDiagnosticsDataType(_sessionId, _subscriptionId, _priority, _publishingInterval, _maxKeepAliveCount, _maxLifetimeCount, _maxNotificationsPerPublish, _publishingEnabled, _modifyCount, _enableCount, _disableCount, _republishRequestCount, _republishMessageRequestCount, _republishMessageCount, _transferRequestCount, _transferredToAltClientCount, _transferredToSameClientCount, _publishRequestCount, _dataChangeNotificationsCount, _eventNotificationsCount, _notificationsCount, _latePublishRequestCount, _currentKeepAliveCount, _currentLifetimeCount, _unacknowledgedMessageCount, _discardedMessageCount, _monitoredItemCount, _disabledMonitoredItemCount, _monitoringQueueOverflowCount, _nextSequenceNumber, _eventQueueOverFlowCount);
+        return new SubscriptionDiagnosticsDataType(
+            _sessionId,
+            _subscriptionId,
+            _priority,
+            _publishingInterval,
+            _maxKeepAliveCount,
+            _maxLifetimeCount,
+            _maxNotificationsPerPublish,
+            _publishingEnabled,
+            _modifyCount,
+            _enableCount,
+            _disableCount,
+            _republishRequestCount,
+            _republishMessageRequestCount,
+            _republishMessageCount,
+            _transferRequestCount,
+            _transferredToAltClientCount,
+            _transferredToSameClientCount,
+            _publishRequestCount,
+            _dataChangeNotificationsCount,
+            _eventNotificationsCount,
+            _notificationsCount,
+            _latePublishRequestCount,
+            _currentKeepAliveCount,
+            _currentLifetimeCount,
+            _unacknowledgedMessageCount,
+            _discardedMessageCount,
+            _monitoredItemCount,
+            _disabledMonitoredItemCount,
+            _monitoringQueueOverflowCount,
+            _nextSequenceNumber,
+            _eventQueueOverFlowCount
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(SubscriptionDiagnosticsDataType::encode, SubscriptionDiagnosticsDataType.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(SubscriptionDiagnosticsDataType::decode, SubscriptionDiagnosticsDataType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            SubscriptionDiagnosticsDataType::encode,
+            SubscriptionDiagnosticsDataType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            SubscriptionDiagnosticsDataType::decode,
+            SubscriptionDiagnosticsDataType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

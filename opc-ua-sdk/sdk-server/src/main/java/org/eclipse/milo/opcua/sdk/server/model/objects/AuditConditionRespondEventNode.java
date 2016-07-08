@@ -29,15 +29,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:AuditConditionRespondEventType")
 public class AuditConditionRespondEventNode extends AuditConditionEventNode implements AuditConditionRespondEventType {
 
-    public AuditConditionRespondEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditConditionRespondEventNode(UaNodeManager nodeManager,
+                                          NodeId nodeId,
+                                          QualifiedName browseName,
+                                          LocalizedText displayName,
+                                          Optional<LocalizedText> description,
+                                          Optional<UInteger> writeMask,
+                                          Optional<UInteger> userWriteMask,
+                                          UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -51,7 +50,9 @@ public class AuditConditionRespondEventNode extends AuditConditionEventNode impl
 
     @Override
     public PropertyNode getSelectedResponseNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditConditionRespondEventType.SELECTED_RESPONSE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditConditionRespondEventType.SELECTED_RESPONSE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

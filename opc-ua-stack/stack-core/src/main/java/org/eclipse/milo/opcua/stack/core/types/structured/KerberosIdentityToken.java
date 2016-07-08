@@ -40,17 +40,24 @@ public class KerberosIdentityToken extends UserIdentityToken {
         this._ticketData = _ticketData;
     }
 
-    public ByteString getTicketData() { return _ticketData; }
+    public ByteString getTicketData() {
+        return _ticketData;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(KerberosIdentityToken kerberosIdentityToken, UaEncoder encoder) {
         encoder.encodeString("PolicyId", kerberosIdentityToken._policyId);
@@ -65,8 +72,18 @@ public class KerberosIdentityToken extends UserIdentityToken {
     }
 
     static {
-        DelegateRegistry.registerEncoder(KerberosIdentityToken::encode, KerberosIdentityToken.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(KerberosIdentityToken::decode, KerberosIdentityToken.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            KerberosIdentityToken::encode,
+            KerberosIdentityToken.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            KerberosIdentityToken::decode,
+            KerberosIdentityToken.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

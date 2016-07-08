@@ -18,7 +18,6 @@ import org.eclipse.milo.opcua.sdk.core.model.Property;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 
-
 public interface DataItemType extends BaseDataVariableType {
 
     Property<String> DEFINITION = new BasicProperty<>(
@@ -34,7 +33,6 @@ public interface DataItemType extends BaseDataVariableType {
         -1,
         Double.class
     );
-
 
     String getDefinition();
 

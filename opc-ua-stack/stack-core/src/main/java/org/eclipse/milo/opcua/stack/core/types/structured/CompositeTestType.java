@@ -64,10 +64,15 @@ public class CompositeTestType implements UaStructure {
         return XmlEncodingId;
     }
 
-
     public static void encode(CompositeTestType compositeTestType, UaEncoder encoder) {
-        encoder.encodeSerializable("Field1", compositeTestType._field1 != null ? compositeTestType._field1 : new ScalarTestType());
-        encoder.encodeSerializable("Field2", compositeTestType._field2 != null ? compositeTestType._field2 : new ArrayTestType());
+        encoder.encodeSerializable(
+            "Field1",
+            compositeTestType._field1 != null ? compositeTestType._field1 : new ScalarTestType()
+        );
+        encoder.encodeSerializable(
+            "Field2",
+            compositeTestType._field2 != null ? compositeTestType._field2 : new ArrayTestType()
+        );
     }
 
     public static CompositeTestType decode(UaDecoder decoder) {
@@ -78,8 +83,10 @@ public class CompositeTestType implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(CompositeTestType::encode, CompositeTestType.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(CompositeTestType::decode, CompositeTestType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(CompositeTestType::encode, CompositeTestType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(CompositeTestType::decode, CompositeTestType.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

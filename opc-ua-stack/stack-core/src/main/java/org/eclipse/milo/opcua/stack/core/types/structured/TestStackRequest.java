@@ -80,9 +80,11 @@ public class TestStackRequest implements UaRequestMessage {
         return XmlEncodingId;
     }
 
-
     public static void encode(TestStackRequest testStackRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", testStackRequest._requestHeader != null ? testStackRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            testStackRequest._requestHeader != null ? testStackRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeUInt32("TestId", testStackRequest._testId);
         encoder.encodeInt32("Iteration", testStackRequest._iteration);
         encoder.encodeVariant("Input", testStackRequest._input);
@@ -98,8 +100,10 @@ public class TestStackRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(TestStackRequest::encode, TestStackRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(TestStackRequest::decode, TestStackRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(TestStackRequest::encode, TestStackRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(TestStackRequest::decode, TestStackRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

@@ -31,35 +31,45 @@ import org.eclipse.milo.opcua.stack.core.types.structured.EnumValueType;
 @UaVariableNode(typeName = "0:MultiStateValueDiscreteType")
 public class MultiStateValueDiscreteNode extends DiscreteItemNode implements MultiStateValueDiscreteType {
 
-    public MultiStateValueDiscreteNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public MultiStateValueDiscreteNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public MultiStateValueDiscreteNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public MultiStateValueDiscreteNode(UaNodeManager nodeManager,
+                                       NodeId nodeId,
+                                       QualifiedName browseName,
+                                       LocalizedText displayName,
+                                       Optional<LocalizedText> description,
+                                       Optional<UInteger> writeMask,
+                                       Optional<UInteger> userWriteMask,
+                                       DataValue value,
+                                       NodeId dataType,
+                                       Integer valueRank,
+                                       Optional<UInteger[]> arrayDimensions,
+                                       UByte accessLevel,
+                                       UByte userAccessLevel,
+                                       Optional<Double> minimumSamplingInterval,
+                                       boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
-
 
     @Override
     public EnumValueType[] getEnumValues() {
@@ -89,7 +99,9 @@ public class MultiStateValueDiscreteNode extends DiscreteItemNode implements Mul
 
     @Override
     public PropertyNode getValueAsTextNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(MultiStateValueDiscreteType.VALUE_AS_TEXT.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            MultiStateValueDiscreteType.VALUE_AS_TEXT.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

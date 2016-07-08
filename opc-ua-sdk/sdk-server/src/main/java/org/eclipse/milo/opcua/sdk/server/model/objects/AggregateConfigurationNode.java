@@ -29,15 +29,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:AggregateConfigurationType")
 public class AggregateConfigurationNode extends BaseObjectNode implements AggregateConfigurationType {
 
-    public AggregateConfigurationNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AggregateConfigurationNode(UaNodeManager nodeManager,
+                                      NodeId nodeId,
+                                      QualifiedName browseName,
+                                      LocalizedText displayName,
+                                      Optional<LocalizedText> description,
+                                      Optional<UInteger> writeMask,
+                                      Optional<UInteger> userWriteMask,
+                                      UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -51,7 +50,9 @@ public class AggregateConfigurationNode extends BaseObjectNode implements Aggreg
 
     @Override
     public PropertyNode getTreatUncertainAsBadNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AggregateConfigurationType.TREAT_UNCERTAIN_AS_BAD.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AggregateConfigurationType.TREAT_UNCERTAIN_AS_BAD.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -70,7 +71,9 @@ public class AggregateConfigurationNode extends BaseObjectNode implements Aggreg
 
     @Override
     public PropertyNode getPercentDataBadNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AggregateConfigurationType.PERCENT_DATA_BAD.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AggregateConfigurationType.PERCENT_DATA_BAD.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -89,7 +92,9 @@ public class AggregateConfigurationNode extends BaseObjectNode implements Aggreg
 
     @Override
     public PropertyNode getPercentDataGoodNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AggregateConfigurationType.PERCENT_DATA_GOOD.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AggregateConfigurationType.PERCENT_DATA_GOOD.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -108,7 +113,9 @@ public class AggregateConfigurationNode extends BaseObjectNode implements Aggreg
 
     @Override
     public PropertyNode getUseSlopedExtrapolationNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AggregateConfigurationType.USE_SLOPED_EXTRAPOLATION.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AggregateConfigurationType.USE_SLOPED_EXTRAPOLATION.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

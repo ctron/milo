@@ -51,7 +51,14 @@ public class EndpointDescription implements UaStructure {
         this._securityLevel = null;
     }
 
-    public EndpointDescription(String _endpointUrl, ApplicationDescription _server, ByteString _serverCertificate, MessageSecurityMode _securityMode, String _securityPolicyUri, UserTokenPolicy[] _userIdentityTokens, String _transportProfileUri, UByte _securityLevel) {
+    public EndpointDescription(String _endpointUrl,
+                               ApplicationDescription _server,
+                               ByteString _serverCertificate,
+                               MessageSecurityMode _securityMode,
+                               String _securityPolicyUri,
+                               UserTokenPolicy[] _userIdentityTokens,
+                               String _transportProfileUri,
+                               UByte _securityLevel) {
         this._endpointUrl = _endpointUrl;
         this._server = _server;
         this._serverCertificate = _serverCertificate;
@@ -62,35 +69,59 @@ public class EndpointDescription implements UaStructure {
         this._securityLevel = _securityLevel;
     }
 
-    public String getEndpointUrl() { return _endpointUrl; }
+    public String getEndpointUrl() {
+        return _endpointUrl;
+    }
 
-    public ApplicationDescription getServer() { return _server; }
+    public ApplicationDescription getServer() {
+        return _server;
+    }
 
-    public ByteString getServerCertificate() { return _serverCertificate; }
+    public ByteString getServerCertificate() {
+        return _serverCertificate;
+    }
 
-    public MessageSecurityMode getSecurityMode() { return _securityMode; }
+    public MessageSecurityMode getSecurityMode() {
+        return _securityMode;
+    }
 
-    public String getSecurityPolicyUri() { return _securityPolicyUri; }
+    public String getSecurityPolicyUri() {
+        return _securityPolicyUri;
+    }
 
-    public UserTokenPolicy[] getUserIdentityTokens() { return _userIdentityTokens; }
+    public UserTokenPolicy[] getUserIdentityTokens() {
+        return _userIdentityTokens;
+    }
 
-    public String getTransportProfileUri() { return _transportProfileUri; }
+    public String getTransportProfileUri() {
+        return _transportProfileUri;
+    }
 
-    public UByte getSecurityLevel() { return _securityLevel; }
+    public UByte getSecurityLevel() {
+        return _securityLevel;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(EndpointDescription endpointDescription, UaEncoder encoder) {
         encoder.encodeString("EndpointUrl", endpointDescription._endpointUrl);
-        encoder.encodeSerializable("Server", endpointDescription._server != null ? endpointDescription._server : new ApplicationDescription());
+        encoder.encodeSerializable(
+            "Server",
+            endpointDescription._server != null ? endpointDescription._server : new ApplicationDescription()
+        );
         encoder.encodeByteString("ServerCertificate", endpointDescription._serverCertificate);
         encoder.encodeEnumeration("SecurityMode", endpointDescription._securityMode);
         encoder.encodeString("SecurityPolicyUri", endpointDescription._securityPolicyUri);
@@ -105,16 +136,28 @@ public class EndpointDescription implements UaStructure {
         ByteString _serverCertificate = decoder.decodeByteString("ServerCertificate");
         MessageSecurityMode _securityMode = decoder.decodeEnumeration("SecurityMode", MessageSecurityMode.class);
         String _securityPolicyUri = decoder.decodeString("SecurityPolicyUri");
-        UserTokenPolicy[] _userIdentityTokens = decoder.decodeArray("UserIdentityTokens", decoder::decodeSerializable, UserTokenPolicy.class);
+        UserTokenPolicy[] _userIdentityTokens = decoder
+            .decodeArray("UserIdentityTokens", decoder::decodeSerializable, UserTokenPolicy.class);
         String _transportProfileUri = decoder.decodeString("TransportProfileUri");
         UByte _securityLevel = decoder.decodeByte("SecurityLevel");
 
-        return new EndpointDescription(_endpointUrl, _server, _serverCertificate, _securityMode, _securityPolicyUri, _userIdentityTokens, _transportProfileUri, _securityLevel);
+        return new EndpointDescription(
+            _endpointUrl,
+            _server,
+            _serverCertificate,
+            _securityMode,
+            _securityPolicyUri,
+            _userIdentityTokens,
+            _transportProfileUri,
+            _securityLevel
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(EndpointDescription::encode, EndpointDescription.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(EndpointDescription::decode, EndpointDescription.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(EndpointDescription::encode, EndpointDescription.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(EndpointDescription::decode, EndpointDescription.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

@@ -29,16 +29,96 @@ public class VariantSerializationTest extends BinarySerializationFixture {
     @DataProvider(name = "VariantProvider")
     public Object[][] getVariants() {
         return new Object[][]{
-                {new Variant(null)},
-                {new Variant("hello, world")},
-                {new Variant(42)},
-                {new Variant(new Integer[]{0, 1, 2, 3})},
-                {new Variant(new Integer[][]{{0, 1}, {2, 3}})},
-                {new Variant(new Long[]{0L, 1L, 2L, 3L})},
-                {new Variant(new Long[][]{{0L, 1L}, {2L, 3L}})},
-                {new Variant(new UInteger[]{Unsigned.uint(0), Unsigned.uint(1), Unsigned.uint(2), Unsigned.uint(3)})},
-                {new Variant(new UInteger[][]{{Unsigned.uint(0), Unsigned.uint(1)}, {Unsigned.uint(2), Unsigned.uint(3)}})},
-                {new Variant(new Variant[] {new Variant(0), new Variant(1), new Variant(2)})}
+            {
+                new Variant(null)
+            },
+            {
+                new Variant("hello, world")
+            },
+            {
+                new Variant(42)
+            },
+            {
+                new Variant(
+                    new Integer[]{
+                        0,
+                        1,
+                        2,
+                        3
+                    }
+                )
+            },
+            {
+                new Variant(
+                    new Integer[][]{
+                        {
+                            0,
+                            1
+                        },
+                        {
+                            2,
+                            3
+                        }
+                    }
+                )
+            },
+            {
+                new Variant(
+                    new Long[]{
+                        0L,
+                        1L,
+                        2L,
+                        3L
+                    }
+                )
+            },
+            {
+                new Variant(
+                    new Long[][]{
+                        {
+                            0L,
+                            1L
+                        },
+                        {
+                            2L,
+                            3L
+                        }
+                    }
+                )
+            },
+            {
+                new Variant(
+                    new UInteger[]{
+                        Unsigned.uint(0),
+                        Unsigned.uint(1),
+                        Unsigned.uint(2),
+                        Unsigned.uint(3)
+                    }
+                )
+            },
+            {
+                new Variant(
+                    new UInteger[][]{
+                        {
+                            Unsigned.uint(0),
+                            Unsigned.uint(1)
+                        },
+                        {
+                            Unsigned.uint(2),
+                            Unsigned.uint(3)
+                        }
+                    }
+                )
+            },
+            {
+                new Variant(
+                    new Variant[]{
+                        new Variant(0),
+                        new Variant(1),
+                        new Variant(2)
+                    }
+                )
+            }
         };
     }
 
@@ -68,22 +148,101 @@ public class VariantSerializationTest extends BinarySerializationFixture {
     @DataProvider(name = "PrimitiveArrayVariantProvider")
     public Object[][] getPrimitiveArrayVariants() {
         return new Object[][]{
-                {new Variant(new int[]{0, 1, 2, 3}),
-                        new Variant(new Integer[]{0, 1, 2, 3})},
+            {
+                new Variant(
+                    new int[]{
+                        0,
+                        1,
+                        2,
+                        3
+                    }
+                ),
+                new Variant(
+                    new Integer[]{
+                        0,
+                        1,
+                        2,
+                        3
+                    }
+                )
+            },
 
-                {new Variant(new int[][]{{0, 1}, {2, 3}}),
-                        new Variant(new Integer[][]{{0, 1}, {2, 3}})},
+            {
+                new Variant(
+                    new int[][]{
+                        {
+                            0,
+                            1
+                        },
+                        {
+                            2,
+                            3
+                        }
+                    }
+                ),
+                new Variant(
+                    new Integer[][]{
+                        {
+                            0,
+                            1
+                        },
+                        {
+                            2,
+                            3
+                        }
+                    }
+                )
+            },
 
-                {new Variant(new long[]{0L, 1L, 2L, 3L}),
-                        new Variant(new Long[]{0L, 1L, 2L, 3L})},
+            {
+                new Variant(
+                    new long[]{
+                        0L,
+                        1L,
+                        2L,
+                        3L
+                    }
+                ),
+                new Variant(
+                    new Long[]{
+                        0L,
+                        1L,
+                        2L,
+                        3L
+                    }
+                )
+            },
 
-                {new Variant(new long[][]{{0L, 1L}, {2L, 3L}}),
-                        new Variant(new Long[][]{{0L, 1L}, {2L, 3L}})}
+            {
+                new Variant(
+                    new long[][]{
+                        {
+                            0L,
+                            1L
+                        },
+                        {
+                            2L,
+                            3L
+                        }
+                    }
+                ),
+                new Variant(
+                    new Long[][]{
+                        {
+                            0L,
+                            1L
+                        },
+                        {
+                            2L,
+                            3L
+                        }
+                    }
+                )
+            }
         };
     }
 
-    @Test(dataProvider = "PrimitiveArrayVariantProvider",
-            description = "Test that after primitive array types given to variants come out as expected after encoding/decoding.")
+    @Test(dataProvider = "PrimitiveArrayVariantProvider", description = "Test that after primitive array types given to variants come out as expected after encoding/decoding.")
     public void testPrimitiveArrayVariantRoundTrip(Variant variant, Variant expected) {
         encoder.encodeVariant(null, variant);
         Variant decoded = decoder.decodeVariant(null);

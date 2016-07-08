@@ -73,29 +73,29 @@ public class Endpoint {
         short securityLevel = 0;
 
         switch (messageSecurity) {
-            case SignAndEncrypt:
-                securityLevel |= 0x80;
-                break;
-            case Sign:
-                securityLevel |= 0x40;
-                break;
-            default:
-                securityLevel |= 0x20;
+        case SignAndEncrypt:
+            securityLevel |= 0x80;
+            break;
+        case Sign:
+            securityLevel |= 0x40;
+            break;
+        default:
+            securityLevel |= 0x20;
         }
 
         switch (securityPolicy) {
-            case Basic256Sha256:
-                securityLevel |= 0x08;
-                break;
-            case Basic256:
-                securityLevel |= 0x04;
-                break;
-            case Basic128Rsa15:
-                securityLevel |= 0x02;
-                break;
-            case None:
-                securityLevel |= 0x01;
-                break;
+        case Basic256Sha256:
+            securityLevel |= 0x08;
+            break;
+        case Basic256:
+            securityLevel |= 0x04;
+            break;
+        case Basic128Rsa15:
+            securityLevel |= 0x02;
+            break;
+        case None:
+            securityLevel |= 0x01;
+            break;
         }
 
         return securityLevel;
@@ -128,11 +128,17 @@ public class Endpoint {
     @Override
     public String toString() {
         return "Endpoint{" +
-            "endpointUri=" + endpointUri +
-            ", securityPolicy=" + securityPolicy +
-            ", messageSecurity=" + messageSecurity +
-            ", certificate=" + certificate +
-            ", bindAddress='" + bindAddress + '\'' +
+            "endpointUri=" +
+            endpointUri +
+            ", securityPolicy=" +
+            securityPolicy +
+            ", messageSecurity=" +
+            messageSecurity +
+            ", certificate=" +
+            certificate +
+            ", bindAddress='" +
+            bindAddress +
+            '\'' +
             '}';
     }
 

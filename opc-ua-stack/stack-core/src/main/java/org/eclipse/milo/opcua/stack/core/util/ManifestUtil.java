@@ -59,7 +59,10 @@ public class ManifestUtil {
 
     private static Set<URI> uris() {
         try {
-            Enumeration<URL> resources = Thread.currentThread().getContextClassLoader().getResources("META-INF/MANIFEST.MF");
+            Enumeration<URL> resources = Thread
+                .currentThread()
+                .getContextClassLoader()
+                .getResources("META-INF/MANIFEST.MF");
 
             Set<URI> uris = new HashSet<>();
             while (resources.hasMoreElements()) {

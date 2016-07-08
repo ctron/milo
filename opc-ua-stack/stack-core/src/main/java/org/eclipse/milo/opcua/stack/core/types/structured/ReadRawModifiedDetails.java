@@ -44,7 +44,11 @@ public class ReadRawModifiedDetails extends HistoryReadDetails {
         this._returnBounds = null;
     }
 
-    public ReadRawModifiedDetails(Boolean _isReadModified, DateTime _startTime, DateTime _endTime, UInteger _numValuesPerNode, Boolean _returnBounds) {
+    public ReadRawModifiedDetails(Boolean _isReadModified,
+                                  DateTime _startTime,
+                                  DateTime _endTime,
+                                  UInteger _numValuesPerNode,
+                                  Boolean _returnBounds) {
         super();
         this._isReadModified = _isReadModified;
         this._startTime = _startTime;
@@ -53,25 +57,40 @@ public class ReadRawModifiedDetails extends HistoryReadDetails {
         this._returnBounds = _returnBounds;
     }
 
-    public Boolean getIsReadModified() { return _isReadModified; }
+    public Boolean getIsReadModified() {
+        return _isReadModified;
+    }
 
-    public DateTime getStartTime() { return _startTime; }
+    public DateTime getStartTime() {
+        return _startTime;
+    }
 
-    public DateTime getEndTime() { return _endTime; }
+    public DateTime getEndTime() {
+        return _endTime;
+    }
 
-    public UInteger getNumValuesPerNode() { return _numValuesPerNode; }
+    public UInteger getNumValuesPerNode() {
+        return _numValuesPerNode;
+    }
 
-    public Boolean getReturnBounds() { return _returnBounds; }
+    public Boolean getReturnBounds() {
+        return _returnBounds;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ReadRawModifiedDetails readRawModifiedDetails, UaEncoder encoder) {
         encoder.encodeBoolean("IsReadModified", readRawModifiedDetails._isReadModified);
@@ -92,8 +111,18 @@ public class ReadRawModifiedDetails extends HistoryReadDetails {
     }
 
     static {
-        DelegateRegistry.registerEncoder(ReadRawModifiedDetails::encode, ReadRawModifiedDetails.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ReadRawModifiedDetails::decode, ReadRawModifiedDetails.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            ReadRawModifiedDetails::encode,
+            ReadRawModifiedDetails.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            ReadRawModifiedDetails::decode,
+            ReadRawModifiedDetails.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

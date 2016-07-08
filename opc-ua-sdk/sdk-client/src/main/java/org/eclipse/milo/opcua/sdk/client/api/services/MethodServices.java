@@ -42,8 +42,7 @@ public interface MethodServices {
      * @see #call(List)
      */
     default CompletableFuture<CallMethodResult> call(CallMethodRequest request) {
-        return call(newArrayList(request))
-            .thenApply(response -> response.getResults()[0]);
+        return call(newArrayList(request)).thenApply(response -> response.getResults()[0]);
     }
 
 }

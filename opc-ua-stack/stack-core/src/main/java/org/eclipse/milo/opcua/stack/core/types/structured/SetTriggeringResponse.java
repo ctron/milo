@@ -44,7 +44,11 @@ public class SetTriggeringResponse implements UaResponseMessage {
         this._removeDiagnosticInfos = null;
     }
 
-    public SetTriggeringResponse(ResponseHeader _responseHeader, StatusCode[] _addResults, DiagnosticInfo[] _addDiagnosticInfos, StatusCode[] _removeResults, DiagnosticInfo[] _removeDiagnosticInfos) {
+    public SetTriggeringResponse(ResponseHeader _responseHeader,
+                                 StatusCode[] _addResults,
+                                 DiagnosticInfo[] _addDiagnosticInfos,
+                                 StatusCode[] _removeResults,
+                                 DiagnosticInfo[] _removeDiagnosticInfos) {
         this._responseHeader = _responseHeader;
         this._addResults = _addResults;
         this._addDiagnosticInfos = _addDiagnosticInfos;
@@ -52,47 +56,91 @@ public class SetTriggeringResponse implements UaResponseMessage {
         this._removeDiagnosticInfos = _removeDiagnosticInfos;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public StatusCode[] getAddResults() { return _addResults; }
+    public StatusCode[] getAddResults() {
+        return _addResults;
+    }
 
-    public DiagnosticInfo[] getAddDiagnosticInfos() { return _addDiagnosticInfos; }
+    public DiagnosticInfo[] getAddDiagnosticInfos() {
+        return _addDiagnosticInfos;
+    }
 
-    public StatusCode[] getRemoveResults() { return _removeResults; }
+    public StatusCode[] getRemoveResults() {
+        return _removeResults;
+    }
 
-    public DiagnosticInfo[] getRemoveDiagnosticInfos() { return _removeDiagnosticInfos; }
+    public DiagnosticInfo[] getRemoveDiagnosticInfos() {
+        return _removeDiagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(SetTriggeringResponse setTriggeringResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", setTriggeringResponse._responseHeader != null ? setTriggeringResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            setTriggeringResponse._responseHeader != null ? setTriggeringResponse._responseHeader : new ResponseHeader()
+        );
         encoder.encodeArray("AddResults", setTriggeringResponse._addResults, encoder::encodeStatusCode);
-        encoder.encodeArray("AddDiagnosticInfos", setTriggeringResponse._addDiagnosticInfos, encoder::encodeDiagnosticInfo);
+        encoder.encodeArray(
+            "AddDiagnosticInfos",
+            setTriggeringResponse._addDiagnosticInfos,
+            encoder::encodeDiagnosticInfo
+        );
         encoder.encodeArray("RemoveResults", setTriggeringResponse._removeResults, encoder::encodeStatusCode);
-        encoder.encodeArray("RemoveDiagnosticInfos", setTriggeringResponse._removeDiagnosticInfos, encoder::encodeDiagnosticInfo);
+        encoder.encodeArray(
+            "RemoveDiagnosticInfos",
+            setTriggeringResponse._removeDiagnosticInfos,
+            encoder::encodeDiagnosticInfo
+        );
     }
 
     public static SetTriggeringResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
         StatusCode[] _addResults = decoder.decodeArray("AddResults", decoder::decodeStatusCode, StatusCode.class);
-        DiagnosticInfo[] _addDiagnosticInfos = decoder.decodeArray("AddDiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        DiagnosticInfo[] _addDiagnosticInfos = decoder
+            .decodeArray("AddDiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
         StatusCode[] _removeResults = decoder.decodeArray("RemoveResults", decoder::decodeStatusCode, StatusCode.class);
-        DiagnosticInfo[] _removeDiagnosticInfos = decoder.decodeArray("RemoveDiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        DiagnosticInfo[] _removeDiagnosticInfos = decoder
+            .decodeArray("RemoveDiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
-        return new SetTriggeringResponse(_responseHeader, _addResults, _addDiagnosticInfos, _removeResults, _removeDiagnosticInfos);
+        return new SetTriggeringResponse(
+            _responseHeader,
+            _addResults,
+            _addDiagnosticInfos,
+            _removeResults,
+            _removeDiagnosticInfos
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(SetTriggeringResponse::encode, SetTriggeringResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(SetTriggeringResponse::decode, SetTriggeringResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            SetTriggeringResponse::encode,
+            SetTriggeringResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            SetTriggeringResponse::decode,
+            SetTriggeringResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

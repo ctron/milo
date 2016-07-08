@@ -74,8 +74,17 @@ public class CertificateGenerator {
                                                          List<String> ipAddresses) throws Exception {
 
         return generateSelfSignedCertificate(
-            commonName, "", organizationName, localityName, stateName,
-            country, 365, applicationUri, dnsNames, ipAddresses);
+            commonName,
+            "",
+            organizationName,
+            localityName,
+            stateName,
+            country,
+            365,
+            applicationUri,
+            dnsNames,
+            ipAddresses
+        );
     }
 
     public X509Certificate generateSelfSignedCertificate(String commonName,
@@ -89,8 +98,15 @@ public class CertificateGenerator {
                                                          List<String> dnsNames,
                                                          List<String> ipAddresses) throws Exception {
 
-        String subject = String.format("cn=%s, ou=%s, o=%s, l=%s, st=%s, c=%s",
-            commonName, organizationUnit, organizationName, localityName, stateName, country);
+        String subject = String.format(
+            "cn=%s, ou=%s, o=%s, l=%s, st=%s, c=%s",
+            commonName,
+            organizationUnit,
+            organizationName,
+            localityName,
+            stateName,
+            country
+        );
 
         List<String> args = buildKeyToolArgs(subject, validity, applicationUri, dnsNames, ipAddresses);
 
@@ -168,7 +184,12 @@ public class CertificateGenerator {
 
             Class<?> c = Class.forName(KEY_TOOL_CLASS_NAME);
             Method m = c.getMethod("main", String[].class);
-            m.invoke(null, new Object[]{args});
+            m.invoke(
+                null,
+                new Object[]{
+                    args
+                }
+            );
         } catch (Throwable t) {
             throw new Exception("error invoking keytool", t);
         } finally {
@@ -176,7 +197,8 @@ public class CertificateGenerator {
         }
     }
 
-    private static class ExitTrappedException extends SecurityException {}
+    private static class ExitTrappedException extends SecurityException {
+    }
 
     private static final SecurityManager SYSTEM_SECURITY_MANAGER = System.getSecurityManager();
 

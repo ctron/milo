@@ -98,8 +98,7 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
             // FIXME: should we log this somewhere?
             return DEFAULT_PRECACHE_SIZE;
         }
-        if (prop == null)
-            return DEFAULT_PRECACHE_SIZE;
+        if (prop == null) return DEFAULT_PRECACHE_SIZE;
         if (prop.length() <= 0) {
             // empty value
             // FIXME: should we log this somewhere?
@@ -113,8 +112,7 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
             return DEFAULT_PRECACHE_SIZE;
         }
         // treat negative value as no cache...
-        if (propParsed < 0)
-            return 0;
+        if (propParsed < 0) return 0;
         if (propParsed > Integer.MAX_VALUE) {
             // FIXME: should we log this somewhere?
             return Integer.MAX_VALUE;
@@ -131,8 +129,7 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
         int precacheSize = getPrecacheSize();
         UInteger[] ret;
 
-        if (precacheSize <= 0)
-            return null;
+        if (precacheSize <= 0) return null;
         ret = new UInteger[precacheSize];
         for (int i = 0; i < precacheSize; i++)
             ret[i] = new UInteger(i);
@@ -159,8 +156,7 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
      * @return Cached value if one exists. Null otherwise.
      */
     private static UInteger getCached(long value) {
-        if (VALUES != null && value < VALUES.length)
-            return VALUES[(int) value];
+        if (VALUES != null && value < VALUES.length) return VALUES[(int) value];
         return null;
     }
 
@@ -170,8 +166,7 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
     private static UInteger valueOfUnchecked(long value) {
         UInteger cached;
 
-        if ((cached = getCached(value)) != null)
-            return cached;
+        if ((cached = getCached(value)) != null) return cached;
         return new UInteger(value, true);
     }
 
@@ -259,8 +254,7 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
 
         // the value read could be invalid so check it
         rangeCheck(value);
-        if ((cached = getCached(value)) != null)
-            return cached;
+        if ((cached = getCached(value)) != null) return cached;
         return this;
     }
 
@@ -291,8 +285,7 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
+        if (this == obj) return true;
         if (obj instanceof UInteger) {
             return value == ((UInteger) obj).value;
         }

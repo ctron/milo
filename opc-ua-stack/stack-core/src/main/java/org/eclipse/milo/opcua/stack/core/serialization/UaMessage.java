@@ -18,5 +18,4 @@ package org.eclipse.milo.opcua.stack.core.serialization;
  */
 public interface UaMessage extends UaStructure {
 
-
 }

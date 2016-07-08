@@ -95,15 +95,17 @@ public interface UaVariableNode extends UaNode {
      * @return the ArrayDimensions attribute value, if present.
      */
     default CompletableFuture<Optional<UInteger[]>> readArrayDimensionsAttribute() {
-        return readArrayDimensions().thenApply(v -> {
-            StatusCode statusCode = v.getStatusCode();
+        return readArrayDimensions().thenApply(
+            v -> {
+                StatusCode statusCode = v.getStatusCode();
 
-            if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
-                return Optional.empty();
-            } else {
-                return Optional.ofNullable((UInteger[]) v.getValue().getValue());
+                if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
+                    return Optional.empty();
+                } else {
+                    return Optional.ofNullable((UInteger[]) v.getValue().getValue());
+                }
             }
-        });
+        );
     }
 
     /**
@@ -157,15 +159,17 @@ public interface UaVariableNode extends UaNode {
      * @return the MinimumSamplingInterval attribute value, if present.
      */
     default CompletableFuture<Optional<Double>> readMinimumSamplingIntervalAttribute() {
-        return readMinimumSamplingInterval().thenApply(v -> {
-            StatusCode statusCode = v.getStatusCode();
+        return readMinimumSamplingInterval().thenApply(
+            v -> {
+                StatusCode statusCode = v.getStatusCode();
 
-            if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
-                return Optional.empty();
-            } else {
-                return Optional.ofNullable((Double) v.getValue().getValue());
+                if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
+                    return Optional.empty();
+                } else {
+                    return Optional.ofNullable((Double) v.getValue().getValue());
+                }
             }
-        });
+        );
     }
 
     /**

@@ -35,15 +35,14 @@ import org.eclipse.milo.opcua.stack.core.types.structured.ServerStatusDataType;
 @UaObjectNode(typeName = "0:ServerType")
 public class ServerNode extends BaseObjectNode implements ServerType {
 
-    public ServerNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ServerNode(UaNodeManager nodeManager,
+                      NodeId nodeId,
+                      QualifiedName browseName,
+                      LocalizedText displayName,
+                      Optional<LocalizedText> description,
+                      Optional<UInteger> writeMask,
+                      Optional<UInteger> userWriteMask,
+                      UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -194,8 +193,7 @@ public class ServerNode extends BaseObjectNode implements ServerType {
 
     @Override
     public void setServerStatus(ServerStatusDataType value) {
-        getVariableComponent("ServerStatus")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ServerStatus").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

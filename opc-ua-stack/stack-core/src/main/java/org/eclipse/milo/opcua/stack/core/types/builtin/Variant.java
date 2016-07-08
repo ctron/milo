@@ -43,8 +43,7 @@ public final class Variant {
         if (value != null) {
             boolean clazzIsArray = value.getClass().isArray();
 
-            Class<?> componentClazz = clazzIsArray ?
-                ArrayUtil.getType(value) : value.getClass();
+            Class<?> componentClazz = clazzIsArray ? ArrayUtil.getType(value) : value.getClass();
 
             checkArgument(clazzIsArray || !Variant.class.equals(componentClazz), "Variant cannot contain Variant");
             checkArgument(!DataValue.class.equals(componentClazz), "Variant cannot contain DataValue");
@@ -62,13 +61,11 @@ public final class Variant {
         } else if (value instanceof UaEnumeration) {
             return Optional.of(Identifiers.Int32);
         } else {
-            Class<?> clazz = value.getClass().isArray() ?
-                ArrayUtil.getType(value) : value.getClass();
+            Class<?> clazz = value.getClass().isArray() ? ArrayUtil.getType(value) : value.getClass();
 
             int typeId = TypeUtil.getBuiltinTypeId(clazz);
 
-            return typeId == -1 ?
-                Optional.empty() : Optional.of(new NodeId(0, typeId));
+            return typeId == -1 ? Optional.empty() : Optional.of(new NodeId(0, typeId));
         }
     }
 

@@ -42,19 +42,28 @@ public class BrowsePathResult implements UaStructure {
         this._targets = _targets;
     }
 
-    public StatusCode getStatusCode() { return _statusCode; }
+    public StatusCode getStatusCode() {
+        return _statusCode;
+    }
 
-    public BrowsePathTarget[] getTargets() { return _targets; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public BrowsePathTarget[] getTargets() {
+        return _targets;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(BrowsePathResult browsePathResult, UaEncoder encoder) {
         encoder.encodeStatusCode("StatusCode", browsePathResult._statusCode);
@@ -63,14 +72,17 @@ public class BrowsePathResult implements UaStructure {
 
     public static BrowsePathResult decode(UaDecoder decoder) {
         StatusCode _statusCode = decoder.decodeStatusCode("StatusCode");
-        BrowsePathTarget[] _targets = decoder.decodeArray("Targets", decoder::decodeSerializable, BrowsePathTarget.class);
+        BrowsePathTarget[] _targets = decoder
+            .decodeArray("Targets", decoder::decodeSerializable, BrowsePathTarget.class);
 
         return new BrowsePathResult(_statusCode, _targets);
     }
 
     static {
-        DelegateRegistry.registerEncoder(BrowsePathResult::encode, BrowsePathResult.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(BrowsePathResult::decode, BrowsePathResult.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(BrowsePathResult::encode, BrowsePathResult.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(BrowsePathResult::decode, BrowsePathResult.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

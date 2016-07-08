@@ -134,15 +134,8 @@ import org.slf4j.LoggerFactory;
 import static com.google.common.collect.Lists.newCopyOnWriteArrayList;
 import static org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.Unsigned.uint;
 
-public class SessionManager implements
-    AttributeServiceSet,
-    MethodServiceSet,
-    MonitoredItemServiceSet,
-    NodeManagementServiceSet,
-    QueryServiceSet,
-    SessionServiceSet,
-    SubscriptionServiceSet,
-    ViewServiceSet {
+public class SessionManager implements AttributeServiceSet, MethodServiceSet, MonitoredItemServiceSet,
+        NodeManagementServiceSet, QueryServiceSet, SessionServiceSet, SubscriptionServiceSet, ViewServiceSet {
 
     private static final int MAX_SESSION_TIMEOUT_MS = 120000;
 
@@ -174,9 +167,9 @@ public class SessionManager implements
     }
 
     public void killSession(NodeId nodeId, boolean deleteSubscriptions) {
-        activeSessions.values().stream()
-            .filter(s -> s.getSessionId().equals(nodeId))
-            .findFirst().ifPresent(s -> s.close(deleteSubscriptions));
+        activeSessions.values().stream().filter(s -> s.getSessionId().equals(nodeId)).findFirst().ifPresent(
+            s -> s.close(deleteSubscriptions)
+        );
     }
 
     private Session session(ServiceRequest<?, ?> service) throws UaException {
@@ -226,15 +219,20 @@ public class SessionManager implements
         ByteString serverNonce = NonceUtil.generateNonce(32);
         NodeId authenticationToken = new NodeId(0, NonceUtil.generateNonce(32));
         long maxRequestMessageSize = serviceRequest.getServer().getChannelConfig().getMaxMessageSize();
-        double revisedSessionTimeout = Math.max(5000, Math.min(MAX_SESSION_TIMEOUT_MS, request.getRequestedSessionTimeout()));
+        double revisedSessionTimeout = Math
+            .max(5000, Math.min(MAX_SESSION_TIMEOUT_MS, request.getRequestedSessionTimeout()));
 
         ServerSecureChannel secureChannel = serviceRequest.getSecureChannel();
         SecurityPolicy securityPolicy = secureChannel.getSecurityPolicy();
 
-        ByteString serverCertificate = serviceRequest.getSecureChannel().getEndpointDescription().getServerCertificate();
+        ByteString serverCertificate = serviceRequest
+            .getSecureChannel()
+            .getEndpointDescription()
+            .getServerCertificate();
         SignedSoftwareCertificate[] serverSoftwareCertificates = server.getSoftwareCertificates();
 
-        EndpointDescription[] serverEndpoints = Arrays.stream(server.getEndpointDescriptions())
+        EndpointDescription[] serverEndpoints = Arrays
+            .stream(server.getEndpointDescriptions())
             .filter(ed -> endpointMatchesUrl(ed, request.getEndpointUrl()))
             .toArray(EndpointDescription[]::new);
 
@@ -277,10 +275,12 @@ public class SessionManager implements
         Session session = new Session(server, sessionId, sessionName, sessionTimeout, secureChannel.getChannelId());
         createdSessions.put(authenticationToken, session);
 
-        session.addLifecycleListener((s, remove) -> {
-            createdSessions.remove(authenticationToken);
-            activeSessions.remove(authenticationToken);
-        });
+        session.addLifecycleListener(
+            (s, remove) -> {
+                createdSessions.remove(authenticationToken);
+                activeSessions.remove(authenticationToken);
+            }
+        );
 
         session.setLastNonce(serverNonce);
 
@@ -331,7 +331,9 @@ public class SessionManager implements
                         if (!applicationUri.equals(certificateUri)) {
                             String message = String.format(
                                 "Certificate URI does not match. certificateUri=%s, applicationUri=%s",
-                                certificateUri, applicationUri);
+                                certificateUri,
+                                applicationUri
+                            );
 
                             logger.warn(message);
 
@@ -410,8 +412,11 @@ public class SessionManager implements
 
                         session.setSecureChannelId(secureChannelId);
 
-                        logger.debug("Session id={} is now associated with secureChannelId={}",
-                            session.getSessionId(), secureChannelId);
+                        logger.debug(
+                            "Session id={} is now associated with secureChannelId={}",
+                            session.getSessionId(),
+                            secureChannelId
+                        );
 
                         StatusCode[] results = new StatusCode[clientSoftwareCertificates.length];
                         Arrays.fill(results, StatusCode.GOOD);
@@ -469,7 +474,9 @@ public class SessionManager implements
         }
     }
 
-    private Object validateIdentityToken(ServerSecureChannel secureChannel, Session session, Object tokenObject) throws UaException {
+    private Object validateIdentityToken(ServerSecureChannel secureChannel,
+                                         Session session,
+                                         Object tokenObject) throws UaException {
         IdentityValidator identityValidator = server.getConfig().getIdentityValidator();
         UserTokenPolicy tokenPolicy = validatePolicyId(tokenObject);
 
@@ -558,11 +565,7 @@ public class SessionManager implements
 
             byte[] data = Bytes.concat(clientCertificate.bytes(), clientNonce.bytes());
 
-            byte[] signature = SignatureUtil.sign(
-                algorithm,
-                keyPair.getPrivate(),
-                ByteBuffer.wrap(data)
-            );
+            byte[] signature = SignatureUtil.sign(algorithm, keyPair.getPrivate(), ByteBuffer.wrap(data));
 
             return new SignatureData(algorithm.getUri(), ByteString.of(signature));
         } catch (UaRuntimeException e) {

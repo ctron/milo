@@ -47,21 +47,32 @@ public class DataChangeFilter extends MonitoringFilter {
         this._deadbandValue = _deadbandValue;
     }
 
-    public DataChangeTrigger getTrigger() { return _trigger; }
+    public DataChangeTrigger getTrigger() {
+        return _trigger;
+    }
 
-    public UInteger getDeadbandType() { return _deadbandType; }
+    public UInteger getDeadbandType() {
+        return _deadbandType;
+    }
 
-    public Double getDeadbandValue() { return _deadbandValue; }
+    public Double getDeadbandValue() {
+        return _deadbandValue;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DataChangeFilter dataChangeFilter, UaEncoder encoder) {
         encoder.encodeEnumeration("Trigger", dataChangeFilter._trigger);
@@ -78,8 +89,10 @@ public class DataChangeFilter extends MonitoringFilter {
     }
 
     static {
-        DelegateRegistry.registerEncoder(DataChangeFilter::encode, DataChangeFilter.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DataChangeFilter::decode, DataChangeFilter.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(DataChangeFilter::encode, DataChangeFilter.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(DataChangeFilter::decode, DataChangeFilter.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

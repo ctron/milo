@@ -66,10 +66,12 @@ public class SubscriptionModel {
     }
 
     public void onDataItemsCreated(List<DataItem> items) {
-        executionQueue.submit(() -> {
-            itemSet.addAll(items);
-            reschedule();
-        });
+        executionQueue.submit(
+            () -> {
+                itemSet.addAll(items);
+                reschedule();
+            }
+        );
     }
 
     public void onDataItemsModified(List<DataItem> items) {
@@ -77,10 +79,12 @@ public class SubscriptionModel {
     }
 
     public void onDataItemsDeleted(List<DataItem> items) {
-        executionQueue.submit(() -> {
-            itemSet.removeAll(items);
-            reschedule();
-        });
+        executionQueue.submit(
+            () -> {
+                itemSet.removeAll(items);
+                reschedule();
+            }
+        );
     }
 
     public void onMonitoringModeChanged(List<MonitoredItem> items) {
@@ -88,15 +92,18 @@ public class SubscriptionModel {
     }
 
     private void reschedule() {
-        Map<Double, List<DataItem>> bySamplingInterval = itemSet.stream()
+        Map<Double, List<DataItem>> bySamplingInterval = itemSet
+            .stream()
             .filter(DataItem::isSamplingEnabled)
             .collect(Collectors.groupingBy(DataItem::getSamplingInterval));
 
-        List<ScheduledUpdate> updates = bySamplingInterval.keySet().stream().map(samplingInterval -> {
-            List<DataItem> items = bySamplingInterval.get(samplingInterval);
+        List<ScheduledUpdate> updates = bySamplingInterval.keySet().stream().map(
+            samplingInterval -> {
+                List<DataItem> items = bySamplingInterval.get(samplingInterval);
 
-            return new ScheduledUpdate(samplingInterval, items);
-        }).collect(Collectors.toList());
+                return new ScheduledUpdate(samplingInterval, items);
+            }
+        ).collect(Collectors.toList());
 
         schedule.forEach(ScheduledUpdate::cancel);
         schedule.clear();
@@ -122,44 +129,45 @@ public class SubscriptionModel {
 
         @Override
         public void run() {
-            List<PendingRead> pending = items.stream()
+            List<PendingRead> pending = items
+                .stream()
                 .map(item -> new PendingRead(item.getReadValueId()))
                 .collect(Collectors.toList());
 
-            List<ReadValueId> ids = pending.stream()
-                .map(PendingRead::getInput)
-                .collect(Collectors.toList());
+            List<ReadValueId> ids = pending.stream().map(PendingRead::getInput).collect(Collectors.toList());
 
             CompletableFuture<List<DataValue>> future = new CompletableFuture<>();
 
-            ReadContext context = new ReadContext(
-                server, null, future, new DiagnosticsContext<>());
+            ReadContext context = new ReadContext(server, null, future, new DiagnosticsContext<>());
 
-            future.thenAcceptAsync(values -> {
-                Iterator<DataItem> ii = items.iterator();
-                Iterator<DataValue> vi = values.iterator();
+            future.thenAcceptAsync(
+                values -> {
+                    Iterator<DataItem> ii = items.iterator();
+                    Iterator<DataValue> vi = values.iterator();
 
-                while (ii.hasNext() && vi.hasNext()) {
-                    DataItem item = ii.next();
-                    DataValue value = vi.next();
+                    while (ii.hasNext() && vi.hasNext()) {
+                        DataItem item = ii.next();
+                        DataValue value = vi.next();
 
-                    TimestampsToReturn timestamps = item.getTimestampsToReturn();
+                        TimestampsToReturn timestamps = item.getTimestampsToReturn();
 
-                    if (timestamps != null) {
-                        UInteger attributeId = item.getReadValueId().getAttributeId();
+                        if (timestamps != null) {
+                            UInteger attributeId = item.getReadValueId().getAttributeId();
 
-                        value = (AttributeId.Value.isEqual(attributeId)) ?
-                            DataValue.derivedValue(value, timestamps) :
-                            DataValue.derivedNonValue(value, timestamps);
+                            value = (AttributeId.Value.isEqual(attributeId)) ?
+                                DataValue.derivedValue(value, timestamps) :
+                                DataValue.derivedNonValue(value, timestamps);
+                        }
+
+                        item.setValue(value);
                     }
 
-                    item.setValue(value);
-                }
-
-                if (!cancelled) {
-                    scheduler.schedule(this, samplingInterval, TimeUnit.MILLISECONDS);
-                }
-            }, executor);
+                    if (!cancelled) {
+                        scheduler.schedule(this, samplingInterval, TimeUnit.MILLISECONDS);
+                    }
+                },
+                executor
+            );
 
             executor.execute(() -> attributeServices.read(context, 0d, TimestampsToReturn.Both, ids));
         }

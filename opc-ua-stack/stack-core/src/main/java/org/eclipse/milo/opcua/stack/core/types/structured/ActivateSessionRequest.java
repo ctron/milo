@@ -45,7 +45,12 @@ public class ActivateSessionRequest implements UaRequestMessage {
         this._userTokenSignature = null;
     }
 
-    public ActivateSessionRequest(RequestHeader _requestHeader, SignatureData _clientSignature, SignedSoftwareCertificate[] _clientSoftwareCertificates, String[] _localeIds, ExtensionObject _userIdentityToken, SignatureData _userTokenSignature) {
+    public ActivateSessionRequest(RequestHeader _requestHeader,
+                                  SignatureData _clientSignature,
+                                  SignedSoftwareCertificate[] _clientSoftwareCertificates,
+                                  String[] _localeIds,
+                                  ExtensionObject _userIdentityToken,
+                                  SignatureData _userTokenSignature) {
         this._requestHeader = _requestHeader;
         this._clientSignature = _clientSignature;
         this._clientSoftwareCertificates = _clientSoftwareCertificates;
@@ -54,51 +59,103 @@ public class ActivateSessionRequest implements UaRequestMessage {
         this._userTokenSignature = _userTokenSignature;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public SignatureData getClientSignature() { return _clientSignature; }
+    public SignatureData getClientSignature() {
+        return _clientSignature;
+    }
 
-    public SignedSoftwareCertificate[] getClientSoftwareCertificates() { return _clientSoftwareCertificates; }
+    public SignedSoftwareCertificate[] getClientSoftwareCertificates() {
+        return _clientSoftwareCertificates;
+    }
 
-    public String[] getLocaleIds() { return _localeIds; }
+    public String[] getLocaleIds() {
+        return _localeIds;
+    }
 
-    public ExtensionObject getUserIdentityToken() { return _userIdentityToken; }
+    public ExtensionObject getUserIdentityToken() {
+        return _userIdentityToken;
+    }
 
-    public SignatureData getUserTokenSignature() { return _userTokenSignature; }
+    public SignatureData getUserTokenSignature() {
+        return _userTokenSignature;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ActivateSessionRequest activateSessionRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", activateSessionRequest._requestHeader != null ? activateSessionRequest._requestHeader : new RequestHeader());
-        encoder.encodeSerializable("ClientSignature", activateSessionRequest._clientSignature != null ? activateSessionRequest._clientSignature : new SignatureData());
-        encoder.encodeArray("ClientSoftwareCertificates", activateSessionRequest._clientSoftwareCertificates, encoder::encodeSerializable);
+        encoder.encodeSerializable(
+            "RequestHeader",
+            activateSessionRequest._requestHeader != null ? activateSessionRequest._requestHeader : new RequestHeader()
+        );
+        encoder.encodeSerializable(
+            "ClientSignature",
+            activateSessionRequest._clientSignature != null ?
+                activateSessionRequest._clientSignature :
+                new SignatureData()
+        );
+        encoder.encodeArray(
+            "ClientSoftwareCertificates",
+            activateSessionRequest._clientSoftwareCertificates,
+            encoder::encodeSerializable
+        );
         encoder.encodeArray("LocaleIds", activateSessionRequest._localeIds, encoder::encodeString);
         encoder.encodeExtensionObject("UserIdentityToken", activateSessionRequest._userIdentityToken);
-        encoder.encodeSerializable("UserTokenSignature", activateSessionRequest._userTokenSignature != null ? activateSessionRequest._userTokenSignature : new SignatureData());
+        encoder.encodeSerializable(
+            "UserTokenSignature",
+            activateSessionRequest._userTokenSignature != null ?
+                activateSessionRequest._userTokenSignature :
+                new SignatureData()
+        );
     }
 
     public static ActivateSessionRequest decode(UaDecoder decoder) {
         RequestHeader _requestHeader = decoder.decodeSerializable("RequestHeader", RequestHeader.class);
         SignatureData _clientSignature = decoder.decodeSerializable("ClientSignature", SignatureData.class);
-        SignedSoftwareCertificate[] _clientSoftwareCertificates = decoder.decodeArray("ClientSoftwareCertificates", decoder::decodeSerializable, SignedSoftwareCertificate.class);
+        SignedSoftwareCertificate[] _clientSoftwareCertificates = decoder
+            .decodeArray("ClientSoftwareCertificates", decoder::decodeSerializable, SignedSoftwareCertificate.class);
         String[] _localeIds = decoder.decodeArray("LocaleIds", decoder::decodeString, String.class);
         ExtensionObject _userIdentityToken = decoder.decodeExtensionObject("UserIdentityToken");
         SignatureData _userTokenSignature = decoder.decodeSerializable("UserTokenSignature", SignatureData.class);
 
-        return new ActivateSessionRequest(_requestHeader, _clientSignature, _clientSoftwareCertificates, _localeIds, _userIdentityToken, _userTokenSignature);
+        return new ActivateSessionRequest(
+            _requestHeader,
+            _clientSignature,
+            _clientSoftwareCertificates,
+            _localeIds,
+            _userIdentityToken,
+            _userTokenSignature
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(ActivateSessionRequest::encode, ActivateSessionRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ActivateSessionRequest::decode, ActivateSessionRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            ActivateSessionRequest::encode,
+            ActivateSessionRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            ActivateSessionRequest::decode,
+            ActivateSessionRequest.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

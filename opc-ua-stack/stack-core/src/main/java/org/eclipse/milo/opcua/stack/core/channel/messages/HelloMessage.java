@@ -132,7 +132,8 @@ public class HelloMessage {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects
+            .toStringHelper(this)
             .add("protocolVersion", protocolVersion)
             .add("receiverBufferSize", receiveBufferSize)
             .add("sendBufferSize", sendBufferSize)
@@ -158,7 +159,7 @@ public class HelloMessage {
             buffer.readUnsignedInt(), /*    SendBufferSize     */
             buffer.readUnsignedInt(), /*    MaxMessageSize     */
             buffer.readUnsignedInt(), /*    MaxChunkCount      */
-            decodeString(buffer)      /*    EndpointUrl        */
+            decodeString(buffer) /*    EndpointUrl        */
         );
     }
 

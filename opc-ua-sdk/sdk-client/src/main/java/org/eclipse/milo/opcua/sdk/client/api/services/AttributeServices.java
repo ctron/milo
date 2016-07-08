@@ -81,8 +81,10 @@ public interface AttributeServices {
             return failed;
         } else {
             Stream<ReadValueId> stream = StreamUtils.zip(
-                nodeIds.stream(), attributeIds.stream(),
-                (nId, aId) -> new ReadValueId(nId, aId, null, QualifiedName.NULL_VALUE));
+                nodeIds.stream(),
+                attributeIds.stream(),
+                (nId, aId) -> new ReadValueId(nId, aId, null, QualifiedName.NULL_VALUE)
+            );
 
             return read(maxAge, timestampsToReturn, stream.collect(Collectors.toList()))
                 .thenApply(r -> newArrayList(r.getResults()));
@@ -104,8 +106,7 @@ public interface AttributeServices {
                                                    TimestampsToReturn timestampsToReturn,
                                                    NodeId nodeId) {
 
-        return readValues(maxAge, timestampsToReturn, Collections.singletonList(nodeId))
-            .thenApply(r -> r.get(0));
+        return readValues(maxAge, timestampsToReturn, Collections.singletonList(nodeId)).thenApply(r -> r.get(0));
     }
 
     /**
@@ -124,12 +125,12 @@ public interface AttributeServices {
                                                           TimestampsToReturn timestampsToReturn,
                                                           List<NodeId> nodeIds) {
 
-        List<ReadValueId> readValueIds = nodeIds.stream()
+        List<ReadValueId> readValueIds = nodeIds
+            .stream()
             .map(nodeId -> new ReadValueId(nodeId, AttributeId.Value.uid(), null, QualifiedName.NULL_VALUE))
             .collect(Collectors.toList());
 
-        return read(maxAge, timestampsToReturn, readValueIds)
-            .thenApply(r -> newArrayList(r.getResults()));
+        return read(maxAge, timestampsToReturn, readValueIds).thenApply(r -> newArrayList(r.getResults()));
     }
 
     /**
@@ -154,14 +155,16 @@ public interface AttributeServices {
             return failed;
         } else {
             Stream<WriteValue> stream = StreamUtils.zip(
-                nodeIds.stream(), values.stream(),
-                (nodeId, value) -> new WriteValue(nodeId, uint(13), null, value));
+                nodeIds.stream(),
+                values.stream(),
+                (nodeId, value) -> new WriteValue(nodeId, uint(13), null, value)
+            );
 
             return write(stream.collect(Collectors.toList()))
                 .thenApply(response -> newArrayList(response.getResults()));
         }
     }
-    
+
     /**
      * This service is used to write to the value attribute of one node.
      *
@@ -189,7 +192,6 @@ public interface AttributeServices {
                                                        TimestampsToReturn timestampsToReturn,
                                                        boolean releaseContinuationPoints,
                                                        List<HistoryReadValueId> nodesToRead);
-
 
     /**
      * This Service is used to update historical values or Events of one or more Nodes.

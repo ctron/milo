@@ -72,10 +72,7 @@ public class UaVariableNode extends UaNode implements VariableNode {
     private volatile Optional<Double> minimumSamplingInterval = Optional.empty();
     private volatile boolean historizing = false;
 
-    public UaVariableNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public UaVariableNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         this(nodeManager, nodeId, variableTypeNode.getBrowseName(), variableTypeNode.getDisplayName());
 
@@ -221,7 +218,8 @@ public class UaVariableNode extends UaNode implements VariableNode {
     }
 
     public Optional<ObjectNode> getModellingRuleNode() {
-        Node node = getReferences().stream()
+        Node node = getReferences()
+            .stream()
             .filter(HAS_MODELLING_RULE_PREDICATE)
             .findFirst()
             .flatMap(r -> getNode(r.getTargetNodeId()))
@@ -233,21 +231,24 @@ public class UaVariableNode extends UaNode implements VariableNode {
     }
 
     public List<Node> getPropertyNodes() {
-        return getReferences().stream()
+        return getReferences()
+            .stream()
             .filter(HAS_PROPERTY_PREDICATE)
             .flatMap(r -> StreamUtil.opt2stream(getNode(r.getTargetNodeId())))
             .collect(Collectors.toList());
     }
 
     public List<Node> getComponentNodes() {
-        return getReferences().stream()
+        return getReferences()
+            .stream()
             .filter(HAS_COMPONENT_PREDICATE)
             .flatMap(r -> StreamUtil.opt2stream(getNode(r.getTargetNodeId())))
             .collect(Collectors.toList());
     }
 
     public VariableTypeNode getTypeDefinitionNode() {
-        Node node = getReferences().stream()
+        Node node = getReferences()
+            .stream()
             .filter(HAS_TYPE_DEFINITION_PREDICATE)
             .findFirst()
             .flatMap(r -> getNode(r.getTargetNodeId()))
@@ -263,21 +264,13 @@ public class UaVariableNode extends UaNode implements VariableNode {
      * @param node the node to add as a component of this Object.
      */
     public void addComponent(UaNode node) {
-        addReference(new Reference(
-            getNodeId(),
-            Identifiers.HasComponent,
-            node.getNodeId().expanded(),
-            node.getNodeClass(),
-            true
-        ));
+        addReference(
+            new Reference(getNodeId(), Identifiers.HasComponent, node.getNodeId().expanded(), node.getNodeClass(), true)
+        );
 
-        node.addReference(new Reference(
-            node.getNodeId(),
-            Identifiers.HasComponent,
-            getNodeId().expanded(),
-            getNodeClass(),
-            false
-        ));
+        node.addReference(
+            new Reference(node.getNodeId(), Identifiers.HasComponent, getNodeId().expanded(), getNodeClass(), false)
+        );
     }
 
     /**
@@ -287,21 +280,13 @@ public class UaVariableNode extends UaNode implements VariableNode {
      * @param node the node to remove as a component of this Object.
      */
     public void removeComponent(UaNode node) {
-        removeReference(new Reference(
-            getNodeId(),
-            Identifiers.HasComponent,
-            node.getNodeId().expanded(),
-            node.getNodeClass(),
-            true
-        ));
+        removeReference(
+            new Reference(getNodeId(), Identifiers.HasComponent, node.getNodeId().expanded(), node.getNodeClass(), true)
+        );
 
-        node.removeReference(new Reference(
-            node.getNodeId(),
-            Identifiers.HasComponent,
-            getNodeId().expanded(),
-            getNodeClass(),
-            false
-        ));
+        node.removeReference(
+            new Reference(node.getNodeId(), Identifiers.HasComponent, getNodeId().expanded(), getNodeClass(), false)
+        );
     }
 
     @UaOptional("NodeVersion")
@@ -455,8 +440,10 @@ public class UaVariableNode extends UaNode implements VariableNode {
         private Optional<UInteger> userWriteMask = Optional.of(uint(0));
 
         private DataValue value = new DataValue(
-            Variant.NULL_VALUE, new StatusCode(StatusCodes.Uncertain_InitialValue),
-            DateTime.now(), DateTime.now()
+            Variant.NULL_VALUE,
+            new StatusCode(StatusCodes.Uncertain_InitialValue),
+            DateTime.now(),
+            DateTime.now()
         );
 
         private NodeId dataType;
@@ -484,26 +471,37 @@ public class UaVariableNode extends UaNode implements VariableNode {
             Preconditions.checkNotNull(displayName, "DisplayName cannot be null");
             Preconditions.checkNotNull(dataType, "DataType cannot be null");
 
-            long hasTypeDefinitionCount = references.stream()
-                .filter(r -> Identifiers.HasTypeDefinition.equals(r.getReferenceTypeId())).count();
+            long hasTypeDefinitionCount = references
+                .stream()
+                .filter(r -> Identifiers.HasTypeDefinition.equals(r.getReferenceTypeId()))
+                .count();
 
             if (hasTypeDefinitionCount == 0) {
                 setTypeDefinition(Identifiers.BaseDataVariableType);
             } else {
                 Preconditions.checkState(
                     hasTypeDefinitionCount == 1,
-                    "Variable Node must have exactly one HasTypeDefinition reference.");
+                    "Variable Node must have exactly one HasTypeDefinition reference."
+                );
             }
 
             // TODO More validation on references.
 
             UaVariableNode node = new UaVariableNode(
                 nodeManager,
-                nodeId, browseName, displayName,
-                description, writeMask, userWriteMask,
-                value, dataType, valueRank,
-                arrayDimensions, accessLevel,
-                userAccessLevel, minimumSamplingInterval,
+                nodeId,
+                browseName,
+                displayName,
+                description,
+                writeMask,
+                userWriteMask,
+                value,
+                dataType,
+                valueRank,
+                arrayDimensions,
+                accessLevel,
+                userAccessLevel,
+                minimumSamplingInterval,
                 historizing
             );
 
@@ -598,13 +596,15 @@ public class UaVariableNode extends UaNode implements VariableNode {
         public UaVariableNodeBuilder setTypeDefinition(NodeId typeDefinition) {
             Objects.requireNonNull(nodeId, "NodeId cannot be null");
 
-            references.add(new Reference(
-                nodeId,
-                Identifiers.HasTypeDefinition,
-                new ExpandedNodeId(typeDefinition),
-                NodeClass.VariableType,
-                true
-            ));
+            references.add(
+                new Reference(
+                    nodeId,
+                    Identifiers.HasTypeDefinition,
+                    new ExpandedNodeId(typeDefinition),
+                    NodeClass.VariableType,
+                    true
+                )
+            );
 
             return this;
         }

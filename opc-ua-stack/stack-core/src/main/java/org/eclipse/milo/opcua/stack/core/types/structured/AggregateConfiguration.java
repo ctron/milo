@@ -43,7 +43,11 @@ public class AggregateConfiguration implements UaStructure {
         this._useSlopedExtrapolation = null;
     }
 
-    public AggregateConfiguration(Boolean _useServerCapabilitiesDefaults, Boolean _treatUncertainAsBad, UByte _percentDataBad, UByte _percentDataGood, Boolean _useSlopedExtrapolation) {
+    public AggregateConfiguration(Boolean _useServerCapabilitiesDefaults,
+                                  Boolean _treatUncertainAsBad,
+                                  UByte _percentDataBad,
+                                  UByte _percentDataGood,
+                                  Boolean _useSlopedExtrapolation) {
         this._useServerCapabilitiesDefaults = _useServerCapabilitiesDefaults;
         this._treatUncertainAsBad = _treatUncertainAsBad;
         this._percentDataBad = _percentDataBad;
@@ -51,25 +55,40 @@ public class AggregateConfiguration implements UaStructure {
         this._useSlopedExtrapolation = _useSlopedExtrapolation;
     }
 
-    public Boolean getUseServerCapabilitiesDefaults() { return _useServerCapabilitiesDefaults; }
+    public Boolean getUseServerCapabilitiesDefaults() {
+        return _useServerCapabilitiesDefaults;
+    }
 
-    public Boolean getTreatUncertainAsBad() { return _treatUncertainAsBad; }
+    public Boolean getTreatUncertainAsBad() {
+        return _treatUncertainAsBad;
+    }
 
-    public UByte getPercentDataBad() { return _percentDataBad; }
+    public UByte getPercentDataBad() {
+        return _percentDataBad;
+    }
 
-    public UByte getPercentDataGood() { return _percentDataGood; }
+    public UByte getPercentDataGood() {
+        return _percentDataGood;
+    }
 
-    public Boolean getUseSlopedExtrapolation() { return _useSlopedExtrapolation; }
+    public Boolean getUseSlopedExtrapolation() {
+        return _useSlopedExtrapolation;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(AggregateConfiguration aggregateConfiguration, UaEncoder encoder) {
         encoder.encodeBoolean("UseServerCapabilitiesDefaults", aggregateConfiguration._useServerCapabilitiesDefaults);
@@ -86,12 +105,28 @@ public class AggregateConfiguration implements UaStructure {
         UByte _percentDataGood = decoder.decodeByte("PercentDataGood");
         Boolean _useSlopedExtrapolation = decoder.decodeBoolean("UseSlopedExtrapolation");
 
-        return new AggregateConfiguration(_useServerCapabilitiesDefaults, _treatUncertainAsBad, _percentDataBad, _percentDataGood, _useSlopedExtrapolation);
+        return new AggregateConfiguration(
+            _useServerCapabilitiesDefaults,
+            _treatUncertainAsBad,
+            _percentDataBad,
+            _percentDataGood,
+            _useSlopedExtrapolation
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(AggregateConfiguration::encode, AggregateConfiguration.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(AggregateConfiguration::decode, AggregateConfiguration.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            AggregateConfiguration::encode,
+            AggregateConfiguration.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            AggregateConfiguration::decode,
+            AggregateConfiguration.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

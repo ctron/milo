@@ -29,15 +29,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:AuditHistoryUpdateEventType")
 public class AuditHistoryUpdateEventNode extends AuditUpdateEventNode implements AuditHistoryUpdateEventType {
 
-    public AuditHistoryUpdateEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AuditHistoryUpdateEventNode(UaNodeManager nodeManager,
+                                       NodeId nodeId,
+                                       QualifiedName browseName,
+                                       LocalizedText displayName,
+                                       Optional<LocalizedText> description,
+                                       Optional<UInteger> writeMask,
+                                       Optional<UInteger> userWriteMask,
+                                       UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -51,7 +50,9 @@ public class AuditHistoryUpdateEventNode extends AuditUpdateEventNode implements
 
     @Override
     public PropertyNode getParameterDataTypeIdNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(AuditHistoryUpdateEventType.PARAMETER_DATA_TYPE_ID.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            AuditHistoryUpdateEventType.PARAMETER_DATA_TYPE_ID.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

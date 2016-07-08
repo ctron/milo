@@ -40,28 +40,46 @@ public class ReferenceTypeAttributes extends NodeAttributes {
         this._inverseName = null;
     }
 
-    public ReferenceTypeAttributes(UInteger _specifiedAttributes, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask, Boolean _isAbstract, Boolean _symmetric, LocalizedText _inverseName) {
+    public ReferenceTypeAttributes(UInteger _specifiedAttributes,
+                                   LocalizedText _displayName,
+                                   LocalizedText _description,
+                                   UInteger _writeMask,
+                                   UInteger _userWriteMask,
+                                   Boolean _isAbstract,
+                                   Boolean _symmetric,
+                                   LocalizedText _inverseName) {
         super(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask);
         this._isAbstract = _isAbstract;
         this._symmetric = _symmetric;
         this._inverseName = _inverseName;
     }
 
-    public Boolean getIsAbstract() { return _isAbstract; }
+    public Boolean getIsAbstract() {
+        return _isAbstract;
+    }
 
-    public Boolean getSymmetric() { return _symmetric; }
+    public Boolean getSymmetric() {
+        return _symmetric;
+    }
 
-    public LocalizedText getInverseName() { return _inverseName; }
+    public LocalizedText getInverseName() {
+        return _inverseName;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ReferenceTypeAttributes referenceTypeAttributes, UaEncoder encoder) {
         encoder.encodeUInt32("SpecifiedAttributes", referenceTypeAttributes._specifiedAttributes);
@@ -84,12 +102,31 @@ public class ReferenceTypeAttributes extends NodeAttributes {
         Boolean _symmetric = decoder.decodeBoolean("Symmetric");
         LocalizedText _inverseName = decoder.decodeLocalizedText("InverseName");
 
-        return new ReferenceTypeAttributes(_specifiedAttributes, _displayName, _description, _writeMask, _userWriteMask, _isAbstract, _symmetric, _inverseName);
+        return new ReferenceTypeAttributes(
+            _specifiedAttributes,
+            _displayName,
+            _description,
+            _writeMask,
+            _userWriteMask,
+            _isAbstract,
+            _symmetric,
+            _inverseName
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(ReferenceTypeAttributes::encode, ReferenceTypeAttributes.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(ReferenceTypeAttributes::decode, ReferenceTypeAttributes.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            ReferenceTypeAttributes::encode,
+            ReferenceTypeAttributes.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            ReferenceTypeAttributes::decode,
+            ReferenceTypeAttributes.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

@@ -23,10 +23,18 @@ public class StringSerializationTest extends BinarySerializationFixture {
     @DataProvider(name = "StringProvider")
     public Object[][] getStrings() {
         return new Object[][]{
-                {null},
-                {""},
-                {"Hello, world!"},
-                {"水Boy"}
+            {
+                null
+            },
+            {
+                ""
+            },
+            {
+                "Hello, world!"
+            },
+            {
+                "水Boy"
+            }
         };
     }
 

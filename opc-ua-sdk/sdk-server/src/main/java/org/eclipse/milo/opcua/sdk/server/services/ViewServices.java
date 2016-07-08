@@ -89,49 +89,58 @@ public class ViewServices implements ViewServiceSet {
             futures.add(pending.getFuture());
         }
 
-        Map<UShort, List<PendingBrowse>> byNamespace = pendingBrowses.stream()
+        Map<UShort, List<PendingBrowse>> byNamespace = pendingBrowses
+            .stream()
             .collect(groupingBy(pending -> pending.getInput().getNodeId().getNamespaceIndex()));
 
-        byNamespace.keySet().forEach(index -> {
-            List<PendingBrowse> pending = byNamespace.get(index);
+        byNamespace.keySet().forEach(
+            index -> {
+                List<PendingBrowse> pending = byNamespace.get(index);
 
-            CompletableFuture<List<BrowseResult>> future = new CompletableFuture<>();
+                CompletableFuture<List<BrowseResult>> future = new CompletableFuture<>();
 
-            BrowseContext context = new BrowseContext(
-                server, session, future, diagnosticsContext);
+                BrowseContext context = new BrowseContext(server, session, future, diagnosticsContext);
 
-            server.getExecutorService().execute(() -> {
-                Namespace namespace = server.getNamespaceManager().getNamespace(index);
+                server.getExecutorService().execute(
+                    () -> {
+                        Namespace namespace = server.getNamespaceManager().getNamespace(index);
 
-                List<BrowseDescription> browseDescriptions = pending.stream()
-                    .map(PendingBrowse::getInput)
-                    .collect(toList());
+                        List<BrowseDescription> browseDescriptions = pending
+                            .stream()
+                            .map(PendingBrowse::getInput)
+                            .collect(toList());
 
-                namespace.browse(
-                    context,
-                    request.getView(),
-                    request.getRequestedMaxReferencesPerNode(),
-                    browseDescriptions);
-            });
+                        namespace.browse(
+                            context,
+                            request.getView(),
+                            request.getRequestedMaxReferencesPerNode(),
+                            browseDescriptions
+                        );
+                    }
+                );
 
-            future.thenAccept(results -> {
-                for (int i = 0; i < results.size(); i++) {
-                    pending.get(i).getFuture().complete(results.get(i));
-                }
-            });
-        });
+                future.thenAccept(
+                    results -> {
+                        for (int i = 0; i < results.size(); i++) {
+                            pending.get(i).getFuture().complete(results.get(i));
+                        }
+                    }
+                );
+            }
+        );
 
-        FutureUtils.sequence(futures).thenAcceptAsync(results -> {
-            ResponseHeader header = service.createResponseHeader();
+        FutureUtils.sequence(futures).thenAcceptAsync(
+            results -> {
+                ResponseHeader header = service.createResponseHeader();
 
-            DiagnosticInfo[] diagnosticInfos =
-                diagnosticsContext.getDiagnosticInfos(nodesToBrowse);
+                DiagnosticInfo[] diagnosticInfos = diagnosticsContext.getDiagnosticInfos(nodesToBrowse);
 
-            BrowseResponse response = new BrowseResponse(
-                header, a(results, BrowseResult.class), diagnosticInfos);
+                BrowseResponse response = new BrowseResponse(header, a(results, BrowseResult.class), diagnosticInfos);
 
-            service.setResponse(response);
-        }, server.getExecutorService());
+                service.setResponse(response);
+            },
+            server.getExecutorService()
+        );
     }
 
     @Override
@@ -142,8 +151,7 @@ public class ViewServices implements ViewServiceSet {
     }
 
     @Override
-    public void onTranslateBrowsePaths(
-        ServiceRequest<TranslateBrowsePathsToNodeIdsRequest, TranslateBrowsePathsToNodeIdsResponse> service) {
+    public void onTranslateBrowsePaths(ServiceRequest<TranslateBrowsePathsToNodeIdsRequest, TranslateBrowsePathsToNodeIdsResponse> service) {
 
         translateBrowsePathsCounter.record(service);
 
@@ -169,10 +177,7 @@ public class ViewServices implements ViewServiceSet {
             throw new UaException(StatusCodes.Bad_TooManyOperations);
         }
 
-        service.setResponse(new RegisterNodesResponse(
-            service.createResponseHeader(StatusCode.GOOD),
-            nodeIds
-        ));
+        service.setResponse(new RegisterNodesResponse(service.createResponseHeader(StatusCode.GOOD), nodeIds));
     }
 
     @Override

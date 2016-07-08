@@ -42,23 +42,33 @@ public class MdnsDiscoveryConfiguration extends DiscoveryConfiguration {
         this._serverCapabilities = _serverCapabilities;
     }
 
-    public String getMdnsServerName() { return _mdnsServerName; }
+    public String getMdnsServerName() {
+        return _mdnsServerName;
+    }
 
-    public String[] getServerCapabilities() { return _serverCapabilities; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public String[] getServerCapabilities() {
+        return _serverCapabilities;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(MdnsDiscoveryConfiguration mdnsDiscoveryConfiguration, UaEncoder encoder) {
         encoder.encodeString("MdnsServerName", mdnsDiscoveryConfiguration._mdnsServerName);
-        encoder.encodeArray("ServerCapabilities", mdnsDiscoveryConfiguration._serverCapabilities, encoder::encodeString);
+        encoder
+            .encodeArray("ServerCapabilities", mdnsDiscoveryConfiguration._serverCapabilities, encoder::encodeString);
     }
 
     public static MdnsDiscoveryConfiguration decode(UaDecoder decoder) {
@@ -69,8 +79,18 @@ public class MdnsDiscoveryConfiguration extends DiscoveryConfiguration {
     }
 
     static {
-        DelegateRegistry.registerEncoder(MdnsDiscoveryConfiguration::encode, MdnsDiscoveryConfiguration.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(MdnsDiscoveryConfiguration::decode, MdnsDiscoveryConfiguration.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            MdnsDiscoveryConfiguration::encode,
+            MdnsDiscoveryConfiguration.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            MdnsDiscoveryConfiguration::decode,
+            MdnsDiscoveryConfiguration.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

@@ -92,13 +92,13 @@ public class UaTcpStackServer implements UaStackServer {
     private final AtomicLong channelIds = new AtomicLong();
     private final AtomicLong tokenIds = new AtomicLong();
 
-    private final Map<Class<? extends UaRequestMessage>, ServiceRequestHandler<UaRequestMessage, UaResponseMessage>>
-        handlers = Maps.newConcurrentMap();
+    private final Map<Class<? extends UaRequestMessage>, ServiceRequestHandler<UaRequestMessage, UaResponseMessage>> handlers = Maps
+        .newConcurrentMap();
 
     private final Map<Long, ServerSecureChannel> secureChannels = Maps.newConcurrentMap();
 
-    private final ListMultimap<Long, ServiceResponse> responseQueues =
-        Multimaps.synchronizedListMultimap(ArrayListMultimap.create());
+    private final ListMultimap<Long, ServiceResponse> responseQueues = Multimaps
+        .synchronizedListMultimap(ArrayListMultimap.create());
 
     private final List<Endpoint> endpoints = Lists.newCopyOnWriteArrayList();
     private final Set<String> discoveryUrls = Sets.newConcurrentHashSet();
@@ -113,24 +113,42 @@ public class UaTcpStackServer implements UaStackServer {
 
         addServiceSet(new DefaultDiscoveryServiceSet());
 
-        addServiceSet(new AttributeServiceSet() {
-        });
-        addServiceSet(new MethodServiceSet() {
-        });
-        addServiceSet(new MonitoredItemServiceSet() {
-        });
-        addServiceSet(new NodeManagementServiceSet() {
-        });
-        addServiceSet(new QueryServiceSet() {
-        });
-        addServiceSet(new SessionServiceSet() {
-        });
-        addServiceSet(new SubscriptionServiceSet() {
-        });
-        addServiceSet(new TestServiceSet() {
-        });
-        addServiceSet(new ViewServiceSet() {
-        });
+        addServiceSet(
+            new AttributeServiceSet() {
+            }
+        );
+        addServiceSet(
+            new MethodServiceSet() {
+            }
+        );
+        addServiceSet(
+            new MonitoredItemServiceSet() {
+            }
+        );
+        addServiceSet(
+            new NodeManagementServiceSet() {
+            }
+        );
+        addServiceSet(
+            new QueryServiceSet() {
+            }
+        );
+        addServiceSet(
+            new SessionServiceSet() {
+            }
+        );
+        addServiceSet(
+            new SubscriptionServiceSet() {
+            }
+        );
+        addServiceSet(
+            new TestServiceSet() {
+            }
+        );
+        addServiceSet(
+            new ViewServiceSet() {
+            }
+        );
     }
 
     public UaTcpStackServerConfig getConfig() {
@@ -147,9 +165,13 @@ public class UaTcpStackServer implements UaStackServer {
                 SocketServer socketServer = SocketServer.boundTo(bindAddress, endpointUri.getPort());
                 socketServer.setStrictEndpointUrlsEnabled(config.isStrictEndpointUrlsEnabled());
 
-                logger.info("{} bound to {} [{}/{}]",
-                    endpoint.getEndpointUri(), socketServer.getLocalAddress(),
-                    endpoint.getSecurityPolicy(), endpoint.getMessageSecurity());
+                logger.info(
+                    "{} bound to {} [{}/{}]",
+                    endpoint.getEndpointUri(),
+                    socketServer.getLocalAddress(),
+                    endpoint.getSecurityPolicy(),
+                    endpoint.getMessageSecurity()
+                );
 
                 addDiscoveryUrl(endpointUri);
 
@@ -165,10 +187,7 @@ public class UaTcpStackServer implements UaStackServer {
 
         StringBuilder discoveryUrl = new StringBuilder();
 
-        discoveryUrl.append("opc.tcp://")
-            .append(endpointUri.getHost())
-            .append(":")
-            .append(endpointUri.getPort());
+        discoveryUrl.append("opc.tcp://").append(endpointUri.getHost()).append(":").append(endpointUri.getPort());
 
         if (!serverName.isEmpty()) {
             discoveryUrl.append("/").append(serverName);
@@ -198,32 +217,38 @@ public class UaTcpStackServer implements UaStackServer {
     public void receiveRequest(ServiceRequest<UaRequestMessage, UaResponseMessage> serviceRequest) {
         logger.trace("Received {} on {}.", serviceRequest, serviceRequest.getSecureChannel());
 
-        serviceRequest.getFuture().whenComplete((response, throwable) -> {
-            long requestId = serviceRequest.getRequestId();
+        serviceRequest.getFuture().whenComplete(
+            (response, throwable) -> {
+                long requestId = serviceRequest.getRequestId();
 
-            ServiceResponse serviceResponse = response != null ?
-                new ServiceResponse(serviceRequest.getRequest(), requestId, response) :
-                new ServiceResponse(serviceRequest.getRequest(), requestId, serviceRequest.createServiceFault(throwable));
+                ServiceResponse serviceResponse = response != null ?
+                    new ServiceResponse(serviceRequest.getRequest(), requestId, response) :
+                    new ServiceResponse(
+                        serviceRequest.getRequest(),
+                        requestId,
+                        serviceRequest.createServiceFault(throwable)
+                    );
 
-            ServerSecureChannel secureChannel = serviceRequest.getSecureChannel();
-            boolean secureChannelValid = secureChannels.containsKey(secureChannel.getChannelId());
+                ServerSecureChannel secureChannel = serviceRequest.getSecureChannel();
+                boolean secureChannelValid = secureChannels.containsKey(secureChannel.getChannelId());
 
-            if (secureChannelValid) {
-                Channel channel = secureChannel.attr(BoundChannelKey).get();
+                if (secureChannelValid) {
+                    Channel channel = secureChannel.attr(BoundChannelKey).get();
 
-                if (channel != null) {
-                    if (serviceResponse.isServiceFault()) {
-                        logger.debug("Sending {} on {}.", serviceResponse, secureChannel);
+                    if (channel != null) {
+                        if (serviceResponse.isServiceFault()) {
+                            logger.debug("Sending {} on {}.", serviceResponse, secureChannel);
+                        } else {
+                            logger.trace("Sending {} on {}.", serviceResponse, secureChannel);
+                        }
+                        channel.writeAndFlush(serviceResponse, channel.voidPromise());
                     } else {
-                        logger.trace("Sending {} on {}.", serviceResponse, secureChannel);
+                        logger.trace("Queueing {} for unbound {}.", serviceResponse, secureChannel);
+                        responseQueues.put(secureChannel.getChannelId(), serviceResponse);
                     }
-                    channel.writeAndFlush(serviceResponse, channel.voidPromise());
-                } else {
-                    logger.trace("Queueing {} for unbound {}.", serviceResponse, secureChannel);
-                    responseQueues.put(secureChannel.getChannelId(), serviceResponse);
                 }
             }
-        });
+        );
 
         Class<? extends UaRequestMessage> requestClass = serviceRequest.getRequest().getClass();
         ServiceRequestHandler<UaRequestMessage, UaResponseMessage> handler = handlers.get(requestClass);
@@ -249,7 +274,8 @@ public class UaTcpStackServer implements UaStackServer {
             config.getProductUri(),
             config.getApplicationName(),
             ApplicationType.Server,
-            null, null,
+            null,
+            null,
             a(newArrayList(this.discoveryUrls), String.class)
         );
     }
@@ -260,9 +286,7 @@ public class UaTcpStackServer implements UaStackServer {
 
     @Override
     public EndpointDescription[] getEndpointDescriptions() {
-        return getEndpoints().stream()
-            .map(this::mapEndpoint)
-            .toArray(EndpointDescription[]::new);
+        return getEndpoints().stream().map(this::mapEndpoint).toArray(EndpointDescription[]::new);
     }
 
     @Override
@@ -347,8 +371,8 @@ public class UaTcpStackServer implements UaStackServer {
         boolean cancelled = (timeout == null || timeout.cancel());
 
         if (cancelled) {
-            timeout = wheelTimer.newTimeout(t ->
-                closeSecureChannel(secureChannel), lifetimeMillis, TimeUnit.MILLISECONDS);
+            timeout = wheelTimer
+                .newTimeout(t -> closeSecureChannel(secureChannel), lifetimeMillis, TimeUnit.MILLISECONDS);
 
             timeouts.put(channelId, timeout);
 
@@ -371,10 +395,9 @@ public class UaTcpStackServer implements UaStackServer {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends UaRequestMessage, U extends UaResponseMessage>
-    void addRequestHandler(Class<T> requestClass, ServiceRequestHandler<T, U> requestHandler) {
-        ServiceRequestHandler<UaRequestMessage, UaResponseMessage> handler =
-            (ServiceRequestHandler<UaRequestMessage, UaResponseMessage>) requestHandler;
+    public <T extends UaRequestMessage, U extends UaResponseMessage> void addRequestHandler(Class<T> requestClass,
+                                                                                            ServiceRequestHandler<T, U> requestHandler) {
+        ServiceRequestHandler<UaRequestMessage, UaResponseMessage> handler = (ServiceRequestHandler<UaRequestMessage, UaResponseMessage>) requestHandler;
 
         handlers.put(requestClass, handler);
     }
@@ -442,12 +465,14 @@ public class UaTcpStackServer implements UaStackServer {
                 newArrayList(request.getProfileUris()) :
                 new ArrayList<>();
 
-            List<EndpointDescription> allEndpoints = endpoints.stream()
+            List<EndpointDescription> allEndpoints = endpoints
+                .stream()
                 .map(UaTcpStackServer.this::mapEndpoint)
                 .filter(ed -> filterProfileUris(ed, profileUris))
                 .collect(toList());
 
-            List<EndpointDescription> matchingEndpoints = allEndpoints.stream()
+            List<EndpointDescription> matchingEndpoints = allEndpoints
+                .stream()
                 .filter(ed -> filterEndpointUrls(ed, request.getEndpointUrl()))
                 .collect(toList());
 
@@ -485,10 +510,12 @@ public class UaTcpStackServer implements UaStackServer {
                 newArrayList(request.getServerUris()) :
                 new ArrayList<>();
 
-            List<ApplicationDescription> applicationDescriptions =
-                newArrayList(getApplicationDescription(request.getEndpointUrl()));
+            List<ApplicationDescription> applicationDescriptions = newArrayList(
+                getApplicationDescription(request.getEndpointUrl())
+            );
 
-            applicationDescriptions = applicationDescriptions.stream()
+            applicationDescriptions = applicationDescriptions
+                .stream()
                 .filter(ad -> filterServerUris(ad, serverUris))
                 .collect(toList());
 
@@ -503,8 +530,8 @@ public class UaTcpStackServer implements UaStackServer {
         private ApplicationDescription getApplicationDescription(String endpointUrl) {
             List<String> allDiscoveryUrls = newArrayList(discoveryUrls);
 
-            List<String> matchingDiscoveryUrls = allDiscoveryUrls.stream()
-                .filter(discoveryUrl -> {
+            List<String> matchingDiscoveryUrls = allDiscoveryUrls.stream().filter(
+                discoveryUrl -> {
                     try {
                         String requestedHost = new URI(endpointUrl).parseServerAuthority().getHost();
                         String discoveryHost = new URI(discoveryUrl).parseServerAuthority().getHost();
@@ -514,15 +541,16 @@ public class UaTcpStackServer implements UaStackServer {
                         logger.warn("Unable to create URI.", e);
                         return false;
                     }
-                })
-                .collect(toList());
+                }
+            ).collect(toList());
 
             return new ApplicationDescription(
                 config.getApplicationUri(),
                 config.getProductUri(),
                 config.getApplicationName(),
                 ApplicationType.Server,
-                null, null,
+                null,
+                null,
                 matchingDiscoveryUrls.isEmpty() ?
                     a(allDiscoveryUrls, String.class) :
                     a(matchingDiscoveryUrls, String.class)

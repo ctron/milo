@@ -19,7 +19,8 @@ public abstract class DerivedVariableNode extends UaVariableNode {
 
     public DerivedVariableNode(UaNodeManager nodeManager, UaVariableNode variableNode) {
 
-        super(nodeManager,
+        super(
+            nodeManager,
             variableNode.getNodeId(),
             variableNode.getBrowseName(),
             variableNode.getDisplayName(),
@@ -33,7 +34,8 @@ public abstract class DerivedVariableNode extends UaVariableNode {
             variableNode.getAccessLevel(),
             variableNode.getUserAccessLevel(),
             variableNode.getMinimumSamplingInterval(),
-            variableNode.getHistorizing());
+            variableNode.getHistorizing()
+        );
 
         addReferences(variableNode.getReferences());
     }

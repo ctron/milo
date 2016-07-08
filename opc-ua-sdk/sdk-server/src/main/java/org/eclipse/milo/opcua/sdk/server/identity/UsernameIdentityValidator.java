@@ -33,20 +33,21 @@ public class UsernameIdentityValidator extends IdentityValidator {
     private final boolean allowAnonymous;
     private final Predicate<AuthenticationChallenge> predicate;
 
-    public UsernameIdentityValidator(boolean allowAnonymous,
-                                     Predicate<AuthenticationChallenge> predicate) {
+    public UsernameIdentityValidator(boolean allowAnonymous, Predicate<AuthenticationChallenge> predicate) {
 
         this.allowAnonymous = allowAnonymous;
         this.predicate = predicate;
     }
 
     @Override
-    public Object validateAnonymousToken(AnonymousIdentityToken token, UserTokenPolicy tokenPolicy,
-                                         SecureChannel channel, Session session) throws UaException {
+    public Object validateAnonymousToken(AnonymousIdentityToken token,
+                                         UserTokenPolicy tokenPolicy,
+                                         SecureChannel channel,
+                                         Session session) throws UaException {
 
         if (allowAnonymous) {
-            return String.format("anonymous_%s_%s",
-                session.getSessionName(), session.getSessionId().toParseableString());
+            return String
+                .format("anonymous_%s_%s", session.getSessionName(), session.getSessionId().toParseableString());
         } else {
             throw new UaException(StatusCodes.Bad_UserAccessDenied);
         }

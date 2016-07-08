@@ -41,19 +41,28 @@ public class DoubleComplexNumberType implements UaStructure {
         this._imaginary = _imaginary;
     }
 
-    public Double getReal() { return _real; }
+    public Double getReal() {
+        return _real;
+    }
 
-    public Double getImaginary() { return _imaginary; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public Double getImaginary() {
+        return _imaginary;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DoubleComplexNumberType doubleComplexNumberType, UaEncoder encoder) {
         encoder.encodeDouble("Real", doubleComplexNumberType._real);
@@ -68,8 +77,18 @@ public class DoubleComplexNumberType implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(DoubleComplexNumberType::encode, DoubleComplexNumberType.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DoubleComplexNumberType::decode, DoubleComplexNumberType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            DoubleComplexNumberType::encode,
+            DoubleComplexNumberType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            DoubleComplexNumberType::decode,
+            DoubleComplexNumberType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

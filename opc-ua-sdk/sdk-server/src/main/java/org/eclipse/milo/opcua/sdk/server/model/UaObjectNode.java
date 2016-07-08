@@ -57,10 +57,7 @@ public class UaObjectNode extends UaNode implements ObjectNode {
 
     private volatile UByte eventNotifier = ubyte(0);
 
-    public UaObjectNode(UaNodeManager nodeManager,
-                        NodeId nodeId,
-                        QualifiedName browseName,
-                        LocalizedText displayName) {
+    public UaObjectNode(UaNodeManager nodeManager, NodeId nodeId, QualifiedName browseName, LocalizedText displayName) {
 
         super(nodeManager, nodeId, NodeClass.Object, browseName, displayName);
     }
@@ -92,21 +89,24 @@ public class UaObjectNode extends UaNode implements ObjectNode {
     }
 
     public List<Node> getComponentNodes() {
-        return getReferences().stream()
+        return getReferences()
+            .stream()
             .filter(HAS_COMPONENT_PREDICATE)
             .flatMap(r -> opt2stream(getNode(r.getTargetNodeId())))
             .collect(Collectors.toList());
     }
 
     public List<Node> getPropertyNodes() {
-        return getReferences().stream()
+        return getReferences()
+            .stream()
             .filter(HAS_PROPERTY_PREDICATE)
             .flatMap(r -> opt2stream(getNode(r.getTargetNodeId())))
             .collect(Collectors.toList());
     }
 
     public ObjectTypeNode getTypeDefinitionNode() {
-        Node node = getReferences().stream()
+        Node node = getReferences()
+            .stream()
             .filter(HAS_TYPE_DEFINITION_PREDICATE)
             .findFirst()
             .flatMap(r -> getNode(r.getTargetNodeId()))
@@ -116,28 +116,32 @@ public class UaObjectNode extends UaNode implements ObjectNode {
     }
 
     public List<Node> getEventSourceNodes() {
-        return getReferences().stream()
+        return getReferences()
+            .stream()
             .filter(HAS_EVENT_SOURCE_PREDICATE)
             .flatMap(r -> opt2stream(getNode(r.getTargetNodeId())))
             .collect(Collectors.toList());
     }
 
     public List<Node> getNotifierNodes() {
-        return getReferences().stream()
+        return getReferences()
+            .stream()
             .filter(HAS_NOTIFIER_PREDICATE)
             .flatMap(r -> opt2stream(getNode(r.getTargetNodeId())))
             .collect(Collectors.toList());
     }
 
     public List<Node> getOrganizesNodes() {
-        return getReferences().stream()
+        return getReferences()
+            .stream()
             .filter(ORGANIZES_PREDICATE)
             .flatMap(r -> opt2stream(getNode(r.getTargetNodeId())))
             .collect(Collectors.toList());
     }
 
     public Optional<Node> getDescriptionNode() {
-        Optional<UaNode> node = getReferences().stream()
+        Optional<UaNode> node = getReferences()
+            .stream()
             .filter(HAS_DESCRIPTION_PREDICATE)
             .findFirst()
             .flatMap(r -> getNode(r.getTargetNodeId()));
@@ -152,21 +156,13 @@ public class UaObjectNode extends UaNode implements ObjectNode {
      * @param node the node to add as a component of this Object.
      */
     public void addComponent(UaNode node) {
-        addReference(new Reference(
-            getNodeId(),
-            Identifiers.HasComponent,
-            node.getNodeId().expanded(),
-            node.getNodeClass(),
-            true
-        ));
+        addReference(
+            new Reference(getNodeId(), Identifiers.HasComponent, node.getNodeId().expanded(), node.getNodeClass(), true)
+        );
 
-        node.addReference(new Reference(
-            node.getNodeId(),
-            Identifiers.HasComponent,
-            getNodeId().expanded(),
-            getNodeClass(),
-            false
-        ));
+        node.addReference(
+            new Reference(node.getNodeId(), Identifiers.HasComponent, getNodeId().expanded(), getNodeClass(), false)
+        );
     }
 
     /**
@@ -176,21 +172,13 @@ public class UaObjectNode extends UaNode implements ObjectNode {
      * @param node the node to remove as a component of this Object.
      */
     public void removeComponent(UaNode node) {
-        removeReference(new Reference(
-            getNodeId(),
-            Identifiers.HasComponent,
-            node.getNodeId().expanded(),
-            node.getNodeClass(),
-            true
-        ));
+        removeReference(
+            new Reference(getNodeId(), Identifiers.HasComponent, node.getNodeId().expanded(), node.getNodeClass(), true)
+        );
 
-        node.removeReference(new Reference(
-            node.getNodeId(),
-            Identifiers.HasComponent,
-            getNodeId().expanded(),
-            getNodeClass(),
-            false
-        ));
+        node.removeReference(
+            new Reference(node.getNodeId(), Identifiers.HasComponent, getNodeId().expanded(), getNodeClass(), false)
+        );
     }
 
     @UaOptional("NodeVersion")
@@ -284,12 +272,15 @@ public class UaObjectNode extends UaNode implements ObjectNode {
             Preconditions.checkNotNull(browseName, "BrowseName cannot be null");
             Preconditions.checkNotNull(displayName, "DisplayName cannot be null");
 
-            long hasTypeDefinitionCount = references.stream()
-                .filter(r -> Identifiers.HasTypeDefinition.equals(r.getReferenceTypeId())).count();
+            long hasTypeDefinitionCount = references
+                .stream()
+                .filter(r -> Identifiers.HasTypeDefinition.equals(r.getReferenceTypeId()))
+                .count();
 
             Preconditions.checkState(
                 hasTypeDefinitionCount == 1,
-                "Object Node must have exactly one HasTypeDefinition reference.");
+                "Object Node must have exactly one HasTypeDefinition reference."
+            );
 
             // TODO More validation on references.
 
@@ -360,13 +351,15 @@ public class UaObjectNode extends UaNode implements ObjectNode {
         public UaObjectNodeBuilder setTypeDefinition(NodeId typeDefinition) {
             Objects.requireNonNull(nodeId, "NodeId cannot be null");
 
-            references.add(new Reference(
-                nodeId,
-                Identifiers.HasTypeDefinition,
-                new ExpandedNodeId(typeDefinition),
-                NodeClass.ObjectType,
-                true
-            ));
+            references.add(
+                new Reference(
+                    nodeId,
+                    Identifiers.HasTypeDefinition,
+                    new ExpandedNodeId(typeDefinition),
+                    NodeClass.ObjectType,
+                    true
+                )
+            );
 
             return this;
         }

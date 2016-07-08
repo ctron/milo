@@ -38,20 +38,30 @@ public class CloseSessionResponse implements UaResponseMessage {
         this._responseHeader = _responseHeader;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CloseSessionResponse closeSessionResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", closeSessionResponse._responseHeader != null ? closeSessionResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            closeSessionResponse._responseHeader != null ? closeSessionResponse._responseHeader : new ResponseHeader()
+        );
     }
 
     public static CloseSessionResponse decode(UaDecoder decoder) {
@@ -61,8 +71,10 @@ public class CloseSessionResponse implements UaResponseMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(CloseSessionResponse::encode, CloseSessionResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(CloseSessionResponse::decode, CloseSessionResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(CloseSessionResponse::encode, CloseSessionResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(CloseSessionResponse::decode, CloseSessionResponse.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

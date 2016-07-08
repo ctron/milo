@@ -24,10 +24,18 @@ public class LocalizedTextSerializationTest extends BinarySerializationFixture {
     @DataProvider
     public Object[][] getLocalizedTexts() {
         return new Object[][]{
-                {new LocalizedText(null, null)},
-                {new LocalizedText("locale", null)},
-                {new LocalizedText(null, "text")},
-                {LocalizedText.english("hello, world!")},
+            {
+                new LocalizedText(null, null)
+            },
+            {
+                new LocalizedText("locale", null)
+            },
+            {
+                new LocalizedText(null, "text")
+            },
+            {
+                LocalizedText.english("hello, world!")
+            },
         };
     }
 

@@ -40,45 +40,78 @@ public class DeleteSubscriptionsResponse implements UaResponseMessage {
         this._diagnosticInfos = null;
     }
 
-    public DeleteSubscriptionsResponse(ResponseHeader _responseHeader, StatusCode[] _results, DiagnosticInfo[] _diagnosticInfos) {
+    public DeleteSubscriptionsResponse(ResponseHeader _responseHeader,
+                                       StatusCode[] _results,
+                                       DiagnosticInfo[] _diagnosticInfos) {
         this._responseHeader = _responseHeader;
         this._results = _results;
         this._diagnosticInfos = _diagnosticInfos;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
-    public StatusCode[] getResults() { return _results; }
+    public StatusCode[] getResults() {
+        return _results;
+    }
 
-    public DiagnosticInfo[] getDiagnosticInfos() { return _diagnosticInfos; }
+    public DiagnosticInfo[] getDiagnosticInfos() {
+        return _diagnosticInfos;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DeleteSubscriptionsResponse deleteSubscriptionsResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", deleteSubscriptionsResponse._responseHeader != null ? deleteSubscriptionsResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            deleteSubscriptionsResponse._responseHeader != null ?
+                deleteSubscriptionsResponse._responseHeader :
+                new ResponseHeader()
+        );
         encoder.encodeArray("Results", deleteSubscriptionsResponse._results, encoder::encodeStatusCode);
-        encoder.encodeArray("DiagnosticInfos", deleteSubscriptionsResponse._diagnosticInfos, encoder::encodeDiagnosticInfo);
+        encoder.encodeArray(
+            "DiagnosticInfos",
+            deleteSubscriptionsResponse._diagnosticInfos,
+            encoder::encodeDiagnosticInfo
+        );
     }
 
     public static DeleteSubscriptionsResponse decode(UaDecoder decoder) {
         ResponseHeader _responseHeader = decoder.decodeSerializable("ResponseHeader", ResponseHeader.class);
         StatusCode[] _results = decoder.decodeArray("Results", decoder::decodeStatusCode, StatusCode.class);
-        DiagnosticInfo[] _diagnosticInfos = decoder.decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        DiagnosticInfo[] _diagnosticInfos = decoder
+            .decodeArray("DiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
 
         return new DeleteSubscriptionsResponse(_responseHeader, _results, _diagnosticInfos);
     }
 
     static {
-        DelegateRegistry.registerEncoder(DeleteSubscriptionsResponse::encode, DeleteSubscriptionsResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DeleteSubscriptionsResponse::decode, DeleteSubscriptionsResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            DeleteSubscriptionsResponse::encode,
+            DeleteSubscriptionsResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            DeleteSubscriptionsResponse::decode,
+            DeleteSubscriptionsResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

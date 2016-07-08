@@ -83,8 +83,11 @@ public interface ServerNode extends Node {
      * @param indexRange the index range to read. Must be a parseable by {@link NumericRange}.
      * @return the value of the specified attribute.
      */
-    default DataValue readAttribute(int attribute, @Nullable TimestampsToReturn timestamps, @Nullable String indexRange) {
-        return AttributeId.from(attribute)
+    default DataValue readAttribute(int attribute,
+                                    @Nullable TimestampsToReturn timestamps,
+                                    @Nullable String indexRange) {
+        return AttributeId
+            .from(attribute)
             .map(attributeId -> readAttribute(attributeId, timestamps, indexRange))
             .orElse(new DataValue(StatusCodes.Bad_AttributeIdInvalid));
     }
@@ -113,7 +116,9 @@ public interface ServerNode extends Node {
      * @param indexRange  the index range to read. Must be a parseable by {@link NumericRange}.
      * @return the value of the specified attribute.
      */
-    default DataValue readAttribute(AttributeId attributeId, @Nullable TimestampsToReturn timestamps, @Nullable String indexRange) {
+    default DataValue readAttribute(AttributeId attributeId,
+                                    @Nullable TimestampsToReturn timestamps,
+                                    @Nullable String indexRange) {
         return AttributeReader.readAttribute(this, attributeId, timestamps, indexRange);
     }
 
@@ -126,7 +131,10 @@ public interface ServerNode extends Node {
      * @param indexRange the index range to write. Must be a parseable by {@link NumericRange}.
      * @throws UaException
      */
-    default void writeAttribute(NamespaceManager ns, UInteger attribute, DataValue value, String indexRange) throws UaException {
+    default void writeAttribute(NamespaceManager ns,
+                                UInteger attribute,
+                                DataValue value,
+                                String indexRange) throws UaException {
         writeAttribute(ns, attribute.intValue(), value, indexRange);
     }
 
@@ -139,7 +147,10 @@ public interface ServerNode extends Node {
      * @param indexRange the index range to write. Must be a parseable by {@link NumericRange}.
      * @throws UaException
      */
-    default void writeAttribute(NamespaceManager ns, int attribute, DataValue value, String indexRange) throws UaException {
+    default void writeAttribute(NamespaceManager ns,
+                                int attribute,
+                                DataValue value,
+                                String indexRange) throws UaException {
         Optional<AttributeId> attributeId = AttributeId.from(attribute);
 
         if (attributeId.isPresent()) {
@@ -158,7 +169,10 @@ public interface ServerNode extends Node {
      * @param indexRange  the index range to write. Must be a parseable by {@link NumericRange}.
      * @throws UaException
      */
-    default void writeAttribute(NamespaceManager ns, AttributeId attributeId, DataValue value, String indexRange) throws UaException {
+    default void writeAttribute(NamespaceManager ns,
+                                AttributeId attributeId,
+                                DataValue value,
+                                String indexRange) throws UaException {
         AttributeWriter.writeAttribute(ns, this, attributeId, value, indexRange);
     }
 

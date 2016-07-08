@@ -113,7 +113,8 @@ public class OpcUaNamespace implements Namespace {
     }
 
     @Override
-    public void read(ReadContext context, Double maxAge,
+    public void read(ReadContext context,
+                     Double maxAge,
                      TimestampsToReturn timestamps,
                      List<ReadValueId> readValueIds) {
 
@@ -125,10 +126,7 @@ public class OpcUaNamespace implements Namespace {
             UaNode node = nodeManager.get(id.getNodeId());
 
             if (node != null) {
-                value = node.readAttribute(
-                    id.getAttributeId().intValue(),
-                    timestamps,
-                    id.getIndexRange());
+                value = node.readAttribute(id.getAttributeId().intValue(), timestamps, id.getIndexRange());
             } else {
                 value = new DataValue(new StatusCode(StatusCodes.Bad_NodeIdUnknown));
             }
@@ -141,13 +139,15 @@ public class OpcUaNamespace implements Namespace {
 
     @Override
     public void write(WriteContext context, List<WriteValue> writeValues) {
-        List<StatusCode> results = writeValues.stream().map(value -> {
-            if (nodeManager.containsKey(value.getNodeId())) {
-                return new StatusCode(StatusCodes.Bad_NotWritable);
-            } else {
-                return new StatusCode(StatusCodes.Bad_NodeIdUnknown);
+        List<StatusCode> results = writeValues.stream().map(
+            value -> {
+                if (nodeManager.containsKey(value.getNodeId())) {
+                    return new StatusCode(StatusCodes.Bad_NotWritable);
+                } else {
+                    return new StatusCode(StatusCodes.Bad_NodeIdUnknown);
+                }
             }
-        }).collect(toList());
+        ).collect(toList());
 
         context.complete(results);
     }
@@ -174,7 +174,8 @@ public class OpcUaNamespace implements Namespace {
 
     @Override
     public void onEventItemsCreated(List<EventItem> eventItems) {
-        eventItems.stream()
+        eventItems
+            .stream()
             .filter(MonitoredItem::isSamplingEnabled)
             .forEach(item -> server.getEventBus().register(item));
     }
@@ -204,12 +205,7 @@ public class OpcUaNamespace implements Namespace {
         UaNode node = nodeManager.get(sourceNodeId);
 
         if (node != null) {
-            Reference reference = new Reference(
-                sourceNodeId,
-                referenceTypeId,
-                targetNodeId,
-                targetNodeClass,
-                forward);
+            Reference reference = new Reference(sourceNodeId, referenceTypeId, targetNodeId, targetNodeClass, forward);
 
             node.addReference(reference);
         } else {
@@ -219,13 +215,12 @@ public class OpcUaNamespace implements Namespace {
 
     @Override
     public Optional<MethodInvocationHandler> getInvocationHandler(NodeId methodId) {
-        return Optional.ofNullable(nodeManager.get(methodId))
-            .filter(n -> n instanceof UaMethodNode)
-            .map(n -> {
+        return Optional.ofNullable(nodeManager.get(methodId)).filter(n -> n instanceof UaMethodNode).map(
+            n -> {
                 UaMethodNode m = (UaMethodNode) n;
-                return m.getInvocationHandler()
-                    .orElse(new NotImplementedHandler());
-            });
+                return m.getInvocationHandler().orElse(new NotImplementedHandler());
+            }
+        );
     }
 
     public UaObjectNode getObjectsFolder() {
@@ -281,7 +276,11 @@ public class OpcUaNamespace implements Namespace {
         nodeManager.put(Identifiers.Server_ServerStatus_CurrentTime, derivedCurrentTime);
 
         ServerCapabilitiesNode serverCapabilities = serverNode.getServerCapabilitiesNode();
-        serverCapabilities.setLocaleIdArray(new String[]{Locale.ENGLISH.getLanguage()});
+        serverCapabilities.setLocaleIdArray(
+            new String[]{
+                Locale.ENGLISH.getLanguage()
+            }
+        );
         serverCapabilities.setMaxArrayLength(limits.getMaxArrayLength());
         serverCapabilities.setMaxBrowseContinuationPoints(limits.getMaxBrowseContinuationPoints());
         serverCapabilities.setMaxHistoryContinuationPoints(limits.getMaxHistoryContinuationPoints());
@@ -300,7 +299,8 @@ public class OpcUaNamespace implements Namespace {
         operationLimits.setMaxNodesPerNodeManagement(limits.getMaxNodesPerNodeManagement());
         operationLimits.setMaxNodesPerRead(limits.getMaxNodesPerRead());
         operationLimits.setMaxNodesPerRegisterNodes(limits.getMaxNodesPerRegisterNodes());
-        operationLimits.setMaxNodesPerTranslateBrowsePathsToNodeIds(limits.getMaxNodesPerTranslateBrowsePathsToNodeIds());
+        operationLimits
+            .setMaxNodesPerTranslateBrowsePathsToNodeIds(limits.getMaxNodesPerTranslateBrowsePathsToNodeIds());
         operationLimits.setMaxNodesPerWrite(limits.getMaxNodesPerWrite());
 
         serverNode.getServerRedundancyNode().setRedundancySupport(RedundancySupport.None);
@@ -308,8 +308,8 @@ public class OpcUaNamespace implements Namespace {
         try {
             UaMethodNode getMonitoredItems = (UaMethodNode) nodeManager.get(Identifiers.Server_GetMonitoredItems);
 
-            AnnotationBasedInvocationHandler handler =
-                AnnotationBasedInvocationHandler.fromAnnotatedObject(nodeManager, new GetMonitoredItems(server));
+            AnnotationBasedInvocationHandler handler = AnnotationBasedInvocationHandler
+                .fromAnnotatedObject(nodeManager, new GetMonitoredItems(server));
 
             getMonitoredItems.setInvocationHandler(handler);
             getMonitoredItems.setInputArguments(handler.getInputArguments());
@@ -321,8 +321,8 @@ public class OpcUaNamespace implements Namespace {
         try {
             UaMethodNode resendData = (UaMethodNode) nodeManager.get(Identifiers.Server_ResendData);
 
-            AnnotationBasedInvocationHandler handler =
-                AnnotationBasedInvocationHandler.fromAnnotatedObject(nodeManager, new ResendData(server));
+            AnnotationBasedInvocationHandler handler = AnnotationBasedInvocationHandler
+                .fromAnnotatedObject(nodeManager, new ResendData(server));
 
             resendData.setInvocationHandler(handler);
             resendData.setInputArguments(handler.getInputArguments());

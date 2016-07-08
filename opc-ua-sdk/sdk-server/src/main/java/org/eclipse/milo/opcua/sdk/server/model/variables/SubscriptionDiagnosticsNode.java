@@ -32,33 +32,44 @@ import org.eclipse.milo.opcua.stack.core.types.structured.SubscriptionDiagnostic
 @UaVariableNode(typeName = "0:SubscriptionDiagnosticsType")
 public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements SubscriptionDiagnosticsType {
 
-    public SubscriptionDiagnosticsNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        VariableTypeNode variableTypeNode) {
+    public SubscriptionDiagnosticsNode(UaNodeManager nodeManager, NodeId nodeId, VariableTypeNode variableTypeNode) {
 
         super(nodeManager, nodeId, variableTypeNode);
     }
 
-    public SubscriptionDiagnosticsNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        DataValue value,
-        NodeId dataType,
-        Integer valueRank,
-        Optional<UInteger[]> arrayDimensions,
-        UByte accessLevel,
-        UByte userAccessLevel,
-        Optional<Double> minimumSamplingInterval,
-        boolean historizing) {
+    public SubscriptionDiagnosticsNode(UaNodeManager nodeManager,
+                                       NodeId nodeId,
+                                       QualifiedName browseName,
+                                       LocalizedText displayName,
+                                       Optional<LocalizedText> description,
+                                       Optional<UInteger> writeMask,
+                                       Optional<UInteger> userWriteMask,
+                                       DataValue value,
+                                       NodeId dataType,
+                                       Integer valueRank,
+                                       Optional<UInteger[]> arrayDimensions,
+                                       UByte accessLevel,
+                                       UByte userAccessLevel,
+                                       Optional<Double> minimumSamplingInterval,
+                                       boolean historizing) {
 
-        super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask,
-            value, dataType, valueRank, arrayDimensions, accessLevel, userAccessLevel, minimumSamplingInterval, historizing);
+        super(
+            nodeManager,
+            nodeId,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask,
+            value,
+            dataType,
+            valueRank,
+            arrayDimensions,
+            accessLevel,
+            userAccessLevel,
+            minimumSamplingInterval,
+            historizing
+        );
     }
 
     @Override
@@ -116,8 +127,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setSessionId(NodeId value) {
-        getVariableComponent("SessionId")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SessionId").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -136,8 +146,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setSubscriptionId(UInteger value) {
-        getVariableComponent("SubscriptionId")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("SubscriptionId").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -156,8 +165,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setPriority(UByte value) {
-        getVariableComponent("Priority")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("Priority").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -176,8 +184,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setPublishingInterval(Double value) {
-        getVariableComponent("PublishingInterval")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("PublishingInterval").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -196,8 +203,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setMaxKeepAliveCount(UInteger value) {
-        getVariableComponent("MaxKeepAliveCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("MaxKeepAliveCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -216,8 +222,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setMaxLifetimeCount(UInteger value) {
-        getVariableComponent("MaxLifetimeCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("MaxLifetimeCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -256,8 +261,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setPublishingEnabled(Boolean value) {
-        getVariableComponent("PublishingEnabled")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("PublishingEnabled").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -276,8 +280,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setModifyCount(UInteger value) {
-        getVariableComponent("ModifyCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ModifyCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -296,8 +299,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setEnableCount(UInteger value) {
-        getVariableComponent("EnableCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("EnableCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -316,8 +318,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setDisableCount(UInteger value) {
-        getVariableComponent("DisableCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("DisableCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -336,8 +337,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setRepublishRequestCount(UInteger value) {
-        getVariableComponent("RepublishRequestCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("RepublishRequestCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -376,8 +376,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setRepublishMessageCount(UInteger value) {
-        getVariableComponent("RepublishMessageCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("RepublishMessageCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -396,8 +395,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setTransferRequestCount(UInteger value) {
-        getVariableComponent("TransferRequestCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("TransferRequestCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -456,8 +454,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setPublishRequestCount(UInteger value) {
-        getVariableComponent("PublishRequestCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("PublishRequestCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -496,8 +493,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setEventNotificationsCount(UInteger value) {
-        getVariableComponent("EventNotificationsCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("EventNotificationsCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -516,8 +512,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setNotificationsCount(UInteger value) {
-        getVariableComponent("NotificationsCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("NotificationsCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -536,8 +531,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setLatePublishRequestCount(UInteger value) {
-        getVariableComponent("LatePublishRequestCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("LatePublishRequestCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -556,8 +550,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setCurrentKeepAliveCount(UInteger value) {
-        getVariableComponent("CurrentKeepAliveCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CurrentKeepAliveCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -576,8 +569,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setCurrentLifetimeCount(UInteger value) {
-        getVariableComponent("CurrentLifetimeCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("CurrentLifetimeCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -616,8 +608,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setDiscardedMessageCount(UInteger value) {
-        getVariableComponent("DiscardedMessageCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("DiscardedMessageCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -636,8 +627,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setMonitoredItemCount(UInteger value) {
-        getVariableComponent("MonitoredItemCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("MonitoredItemCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -696,8 +686,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setNextSequenceNumber(UInteger value) {
-        getVariableComponent("NextSequenceNumber")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("NextSequenceNumber").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -716,8 +705,7 @@ public class SubscriptionDiagnosticsNode extends BaseDataVariableNode implements
 
     @Override
     public void setEventQueueOverFlowCount(UInteger value) {
-        getVariableComponent("EventQueueOverFlowCount")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("EventQueueOverFlowCount").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

@@ -46,21 +46,32 @@ public class RedundantServerDataType implements UaStructure {
         this._serverState = _serverState;
     }
 
-    public String getServerId() { return _serverId; }
+    public String getServerId() {
+        return _serverId;
+    }
 
-    public UByte getServiceLevel() { return _serviceLevel; }
+    public UByte getServiceLevel() {
+        return _serviceLevel;
+    }
 
-    public ServerState getServerState() { return _serverState; }
+    public ServerState getServerState() {
+        return _serverState;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(RedundantServerDataType redundantServerDataType, UaEncoder encoder) {
         encoder.encodeString("ServerId", redundantServerDataType._serverId);
@@ -77,8 +88,18 @@ public class RedundantServerDataType implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(RedundantServerDataType::encode, RedundantServerDataType.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(RedundantServerDataType::decode, RedundantServerDataType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            RedundantServerDataType::encode,
+            RedundantServerDataType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            RedundantServerDataType::decode,
+            RedundantServerDataType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

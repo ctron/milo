@@ -41,19 +41,28 @@ public class Range implements UaStructure {
         this._high = _high;
     }
 
-    public Double getLow() { return _low; }
+    public Double getLow() {
+        return _low;
+    }
 
-    public Double getHigh() { return _high; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public Double getHigh() {
+        return _high;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(Range range, UaEncoder encoder) {
         encoder.encodeDouble("Low", range._low);

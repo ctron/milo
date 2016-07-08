@@ -43,50 +43,79 @@ public class CallMethodResult implements UaStructure {
         this._outputArguments = null;
     }
 
-    public CallMethodResult(StatusCode _statusCode, StatusCode[] _inputArgumentResults, DiagnosticInfo[] _inputArgumentDiagnosticInfos, Variant[] _outputArguments) {
+    public CallMethodResult(StatusCode _statusCode,
+                            StatusCode[] _inputArgumentResults,
+                            DiagnosticInfo[] _inputArgumentDiagnosticInfos,
+                            Variant[] _outputArguments) {
         this._statusCode = _statusCode;
         this._inputArgumentResults = _inputArgumentResults;
         this._inputArgumentDiagnosticInfos = _inputArgumentDiagnosticInfos;
         this._outputArguments = _outputArguments;
     }
 
-    public StatusCode getStatusCode() { return _statusCode; }
+    public StatusCode getStatusCode() {
+        return _statusCode;
+    }
 
-    public StatusCode[] getInputArgumentResults() { return _inputArgumentResults; }
+    public StatusCode[] getInputArgumentResults() {
+        return _inputArgumentResults;
+    }
 
-    public DiagnosticInfo[] getInputArgumentDiagnosticInfos() { return _inputArgumentDiagnosticInfos; }
+    public DiagnosticInfo[] getInputArgumentDiagnosticInfos() {
+        return _inputArgumentDiagnosticInfos;
+    }
 
-    public Variant[] getOutputArguments() { return _outputArguments; }
+    public Variant[] getOutputArguments() {
+        return _outputArguments;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(CallMethodResult callMethodResult, UaEncoder encoder) {
         encoder.encodeStatusCode("StatusCode", callMethodResult._statusCode);
         encoder.encodeArray("InputArgumentResults", callMethodResult._inputArgumentResults, encoder::encodeStatusCode);
-        encoder.encodeArray("InputArgumentDiagnosticInfos", callMethodResult._inputArgumentDiagnosticInfos, encoder::encodeDiagnosticInfo);
+        encoder.encodeArray(
+            "InputArgumentDiagnosticInfos",
+            callMethodResult._inputArgumentDiagnosticInfos,
+            encoder::encodeDiagnosticInfo
+        );
         encoder.encodeArray("OutputArguments", callMethodResult._outputArguments, encoder::encodeVariant);
     }
 
     public static CallMethodResult decode(UaDecoder decoder) {
         StatusCode _statusCode = decoder.decodeStatusCode("StatusCode");
-        StatusCode[] _inputArgumentResults = decoder.decodeArray("InputArgumentResults", decoder::decodeStatusCode, StatusCode.class);
-        DiagnosticInfo[] _inputArgumentDiagnosticInfos = decoder.decodeArray("InputArgumentDiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
+        StatusCode[] _inputArgumentResults = decoder
+            .decodeArray("InputArgumentResults", decoder::decodeStatusCode, StatusCode.class);
+        DiagnosticInfo[] _inputArgumentDiagnosticInfos = decoder
+            .decodeArray("InputArgumentDiagnosticInfos", decoder::decodeDiagnosticInfo, DiagnosticInfo.class);
         Variant[] _outputArguments = decoder.decodeArray("OutputArguments", decoder::decodeVariant, Variant.class);
 
-        return new CallMethodResult(_statusCode, _inputArgumentResults, _inputArgumentDiagnosticInfos, _outputArguments);
+        return new CallMethodResult(
+            _statusCode,
+            _inputArgumentResults,
+            _inputArgumentDiagnosticInfos,
+            _outputArguments
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(CallMethodResult::encode, CallMethodResult.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(CallMethodResult::decode, CallMethodResult.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(CallMethodResult::encode, CallMethodResult.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(CallMethodResult::decode, CallMethodResult.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

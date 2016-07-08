@@ -102,8 +102,8 @@ public interface UaStackServer {
 
     void closeSecureChannel(ServerSecureChannel secureChannel);
 
-    <T extends UaRequestMessage, U extends UaResponseMessage>
-    void addRequestHandler(Class<T> requestClass, ServiceRequestHandler<T, U> requestHandler);
+    <T extends UaRequestMessage, U extends UaResponseMessage> void addRequestHandler(Class<T> requestClass,
+                                                                                     ServiceRequestHandler<T, U> requestHandler);
 
     /**
      * Add an endpoint with the given security configuration. A certificate must be provided for secure endpoints.
@@ -129,9 +129,7 @@ public interface UaStackServer {
      * @return this {@link UaStackServer}.
      */
     default UaStackServer addEndpoint(String endpointUri, String bindAddress) {
-        return addEndpoint(
-            endpointUri, bindAddress, null,
-            SecurityPolicy.None, MessageSecurityMode.None);
+        return addEndpoint(endpointUri, bindAddress, null, SecurityPolicy.None, MessageSecurityMode.None);
     }
 
     default void addServiceSet(AttributeServiceSet serviceSet) {

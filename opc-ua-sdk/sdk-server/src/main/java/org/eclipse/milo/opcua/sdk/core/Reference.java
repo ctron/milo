@@ -80,11 +80,13 @@ public class Reference {
             return false;
         }
 
-        return referenceType.getSuperType().map(superType -> {
-            NodeId id = superType.getNodeId();
+        return referenceType.getSuperType().map(
+            superType -> {
+                NodeId id = superType.getNodeId();
 
-            return id.equals(superTypeId) || subtypeOf(id, superTypeId, referenceTypes);
-        }).orElse(false);
+                return id.equals(superTypeId) || subtypeOf(id, superTypeId, referenceTypes);
+            }
+        ).orElse(false);
     }
 
     @Override
@@ -114,39 +116,44 @@ public class Reference {
     @Override
     public String toString() {
         return "Reference{" +
-            "sourceNodeId=" + sourceNodeId +
-            ", referenceTypeId=" + referenceTypeId +
-            ", targetNodeId=" + targetNodeId +
-            ", targetNodeClass=" + targetNodeClass +
-            ", forward=" + forward +
+            "sourceNodeId=" +
+            sourceNodeId +
+            ", referenceTypeId=" +
+            referenceTypeId +
+            ", targetNodeId=" +
+            targetNodeId +
+            ", targetNodeClass=" +
+            targetNodeClass +
+            ", forward=" +
+            forward +
             '}';
     }
 
-    public static final Predicate<Reference> HAS_COMPONENT_PREDICATE =
-        (reference) -> reference.isForward() && Identifiers.HasComponent.equals(reference.getReferenceTypeId());
+    public static final Predicate<Reference> HAS_COMPONENT_PREDICATE = (reference) -> reference.isForward() &&
+        Identifiers.HasComponent.equals(reference.getReferenceTypeId());
 
-    public static final Predicate<Reference> HAS_PROPERTY_PREDICATE =
-        (reference) -> reference.isForward() && Identifiers.HasProperty.equals(reference.getReferenceTypeId());
+    public static final Predicate<Reference> HAS_PROPERTY_PREDICATE = (reference) -> reference.isForward() &&
+        Identifiers.HasProperty.equals(reference.getReferenceTypeId());
 
-    public static final Predicate<Reference> HAS_TYPE_DEFINITION_PREDICATE =
-        (reference) -> reference.isForward() && Identifiers.HasTypeDefinition.equals(reference.getReferenceTypeId());
+    public static final Predicate<Reference> HAS_TYPE_DEFINITION_PREDICATE = (reference) -> reference.isForward() &&
+        Identifiers.HasTypeDefinition.equals(reference.getReferenceTypeId());
 
-    public static final Predicate<Reference> HAS_EVENT_SOURCE_PREDICATE =
-        (reference) -> reference.isForward() && Identifiers.HasEventSource.equals(reference.getReferenceTypeId());
+    public static final Predicate<Reference> HAS_EVENT_SOURCE_PREDICATE = (reference) -> reference.isForward() &&
+        Identifiers.HasEventSource.equals(reference.getReferenceTypeId());
 
-    public static final Predicate<Reference> HAS_NOTIFIER_PREDICATE =
-        (reference) -> reference.isForward() && Identifiers.HasNotifier.equals(reference.getReferenceTypeId());
+    public static final Predicate<Reference> HAS_NOTIFIER_PREDICATE = (reference) -> reference.isForward() &&
+        Identifiers.HasNotifier.equals(reference.getReferenceTypeId());
 
-    public static final Predicate<Reference> ORGANIZES_PREDICATE =
-        (reference) -> reference.isForward() && Identifiers.Organizes.equals(reference.getReferenceTypeId());
+    public static final Predicate<Reference> ORGANIZES_PREDICATE = (reference) -> reference.isForward() &&
+        Identifiers.Organizes.equals(reference.getReferenceTypeId());
 
-    public static final Predicate<Reference> HAS_DESCRIPTION_PREDICATE =
-        (reference) -> reference.isForward() && Identifiers.HasDescription.equals(reference.getReferenceTypeId());
+    public static final Predicate<Reference> HAS_DESCRIPTION_PREDICATE = (reference) -> reference.isForward() &&
+        Identifiers.HasDescription.equals(reference.getReferenceTypeId());
 
-    public static final Predicate<Reference> HAS_MODELLING_RULE_PREDICATE =
-        (reference) -> reference.isForward() && Identifiers.HasModellingRule.equals(reference.getReferenceTypeId());
+    public static final Predicate<Reference> HAS_MODELLING_RULE_PREDICATE = (reference) -> reference.isForward() &&
+        Identifiers.HasModellingRule.equals(reference.getReferenceTypeId());
 
-    public static final Predicate<Reference> ALWAYS_GENERATES_EVENT_PREDICATE =
-        (reference) -> reference.isForward() && Identifiers.AlwaysGeneratesEvent.equals(reference.getReferenceTypeId());
+    public static final Predicate<Reference> ALWAYS_GENERATES_EVENT_PREDICATE = (reference) -> reference.isForward() &&
+        Identifiers.AlwaysGeneratesEvent.equals(reference.getReferenceTypeId());
 
 }

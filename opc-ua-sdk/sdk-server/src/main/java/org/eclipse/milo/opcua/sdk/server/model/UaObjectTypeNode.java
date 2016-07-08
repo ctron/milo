@@ -43,7 +43,16 @@ public class UaObjectTypeNode extends UaNode implements ObjectTypeNode {
                             Optional<UInteger> userWriteMask,
                             boolean isAbstract) {
 
-        super(nodeManager, nodeId, NodeClass.ObjectType, browseName, displayName, description, writeMask, userWriteMask);
+        super(
+            nodeManager,
+            nodeId,
+            NodeClass.ObjectType,
+            browseName,
+            displayName,
+            description,
+            writeMask,
+            userWriteMask
+        );
 
         this.isAbstract = isAbstract;
     }

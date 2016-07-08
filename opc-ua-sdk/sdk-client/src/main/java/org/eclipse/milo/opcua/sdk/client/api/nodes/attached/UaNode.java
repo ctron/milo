@@ -117,15 +117,17 @@ public interface UaNode {
      * @return the Description attribute, if present.
      */
     default CompletableFuture<Optional<LocalizedText>> readDescriptionAttribute() {
-        return readDescription().thenApply(v -> {
-            StatusCode statusCode = v.getStatusCode();
+        return readDescription().thenApply(
+            v -> {
+                StatusCode statusCode = v.getStatusCode();
 
-            if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
-                return Optional.empty();
-            } else {
-                return Optional.ofNullable((LocalizedText) v.getValue().getValue());
+                if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
+                    return Optional.empty();
+                } else {
+                    return Optional.ofNullable((LocalizedText) v.getValue().getValue());
+                }
             }
-        });
+        );
     }
 
     /**
@@ -143,15 +145,17 @@ public interface UaNode {
      * @return the WriteMask attribute, if present.
      */
     default CompletableFuture<Optional<UInteger>> readWriteMaskAttribute() {
-        return readWriteMask().thenApply(v -> {
-            StatusCode statusCode = v.getStatusCode();
+        return readWriteMask().thenApply(
+            v -> {
+                StatusCode statusCode = v.getStatusCode();
 
-            if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
-                return Optional.empty();
-            } else {
-                return Optional.ofNullable((UInteger) v.getValue().getValue());
+                if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
+                    return Optional.empty();
+                } else {
+                    return Optional.ofNullable((UInteger) v.getValue().getValue());
+                }
             }
-        });
+        );
     }
 
     /**
@@ -169,15 +173,17 @@ public interface UaNode {
      * @return the UserWriteMask attribute, if present.
      */
     default CompletableFuture<Optional<UInteger>> readUserWriteMaskAttribute() {
-        return readUserWriteMask().thenApply(v -> {
-            StatusCode statusCode = v.getStatusCode();
+        return readUserWriteMask().thenApply(
+            v -> {
+                StatusCode statusCode = v.getStatusCode();
 
-            if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
-                return Optional.empty();
-            } else {
-                return Optional.ofNullable((UInteger) v.getValue().getValue());
+                if (statusCode.getValue() == StatusCodes.Bad_AttributeIdInvalid) {
+                    return Optional.empty();
+                } else {
+                    return Optional.ofNullable((UInteger) v.getValue().getValue());
+                }
             }
-        });
+        );
     }
 
     /**

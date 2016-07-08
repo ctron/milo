@@ -40,17 +40,24 @@ public class DeleteAtTimeDetails extends HistoryUpdateDetails {
         this._reqTimes = _reqTimes;
     }
 
-    public DateTime[] getReqTimes() { return _reqTimes; }
+    public DateTime[] getReqTimes() {
+        return _reqTimes;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(DeleteAtTimeDetails deleteAtTimeDetails, UaEncoder encoder) {
         encoder.encodeNodeId("NodeId", deleteAtTimeDetails._nodeId);
@@ -65,8 +72,10 @@ public class DeleteAtTimeDetails extends HistoryUpdateDetails {
     }
 
     static {
-        DelegateRegistry.registerEncoder(DeleteAtTimeDetails::encode, DeleteAtTimeDetails.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DeleteAtTimeDetails::decode, DeleteAtTimeDetails.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(DeleteAtTimeDetails::encode, DeleteAtTimeDetails.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(DeleteAtTimeDetails::decode, DeleteAtTimeDetails.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

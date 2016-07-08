@@ -19,7 +19,6 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.LocalizedText;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 
-
 public interface OptionSetType extends BaseDataVariableType {
 
     Property<LocalizedText[]> OPTION_SET_VALUES = new BasicProperty<>(
@@ -35,7 +34,6 @@ public interface OptionSetType extends BaseDataVariableType {
         1,
         Boolean[].class
     );
-
 
     LocalizedText[] getOptionSetValues();
 

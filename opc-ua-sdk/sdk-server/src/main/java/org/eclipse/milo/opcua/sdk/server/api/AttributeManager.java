@@ -38,10 +38,7 @@ public interface AttributeManager {
      * @param timestamps   requested timestamp values.
      * @param readValueIds the values to read.
      */
-    void read(ReadContext context,
-              Double maxAge,
-              TimestampsToReturn timestamps,
-              List<ReadValueId> readValueIds);
+    void read(ReadContext context, Double maxAge, TimestampsToReturn timestamps, List<ReadValueId> readValueIds);
 
     /**
      * Write one or more values to nodes belonging to this {@link AttributeManager}.

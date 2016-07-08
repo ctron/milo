@@ -42,27 +42,40 @@ public class EventFilter extends MonitoringFilter {
         this._whereClause = _whereClause;
     }
 
-    public SimpleAttributeOperand[] getSelectClauses() { return _selectClauses; }
+    public SimpleAttributeOperand[] getSelectClauses() {
+        return _selectClauses;
+    }
 
-    public ContentFilter getWhereClause() { return _whereClause; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public ContentFilter getWhereClause() {
+        return _whereClause;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(EventFilter eventFilter, UaEncoder encoder) {
         encoder.encodeArray("SelectClauses", eventFilter._selectClauses, encoder::encodeSerializable);
-        encoder.encodeSerializable("WhereClause", eventFilter._whereClause != null ? eventFilter._whereClause : new ContentFilter());
+        encoder.encodeSerializable(
+            "WhereClause",
+            eventFilter._whereClause != null ? eventFilter._whereClause : new ContentFilter()
+        );
     }
 
     public static EventFilter decode(UaDecoder decoder) {
-        SimpleAttributeOperand[] _selectClauses = decoder.decodeArray("SelectClauses", decoder::decodeSerializable, SimpleAttributeOperand.class);
+        SimpleAttributeOperand[] _selectClauses = decoder
+            .decodeArray("SelectClauses", decoder::decodeSerializable, SimpleAttributeOperand.class);
         ContentFilter _whereClause = decoder.decodeSerializable("WhereClause", ContentFilter.class);
 
         return new EventFilter(_selectClauses, _whereClause);

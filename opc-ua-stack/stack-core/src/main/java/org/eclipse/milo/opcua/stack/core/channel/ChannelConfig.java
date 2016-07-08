@@ -57,11 +57,13 @@ public class ChannelConfig {
      * @see {@link ChannelConfig#DEFAULT_MAX_STRING_LENGTH}
      */
     public ChannelConfig() {
-        this(DEFAULT_MAX_CHUNK_SIZE,
+        this(
+            DEFAULT_MAX_CHUNK_SIZE,
             DEFAULT_MAX_CHUNK_COUNT,
             DEFAULT_MAX_MESSAGE_SIZE,
             DEFAULT_MAX_ARRAY_LENGTH,
-            DEFAULT_MAX_STRING_LENGTH);
+            DEFAULT_MAX_STRING_LENGTH
+        );
     }
 
     /**
@@ -74,8 +76,7 @@ public class ChannelConfig {
                          int maxMessageSize,
                          int maxArrayLength,
                          int maxStringLength) {
-        Preconditions.checkArgument(maxChunkSize >= 8192,
-            "maxChunkSize must be greater than or equal to 8192");
+        Preconditions.checkArgument(maxChunkSize >= 8192, "maxChunkSize must be greater than or equal to 8192");
 
         this.maxChunkSize = maxChunkSize;
         this.maxChunkCount = maxChunkCount;

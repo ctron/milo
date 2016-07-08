@@ -30,15 +30,14 @@ import org.eclipse.milo.opcua.stack.core.types.enumerated.ServerState;
 @UaObjectNode(typeName = "0:SystemStatusChangeEventType")
 public class SystemStatusChangeEventNode extends SystemEventNode implements SystemStatusChangeEventType {
 
-    public SystemStatusChangeEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public SystemStatusChangeEventNode(UaNodeManager nodeManager,
+                                       NodeId nodeId,
+                                       QualifiedName browseName,
+                                       LocalizedText displayName,
+                                       Optional<LocalizedText> description,
+                                       Optional<UInteger> writeMask,
+                                       Optional<UInteger> userWriteMask,
+                                       UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }

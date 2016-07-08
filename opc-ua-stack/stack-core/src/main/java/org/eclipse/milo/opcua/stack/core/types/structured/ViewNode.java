@@ -41,25 +41,43 @@ public class ViewNode extends InstanceNode {
         this._eventNotifier = null;
     }
 
-    public ViewNode(NodeId _nodeId, NodeClass _nodeClass, QualifiedName _browseName, LocalizedText _displayName, LocalizedText _description, UInteger _writeMask, UInteger _userWriteMask, ReferenceNode[] _references, Boolean _containsNoLoops, UByte _eventNotifier) {
+    public ViewNode(NodeId _nodeId,
+                    NodeClass _nodeClass,
+                    QualifiedName _browseName,
+                    LocalizedText _displayName,
+                    LocalizedText _description,
+                    UInteger _writeMask,
+                    UInteger _userWriteMask,
+                    ReferenceNode[] _references,
+                    Boolean _containsNoLoops,
+                    UByte _eventNotifier) {
         super(_nodeId, _nodeClass, _browseName, _displayName, _description, _writeMask, _userWriteMask, _references);
         this._containsNoLoops = _containsNoLoops;
         this._eventNotifier = _eventNotifier;
     }
 
-    public Boolean getContainsNoLoops() { return _containsNoLoops; }
+    public Boolean getContainsNoLoops() {
+        return _containsNoLoops;
+    }
 
-    public UByte getEventNotifier() { return _eventNotifier; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public UByte getEventNotifier() {
+        return _eventNotifier;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(ViewNode viewNode, UaEncoder encoder) {
         encoder.encodeNodeId("NodeId", viewNode._nodeId);
@@ -82,11 +100,23 @@ public class ViewNode extends InstanceNode {
         LocalizedText _description = decoder.decodeLocalizedText("Description");
         UInteger _writeMask = decoder.decodeUInt32("WriteMask");
         UInteger _userWriteMask = decoder.decodeUInt32("UserWriteMask");
-        ReferenceNode[] _references = decoder.decodeArray("References", decoder::decodeSerializable, ReferenceNode.class);
+        ReferenceNode[] _references = decoder
+            .decodeArray("References", decoder::decodeSerializable, ReferenceNode.class);
         Boolean _containsNoLoops = decoder.decodeBoolean("ContainsNoLoops");
         UByte _eventNotifier = decoder.decodeByte("EventNotifier");
 
-        return new ViewNode(_nodeId, _nodeClass, _browseName, _displayName, _description, _writeMask, _userWriteMask, _references, _containsNoLoops, _eventNotifier);
+        return new ViewNode(
+            _nodeId,
+            _nodeClass,
+            _browseName,
+            _displayName,
+            _description,
+            _writeMask,
+            _userWriteMask,
+            _references,
+            _containsNoLoops,
+            _eventNotifier
+        );
     }
 
     static {

@@ -38,20 +38,32 @@ public class UnregisterNodesResponse implements UaResponseMessage {
         this._responseHeader = _responseHeader;
     }
 
-    public ResponseHeader getResponseHeader() { return _responseHeader; }
+    public ResponseHeader getResponseHeader() {
+        return _responseHeader;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(UnregisterNodesResponse unregisterNodesResponse, UaEncoder encoder) {
-        encoder.encodeSerializable("ResponseHeader", unregisterNodesResponse._responseHeader != null ? unregisterNodesResponse._responseHeader : new ResponseHeader());
+        encoder.encodeSerializable(
+            "ResponseHeader",
+            unregisterNodesResponse._responseHeader != null ?
+                unregisterNodesResponse._responseHeader :
+                new ResponseHeader()
+        );
     }
 
     public static UnregisterNodesResponse decode(UaDecoder decoder) {
@@ -61,8 +73,18 @@ public class UnregisterNodesResponse implements UaResponseMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(UnregisterNodesResponse::encode, UnregisterNodesResponse.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(UnregisterNodesResponse::decode, UnregisterNodesResponse.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            UnregisterNodesResponse::encode,
+            UnregisterNodesResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            UnregisterNodesResponse::decode,
+            UnregisterNodesResponse.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

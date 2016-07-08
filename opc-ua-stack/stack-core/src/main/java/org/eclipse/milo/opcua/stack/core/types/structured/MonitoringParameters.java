@@ -44,7 +44,11 @@ public class MonitoringParameters implements UaStructure {
         this._discardOldest = null;
     }
 
-    public MonitoringParameters(UInteger _clientHandle, Double _samplingInterval, ExtensionObject _filter, UInteger _queueSize, Boolean _discardOldest) {
+    public MonitoringParameters(UInteger _clientHandle,
+                                Double _samplingInterval,
+                                ExtensionObject _filter,
+                                UInteger _queueSize,
+                                Boolean _discardOldest) {
         this._clientHandle = _clientHandle;
         this._samplingInterval = _samplingInterval;
         this._filter = _filter;
@@ -52,25 +56,40 @@ public class MonitoringParameters implements UaStructure {
         this._discardOldest = _discardOldest;
     }
 
-    public UInteger getClientHandle() { return _clientHandle; }
+    public UInteger getClientHandle() {
+        return _clientHandle;
+    }
 
-    public Double getSamplingInterval() { return _samplingInterval; }
+    public Double getSamplingInterval() {
+        return _samplingInterval;
+    }
 
-    public ExtensionObject getFilter() { return _filter; }
+    public ExtensionObject getFilter() {
+        return _filter;
+    }
 
-    public UInteger getQueueSize() { return _queueSize; }
+    public UInteger getQueueSize() {
+        return _queueSize;
+    }
 
-    public Boolean getDiscardOldest() { return _discardOldest; }
+    public Boolean getDiscardOldest() {
+        return _discardOldest;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(MonitoringParameters monitoringParameters, UaEncoder encoder) {
         encoder.encodeUInt32("ClientHandle", monitoringParameters._clientHandle);
@@ -91,8 +110,10 @@ public class MonitoringParameters implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(MonitoringParameters::encode, MonitoringParameters.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(MonitoringParameters::decode, MonitoringParameters.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(MonitoringParameters::encode, MonitoringParameters.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(MonitoringParameters::decode, MonitoringParameters.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

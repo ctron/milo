@@ -52,7 +52,8 @@ public class CertificateValidationUtil {
                                           Set<X509Certificate> trustedCertificates,
                                           Set<X509Certificate> authorityCertificates) throws UaException {
 
-        boolean certificateTrusted = trustedCertificates.stream()
+        boolean certificateTrusted = trustedCertificates
+            .stream()
             .anyMatch(c -> Arrays.equals(certificate.getSignature(), c.getSignature()));
 
         if (certificateTrusted) return;
@@ -68,8 +69,8 @@ public class CertificateValidationUtil {
 
             params.setRevocationEnabled(false);
 
-            CertStore intermediateCertStore =
-                CertStore.getInstance("Collection", new CollectionCertStoreParameters(chain));
+            CertStore intermediateCertStore = CertStore
+                .getInstance("Collection", new CollectionCertStoreParameters(chain));
 
             params.addCertStore(intermediateCertStore);
 
@@ -87,13 +88,16 @@ public class CertificateValidationUtil {
         try {
             certificate.checkValidity();
         } catch (CertificateExpiredException e) {
-            throw new UaException(StatusCodes.Bad_CertificateTimeInvalid,
-                String.format("certificate is expired: %s - %s",
-                    certificate.getNotBefore(), certificate.getNotAfter()));
+            throw new UaException(
+                StatusCodes.Bad_CertificateTimeInvalid,
+                String.format("certificate is expired: %s - %s", certificate.getNotBefore(), certificate.getNotAfter())
+            );
         } catch (CertificateNotYetValidException e) {
-            throw new UaException(StatusCodes.Bad_CertificateTimeInvalid,
-                String.format("certificate not yet valid: %s - %s",
-                    certificate.getNotBefore(), certificate.getNotAfter()));
+            throw new UaException(
+                StatusCodes.Bad_CertificateTimeInvalid,
+                String
+                    .format("certificate not yet valid: %s - %s", certificate.getNotBefore(), certificate.getNotAfter())
+            );
         }
     }
 
@@ -106,11 +110,13 @@ public class CertificateValidationUtil {
      * @throws UaException if there is no matching DNSName or IPAddress entry.
      */
     public static void validateHostnameOrIpAddress(X509Certificate certificate, String hostname) throws UaException {
-        boolean dnsNameMatches =
-            validateSubjectAltNameField(certificate, SUBJECT_ALT_NAME_DNS_NAME, hostname::equals);
+        boolean dnsNameMatches = validateSubjectAltNameField(certificate, SUBJECT_ALT_NAME_DNS_NAME, hostname::equals);
 
-        boolean ipAddressMatches =
-            validateSubjectAltNameField(certificate, SUBJECT_ALT_NAME_IP_ADDRESS, hostname::equals);
+        boolean ipAddressMatches = validateSubjectAltNameField(
+            certificate,
+            SUBJECT_ALT_NAME_IP_ADDRESS,
+            hostname::equals
+        );
 
         if (!(dnsNameMatches || ipAddressMatches)) {
             throw new UaException(StatusCodes.Bad_CertificateHostNameInvalid);
@@ -142,28 +148,37 @@ public class CertificateValidationUtil {
             boolean dataEncipherment = keyUsage[3];
 
             if (!digitalSignature) {
-                throw new UaException(StatusCodes.Bad_CertificateUseNotAllowed,
-                    "required KeyUsage 'digitalSignature' not found");
+                throw new UaException(
+                    StatusCodes.Bad_CertificateUseNotAllowed,
+                    "required KeyUsage 'digitalSignature' not found"
+                );
             }
 
             if (!nonRepudiation) {
-                throw new UaException(StatusCodes.Bad_CertificateUseNotAllowed,
-                    "required KeyUsage 'nonRepudiation' not found");
+                throw new UaException(
+                    StatusCodes.Bad_CertificateUseNotAllowed,
+                    "required KeyUsage 'nonRepudiation' not found"
+                );
             }
 
             if (!keyEncipherment) {
-                throw new UaException(StatusCodes.Bad_CertificateUseNotAllowed,
-                    "required KeyUsage 'keyEncipherment' not found");
+                throw new UaException(
+                    StatusCodes.Bad_CertificateUseNotAllowed,
+                    "required KeyUsage 'keyEncipherment' not found"
+                );
             }
 
             if (!dataEncipherment) {
-                throw new UaException(StatusCodes.Bad_CertificateUseNotAllowed,
-                    "required KeyUsage 'dataEncipherment' not found");
+                throw new UaException(
+                    StatusCodes.Bad_CertificateUseNotAllowed,
+                    "required KeyUsage 'dataEncipherment' not found"
+                );
             }
         }
     }
 
-    public static boolean validateSubjectAltNameField(X509Certificate certificate, int field,
+    public static boolean validateSubjectAltNameField(X509Certificate certificate,
+                                                      int field,
                                                       Predicate<Object> fieldValidator) throws UaException {
 
         try {

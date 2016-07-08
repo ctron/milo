@@ -43,7 +43,11 @@ public class SetTriggeringRequest implements UaRequestMessage {
         this._linksToRemove = null;
     }
 
-    public SetTriggeringRequest(RequestHeader _requestHeader, UInteger _subscriptionId, UInteger _triggeringItemId, UInteger[] _linksToAdd, UInteger[] _linksToRemove) {
+    public SetTriggeringRequest(RequestHeader _requestHeader,
+                                UInteger _subscriptionId,
+                                UInteger _triggeringItemId,
+                                UInteger[] _linksToAdd,
+                                UInteger[] _linksToRemove) {
         this._requestHeader = _requestHeader;
         this._subscriptionId = _subscriptionId;
         this._triggeringItemId = _triggeringItemId;
@@ -51,28 +55,46 @@ public class SetTriggeringRequest implements UaRequestMessage {
         this._linksToRemove = _linksToRemove;
     }
 
-    public RequestHeader getRequestHeader() { return _requestHeader; }
+    public RequestHeader getRequestHeader() {
+        return _requestHeader;
+    }
 
-    public UInteger getSubscriptionId() { return _subscriptionId; }
+    public UInteger getSubscriptionId() {
+        return _subscriptionId;
+    }
 
-    public UInteger getTriggeringItemId() { return _triggeringItemId; }
+    public UInteger getTriggeringItemId() {
+        return _triggeringItemId;
+    }
 
-    public UInteger[] getLinksToAdd() { return _linksToAdd; }
+    public UInteger[] getLinksToAdd() {
+        return _linksToAdd;
+    }
 
-    public UInteger[] getLinksToRemove() { return _linksToRemove; }
+    public UInteger[] getLinksToRemove() {
+        return _linksToRemove;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(SetTriggeringRequest setTriggeringRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", setTriggeringRequest._requestHeader != null ? setTriggeringRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            setTriggeringRequest._requestHeader != null ? setTriggeringRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeUInt32("SubscriptionId", setTriggeringRequest._subscriptionId);
         encoder.encodeUInt32("TriggeringItemId", setTriggeringRequest._triggeringItemId);
         encoder.encodeArray("LinksToAdd", setTriggeringRequest._linksToAdd, encoder::encodeUInt32);
@@ -86,12 +108,20 @@ public class SetTriggeringRequest implements UaRequestMessage {
         UInteger[] _linksToAdd = decoder.decodeArray("LinksToAdd", decoder::decodeUInt32, UInteger.class);
         UInteger[] _linksToRemove = decoder.decodeArray("LinksToRemove", decoder::decodeUInt32, UInteger.class);
 
-        return new SetTriggeringRequest(_requestHeader, _subscriptionId, _triggeringItemId, _linksToAdd, _linksToRemove);
+        return new SetTriggeringRequest(
+            _requestHeader,
+            _subscriptionId,
+            _triggeringItemId,
+            _linksToAdd,
+            _linksToRemove
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(SetTriggeringRequest::encode, SetTriggeringRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(SetTriggeringRequest::decode, SetTriggeringRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(SetTriggeringRequest::encode, SetTriggeringRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(SetTriggeringRequest::decode, SetTriggeringRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

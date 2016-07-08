@@ -46,11 +46,12 @@ public class DefaultCertificateManager implements CertificateManager {
         this(newArrayList(privateKey), newArrayList(certificate));
     }
 
-    public DefaultCertificateManager(List<KeyPair> privateKeys,
-                                     List<X509Certificate> certificates) {
+    public DefaultCertificateManager(List<KeyPair> privateKeys, List<X509Certificate> certificates) {
 
-        Preconditions.checkState(privateKeys.size() == certificates.size(),
-            "privateKeys.size() and certificates.size() must be equal");
+        Preconditions.checkState(
+            privateKeys.size() == certificates.size(),
+            "privateKeys.size() and certificates.size() must be equal"
+        );
 
         for (int i = 0; i < privateKeys.size(); i++) {
             KeyPair privateKey = privateKeys.get(0);

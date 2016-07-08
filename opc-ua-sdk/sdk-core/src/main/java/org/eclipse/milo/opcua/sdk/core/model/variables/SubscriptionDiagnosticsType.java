@@ -17,9 +17,7 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UByte;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 
-
 public interface SubscriptionDiagnosticsType extends BaseDataVariableType {
-
 
     NodeId getSessionId();
 

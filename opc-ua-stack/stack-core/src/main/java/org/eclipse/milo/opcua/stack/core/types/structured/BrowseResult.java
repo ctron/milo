@@ -46,21 +46,32 @@ public class BrowseResult implements UaStructure {
         this._references = _references;
     }
 
-    public StatusCode getStatusCode() { return _statusCode; }
+    public StatusCode getStatusCode() {
+        return _statusCode;
+    }
 
-    public ByteString getContinuationPoint() { return _continuationPoint; }
+    public ByteString getContinuationPoint() {
+        return _continuationPoint;
+    }
 
-    public ReferenceDescription[] getReferences() { return _references; }
+    public ReferenceDescription[] getReferences() {
+        return _references;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(BrowseResult browseResult, UaEncoder encoder) {
         encoder.encodeStatusCode("StatusCode", browseResult._statusCode);
@@ -71,7 +82,8 @@ public class BrowseResult implements UaStructure {
     public static BrowseResult decode(UaDecoder decoder) {
         StatusCode _statusCode = decoder.decodeStatusCode("StatusCode");
         ByteString _continuationPoint = decoder.decodeByteString("ContinuationPoint");
-        ReferenceDescription[] _references = decoder.decodeArray("References", decoder::decodeSerializable, ReferenceDescription.class);
+        ReferenceDescription[] _references = decoder
+            .decodeArray("References", decoder::decodeSerializable, ReferenceDescription.class);
 
         return new BrowseResult(_statusCode, _continuationPoint, _references);
     }

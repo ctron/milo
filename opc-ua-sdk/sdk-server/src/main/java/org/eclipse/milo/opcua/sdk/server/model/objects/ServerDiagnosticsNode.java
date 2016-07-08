@@ -38,15 +38,14 @@ import org.eclipse.milo.opcua.stack.core.types.structured.SubscriptionDiagnostic
 @UaObjectNode(typeName = "0:ServerDiagnosticsType")
 public class ServerDiagnosticsNode extends BaseObjectNode implements ServerDiagnosticsType {
 
-    public ServerDiagnosticsNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public ServerDiagnosticsNode(UaNodeManager nodeManager,
+                                 NodeId nodeId,
+                                 QualifiedName browseName,
+                                 LocalizedText displayName,
+                                 Optional<LocalizedText> description,
+                                 Optional<UInteger> writeMask,
+                                 Optional<UInteger> userWriteMask,
+                                 UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -81,7 +80,9 @@ public class ServerDiagnosticsNode extends BaseObjectNode implements ServerDiagn
     public ServerDiagnosticsSummaryDataType getServerDiagnosticsSummary() {
         Optional<VariableNode> component = getVariableComponent("ServerDiagnosticsSummary");
 
-        return component.map(node -> (ServerDiagnosticsSummaryDataType) node.getValue().getValue().getValue()).orElse(null);
+        return component
+            .map(node -> (ServerDiagnosticsSummaryDataType) node.getValue().getValue().getValue())
+            .orElse(null);
     }
 
     @Override
@@ -93,15 +94,16 @@ public class ServerDiagnosticsNode extends BaseObjectNode implements ServerDiagn
 
     @Override
     public void setServerDiagnosticsSummary(ServerDiagnosticsSummaryDataType value) {
-        getVariableComponent("ServerDiagnosticsSummary")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ServerDiagnosticsSummary").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
     public SamplingIntervalDiagnosticsDataType[] getSamplingIntervalDiagnosticsArray() {
         Optional<VariableNode> component = getVariableComponent("SamplingIntervalDiagnosticsArray");
 
-        return component.map(node -> (SamplingIntervalDiagnosticsDataType[]) node.getValue().getValue().getValue()).orElse(null);
+        return component
+            .map(node -> (SamplingIntervalDiagnosticsDataType[]) node.getValue().getValue().getValue())
+            .orElse(null);
     }
 
     @Override
@@ -121,7 +123,9 @@ public class ServerDiagnosticsNode extends BaseObjectNode implements ServerDiagn
     public SubscriptionDiagnosticsDataType[] getSubscriptionDiagnosticsArray() {
         Optional<VariableNode> component = getVariableComponent("SubscriptionDiagnosticsArray");
 
-        return component.map(node -> (SubscriptionDiagnosticsDataType[]) node.getValue().getValue().getValue()).orElse(null);
+        return component
+            .map(node -> (SubscriptionDiagnosticsDataType[]) node.getValue().getValue().getValue())
+            .orElse(null);
     }
 
     @Override

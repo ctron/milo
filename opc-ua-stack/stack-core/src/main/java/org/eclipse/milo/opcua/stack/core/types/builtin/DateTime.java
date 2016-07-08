@@ -82,10 +82,7 @@ public final class DateTime {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("utcTime", utcTime)
-            .add("javaDate", getJavaDate())
-            .toString();
+        return MoreObjects.toStringHelper(this).add("utcTime", utcTime).add("javaDate", getJavaDate()).toString();
     }
 
     /**

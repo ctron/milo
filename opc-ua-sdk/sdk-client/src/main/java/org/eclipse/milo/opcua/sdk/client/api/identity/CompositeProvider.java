@@ -68,9 +68,7 @@ public class CompositeProvider implements IdentityProvider {
 
     @Override
     public String toString() {
-        return "CompositeProvider{" +
-            "providers=" + providers +
-            '}';
+        return "CompositeProvider{" + "providers=" + providers + '}';
     }
 
 }

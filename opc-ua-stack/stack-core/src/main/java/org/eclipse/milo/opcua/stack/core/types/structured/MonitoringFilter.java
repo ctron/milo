@@ -28,23 +28,24 @@ public class MonitoringFilter implements UaStructure {
     public static final NodeId BinaryEncodingId = Identifiers.MonitoringFilter_Encoding_DefaultBinary;
     public static final NodeId XmlEncodingId = Identifiers.MonitoringFilter_Encoding_DefaultXml;
 
+    public MonitoringFilter() {}
 
-    public MonitoringFilter() {
+    @Override
+    public NodeId getTypeId() {
+        return TypeId;
     }
 
-
     @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
-
-    @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
-
-    public static void encode(MonitoringFilter monitoringFilter, UaEncoder encoder) {
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
     }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
+
+    public static void encode(MonitoringFilter monitoringFilter, UaEncoder encoder) {}
 
     public static MonitoringFilter decode(UaDecoder decoder) {
 
@@ -52,8 +53,10 @@ public class MonitoringFilter implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(MonitoringFilter::encode, MonitoringFilter.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(MonitoringFilter::decode, MonitoringFilter.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(MonitoringFilter::encode, MonitoringFilter.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(MonitoringFilter::decode, MonitoringFilter.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

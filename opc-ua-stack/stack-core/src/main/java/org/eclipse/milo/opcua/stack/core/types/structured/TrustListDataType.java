@@ -44,7 +44,11 @@ public class TrustListDataType implements UaStructure {
         this._issuerCrls = null;
     }
 
-    public TrustListDataType(UInteger _specifiedLists, ByteString[] _trustedCertificates, ByteString[] _trustedCrls, ByteString[] _issuerCertificates, ByteString[] _issuerCrls) {
+    public TrustListDataType(UInteger _specifiedLists,
+                             ByteString[] _trustedCertificates,
+                             ByteString[] _trustedCrls,
+                             ByteString[] _issuerCertificates,
+                             ByteString[] _issuerCrls) {
         this._specifiedLists = _specifiedLists;
         this._trustedCertificates = _trustedCertificates;
         this._trustedCrls = _trustedCrls;
@@ -52,25 +56,40 @@ public class TrustListDataType implements UaStructure {
         this._issuerCrls = _issuerCrls;
     }
 
-    public UInteger getSpecifiedLists() { return _specifiedLists; }
+    public UInteger getSpecifiedLists() {
+        return _specifiedLists;
+    }
 
-    public ByteString[] getTrustedCertificates() { return _trustedCertificates; }
+    public ByteString[] getTrustedCertificates() {
+        return _trustedCertificates;
+    }
 
-    public ByteString[] getTrustedCrls() { return _trustedCrls; }
+    public ByteString[] getTrustedCrls() {
+        return _trustedCrls;
+    }
 
-    public ByteString[] getIssuerCertificates() { return _issuerCertificates; }
+    public ByteString[] getIssuerCertificates() {
+        return _issuerCertificates;
+    }
 
-    public ByteString[] getIssuerCrls() { return _issuerCrls; }
+    public ByteString[] getIssuerCrls() {
+        return _issuerCrls;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(TrustListDataType trustListDataType, UaEncoder encoder) {
         encoder.encodeUInt32("SpecifiedLists", trustListDataType._specifiedLists);
@@ -82,17 +101,27 @@ public class TrustListDataType implements UaStructure {
 
     public static TrustListDataType decode(UaDecoder decoder) {
         UInteger _specifiedLists = decoder.decodeUInt32("SpecifiedLists");
-        ByteString[] _trustedCertificates = decoder.decodeArray("TrustedCertificates", decoder::decodeByteString, ByteString.class);
+        ByteString[] _trustedCertificates = decoder
+            .decodeArray("TrustedCertificates", decoder::decodeByteString, ByteString.class);
         ByteString[] _trustedCrls = decoder.decodeArray("TrustedCrls", decoder::decodeByteString, ByteString.class);
-        ByteString[] _issuerCertificates = decoder.decodeArray("IssuerCertificates", decoder::decodeByteString, ByteString.class);
+        ByteString[] _issuerCertificates = decoder
+            .decodeArray("IssuerCertificates", decoder::decodeByteString, ByteString.class);
         ByteString[] _issuerCrls = decoder.decodeArray("IssuerCrls", decoder::decodeByteString, ByteString.class);
 
-        return new TrustListDataType(_specifiedLists, _trustedCertificates, _trustedCrls, _issuerCertificates, _issuerCrls);
+        return new TrustListDataType(
+            _specifiedLists,
+            _trustedCertificates,
+            _trustedCrls,
+            _issuerCertificates,
+            _issuerCrls
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(TrustListDataType::encode, TrustListDataType.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(TrustListDataType::decode, TrustListDataType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(TrustListDataType::encode, TrustListDataType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(TrustListDataType::decode, TrustListDataType.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

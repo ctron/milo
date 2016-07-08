@@ -43,8 +43,10 @@ public abstract class IdentityValidator {
      * @return an identity Object that represents the user.
      * @throws UaException if the token is invalid, rejected, or user access is denied.
      */
-    public Object validateAnonymousToken(AnonymousIdentityToken token, UserTokenPolicy tokenPolicy,
-                                         SecureChannel channel, Session session) throws UaException {
+    public Object validateAnonymousToken(AnonymousIdentityToken token,
+                                         UserTokenPolicy tokenPolicy,
+                                         SecureChannel channel,
+                                         Session session) throws UaException {
         throw new UaException(StatusCodes.Bad_IdentityTokenInvalid);
     }
 
@@ -61,8 +63,10 @@ public abstract class IdentityValidator {
      * @return an identity Object that represents the user.
      * @throws UaException if the token is invalid, rejected, or user access is denied.
      */
-    public Object validateUsernameToken(UserNameIdentityToken token, UserTokenPolicy tokenPolicy,
-                                        SecureChannel channel, Session session) throws UaException {
+    public Object validateUsernameToken(UserNameIdentityToken token,
+                                        UserTokenPolicy tokenPolicy,
+                                        SecureChannel channel,
+                                        Session session) throws UaException {
         throw new UaException(StatusCodes.Bad_IdentityTokenInvalid);
     }
 
@@ -79,8 +83,10 @@ public abstract class IdentityValidator {
      * @return an identity Object that represents the user.
      * @throws UaException if the token is invalid, rejected, or user access is denied.
      */
-    public Object validateX509Token(X509IdentityToken token, UserTokenPolicy tokenPolicy,
-                                    SecureChannel channel, Session session) throws UaException {
+    public Object validateX509Token(X509IdentityToken token,
+                                    UserTokenPolicy tokenPolicy,
+                                    SecureChannel channel,
+                                    Session session) throws UaException {
         throw new UaException(StatusCodes.Bad_IdentityTokenInvalid);
     }
 
@@ -97,8 +103,10 @@ public abstract class IdentityValidator {
      * @return an identity Object that represents the user.
      * @throws UaException if the token is invalid, rejected, or user access is denied.
      */
-    public Object validateIssuedIdentityToken(IssuedIdentityToken token, UserTokenPolicy tokenPolicy,
-                                              SecureChannel channel, Session session) throws UaException {
+    public Object validateIssuedIdentityToken(IssuedIdentityToken token,
+                                              UserTokenPolicy tokenPolicy,
+                                              SecureChannel channel,
+                                              Session session) throws UaException {
         throw new UaException(StatusCodes.Bad_IdentityTokenInvalid);
     }
 

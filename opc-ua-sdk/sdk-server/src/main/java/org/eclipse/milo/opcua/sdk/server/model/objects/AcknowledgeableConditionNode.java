@@ -31,15 +31,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:AcknowledgeableConditionType")
 public class AcknowledgeableConditionNode extends ConditionNode implements AcknowledgeableConditionType {
 
-    public AcknowledgeableConditionNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public AcknowledgeableConditionNode(UaNodeManager nodeManager,
+                                        NodeId nodeId,
+                                        QualifiedName browseName,
+                                        LocalizedText displayName,
+                                        Optional<LocalizedText> description,
+                                        Optional<UInteger> writeMask,
+                                        Optional<UInteger> userWriteMask,
+                                        UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -60,8 +59,7 @@ public class AcknowledgeableConditionNode extends ConditionNode implements Ackno
 
     @Override
     public void setEnabledState(LocalizedText value) {
-        getVariableComponent("EnabledState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("EnabledState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -80,8 +78,7 @@ public class AcknowledgeableConditionNode extends ConditionNode implements Ackno
 
     @Override
     public void setAckedState(LocalizedText value) {
-        getVariableComponent("AckedState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("AckedState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -100,8 +97,7 @@ public class AcknowledgeableConditionNode extends ConditionNode implements Ackno
 
     @Override
     public void setConfirmedState(LocalizedText value) {
-        getVariableComponent("ConfirmedState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ConfirmedState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

@@ -41,7 +41,10 @@ public class AggregateFilter extends MonitoringFilter {
         this._aggregateConfiguration = null;
     }
 
-    public AggregateFilter(DateTime _startTime, NodeId _aggregateType, Double _processingInterval, AggregateConfiguration _aggregateConfiguration) {
+    public AggregateFilter(DateTime _startTime,
+                           NodeId _aggregateType,
+                           Double _processingInterval,
+                           AggregateConfiguration _aggregateConfiguration) {
         super();
         this._startTime = _startTime;
         this._aggregateType = _aggregateType;
@@ -49,43 +52,64 @@ public class AggregateFilter extends MonitoringFilter {
         this._aggregateConfiguration = _aggregateConfiguration;
     }
 
-    public DateTime getStartTime() { return _startTime; }
+    public DateTime getStartTime() {
+        return _startTime;
+    }
 
-    public NodeId getAggregateType() { return _aggregateType; }
+    public NodeId getAggregateType() {
+        return _aggregateType;
+    }
 
-    public Double getProcessingInterval() { return _processingInterval; }
+    public Double getProcessingInterval() {
+        return _processingInterval;
+    }
 
-    public AggregateConfiguration getAggregateConfiguration() { return _aggregateConfiguration; }
+    public AggregateConfiguration getAggregateConfiguration() {
+        return _aggregateConfiguration;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(AggregateFilter aggregateFilter, UaEncoder encoder) {
         encoder.encodeDateTime("StartTime", aggregateFilter._startTime);
         encoder.encodeNodeId("AggregateType", aggregateFilter._aggregateType);
         encoder.encodeDouble("ProcessingInterval", aggregateFilter._processingInterval);
-        encoder.encodeSerializable("AggregateConfiguration", aggregateFilter._aggregateConfiguration != null ? aggregateFilter._aggregateConfiguration : new AggregateConfiguration());
+        encoder.encodeSerializable(
+            "AggregateConfiguration",
+            aggregateFilter._aggregateConfiguration != null ?
+                aggregateFilter._aggregateConfiguration :
+                new AggregateConfiguration()
+        );
     }
 
     public static AggregateFilter decode(UaDecoder decoder) {
         DateTime _startTime = decoder.decodeDateTime("StartTime");
         NodeId _aggregateType = decoder.decodeNodeId("AggregateType");
         Double _processingInterval = decoder.decodeDouble("ProcessingInterval");
-        AggregateConfiguration _aggregateConfiguration = decoder.decodeSerializable("AggregateConfiguration", AggregateConfiguration.class);
+        AggregateConfiguration _aggregateConfiguration = decoder
+            .decodeSerializable("AggregateConfiguration", AggregateConfiguration.class);
 
         return new AggregateFilter(_startTime, _aggregateType, _processingInterval, _aggregateConfiguration);
     }
 
     static {
-        DelegateRegistry.registerEncoder(AggregateFilter::encode, AggregateFilter.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(AggregateFilter::decode, AggregateFilter.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(AggregateFilter::encode, AggregateFilter.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(AggregateFilter::decode, AggregateFilter.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

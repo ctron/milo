@@ -28,23 +28,24 @@ public class DiscoveryConfiguration implements UaStructure {
     public static final NodeId BinaryEncodingId = Identifiers.DiscoveryConfiguration_Encoding_DefaultBinary;
     public static final NodeId XmlEncodingId = Identifiers.DiscoveryConfiguration_Encoding_DefaultXml;
 
+    public DiscoveryConfiguration() {}
 
-    public DiscoveryConfiguration() {
+    @Override
+    public NodeId getTypeId() {
+        return TypeId;
     }
 
-
     @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
-
-    @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
-
-
-    public static void encode(DiscoveryConfiguration discoveryConfiguration, UaEncoder encoder) {
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
     }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
+
+    public static void encode(DiscoveryConfiguration discoveryConfiguration, UaEncoder encoder) {}
 
     public static DiscoveryConfiguration decode(UaDecoder decoder) {
 
@@ -52,8 +53,18 @@ public class DiscoveryConfiguration implements UaStructure {
     }
 
     static {
-        DelegateRegistry.registerEncoder(DiscoveryConfiguration::encode, DiscoveryConfiguration.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(DiscoveryConfiguration::decode, DiscoveryConfiguration.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            DiscoveryConfiguration::encode,
+            DiscoveryConfiguration.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            DiscoveryConfiguration::decode,
+            DiscoveryConfiguration.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

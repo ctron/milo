@@ -72,7 +72,8 @@ public class SequenceHeader {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects
+            .toStringHelper(this)
             .add("sequenceNumber", sequenceNumber)
             .add("requestId", requestId)
             .toString();
@@ -88,7 +89,7 @@ public class SequenceHeader {
     public static SequenceHeader decode(ByteBuf buffer) {
         return new SequenceHeader(
             buffer.readUnsignedInt(), /*    SequenceNumber  */
-            buffer.readUnsignedInt()  /*    RequestId       */
+            buffer.readUnsignedInt() /*    RequestId       */
         );
     }
 

@@ -41,36 +41,56 @@ public class SamplingIntervalDiagnosticsDataType implements UaStructure {
         this._disabledMonitoredItemCount = null;
     }
 
-    public SamplingIntervalDiagnosticsDataType(Double _samplingInterval, UInteger _monitoredItemCount, UInteger _maxMonitoredItemCount, UInteger _disabledMonitoredItemCount) {
+    public SamplingIntervalDiagnosticsDataType(Double _samplingInterval,
+                                               UInteger _monitoredItemCount,
+                                               UInteger _maxMonitoredItemCount,
+                                               UInteger _disabledMonitoredItemCount) {
         this._samplingInterval = _samplingInterval;
         this._monitoredItemCount = _monitoredItemCount;
         this._maxMonitoredItemCount = _maxMonitoredItemCount;
         this._disabledMonitoredItemCount = _disabledMonitoredItemCount;
     }
 
-    public Double getSamplingInterval() { return _samplingInterval; }
+    public Double getSamplingInterval() {
+        return _samplingInterval;
+    }
 
-    public UInteger getMonitoredItemCount() { return _monitoredItemCount; }
+    public UInteger getMonitoredItemCount() {
+        return _monitoredItemCount;
+    }
 
-    public UInteger getMaxMonitoredItemCount() { return _maxMonitoredItemCount; }
+    public UInteger getMaxMonitoredItemCount() {
+        return _maxMonitoredItemCount;
+    }
 
-    public UInteger getDisabledMonitoredItemCount() { return _disabledMonitoredItemCount; }
+    public UInteger getDisabledMonitoredItemCount() {
+        return _disabledMonitoredItemCount;
+    }
 
     @Override
-    public NodeId getTypeId() { return TypeId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
     @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
-
-    public static void encode(SamplingIntervalDiagnosticsDataType samplingIntervalDiagnosticsDataType, UaEncoder encoder) {
+    public static void encode(SamplingIntervalDiagnosticsDataType samplingIntervalDiagnosticsDataType,
+                              UaEncoder encoder) {
         encoder.encodeDouble("SamplingInterval", samplingIntervalDiagnosticsDataType._samplingInterval);
         encoder.encodeUInt32("MonitoredItemCount", samplingIntervalDiagnosticsDataType._monitoredItemCount);
         encoder.encodeUInt32("MaxMonitoredItemCount", samplingIntervalDiagnosticsDataType._maxMonitoredItemCount);
-        encoder.encodeUInt32("DisabledMonitoredItemCount", samplingIntervalDiagnosticsDataType._disabledMonitoredItemCount);
+        encoder.encodeUInt32(
+            "DisabledMonitoredItemCount",
+            samplingIntervalDiagnosticsDataType._disabledMonitoredItemCount
+        );
     }
 
     public static SamplingIntervalDiagnosticsDataType decode(UaDecoder decoder) {
@@ -79,12 +99,27 @@ public class SamplingIntervalDiagnosticsDataType implements UaStructure {
         UInteger _maxMonitoredItemCount = decoder.decodeUInt32("MaxMonitoredItemCount");
         UInteger _disabledMonitoredItemCount = decoder.decodeUInt32("DisabledMonitoredItemCount");
 
-        return new SamplingIntervalDiagnosticsDataType(_samplingInterval, _monitoredItemCount, _maxMonitoredItemCount, _disabledMonitoredItemCount);
+        return new SamplingIntervalDiagnosticsDataType(
+            _samplingInterval,
+            _monitoredItemCount,
+            _maxMonitoredItemCount,
+            _disabledMonitoredItemCount
+        );
     }
 
     static {
-        DelegateRegistry.registerEncoder(SamplingIntervalDiagnosticsDataType::encode, SamplingIntervalDiagnosticsDataType.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(SamplingIntervalDiagnosticsDataType::decode, SamplingIntervalDiagnosticsDataType.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry.registerEncoder(
+            SamplingIntervalDiagnosticsDataType::encode,
+            SamplingIntervalDiagnosticsDataType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
+        DelegateRegistry.registerDecoder(
+            SamplingIntervalDiagnosticsDataType::decode,
+            SamplingIntervalDiagnosticsDataType.class,
+            BinaryEncodingId,
+            XmlEncodingId
+        );
     }
 
 }

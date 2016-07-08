@@ -92,7 +92,10 @@ public class VendorNamespace implements Namespace {
     }
 
     @Override
-    public void read(ReadContext context, Double maxAge, TimestampsToReturn timestamps, List<ReadValueId> readValueIds) {
+    public void read(ReadContext context,
+                     Double maxAge,
+                     TimestampsToReturn timestamps,
+                     List<ReadValueId> readValueIds) {
         List<DataValue> results = Lists.newArrayListWithCapacity(readValueIds.size());
 
         for (ReadValueId id : readValueIds) {
@@ -110,13 +113,15 @@ public class VendorNamespace implements Namespace {
 
     @Override
     public void write(WriteContext context, List<WriteValue> writeValues) {
-        List<StatusCode> results = writeValues.stream().map(value -> {
-            if (nodeManager.containsKey(value.getNodeId())) {
-                return new StatusCode(StatusCodes.Bad_NotWritable);
-            } else {
-                return new StatusCode(StatusCodes.Bad_NodeIdUnknown);
+        List<StatusCode> results = writeValues.stream().map(
+            value -> {
+                if (nodeManager.containsKey(value.getNodeId())) {
+                    return new StatusCode(StatusCodes.Bad_NotWritable);
+                } else {
+                    return new StatusCode(StatusCodes.Bad_NodeIdUnknown);
+                }
             }
-        }).collect(toList());
+        ).collect(toList());
 
         context.complete(results);
     }
@@ -142,137 +147,147 @@ public class VendorNamespace implements Namespace {
     }
 
     private void addVendorServerInfoNodes() {
-        nodeManager.getNode(Identifiers.Server_VendorServerInfo).ifPresent(node -> {
-            UaObjectNode vendorServerInfo = (UaObjectNode) node;
+        nodeManager.getNode(Identifiers.Server_VendorServerInfo).ifPresent(
+            node -> {
+                UaObjectNode vendorServerInfo = (UaObjectNode) node;
 
-            OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-            MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
+                OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+                MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
 
-            UaVariableNode processCpuLoad = new UaVariableNode(
-                nodeManager,
-                new NodeId(1, "VendorServerInfo/ProcessCpuLoad"),
-                new QualifiedName(1, "ProcessCpuLoad"),
-                LocalizedText.english("ProcessCpuLoad")) {
-
-                @Override
-                public DataValue getValue() {
-                    return new DataValue(new Variant(osBean.getProcessCpuLoad() * 100d));
-                }
-            };
-            processCpuLoad.setDataType(Identifiers.Double);
-
-            UaVariableNode systemCpuLoad = new UaVariableNode(
-                nodeManager,
-                new NodeId(1, "VendorServerInfo/SystemCpuLoad"),
-                new QualifiedName(1, "SystemCpuLoad"),
-                LocalizedText.english("SystemCpuLoad")) {
-                @Override
-                public DataValue getValue() {
-                    return new DataValue(new Variant(osBean.getSystemCpuLoad() * 100d));
-                }
-            };
-            systemCpuLoad.setDataType(Identifiers.Double);
-
-            UaVariableNode usedMemory = new UaVariableNode(
-                nodeManager,
-                new NodeId(1, "VendorServerInfo/UsedMemory"),
-                new QualifiedName(1, "UsedMemory"),
-                LocalizedText.english("UsedMemory")) {
-                @Override
-                public DataValue getValue() {
-                    return new DataValue(new Variant(memoryBean.getHeapMemoryUsage().getUsed() / 1000));
-                }
-            };
-            usedMemory.setDataType(Identifiers.Int64);
-
-            UaVariableNode maxMemory = new UaVariableNode(
-                nodeManager,
-                new NodeId(1, "VendorServerInfo/MaxMemory"),
-                new QualifiedName(1, "MaxMemory"),
-                LocalizedText.english("MaxMemory")) {
-                @Override
-                public DataValue getValue() {
-                    return new DataValue(new Variant(memoryBean.getHeapMemoryUsage().getMax()));
-                }
-            };
-            maxMemory.setDataType(Identifiers.Int64);
-
-            UaVariableNode osName = new UaVariableNode(
-                nodeManager,
-                new NodeId(1, "VendorServerInfo/OsName"),
-                new QualifiedName(1, "OsName"),
-                LocalizedText.english("OsName")) {
-                @Override
-                public DataValue getValue() {
-                    return new DataValue(new Variant(osBean.getName()));
-                }
-            };
-            osName.setDataType(Identifiers.String);
-
-
-            UaVariableNode osArch = new UaVariableNode(
-                nodeManager,
-                new NodeId(1, "VendorServerInfo/OsArch"),
-                new QualifiedName(1, "OsArch"),
-                LocalizedText.english("OsArch")) {
-                @Override
-                public DataValue getValue() {
-                    return new DataValue(new Variant(osBean.getArch()));
-                }
-            };
-            osArch.setDataType(Identifiers.String);
-
-            UaVariableNode osVersion = new UaVariableNode(
-                nodeManager,
-                new NodeId(1, "VendorServerInfo/OsVersion"),
-                new QualifiedName(1, "OsVersion"),
-                LocalizedText.english("OsVersion")) {
-                @Override
-                public DataValue getValue() {
-                    return new DataValue(new Variant(osBean.getVersion()));
-                }
-            };
-            osVersion.setDataType(Identifiers.String);
-
-            vendorServerInfo.addComponent(processCpuLoad);
-            vendorServerInfo.addComponent(systemCpuLoad);
-            vendorServerInfo.addComponent(usedMemory);
-            vendorServerInfo.addComponent(maxMemory);
-            vendorServerInfo.addComponent(osName);
-            vendorServerInfo.addComponent(osArch);
-            vendorServerInfo.addComponent(osVersion);
-
-            if (osBean instanceof UnixOperatingSystemMXBean) {
-                UnixOperatingSystemMXBean unixBean = (UnixOperatingSystemMXBean) osBean;
-
-                UaVariableNode openFileDescriptors = new UaVariableNode(
+                UaVariableNode processCpuLoad = new UaVariableNode(
                     nodeManager,
-                    new NodeId(1, "VendorServerInfo/OpenFileDescriptors"),
-                    new QualifiedName(1, "OpenFileDescriptors"),
-                    LocalizedText.english("OpenFileDescriptors")) {
+                    new NodeId(1, "VendorServerInfo/ProcessCpuLoad"),
+                    new QualifiedName(1, "ProcessCpuLoad"),
+                    LocalizedText.english("ProcessCpuLoad")
+                ) {
+
                     @Override
                     public DataValue getValue() {
-                        return new DataValue(new Variant(unixBean.getOpenFileDescriptorCount()));
+                        return new DataValue(new Variant(osBean.getProcessCpuLoad() * 100d));
                     }
                 };
-                openFileDescriptors.setDataType(Identifiers.Int64);
+                processCpuLoad.setDataType(Identifiers.Double);
 
-                UaVariableNode maxFileDescriptors = new UaVariableNode(
+                UaVariableNode systemCpuLoad = new UaVariableNode(
                     nodeManager,
-                    new NodeId(1, "VendorServerInfo/MaxFileDescriptors"),
-                    new QualifiedName(1, "MaxFileDescriptors"),
-                    LocalizedText.english("MaxFileDescriptors")) {
+                    new NodeId(1, "VendorServerInfo/SystemCpuLoad"),
+                    new QualifiedName(1, "SystemCpuLoad"),
+                    LocalizedText.english("SystemCpuLoad")
+                ) {
                     @Override
                     public DataValue getValue() {
-                        return new DataValue(new Variant(unixBean.getMaxFileDescriptorCount()));
+                        return new DataValue(new Variant(osBean.getSystemCpuLoad() * 100d));
                     }
                 };
-                maxFileDescriptors.setDataType(Identifiers.Int64);
+                systemCpuLoad.setDataType(Identifiers.Double);
 
-                vendorServerInfo.addComponent(openFileDescriptors);
-                vendorServerInfo.addComponent(maxFileDescriptors);
+                UaVariableNode usedMemory = new UaVariableNode(
+                    nodeManager,
+                    new NodeId(1, "VendorServerInfo/UsedMemory"),
+                    new QualifiedName(1, "UsedMemory"),
+                    LocalizedText.english("UsedMemory")
+                ) {
+                    @Override
+                    public DataValue getValue() {
+                        return new DataValue(new Variant(memoryBean.getHeapMemoryUsage().getUsed() / 1000));
+                    }
+                };
+                usedMemory.setDataType(Identifiers.Int64);
+
+                UaVariableNode maxMemory = new UaVariableNode(
+                    nodeManager,
+                    new NodeId(1, "VendorServerInfo/MaxMemory"),
+                    new QualifiedName(1, "MaxMemory"),
+                    LocalizedText.english("MaxMemory")
+                ) {
+                    @Override
+                    public DataValue getValue() {
+                        return new DataValue(new Variant(memoryBean.getHeapMemoryUsage().getMax()));
+                    }
+                };
+                maxMemory.setDataType(Identifiers.Int64);
+
+                UaVariableNode osName = new UaVariableNode(
+                    nodeManager,
+                    new NodeId(1, "VendorServerInfo/OsName"),
+                    new QualifiedName(1, "OsName"),
+                    LocalizedText.english("OsName")
+                ) {
+                    @Override
+                    public DataValue getValue() {
+                        return new DataValue(new Variant(osBean.getName()));
+                    }
+                };
+                osName.setDataType(Identifiers.String);
+
+                UaVariableNode osArch = new UaVariableNode(
+                    nodeManager,
+                    new NodeId(1, "VendorServerInfo/OsArch"),
+                    new QualifiedName(1, "OsArch"),
+                    LocalizedText.english("OsArch")
+                ) {
+                    @Override
+                    public DataValue getValue() {
+                        return new DataValue(new Variant(osBean.getArch()));
+                    }
+                };
+                osArch.setDataType(Identifiers.String);
+
+                UaVariableNode osVersion = new UaVariableNode(
+                    nodeManager,
+                    new NodeId(1, "VendorServerInfo/OsVersion"),
+                    new QualifiedName(1, "OsVersion"),
+                    LocalizedText.english("OsVersion")
+                ) {
+                    @Override
+                    public DataValue getValue() {
+                        return new DataValue(new Variant(osBean.getVersion()));
+                    }
+                };
+                osVersion.setDataType(Identifiers.String);
+
+                vendorServerInfo.addComponent(processCpuLoad);
+                vendorServerInfo.addComponent(systemCpuLoad);
+                vendorServerInfo.addComponent(usedMemory);
+                vendorServerInfo.addComponent(maxMemory);
+                vendorServerInfo.addComponent(osName);
+                vendorServerInfo.addComponent(osArch);
+                vendorServerInfo.addComponent(osVersion);
+
+                if (osBean instanceof UnixOperatingSystemMXBean) {
+                    UnixOperatingSystemMXBean unixBean = (UnixOperatingSystemMXBean) osBean;
+
+                    UaVariableNode openFileDescriptors = new UaVariableNode(
+                        nodeManager,
+                        new NodeId(1, "VendorServerInfo/OpenFileDescriptors"),
+                        new QualifiedName(1, "OpenFileDescriptors"),
+                        LocalizedText.english("OpenFileDescriptors")
+                    ) {
+                        @Override
+                        public DataValue getValue() {
+                            return new DataValue(new Variant(unixBean.getOpenFileDescriptorCount()));
+                        }
+                    };
+                    openFileDescriptors.setDataType(Identifiers.Int64);
+
+                    UaVariableNode maxFileDescriptors = new UaVariableNode(
+                        nodeManager,
+                        new NodeId(1, "VendorServerInfo/MaxFileDescriptors"),
+                        new QualifiedName(1, "MaxFileDescriptors"),
+                        LocalizedText.english("MaxFileDescriptors")
+                    ) {
+                        @Override
+                        public DataValue getValue() {
+                            return new DataValue(new Variant(unixBean.getMaxFileDescriptorCount()));
+                        }
+                    };
+                    maxFileDescriptors.setDataType(Identifiers.Int64);
+
+                    vendorServerInfo.addComponent(openFileDescriptors);
+                    vendorServerInfo.addComponent(maxFileDescriptors);
+                }
             }
-        });
+        );
     }
 
 }

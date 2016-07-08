@@ -60,7 +60,17 @@ public class MonitoredDataItem extends BaseMonitoredItem<DataValue> implements D
                              UInteger queueSize,
                              boolean discardOldest) throws UaException {
 
-        super(id, subscriptionId, readValueId, monitoringMode, timestamps, clientHandle, samplingInterval, queueSize, discardOldest);
+        super(
+            id,
+            subscriptionId,
+            readValueId,
+            monitoringMode,
+            timestamps,
+            clientHandle,
+            samplingInterval,
+            queueSize,
+            discardOldest
+        );
 
         installFilter(filter);
     }
@@ -106,11 +116,7 @@ public class MonitoredDataItem extends BaseMonitoredItem<DataValue> implements D
         if (lastValue == null) {
             setValue(new DataValue(Variant.NULL_VALUE, quality, DateTime.now(), DateTime.now()));
         } else {
-            DataValue value = new DataValue(
-                lastValue.getValue(),
-                quality,
-                DateTime.now(),
-                DateTime.now());
+            DataValue value = new DataValue(lastValue.getValue(), quality, DateTime.now(), DateTime.now());
 
             setValue(value);
         }

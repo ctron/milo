@@ -30,15 +30,14 @@ import org.eclipse.milo.opcua.stack.core.types.structured.SemanticChangeStructur
 @UaObjectNode(typeName = "0:SemanticChangeEventType")
 public class SemanticChangeEventNode extends BaseModelChangeEventNode implements SemanticChangeEventType {
 
-    public SemanticChangeEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public SemanticChangeEventNode(UaNodeManager nodeManager,
+                                   NodeId nodeId,
+                                   QualifiedName browseName,
+                                   LocalizedText displayName,
+                                   Optional<LocalizedText> description,
+                                   Optional<UInteger> writeMask,
+                                   Optional<UInteger> userWriteMask,
+                                   UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }

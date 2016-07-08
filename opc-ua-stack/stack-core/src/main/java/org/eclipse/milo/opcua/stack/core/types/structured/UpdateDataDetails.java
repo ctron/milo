@@ -44,19 +44,28 @@ public class UpdateDataDetails extends HistoryUpdateDetails {
         this._updateValues = _updateValues;
     }
 
-    public PerformUpdateType getPerformInsertReplace() { return _performInsertReplace; }
+    public PerformUpdateType getPerformInsertReplace() {
+        return _performInsertReplace;
+    }
 
-    public DataValue[] getUpdateValues() { return _updateValues; }
-
-    @Override
-    public NodeId getTypeId() { return TypeId; }
-
-    @Override
-    public NodeId getBinaryEncodingId() { return BinaryEncodingId; }
+    public DataValue[] getUpdateValues() {
+        return _updateValues;
+    }
 
     @Override
-    public NodeId getXmlEncodingId() { return XmlEncodingId; }
+    public NodeId getTypeId() {
+        return TypeId;
+    }
 
+    @Override
+    public NodeId getBinaryEncodingId() {
+        return BinaryEncodingId;
+    }
+
+    @Override
+    public NodeId getXmlEncodingId() {
+        return XmlEncodingId;
+    }
 
     public static void encode(UpdateDataDetails updateDataDetails, UaEncoder encoder) {
         encoder.encodeNodeId("NodeId", updateDataDetails._nodeId);
@@ -66,15 +75,18 @@ public class UpdateDataDetails extends HistoryUpdateDetails {
 
     public static UpdateDataDetails decode(UaDecoder decoder) {
         NodeId _nodeId = decoder.decodeNodeId("NodeId");
-        PerformUpdateType _performInsertReplace = decoder.decodeEnumeration("PerformInsertReplace", PerformUpdateType.class);
+        PerformUpdateType _performInsertReplace = decoder
+            .decodeEnumeration("PerformInsertReplace", PerformUpdateType.class);
         DataValue[] _updateValues = decoder.decodeArray("UpdateValues", decoder::decodeDataValue, DataValue.class);
 
         return new UpdateDataDetails(_nodeId, _performInsertReplace, _updateValues);
     }
 
     static {
-        DelegateRegistry.registerEncoder(UpdateDataDetails::encode, UpdateDataDetails.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(UpdateDataDetails::decode, UpdateDataDetails.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(UpdateDataDetails::encode, UpdateDataDetails.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(UpdateDataDetails::decode, UpdateDataDetails.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

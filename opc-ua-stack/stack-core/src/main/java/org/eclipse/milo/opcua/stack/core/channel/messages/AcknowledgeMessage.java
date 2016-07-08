@@ -56,11 +56,10 @@ public class AcknowledgeMessage {
                               @UInt32Primitive long maxMessageSize,
                               @UInt32Primitive long maxChunkCount) {
 
-        Preconditions.checkArgument(receiveBufferSize >= 8192,
-            "receiverBufferSize must be greater than or equal to 8192");
+        Preconditions
+            .checkArgument(receiveBufferSize >= 8192, "receiverBufferSize must be greater than or equal to 8192");
 
-        Preconditions.checkArgument(sendBufferSize >= 8192,
-            "sendBufferSize must be greater than or equal to 8192");
+        Preconditions.checkArgument(sendBufferSize >= 8192, "sendBufferSize must be greater than or equal to 8192");
 
         this.protocolVersion = protocolVersion;
         this.receiveBufferSize = receiveBufferSize;
@@ -120,7 +119,8 @@ public class AcknowledgeMessage {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects
+            .toStringHelper(this)
             .add("protocolVersion", protocolVersion)
             .add("receiverBufferSize", receiveBufferSize)
             .add("sendBufferSize", sendBufferSize)
@@ -143,7 +143,7 @@ public class AcknowledgeMessage {
             buffer.readUnsignedInt(), /*    ReceiveBufferSize   */
             buffer.readUnsignedInt(), /*    SendBufferSize      */
             buffer.readUnsignedInt(), /*    MaxMessageSize      */
-            buffer.readUnsignedInt()  /*    MaxChunkCount       */
+            buffer.readUnsignedInt() /*    MaxChunkCount       */
         );
     }
 

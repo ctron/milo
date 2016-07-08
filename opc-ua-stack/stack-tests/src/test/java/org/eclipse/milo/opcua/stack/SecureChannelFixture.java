@@ -30,7 +30,8 @@ import static org.eclipse.milo.opcua.stack.core.util.NonceUtil.getNonceLength;
 
 public abstract class SecureChannelFixture extends SecurityFixture {
 
-    protected SecureChannel[] generateChannels(SecurityPolicy securityPolicy, MessageSecurityMode messageSecurity) throws Exception {
+    protected SecureChannel[] generateChannels(SecurityPolicy securityPolicy,
+                                               MessageSecurityMode messageSecurity) throws Exception {
         super.setUp();
 
         ByteString clientNonce = generateNonce(getNonceLength(securityPolicy.getSymmetricEncryptionAlgorithm()));
@@ -55,48 +56,52 @@ public abstract class SecureChannelFixture extends SecurityFixture {
         serverChannel.setRemoteNonce(clientNonce);
 
         switch (securityPolicy) {
-            case None:
-                break;
+        case None:
+            break;
 
-            case Basic128Rsa15:
-            case Basic256:
-            case Basic256Sha256:
-            default:
-                if (messageSecurity != MessageSecurityMode.None) {
-                    ChannelSecurity.SecuritySecrets clientSecrets = ChannelSecurity.generateKeyPair(
-                        clientChannel,
-                        clientChannel.getLocalNonce(),
-                        clientChannel.getRemoteNonce()
-                    );
+        case Basic128Rsa15:
+        case Basic256:
+        case Basic256Sha256:
+        default:
+            if (messageSecurity != MessageSecurityMode.None) {
+                ChannelSecurity.SecuritySecrets clientSecrets = ChannelSecurity
+                    .generateKeyPair(clientChannel, clientChannel.getLocalNonce(), clientChannel.getRemoteNonce());
 
-                    ChannelSecurityToken clientToken = new ChannelSecurityToken(
-                        uint(0), uint(1), DateTime.now(), uint(60000));
+                ChannelSecurityToken clientToken = new ChannelSecurityToken(
+                    uint(0),
+                    uint(1),
+                    DateTime.now(),
+                    uint(60000)
+                );
 
-                    clientChannel.setChannelSecurity(new ChannelSecurity(clientSecrets, clientToken));
-                }
+                clientChannel.setChannelSecurity(new ChannelSecurity(clientSecrets, clientToken));
+            }
 
+            serverChannel.setKeyPair(serverKeyPair);
+            serverChannel.setLocalCertificate(serverCertificate);
+            serverChannel.setRemoteCertificate(clientCertificateBytes);
 
-                serverChannel.setKeyPair(serverKeyPair);
-                serverChannel.setLocalCertificate(serverCertificate);
-                serverChannel.setRemoteCertificate(clientCertificateBytes);
+            if (messageSecurity != MessageSecurityMode.None) {
+                ChannelSecurity.SecuritySecrets serverSecrets = ChannelSecurity
+                    .generateKeyPair(serverChannel, serverChannel.getRemoteNonce(), serverChannel.getLocalNonce());
 
-                if (messageSecurity != MessageSecurityMode.None) {
-                    ChannelSecurity.SecuritySecrets serverSecrets = ChannelSecurity.generateKeyPair(
-                        serverChannel,
-                        serverChannel.getRemoteNonce(),
-                        serverChannel.getLocalNonce()
-                    );
+                ChannelSecurityToken serverToken = new ChannelSecurityToken(
+                    uint(0),
+                    uint(1),
+                    DateTime.now(),
+                    uint(60000)
+                );
 
-                    ChannelSecurityToken serverToken = new ChannelSecurityToken(
-                        uint(0), uint(1), DateTime.now(), uint(60000));
+                serverChannel.setChannelSecurity(new ChannelSecurity(serverSecrets, serverToken));
+            }
 
-                    serverChannel.setChannelSecurity(new ChannelSecurity(serverSecrets, serverToken));
-                }
-
-                break;
+            break;
         }
 
-        return new SecureChannel[]{clientChannel, serverChannel};
+        return new SecureChannel[]{
+            clientChannel,
+            serverChannel
+        };
     }
 
 }

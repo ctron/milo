@@ -31,15 +31,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:NonExclusiveLimitAlarmType")
 public class NonExclusiveLimitAlarmNode extends LimitAlarmNode implements NonExclusiveLimitAlarmType {
 
-    public NonExclusiveLimitAlarmNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public NonExclusiveLimitAlarmNode(UaNodeManager nodeManager,
+                                      NodeId nodeId,
+                                      QualifiedName browseName,
+                                      LocalizedText displayName,
+                                      Optional<LocalizedText> description,
+                                      Optional<UInteger> writeMask,
+                                      Optional<UInteger> userWriteMask,
+                                      UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -60,8 +59,7 @@ public class NonExclusiveLimitAlarmNode extends LimitAlarmNode implements NonExc
 
     @Override
     public void setActiveState(LocalizedText value) {
-        getVariableComponent("ActiveState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("ActiveState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -80,8 +78,7 @@ public class NonExclusiveLimitAlarmNode extends LimitAlarmNode implements NonExc
 
     @Override
     public void setHighHighState(LocalizedText value) {
-        getVariableComponent("HighHighState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("HighHighState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -100,8 +97,7 @@ public class NonExclusiveLimitAlarmNode extends LimitAlarmNode implements NonExc
 
     @Override
     public void setHighState(LocalizedText value) {
-        getVariableComponent("HighState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("HighState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -120,8 +116,7 @@ public class NonExclusiveLimitAlarmNode extends LimitAlarmNode implements NonExc
 
     @Override
     public void setLowState(LocalizedText value) {
-        getVariableComponent("LowState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("LowState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
     @Override
@@ -140,8 +135,7 @@ public class NonExclusiveLimitAlarmNode extends LimitAlarmNode implements NonExc
 
     @Override
     public void setLowLowState(LocalizedText value) {
-        getVariableComponent("LowLowState")
-            .ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
+        getVariableComponent("LowLowState").ifPresent(n -> n.setValue(new DataValue(new Variant(value))));
     }
 
 }

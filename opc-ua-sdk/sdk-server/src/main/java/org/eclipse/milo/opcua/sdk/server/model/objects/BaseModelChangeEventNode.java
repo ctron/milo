@@ -27,15 +27,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 @UaObjectNode(typeName = "0:BaseModelChangeEventType")
 public class BaseModelChangeEventNode extends BaseEventNode implements BaseModelChangeEventType {
 
-    public BaseModelChangeEventNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public BaseModelChangeEventNode(UaNodeManager nodeManager,
+                                    NodeId nodeId,
+                                    QualifiedName browseName,
+                                    LocalizedText displayName,
+                                    Optional<LocalizedText> description,
+                                    Optional<UInteger> writeMask,
+                                    Optional<UInteger> userWriteMask,
+                                    UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }

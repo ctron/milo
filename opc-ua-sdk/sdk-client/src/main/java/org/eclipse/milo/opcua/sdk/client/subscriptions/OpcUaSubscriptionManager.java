@@ -84,15 +84,17 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
         deliveryQueue = new ExecutionQueue(client.getConfig().getExecutor());
         processingQueue = new ExecutionQueue(client.getConfig().getExecutor());
 
-        client.addSessionActivityListener(new SessionActivityListener() {
-            @Override
-            public void onSessionInactive(UaSession session) {
-                // This allows a session that gets re-activated to immediately start
-                // publishing again instead of waiting for outstanding PublishRequests
-                // from before the re-activation to expire/timeout.
-                pendingCountMap.replace(session.getSessionId(), new AtomicLong(0));
+        client.addSessionActivityListener(
+            new SessionActivityListener() {
+                @Override
+                public void onSessionInactive(UaSession session) {
+                    // This allows a session that gets re-activated to immediately start
+                    // publishing again instead of waiting for outstanding PublishRequests
+                    // from before the re-activation to expire/timeout.
+                    pendingCountMap.replace(session.getSessionId(), new AtomicLong(0));
+                }
             }
-        });
+        );
     }
 
     @Override
@@ -108,49 +110,53 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
             maxLifetimeCount,
             maxKeepAliveCount,
             DEFAULT_MAX_NOTIFICATIONS_PER_PUBLISH,
-            true, ubyte(0)
+            true,
+            ubyte(0)
         );
     }
 
     @Override
-    public CompletableFuture<UaSubscription> createSubscription(
-        double requestedPublishingInterval,
-        UInteger requestedLifetimeCount,
-        UInteger requestedMaxKeepAliveCount,
-        UInteger maxNotificationsPerPublish,
-        boolean publishingEnabled,
-        UByte priority) {
+    public CompletableFuture<UaSubscription> createSubscription(double requestedPublishingInterval,
+                                                                UInteger requestedLifetimeCount,
+                                                                UInteger requestedMaxKeepAliveCount,
+                                                                UInteger maxNotificationsPerPublish,
+                                                                boolean publishingEnabled,
+                                                                UByte priority) {
 
         CompletableFuture<CreateSubscriptionResponse> future = client.createSubscription(
             requestedPublishingInterval,
             requestedLifetimeCount,
             requestedMaxKeepAliveCount,
             maxNotificationsPerPublish,
-            publishingEnabled, priority
+            publishingEnabled,
+            priority
         );
 
-        return future.thenApply(response -> {
-            OpcUaSubscription subscription = new OpcUaSubscription(
-                client,
-                response.getSubscriptionId(),
-                response.getRevisedPublishingInterval(),
-                response.getRevisedLifetimeCount(),
-                response.getRevisedMaxKeepAliveCount(),
-                maxNotificationsPerPublish,
-                publishingEnabled, priority);
+        return future.thenApply(
+            response -> {
+                OpcUaSubscription subscription = new OpcUaSubscription(
+                    client,
+                    response.getSubscriptionId(),
+                    response.getRevisedPublishingInterval(),
+                    response.getRevisedLifetimeCount(),
+                    response.getRevisedMaxKeepAliveCount(),
+                    maxNotificationsPerPublish,
+                    publishingEnabled,
+                    priority
+                );
 
-            subscriptions.put(subscription.getSubscriptionId(), subscription);
+                subscriptions.put(subscription.getSubscriptionId(), subscription);
 
-            maybeSendPublishRequests();
+                maybeSendPublishRequests();
 
-            return subscription;
-        });
+                return subscription;
+            }
+        );
     }
 
     @Override
-    public CompletableFuture<UaSubscription> modifySubscription(
-        UInteger subscriptionId,
-        double requestedPublishingInterval) {
+    public CompletableFuture<UaSubscription> modifySubscription(UInteger subscriptionId,
+                                                                double requestedPublishingInterval) {
 
         OpcUaSubscription subscription = subscriptions.get(subscriptionId);
 
@@ -181,13 +187,12 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
     }
 
     @Override
-    public CompletableFuture<UaSubscription> modifySubscription(
-        UInteger subscriptionId,
-        double requestedPublishingInterval,
-        UInteger requestedLifetimeCount,
-        UInteger requestedMaxKeepAliveCount,
-        UInteger maxNotificationsPerPublish,
-        UByte priority) {
+    public CompletableFuture<UaSubscription> modifySubscription(UInteger subscriptionId,
+                                                                double requestedPublishingInterval,
+                                                                UInteger requestedLifetimeCount,
+                                                                UInteger requestedMaxKeepAliveCount,
+                                                                UInteger maxNotificationsPerPublish,
+                                                                UByte priority) {
 
         OpcUaSubscription subscription = subscriptions.get(subscriptionId);
 
@@ -206,30 +211,34 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
             priority
         );
 
-        return future.thenApply(response -> {
-            subscription.setRevisedPublishingInterval(response.getRevisedPublishingInterval());
-            subscription.setRevisedLifetimeCount(response.getRevisedLifetimeCount());
-            subscription.setRevisedMaxKeepAliveCount(response.getRevisedMaxKeepAliveCount());
-            subscription.setMaxNotificationsPerPublish(maxNotificationsPerPublish);
-            subscription.setPriority(priority);
+        return future.thenApply(
+            response -> {
+                subscription.setRevisedPublishingInterval(response.getRevisedPublishingInterval());
+                subscription.setRevisedLifetimeCount(response.getRevisedLifetimeCount());
+                subscription.setRevisedMaxKeepAliveCount(response.getRevisedMaxKeepAliveCount());
+                subscription.setMaxNotificationsPerPublish(maxNotificationsPerPublish);
+                subscription.setPriority(priority);
 
-            maybeSendPublishRequests();
+                maybeSendPublishRequests();
 
-            return subscription;
-        });
+                return subscription;
+            }
+        );
     }
 
     @Override
     public CompletableFuture<UaSubscription> deleteSubscription(UInteger subscriptionId) {
         List<UInteger> subscriptionIds = newArrayList(subscriptionId);
 
-        return client.deleteSubscriptions(subscriptionIds).thenApply(r -> {
-            OpcUaSubscription subscription = subscriptions.remove(subscriptionId);
+        return client.deleteSubscriptions(subscriptionIds).thenApply(
+            r -> {
+                OpcUaSubscription subscription = subscriptions.remove(subscriptionId);
 
-            maybeSendPublishRequests();
+                maybeSendPublishRequests();
 
-            return subscription;
-        });
+                return subscription;
+            }
+        );
     }
 
     public void transferFailed(UInteger subscriptionId, StatusCode statusCode) {
@@ -262,7 +271,9 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
     }
 
     private UInteger getTimeoutHint() {
-        double minKeepAlive = subscriptions.values().stream()
+        double minKeepAlive = subscriptions
+            .values()
+            .stream()
             .map(s -> s.getRevisedPublishingInterval() * s.getRevisedMaxKeepAliveCount().doubleValue())
             .min(Comparator.<Double>naturalOrder())
             .orElse(client.getConfig().getRequestTimeout().doubleValue());
@@ -277,32 +288,33 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
 
         if (maxPendingPublishes == 0) return;
 
-        client.getSession().thenAccept(session -> {
-            AtomicLong pendingCount = pendingCountMap.computeIfAbsent(
-                session.getSessionId(), id -> new AtomicLong(0L));
+        client.getSession().thenAccept(
+            session -> {
+                AtomicLong pendingCount = pendingCountMap
+                    .computeIfAbsent(session.getSessionId(), id -> new AtomicLong(0L));
 
-            for (long i = pendingCount.get(); i < maxPendingPublishes; i++) {
-                if (pendingCount.incrementAndGet() <= maxPendingPublishes) {
-                    sendPublishRequest(session, pendingCount);
-                } else {
-                    pendingCount.getAndUpdate(p -> (p > 0) ? p - 1 : 0);
+                for (long i = pendingCount.get(); i < maxPendingPublishes; i++) {
+                    if (pendingCount.incrementAndGet() <= maxPendingPublishes) {
+                        sendPublishRequest(session, pendingCount);
+                    } else {
+                        pendingCount.getAndUpdate(p -> (p > 0) ? p - 1 : 0);
+                    }
+                }
+
+                if (pendingCountMap.size() > 1) {
+                    // Prune any old sessions...
+                    pendingCountMap.entrySet().removeIf(e -> !e.getKey().equals(session.getSessionId()));
                 }
             }
-
-            if (pendingCountMap.size() > 1) {
-                // Prune any old sessions...
-                pendingCountMap.entrySet().removeIf(e ->
-                    !e.getKey().equals(session.getSessionId()));
-            }
-        });
+        );
     }
 
     private void sendPublishRequest(UaSession session, AtomicLong pendingCount) {
         SubscriptionAcknowledgement[] subscriptionAcknowledgements;
 
         synchronized (acknowledgements) {
-            subscriptionAcknowledgements = acknowledgements.toArray(
-                new SubscriptionAcknowledgement[acknowledgements.size()]);
+            subscriptionAcknowledgements = acknowledgements
+                .toArray(new SubscriptionAcknowledgement[acknowledgements.size()]);
 
             acknowledgements.clear();
         }
@@ -319,52 +331,57 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
             null
         );
 
-        PublishRequest request = new PublishRequest(
-            requestHeader,
-            subscriptionAcknowledgements
-        );
+        PublishRequest request = new PublishRequest(requestHeader, subscriptionAcknowledgements);
 
         if (logger.isDebugEnabled()) {
-            String[] ackStrings = Arrays.stream(subscriptionAcknowledgements)
-                .map(ack -> String.format("id=%s/seq=%s",
-                    ack.getSubscriptionId(), ack.getSequenceNumber()))
+            String[] ackStrings = Arrays
+                .stream(subscriptionAcknowledgements)
+                .map(ack -> String.format("id=%s/seq=%s", ack.getSubscriptionId(), ack.getSequenceNumber()))
                 .toArray(String[]::new);
 
             logger.debug(
                 "Sending PublishRequest, requestHandle={}, acknowledgements={}",
-                requestHandle, Arrays.toString(ackStrings));
+                requestHandle,
+                Arrays.toString(ackStrings)
+            );
         }
 
-        client.<PublishResponse>sendRequest(request).whenCompleteAsync((response, ex) -> {
+        client.<PublishResponse>sendRequest(request).whenCompleteAsync(
+            (response, ex) -> {
 
-            pendingCount.getAndUpdate(p -> (p > 0) ? p - 1 : 0);
+                pendingCount.getAndUpdate(p -> (p > 0) ? p - 1 : 0);
 
-            if (response != null) {
-                logger.debug("Received PublishResponse, sequenceNumber={}",
-                    response.getNotificationMessage().getSequenceNumber());
+                if (response != null) {
+                    logger.debug(
+                        "Received PublishResponse, sequenceNumber={}",
+                        response.getNotificationMessage().getSequenceNumber()
+                    );
 
-                processingQueue.submit(() -> onPublishComplete(response));
+                    processingQueue.submit(() -> onPublishComplete(response));
 
-                maybeSendPublishRequests();
-            } else {
-                StatusCode statusCode = UaException.extract(ex)
-                    .map(UaException::getStatusCode)
-                    .orElse(StatusCode.BAD);
-
-                logger.debug("Publish service failure: {}", statusCode, ex);
-
-                if (statusCode.getValue() != StatusCodes.Bad_TooManyPublishRequests) {
                     maybeSendPublishRequests();
-                }
+                } else {
+                    StatusCode statusCode = UaException
+                        .extract(ex)
+                        .map(UaException::getStatusCode)
+                        .orElse(StatusCode.BAD);
 
-                synchronized (this.acknowledgements) {
-                    Collections.addAll(this.acknowledgements, subscriptionAcknowledgements);
-                }
+                    logger.debug("Publish service failure: {}", statusCode, ex);
 
-                UaException uax = UaException.extract(ex).orElse(new UaException(ex));
-                subscriptionListeners.forEach(l -> l.onPublishFailure(uax));
-            }
-        }, client.getConfig().getExecutor());
+                    if (statusCode.getValue() != StatusCodes.Bad_TooManyPublishRequests) {
+                        maybeSendPublishRequests();
+                    }
+
+                    synchronized (this.acknowledgements) {
+                        Collections.addAll(this.acknowledgements, subscriptionAcknowledgements);
+                    }
+
+                    UaException uax = UaException.extract(ex).orElse(new UaException(ex));
+                    subscriptionListeners.forEach(l -> l.onPublishFailure(uax));
+                }
+            },
+            client.getConfig().getExecutor()
+        );
     }
 
     private void onPublishComplete(PublishResponse response) {
@@ -381,27 +398,33 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
         long expectedSequenceNumber = subscription.getLastSequenceNumber() + 1;
 
         if (sequenceNumber > expectedSequenceNumber) {
-            logger.warn("[id={}] expected sequence={}, received sequence={}. Calling Republish service...",
-                subscriptionId, expectedSequenceNumber, sequenceNumber);
+            logger.warn(
+                "[id={}] expected sequence={}, received sequence={}. Calling Republish service...",
+                subscriptionId,
+                expectedSequenceNumber,
+                sequenceNumber
+            );
 
             processingQueue.pause();
             processingQueue.submitToHead(() -> onPublishComplete(response));
 
-            republish(subscriptionId, expectedSequenceNumber, sequenceNumber).whenComplete((dataLost, ex) -> {
-                if (ex != null) {
-                    logger.debug("Republish failed: {}", ex.getMessage(), ex);
+            republish(subscriptionId, expectedSequenceNumber, sequenceNumber).whenComplete(
+                (dataLost, ex) -> {
+                    if (ex != null) {
+                        logger.debug("Republish failed: {}", ex.getMessage(), ex);
 
-                    subscriptionListeners.forEach(l -> l.onNotificationDataLost(subscription));
-                } else {
-                    // Republish succeeded, possibly with some data loss, resume processing.
-                    if (dataLost) {
                         subscriptionListeners.forEach(l -> l.onNotificationDataLost(subscription));
+                    } else {
+                        // Republish succeeded, possibly with some data loss, resume processing.
+                        if (dataLost) {
+                            subscriptionListeners.forEach(l -> l.onNotificationDataLost(subscription));
+                        }
                     }
-                }
 
-                subscription.setLastSequenceNumber(sequenceNumber - 1);
-                processingQueue.resume();
-            });
+                    subscription.setLastSequenceNumber(sequenceNumber - 1);
+                    processingQueue.resume();
+                }
+            );
 
             return;
         }
@@ -414,13 +437,17 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
             }
 
             if (logger.isDebugEnabled()) {
-                String[] seqStrings = Arrays.stream(response.getAvailableSequenceNumbers())
+                String[] seqStrings = Arrays
+                    .stream(response.getAvailableSequenceNumbers())
                     .map(sequence -> String.format("id=%s/seq=%s", subscriptionId, sequence))
                     .toArray(String[]::new);
 
                 logger.debug(
                     "[id={}] PublishResponse sequence={}, available sequences={}",
-                    subscriptionId, sequenceNumber, Arrays.toString(seqStrings));
+                    subscriptionId,
+                    sequenceNumber,
+                    Arrays.toString(seqStrings)
+                );
             }
         }
 
@@ -444,27 +471,30 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
         if (fromSequence == toSequence) {
             future.complete(dataLost);
         } else {
-            client.republish(subscriptionId, uint(fromSequence)).whenComplete((response, ex) -> {
-                if (response != null) {
-                    try {
-                        onRepublishComplete(subscriptionId, response, uint(fromSequence));
+            client.republish(subscriptionId, uint(fromSequence)).whenComplete(
+                (response, ex) -> {
+                    if (response != null) {
+                        try {
+                            onRepublishComplete(subscriptionId, response, uint(fromSequence));
 
-                        republish(subscriptionId, fromSequence + 1, toSequence, dataLost, future);
-                    } catch (UaException e) {
-                        republish(subscriptionId, fromSequence + 1, toSequence, true, future);
-                    }
-                } else {
-                    StatusCode statusCode = UaException.extract(ex)
-                        .map(UaException::getStatusCode)
-                        .orElse(StatusCode.BAD);
-
-                    if (statusCode.getValue() == StatusCodes.Bad_MessageNotAvailable) {
-                        republish(subscriptionId, fromSequence + 1, toSequence, true, future);
+                            republish(subscriptionId, fromSequence + 1, toSequence, dataLost, future);
+                        } catch (UaException e) {
+                            republish(subscriptionId, fromSequence + 1, toSequence, true, future);
+                        }
                     } else {
-                        future.completeExceptionally(ex);
+                        StatusCode statusCode = UaException
+                            .extract(ex)
+                            .map(UaException::getStatusCode)
+                            .orElse(StatusCode.BAD);
+
+                        if (statusCode.getValue() == StatusCodes.Bad_MessageNotAvailable) {
+                            republish(subscriptionId, fromSequence + 1, toSequence, true, future);
+                        } else {
+                            future.completeExceptionally(ex);
+                        }
                     }
                 }
-            });
+            );
         }
     }
 
@@ -476,8 +506,10 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
         UInteger sequenceNumber = notificationMessage.getSequenceNumber();
 
         if (!sequenceNumber.equals(expectedSequenceNumber)) {
-            throw new UaException(StatusCodes.Bad_SequenceNumberInvalid,
-                "expected sequence=" + expectedSequenceNumber + ", received sequence=" + sequenceNumber);
+            throw new UaException(
+                StatusCodes.Bad_SequenceNumberInvalid,
+                "expected sequence=" + expectedSequenceNumber + ", received sequence=" + sequenceNumber
+            );
         }
 
         deliveryQueue.submit(() -> onNotificationMessage(subscriptionId, notificationMessage));
@@ -486,8 +518,12 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
     private void onNotificationMessage(UInteger subscriptionId, NotificationMessage notificationMessage) {
         DateTime publishTime = notificationMessage.getPublishTime();
 
-        logger.debug("onNotificationMessage(), subscriptionId={}, sequenceNumber={}, publishTime={}",
-            subscriptionId, notificationMessage.getSequenceNumber(), publishTime);
+        logger.debug(
+            "onNotificationMessage(), subscriptionId={}, sequenceNumber={}, publishTime={}",
+            subscriptionId,
+            notificationMessage.getSequenceNumber(),
+            publishTime
+        );
 
         OpcUaSubscription subscription = subscriptions.get(subscriptionId);
         if (subscription == null) return;
@@ -504,12 +540,17 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
                 logger.debug("Received {} MonitoredItemNotifications", notificationCount);
 
                 for (MonitoredItemNotification min : dcn.getMonitoredItems()) {
-                    logger.trace("MonitoredItemNotification: clientHandle={}, value={}",
-                        min.getClientHandle(), min.getValue());
+                    logger.trace(
+                        "MonitoredItemNotification: clientHandle={}, value={}",
+                        min.getClientHandle(),
+                        min.getValue()
+                    );
 
                     OpcUaMonitoredItem item = items.get(min.getClientHandle());
-                    if (item != null) item.onValueArrived(min.getValue());
-                    else logger.warn("no item for clientHandle=" + min.getClientHandle());
+                    if (item != null)
+                        item.onValueArrived(min.getValue());
+                    else
+                        logger.warn("no item for clientHandle=" + min.getClientHandle());
                 }
 
                 if (notificationCount == 0) {
@@ -519,8 +560,11 @@ public class OpcUaSubscriptionManager implements UaSubscriptionManager {
                 EventNotificationList enl = (EventNotificationList) o;
 
                 for (EventFieldList efl : enl.getEvents()) {
-                    logger.trace("EventFieldList: clientHandle={}, values={}",
-                        efl.getClientHandle(), Arrays.toString(efl.getEventFields()));
+                    logger.trace(
+                        "EventFieldList: clientHandle={}, values={}",
+                        efl.getClientHandle(),
+                        Arrays.toString(efl.getEventFields())
+                    );
 
                     OpcUaMonitoredItem item = items.get(efl.getClientHandle());
                     if (item != null) item.onEventArrived(efl.getEventFields());

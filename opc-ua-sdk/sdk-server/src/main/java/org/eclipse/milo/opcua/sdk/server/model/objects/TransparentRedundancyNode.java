@@ -30,15 +30,14 @@ import org.eclipse.milo.opcua.stack.core.types.structured.RedundantServerDataTyp
 @UaObjectNode(typeName = "0:TransparentRedundancyType")
 public class TransparentRedundancyNode extends ServerRedundancyNode implements TransparentRedundancyType {
 
-    public TransparentRedundancyNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public TransparentRedundancyNode(UaNodeManager nodeManager,
+                                     NodeId nodeId,
+                                     QualifiedName browseName,
+                                     LocalizedText displayName,
+                                     Optional<LocalizedText> description,
+                                     Optional<UInteger> writeMask,
+                                     Optional<UInteger> userWriteMask,
+                                     UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -52,7 +51,9 @@ public class TransparentRedundancyNode extends ServerRedundancyNode implements T
 
     @Override
     public PropertyNode getCurrentServerIdNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(TransparentRedundancyType.CURRENT_SERVER_ID.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            TransparentRedundancyType.CURRENT_SERVER_ID.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -71,7 +72,9 @@ public class TransparentRedundancyNode extends ServerRedundancyNode implements T
 
     @Override
     public PropertyNode getRedundantServerArrayNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(TransparentRedundancyType.REDUNDANT_SERVER_ARRAY.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            TransparentRedundancyType.REDUNDANT_SERVER_ARRAY.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

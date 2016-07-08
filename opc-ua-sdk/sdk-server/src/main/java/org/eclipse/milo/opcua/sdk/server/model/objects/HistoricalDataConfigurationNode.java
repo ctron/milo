@@ -32,15 +32,14 @@ import org.eclipse.milo.opcua.stack.core.types.enumerated.ExceptionDeviationForm
 @UaObjectNode(typeName = "0:HistoricalDataConfigurationType")
 public class HistoricalDataConfigurationNode extends BaseObjectNode implements HistoricalDataConfigurationType {
 
-    public HistoricalDataConfigurationNode(
-        UaNodeManager nodeManager,
-        NodeId nodeId,
-        QualifiedName browseName,
-        LocalizedText displayName,
-        Optional<LocalizedText> description,
-        Optional<UInteger> writeMask,
-        Optional<UInteger> userWriteMask,
-        UByte eventNotifier) {
+    public HistoricalDataConfigurationNode(UaNodeManager nodeManager,
+                                           NodeId nodeId,
+                                           QualifiedName browseName,
+                                           LocalizedText displayName,
+                                           Optional<LocalizedText> description,
+                                           Optional<UInteger> writeMask,
+                                           Optional<UInteger> userWriteMask,
+                                           UByte eventNotifier) {
 
         super(nodeManager, nodeId, browseName, displayName, description, writeMask, userWriteMask, eventNotifier);
     }
@@ -73,7 +72,9 @@ public class HistoricalDataConfigurationNode extends BaseObjectNode implements H
 
     @Override
     public PropertyNode getDefinitionNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoricalDataConfigurationType.DEFINITION.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoricalDataConfigurationType.DEFINITION.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -92,7 +93,9 @@ public class HistoricalDataConfigurationNode extends BaseObjectNode implements H
 
     @Override
     public PropertyNode getMaxTimeIntervalNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoricalDataConfigurationType.MAX_TIME_INTERVAL.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoricalDataConfigurationType.MAX_TIME_INTERVAL.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -111,7 +114,9 @@ public class HistoricalDataConfigurationNode extends BaseObjectNode implements H
 
     @Override
     public PropertyNode getMinTimeIntervalNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoricalDataConfigurationType.MIN_TIME_INTERVAL.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoricalDataConfigurationType.MIN_TIME_INTERVAL.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -130,7 +135,9 @@ public class HistoricalDataConfigurationNode extends BaseObjectNode implements H
 
     @Override
     public PropertyNode getExceptionDeviationNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoricalDataConfigurationType.EXCEPTION_DEVIATION.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoricalDataConfigurationType.EXCEPTION_DEVIATION.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -142,14 +149,18 @@ public class HistoricalDataConfigurationNode extends BaseObjectNode implements H
 
     @Override
     public ExceptionDeviationFormat getExceptionDeviationFormat() {
-        Optional<ExceptionDeviationFormat> property = getProperty(HistoricalDataConfigurationType.EXCEPTION_DEVIATION_FORMAT);
+        Optional<ExceptionDeviationFormat> property = getProperty(
+            HistoricalDataConfigurationType.EXCEPTION_DEVIATION_FORMAT
+        );
 
         return property.orElse(null);
     }
 
     @Override
     public PropertyNode getExceptionDeviationFormatNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoricalDataConfigurationType.EXCEPTION_DEVIATION_FORMAT.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoricalDataConfigurationType.EXCEPTION_DEVIATION_FORMAT.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -168,7 +179,9 @@ public class HistoricalDataConfigurationNode extends BaseObjectNode implements H
 
     @Override
     public PropertyNode getStartOfArchiveNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoricalDataConfigurationType.START_OF_ARCHIVE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoricalDataConfigurationType.START_OF_ARCHIVE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }
@@ -187,7 +200,9 @@ public class HistoricalDataConfigurationNode extends BaseObjectNode implements H
 
     @Override
     public PropertyNode getStartOfOnlineArchiveNode() {
-        Optional<VariableNode> propertyNode = getPropertyNode(HistoricalDataConfigurationType.START_OF_ONLINE_ARCHIVE.getBrowseName());
+        Optional<VariableNode> propertyNode = getPropertyNode(
+            HistoricalDataConfigurationType.START_OF_ONLINE_ARCHIVE.getBrowseName()
+        );
 
         return propertyNode.map(n -> (PropertyNode) n).orElse(null);
     }

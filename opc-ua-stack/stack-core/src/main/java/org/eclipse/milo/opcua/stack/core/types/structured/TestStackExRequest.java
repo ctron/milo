@@ -41,7 +41,10 @@ public class TestStackExRequest implements UaRequestMessage {
         this._input = null;
     }
 
-    public TestStackExRequest(RequestHeader _requestHeader, UInteger _testId, Integer _iteration, CompositeTestType _input) {
+    public TestStackExRequest(RequestHeader _requestHeader,
+                              UInteger _testId,
+                              Integer _iteration,
+                              CompositeTestType _input) {
         this._requestHeader = _requestHeader;
         this._testId = _testId;
         this._iteration = _iteration;
@@ -79,12 +82,17 @@ public class TestStackExRequest implements UaRequestMessage {
         return XmlEncodingId;
     }
 
-
     public static void encode(TestStackExRequest testStackExRequest, UaEncoder encoder) {
-        encoder.encodeSerializable("RequestHeader", testStackExRequest._requestHeader != null ? testStackExRequest._requestHeader : new RequestHeader());
+        encoder.encodeSerializable(
+            "RequestHeader",
+            testStackExRequest._requestHeader != null ? testStackExRequest._requestHeader : new RequestHeader()
+        );
         encoder.encodeUInt32("TestId", testStackExRequest._testId);
         encoder.encodeInt32("Iteration", testStackExRequest._iteration);
-        encoder.encodeSerializable("Input", testStackExRequest._input != null ? testStackExRequest._input : new CompositeTestType());
+        encoder.encodeSerializable(
+            "Input",
+            testStackExRequest._input != null ? testStackExRequest._input : new CompositeTestType()
+        );
     }
 
     public static TestStackExRequest decode(UaDecoder decoder) {
@@ -97,8 +105,10 @@ public class TestStackExRequest implements UaRequestMessage {
     }
 
     static {
-        DelegateRegistry.registerEncoder(TestStackExRequest::encode, TestStackExRequest.class, BinaryEncodingId, XmlEncodingId);
-        DelegateRegistry.registerDecoder(TestStackExRequest::decode, TestStackExRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerEncoder(TestStackExRequest::encode, TestStackExRequest.class, BinaryEncodingId, XmlEncodingId);
+        DelegateRegistry
+            .registerDecoder(TestStackExRequest::decode, TestStackExRequest.class, BinaryEncodingId, XmlEncodingId);
     }
 
 }

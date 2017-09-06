@@ -14,6 +14,8 @@
 package org.eclipse.milo.opcua.stack.core.types.structured;
 
 import com.google.common.base.MoreObjects;
+
+import org.eclipse.milo.opcua.stack.core.AttributeId;
 import org.eclipse.milo.opcua.stack.core.Identifiers;
 import org.eclipse.milo.opcua.stack.core.serialization.DelegateRegistry;
 import org.eclipse.milo.opcua.stack.core.serialization.UaDecoder;
@@ -48,6 +50,10 @@ public class ReadValueId implements UaStructure {
         this._attributeId = _attributeId;
         this._indexRange = _indexRange;
         this._dataEncoding = _dataEncoding;
+    }
+
+    public ReadValueId(NodeId _nodeId, AttributeId _attributeId, String _indexRange, QualifiedName _dataEncoding) {
+        this(_nodeId, _attributeId != null ? _attributeId.uid() : null, _indexRange, _dataEncoding);
     }
 
     public NodeId getNodeId() { return _nodeId; }
